@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\CustomerDetail $model
+ * @var biz\master\models\CustomerDetail $model
  */
 
 $this->title = 'Update Customer Detail: ' . ' ' . $model->id_customer;

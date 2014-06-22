@@ -7,7 +7,7 @@ use yii\grid\GridView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Product $model
+ * @var biz\master\models\Product $model
  */
 $this->title = $model->id_product;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];

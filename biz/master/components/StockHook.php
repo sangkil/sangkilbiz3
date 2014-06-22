@@ -4,7 +4,7 @@ namespace biz\master\components;
 
 use biz\tools\Hooks;
 use biz\tools\Helper;
-use biz\models\ProductStock;
+use biz\master\models\ProductStock;
 use yii\base\UserException;
 
 /**
@@ -74,7 +74,7 @@ class StockHook extends \yii\base\Behavior
      */
     public function purchaseReceiveBody($event)
     {
-        /* @var $detail \biz\models\PurchaseDtl */
+        /* @var $detail \biz\master\models\PurchaseDtl */
         $detail = $event->params[1];
         $this->updateStock([
             'id_warehouse' => $detail->id_warehouse,
@@ -92,8 +92,8 @@ class StockHook extends \yii\base\Behavior
      */
     public function transferIssueBody($event)
     {
-        /* @var $model \biz\models\TransferHdr */
-        /* @var $detail \biz\models\TransferDtl */
+        /* @var $model \biz\master\models\TransferHdr */
+        /* @var $detail \biz\master\models\TransferDtl */
         $model = $event->params[0];
         $detail = $event->params[1];
 
@@ -113,7 +113,7 @@ class StockHook extends \yii\base\Behavior
      */
     public function salesStdrReleaseBody($event)
     {
-        /* @var $detail \biz\models\SalesDtl */
+        /* @var $detail \biz\master\models\SalesDtl */
         $detail = $event->params[1];
         $this->updateStock([
             'id_warehouse' => $detail->id_warehouse,
@@ -131,8 +131,8 @@ class StockHook extends \yii\base\Behavior
      */
     public function receiveReceiveBody($event)
     {
-        /* @var $model \biz\models\TransferHdr */
-        /* @var $detail \biz\models\TransferDtl */
+        /* @var $model \biz\master\models\TransferHdr */
+        /* @var $detail \biz\master\models\TransferDtl */
         $model = $event->params[0];
         $detail = $event->params[1];
         $this->updateStock([
@@ -151,8 +151,8 @@ class StockHook extends \yii\base\Behavior
      */
     public function transferNoticeApproveBody($event)
     {
-        /* @var $model \biz\models\TransferNotice */
-        /* @var $detail \biz\models\TransferNoticeDtl */
+        /* @var $model \biz\master\models\TransferNotice */
+        /* @var $detail \biz\master\models\TransferNoticeDtl */
         $model = $event->params[0];
         $detail = $event->params[1];
 

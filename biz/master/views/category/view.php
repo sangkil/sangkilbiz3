@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Category $model
+ * @var biz\master\models\Category $model
  */
 
 $this->title = $model->id_category;

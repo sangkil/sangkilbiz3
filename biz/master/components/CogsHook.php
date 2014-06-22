@@ -4,7 +4,7 @@ namespace biz\master\components;
 
 use biz\tools\Hooks;
 use biz\tools\Helper;
-use biz\models\Cogs;
+use biz\master\models\Cogs;
 use yii\base\UserException;
 
 /**
@@ -56,7 +56,7 @@ class CogsHook extends \yii\base\Behavior
      */
     public function purchaseReceiveBody($event)
     {
-        /* @var $detail \biz\models\PurchaseDtl */
+        /* @var $detail \biz\master\models\PurchaseDtl */
         $detail = $event->params[1];
         $this->updateCogs([
             'id_product' => $detail->id_product,

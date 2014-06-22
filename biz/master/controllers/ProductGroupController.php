@@ -3,8 +3,8 @@
 namespace biz\master\controllers;
 
 use Yii;
-use biz\models\ProductGroup;
-use biz\models\searchs\ProductGroup as ProductGroupSearch;
+use biz\master\models\ProductGroup;
+use biz\master\models\searchs\ProductGroup as ProductGroupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

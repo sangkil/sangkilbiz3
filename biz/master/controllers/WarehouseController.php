@@ -3,8 +3,8 @@
 namespace biz\master\controllers;
 
 use Yii;
-use biz\models\Warehouse;
-use biz\models\searchs\Warehouse as WarehouseSearch;
+use biz\master\models\Warehouse;
+use biz\master\models\searchs\Warehouse as WarehouseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

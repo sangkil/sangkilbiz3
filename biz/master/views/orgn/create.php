@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Orgn $model
+ * @var biz\master\models\Orgn $model
  */
 
 $this->title = 'Create Orgn';

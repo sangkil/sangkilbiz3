@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\GlobalConfig $model
+ * @var biz\master\models\GlobalConfig $model
  */
 
 $this->title = 'Update Global Config: ' . $model->config_group;

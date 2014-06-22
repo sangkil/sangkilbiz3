@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\ProductGroup $model
+ * @var biz\master\models\ProductGroup $model
  */
 
 $this->title = 'Create Product Group';

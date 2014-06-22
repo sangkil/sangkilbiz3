@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\ProductUom $model
+ * @var biz\master\models\ProductUom $model
  */
 
 $this->title = $model->id_puom;

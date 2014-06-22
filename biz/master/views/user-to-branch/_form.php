@@ -6,7 +6,7 @@ use biz\tools\Helper;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\User2Branch $model
+ * @var biz\master\models\User2Branch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

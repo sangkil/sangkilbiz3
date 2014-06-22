@@ -3,8 +3,8 @@
 namespace biz\master\controllers;
 
 use Yii;
-use biz\models\Orgn;
-use biz\models\searchs\Orgn as OrgnSearch;
+use biz\master\models\Orgn;
+use biz\master\models\searchs\Orgn as OrgnSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

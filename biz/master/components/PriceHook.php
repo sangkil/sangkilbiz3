@@ -4,8 +4,8 @@ namespace biz\master\components;
 
 use biz\tools\Hooks;
 use biz\tools\Helper;
-use biz\models\PriceCategory;
-use biz\models\Price;
+use biz\master\models\PriceCategory;
+use biz\master\models\Price;
 use yii\base\UserException;
 
 /**
@@ -75,7 +75,7 @@ class PriceHook extends \yii\base\Behavior
      */
     public function purchaseReceiveBody($event)
     {
-        /* @var $detail \biz\models\PurchaseDtl */
+        /* @var $detail \biz\master\models\PurchaseDtl */
         $detail = $event->params[1];
         $smallest_uom = Helper::getSmallestProductUom($detail->id_product);
 

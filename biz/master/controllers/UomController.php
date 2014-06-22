@@ -3,8 +3,8 @@
 namespace biz\master\controllers;
 
 use Yii;
-use biz\models\Uom;
-use biz\models\searchs\Uom as UomSearch;
+use biz\master\models\Uom;
+use biz\master\models\searchs\Uom as UomSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\ProductGroup $model
+ * @var biz\master\models\ProductGroup $model
  */
 
 $this->title = $model->id_group;

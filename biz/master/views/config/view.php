@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\GlobalConfig $model
+ * @var biz\master\models\GlobalConfig $model
  */
 
 $this->title = $model->config_group;

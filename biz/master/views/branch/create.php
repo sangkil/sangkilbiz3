@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Branch $model
+ * @var biz\master\models\Branch $model
  */
 
 $this->title = 'Create Branch';

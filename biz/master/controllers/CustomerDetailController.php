@@ -3,8 +3,8 @@
 namespace biz\master\controllers;
 
 use Yii;
-use biz\models\CustomerDetail;
-use biz\models\searchs\CustomerDetail as CustomerDetailSearch;
+use biz\master\models\CustomerDetail;
+use biz\master\models\searchs\CustomerDetail as CustomerDetailSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -3,8 +3,8 @@
 namespace biz\master\controllers;
 
 use Yii;
-use biz\models\UserToBranch;
-use biz\models\searchs\UserToBranch as UserToBranchSearch;
+use biz\master\models\UserToBranch;
+use biz\master\models\searchs\UserToBranch as UserToBranchSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

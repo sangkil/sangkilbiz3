@@ -2,12 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\models\Customer;
+use biz\master\models\Customer;
 use biz\behaviors\StatusBehavior;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Customer $model
+ * @var biz\master\models\Customer $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

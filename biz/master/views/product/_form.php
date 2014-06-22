@@ -3,17 +3,17 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
-use biz\models\Category;
-use biz\models\ProductGroup;
+use biz\master\models\Category;
+use biz\master\models\ProductGroup;
 use yii\bootstrap\Modal;
-use biz\models\Uom;
-use biz\models\ProductUom;
+use biz\master\models\Uom;
+use biz\master\models\ProductUom;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Product $model
+ * @var biz\master\models\Product $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

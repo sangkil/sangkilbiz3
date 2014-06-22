@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\models\GlobalConfig;
+use biz\master\models\GlobalConfig;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\GlobalConfig $model
+ * @var biz\master\models\GlobalConfig $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
