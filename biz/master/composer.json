@@ -1,6 +1,6 @@
 {
-	"name": "sangkil/biz3-dev",
-	"description": "Simple ERP",
+	"name": "sangkil/biz3-master",
+	"description": "Modul master for sangkilbiz3",
 	"keywords": ["yii2", "ERP"],
 	"homepage": "http://www.sangkilsoft.com/",
 	"type": "yii2-extension",
@@ -22,25 +22,12 @@
 		"issues": "https://github.com/sangkil/sangkilbiz3/issues?page=1&state=open",
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
-	"replace": {
-		"sangkil/biz3-master": "self.version",
-		"sangkil/biz3-purchase": "self.version",
-		"sangkil/biz3-sales": "self.version",
-		"sangkil/biz3-inventory": "self.version",
-		"sangkil/biz3-accounting": "self.version",
-		"sangkil/biz3-theme-adminlte": "self.version"
-	},
 	"require": {
 		"yiisoft/yii2": "*"
 	},
 	"autoload": {
 		"psr-4": {
-			"biz\\master\\": "biz/master",
-			"biz\\purchase\\": "biz/purchase",
-			"biz\\sales\\": "biz/sales",
-			"biz\\inventory\\": "biz/inventory",
-			"biz\\accounting\\": "biz/accounting",
-			"biz\\theme\\adminlte\\": "biz/themes/adminlte"
+			"biz\\master\\": ""
 		}
 	}
 }
