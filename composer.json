@@ -40,7 +40,7 @@
 			"biz\\sales\\": "biz/sales",
 			"biz\\inventory\\": "biz/inventory",
 			"biz\\accounting\\": "biz/accounting",
-			"biz\\theme\\adminlte\\": "biz/themes/adminlte"
+			"biz\\adminlte\\": "biz/theme-adminlte"
 		}
 	}
 }
