@@ -1,5 +1,5 @@
 {
-	"name": "sangkil/biz3-master",
+	"name": "sangkil/biz3-purchase",
 	"description": "Modul master for sangkilbiz3",
 	"keywords": ["yii2", "ERP"],
 	"homepage": "http://www.sangkilsoft.com/",
@@ -24,11 +24,12 @@
 	},
 	"require": {
 		"yiisoft/yii2": "*",
-		"sangkil/biz3-tools": "*"
+		"sangkil/biz3-tools": "*",
+		"sangkil/biz3-master": "*"
 	},
 	"autoload": {
 		"psr-4": {
-			"biz\\master\\": ""
+			"biz\\purchase\\": ""
 		}
 	}
 }

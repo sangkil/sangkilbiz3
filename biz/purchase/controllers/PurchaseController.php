@@ -3,12 +3,12 @@
 namespace biz\purchase\controllers;
 
 use Yii;
-use biz\models\PurchaseHdr;
-use biz\models\searchs\PurchaseHdr as PurchaseHdrSearch;
+use biz\purchase\models\PurchaseHdr;
+use biz\purchase\models\searchs\PurchaseHdr as PurchaseHdrSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\models\PurchaseDtl;
+use biz\purchase\models\PurchaseDtl;
 use \Exception;
 use yii\base\UserException;
 use biz\tools\Hooks;

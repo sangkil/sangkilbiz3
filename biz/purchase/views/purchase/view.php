@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\PurchaseHdr;
+use biz\purchase\models\PurchaseHdr;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\PurchaseHdr $model
+ * @var biz\purchase\models\PurchaseHdr $model
  */
 $this->title = $model->purchase_num;
 $this->params['breadcrumbs'][] = ['label' => 'Purchase', 'url' => ['index']];
