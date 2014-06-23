@@ -35,7 +35,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"biz\\dev": "",
+			"biz\\dev\\": "",
 			"biz\\master\\": "biz/master",
 			"biz\\purchase\\": "biz/purchase",
 			"biz\\sales\\": "biz/sales",
