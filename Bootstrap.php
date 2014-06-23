@@ -1,6 +1,8 @@
 <?php
 
-namespace biz;
+namespace biz\dev;
+
+use Yii;
 
 /**
  * Description of Bootstrap
@@ -13,12 +15,12 @@ class Bootstrap implements \yii\base\BootstrapInterface
     public function bootstrap($app)
     {
         $bootstraps = [
-            'biz\tools\Bootstrap'
+            'biz\master\Bootstrap',
         ];
 
         foreach ($bootstraps as $class) {
             /* @var $obj \yii\base\BootstrapInterface */
-            $obj = new $class;
+            $obj = Yii::createObject($class);
             $obj->bootstrap($app);
         }
     }

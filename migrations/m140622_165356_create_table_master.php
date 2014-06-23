@@ -33,14 +33,33 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'cd_whse' => Schema::TYPE_STRING . '(4) NOT NULL',
             'nm_whse' => Schema::TYPE_STRING . '(32) NOT NULL',
                 ], $history_columns));
-        
+
+        $this->createTable('{{%product_group}}', array_merge([
+            'id_group' => Schema::TYPE_PK,
+            'cd_group' => Schema::TYPE_STRING . '(4) NOT NULL',
+            'nm_group' => Schema::TYPE_STRING . '(32) NOT NULL',
+                ], $history_columns));
+
+        $this->createTable('{{%category}}', array_merge([
+            'id_category' => Schema::TYPE_PK,
+            'cd_category' => Schema::TYPE_STRING . '(4) NOT NULL',
+            'nm_group' => Schema::TYPE_STRING . '(32) NOT NULL',
+                ], $history_columns));
+
+
         $this->createTable('{{%product}}', array_merge([
             'id_product' => Schema::TYPE_PK,
+            'id_group' => Schema::TYPE_INTEGER,
             'id_category' => Schema::TYPE_INTEGER,
             'cd_product' => Schema::TYPE_STRING . '(13) NOT NULL',
             'nm_product' => Schema::TYPE_STRING . '(32) NOT NULL',
                 ], $history_columns));
-        
+
+        $this->createTable('{{%product_child}}', array_merge([
+            'barcode' => Schema::TYPE_STRING . '(13) PRIMARY KEY',
+            'id_product' => Schema::TYPE_INTEGER,
+            'nm_product' => Schema::TYPE_STRING . '(64) NOT NULL',
+                ], $history_columns));
         
         
     }
