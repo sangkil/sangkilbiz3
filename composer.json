@@ -45,6 +45,6 @@
 		}
 	},
 	"extra": {
-		"bootstrap": "biz\\Bootstrap"
+		"bootstrap": "biz\\dev\\Bootstrap"
 	}
 }
