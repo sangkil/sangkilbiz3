@@ -11,8 +11,8 @@ use yii\filters\VerbFilter;
 use biz\purchase\models\PurchaseDtl;
 use \Exception;
 use yii\base\UserException;
-use biz\tools\Hooks;
-use biz\base\Event;
+use biz\master\tools\Hooks;
+use biz\master\tools\Event;
 
 /**
  * PurchaseHdrController implements the CRUD actions for PurchaseHdr model.

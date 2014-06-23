@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\tools;
+namespace biz\master\assets;
 
 /**
  * Description of BizAsset
@@ -9,7 +9,7 @@ namespace biz\tools;
  */
 class BizAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@biz/tools/assets';
+    public $sourcePath = '@biz/master/assets/dist';
     public $js = [
         'js/mdm.numeric.js',
         'js/numeral.min.js',

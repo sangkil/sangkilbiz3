@@ -3,6 +3,9 @@
 namespace biz\purchase\models;
 
 use Yii;
+use biz\master\models\Product;
+use biz\master\models\Uom;
+use biz\master\models\Warehouse;
 
 /**
  * This is the model class for table "purchase_dtl".
@@ -28,7 +31,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'purchase_dtl';
+        return '{{%purchase_dtl}}';
     }
 
     /**

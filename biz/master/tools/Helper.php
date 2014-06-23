@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\tools;
+namespace biz\master\tools;
 
 use yii\base\UserException;
 use biz\models\EntriSheet;
@@ -10,15 +10,15 @@ use biz\models\GlDetail;
 use biz\models\InvoiceHdr;
 use biz\models\InvoiceDtl;
 use biz\models\AccPeriode;
-use biz\models\ProductStock;
-use biz\models\Cogs;
-use biz\models\Price;
-use biz\models\PriceCategory;
-use biz\models\GlobalConfig;
-use biz\models\Warehouse;
-use biz\models\Branch;
-use biz\models\ProductUom;
-use biz\models\UserToBranch;
+use biz\master\models\ProductStock;
+use biz\master\models\Cogs;
+use biz\master\models\Price;
+use biz\master\models\PriceCategory;
+use biz\master\models\GlobalConfig;
+use biz\master\models\Warehouse;
+use biz\master\models\Branch;
+use biz\master\models\ProductUom;
+use biz\master\models\UserToBranch;
 use yii\helpers\ArrayHelper;
 
 /**

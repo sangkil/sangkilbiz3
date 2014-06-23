@@ -65,7 +65,7 @@ class UserToBranch extends \yii\db\ActiveRecord
      */
     public function getIdUser()
     {
-        return $this->hasOne(\common\models\User::className(), ['id' => 'id_user']);
+        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'id_user']);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\tools;
+namespace biz\master\assets;
 
 use yii\web\View;
 use yii\helpers\ArrayHelper;

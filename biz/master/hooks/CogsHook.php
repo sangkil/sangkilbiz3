@@ -1,9 +1,9 @@
 <?php
 
-namespace biz\master\components;
+namespace biz\master\hooks;
 
-use biz\tools\Hooks;
-use biz\tools\Helper;
+use biz\master\tools\Hooks;
+use biz\master\tools\Helper;
 use biz\master\models\Cogs;
 use yii\base\UserException;
 
@@ -52,7 +52,7 @@ class CogsHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\base\Event $event
+     * @param \biz\master\tools\Event $event
      */
     public function purchaseReceiveBody($event)
     {

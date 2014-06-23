@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\tools;
+namespace biz\master\tools;
 
 /**
  * Description of Event

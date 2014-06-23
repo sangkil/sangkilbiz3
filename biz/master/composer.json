@@ -23,12 +23,14 @@
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
 	"require": {
-		"yiisoft/yii2": "*",
-		"sangkil/biz3-tools": "*"
+		"yiisoft/yii2": "*"
 	},
 	"autoload": {
 		"psr-4": {
 			"biz\\master\\": ""
 		}
+	},
+	"extra": {
+		"bootstrap": "biz\\master\\Bootstrap"
 	}
 }

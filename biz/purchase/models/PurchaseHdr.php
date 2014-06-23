@@ -4,6 +4,9 @@ namespace biz\purchase\models;
 
 use Yii;
 
+use biz\master\models\Supplier;
+use biz\master\models\Branch;
+
 /**
  * This is the model class for table "purchase_hdr".
  *
@@ -39,7 +42,7 @@ class PurchaseHdr extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'purchase_hdr';
+        return '{{%purchase_hdr}}';
     }
 
     /**
@@ -116,14 +119,12 @@ class PurchaseHdr extends \yii\db\ActiveRecord
                 'value' => 'PU' . date('y.?')
             ],
             [
-                'class'=>'biz\behaviors\DateConverter',
+                'class'=>'mdm\converter\DateConverter',
                 'attributes'=>[
                     'purchaseDate' => 'purchase_date',
                 ]
             ],
-            [
-                'class'=>'biz\tools\StatusBehavior'
-            ]
+            'BizStatusConverter'
         ];
     }
 }
