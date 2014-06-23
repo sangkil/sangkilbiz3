@@ -34,6 +34,14 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'nm_whse' => Schema::TYPE_STRING . '(32) NOT NULL',
                 ], $history_columns));
         
+        $this->createTable('{{%product}}', array_merge([
+            'id_product' => Schema::TYPE_PK,
+            'id_category' => Schema::TYPE_INTEGER,
+            'cd_product' => Schema::TYPE_STRING . '(13) NOT NULL',
+            'nm_product' => Schema::TYPE_STRING . '(32) NOT NULL',
+                ], $history_columns));
+        
+        
         
     }
 
