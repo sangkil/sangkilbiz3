@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
-use biz\models\EntriSheet;
+use biz\accounting\models\EntriSheet;
 
 /**
  * @var yii\web\View $this

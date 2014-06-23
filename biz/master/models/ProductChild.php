@@ -24,7 +24,7 @@ class ProductChild extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'product_child';
+        return '{{%product_child}}';
     }
 
     /**

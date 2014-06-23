@@ -23,7 +23,7 @@ class UserToBranch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'user_to_branch';
+        return '{{%user_to_branch}}';
     }
 
     /**

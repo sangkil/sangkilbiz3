@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 
-/* @var $model biz\models\GlHeader */
+/* @var $model biz\accounting\models\GlHeader */
 /* @var $this yii\web\View */
-/* @var $details biz\models\GlDetails[] */
+/* @var $details biz\accounting\models\GlDetails[] */
 
 $this->title = 'Create Gl Header';
 $this->params['breadcrumbs'][] = ['label' => 'Gl Headers', 'url' => ['index']];

@@ -26,7 +26,7 @@ class ProductUom extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'product_uom';
+        return '{{%product_uom}}';
     }
 
     /**

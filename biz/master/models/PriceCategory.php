@@ -25,7 +25,7 @@ class PriceCategory extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'price_category';
+        return '{{%price_category}}';
     }
 
     /**
@@ -62,14 +62,6 @@ class PriceCategory extends \yii\db\ActiveRecord
     public function getPrices()
     {
         return $this->hasMany(Price::className(), ['id_price_category' => 'id_price_category']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdProducts()
-    {
-        return $this->hasMany(Product::className(), ['id_product' => 'id_product'])->viaTable('price', ['id_price_category' => 'id_price_category']);
     }
 
     /**

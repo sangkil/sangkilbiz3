@@ -30,7 +30,7 @@ class CustomerDetail extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'customer_detail';
+        return '{{%customer_detail}}';
     }
 
     /**

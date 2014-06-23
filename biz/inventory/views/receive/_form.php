@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\inventory\components\ReceiveAsset;
-use biz\tools\BizDataAsset;
+use biz\inventory\assets\ReceiveAsset;
+use biz\master\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this

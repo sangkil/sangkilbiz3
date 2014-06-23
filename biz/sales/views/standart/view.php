@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\SalesHdr;
+use biz\sales\models\SalesHdr;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\SalesHdr $model
+ * @var biz\sales\models\SalesHdr $model
  */
 $this->title = $model->sales_num;
 $this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];

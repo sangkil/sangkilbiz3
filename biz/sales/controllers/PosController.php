@@ -3,17 +3,17 @@
 namespace biz\sales\controllers;
 
 use Yii;
-use biz\models\SalesHdr;
-use biz\models\SalesDtl;
+use biz\sales\models\SalesHdr;
+use biz\sales\models\SalesDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use mdm\clienttools\AppCache;
-use biz\tools\Helper;
 use yii\db\Query;
 use yii\web\Response;
-use biz\models\Cashdrawer;
-use biz\models\Cogs;
+use biz\sales\models\Cashdrawer;
+use biz\sales\models\Cogs;
+use biz\master\models\Price;
 
 /**
  * PosController implements the CRUD actions for SalesHdr model.
@@ -205,56 +205,31 @@ class PosController extends Controller
 
     public function getDataMaster()
     {
-        // price squence
-        $squence = Helper::getConfigValue('SALES_PRICE', 'GROSIR_CATEGORY', 1);
-        $price_standart = Helper::getConfigValue('SALES_PRICE', 'PRICE_STANDART', 1);
-        $squences = [$squence];
-        $query_squence = (new Query)->select('squence_price')->from('price_category');
-        while (true) {
-            $squence = $query_squence->where(['id_price_category' => $squence])->scalar();
-            $squence = empty($squence) ? $price_standart : $squence;
-            if (!in_array($squence, $squences)) {
-                $squences[] = $squence;
-            }
-            if ($squence == $price_standart) {
-                break;
-            }
-        }
-        $query_price = (new Query)->select(['id_product', 'id_price_category', 'price'])
-            ->from('price')
-            ->where(['id_price_category' => $squences]);
         $prices = [];
-        foreach ($query_price->all() as $row) {
+        foreach (Price::find()->asArray()->all() as $row) {
             $prices[$row['id_product']][$row['id_price_category']] = $row['price'];
         }
 
         // master product
         $query_master = (new Query())
             ->select(['id' => 'p.id_product', 'cd' => 'p.cd_product', 'nm' => 'p.nm_product', 'u.id_uom', 'u.nm_uom', 'pu.isi'])
-            ->from(['p' => 'product'])
-            ->innerJoin(['pu' => 'product_uom'], 'pu.id_product=p.id_product')
-            ->innerJoin(['u' => 'uom'], 'u.id_uom=pu.id_uom')
+            ->from(['p' => '{{%product}}'])
+            ->innerJoin(['pu' => '{{%product_uom}}'], 'pu.id_product=p.id_product')
+            ->innerJoin(['u' => '{{%uom}}'], 'u.id_uom=pu.id_uom')
             ->orderBy(['p.id_product' => SORT_ASC, 'pu.isi' => SORT_ASC]);
-        $result = [];
+        $products = [];
         foreach ($query_master->all() as $row) {
             $id = $row['id'];
-            if (!isset($result[$id])) {
-                $result[$id] = [
+            if (!isset($products[$id])) {
+                $products[$id] = [
                     'id' => $row['id'],
                     'cd' => $row['cd'],
                     'text' => $row['nm'],
                     'id_uom' => $row['id_uom'],
                     'nm_uom' => $row['nm_uom'],
-                    'price' => 0,
                 ];
-                foreach ($squences as $ct) {
-                    if (isset($prices[$id][$ct])) {
-                        $result[$id]['price'] = $prices[$id][$ct];
-                        break;
-                    }
-                }
             }
-            $result[$id]['uoms'][$row['id_uom']] = [
+            $products[$id]['uoms'][$row['id_uom']] = [
                 'id' => $row['id_uom'],
                 'nm' => $row['nm_uom'],
                 'isi' => $row['isi']
@@ -265,17 +240,18 @@ class PosController extends Controller
         $barcodes = [];
         $query_barcode = (new Query())
             ->select(['barcode' => 'lower(barcode)', 'id' => 'id_product'])
-            ->from('product_child')
+            ->from('{{%product_child}}')
             ->union((new Query())
             ->select(['lower(cd_product)', 'id_product'])
-            ->from('product'));
+            ->from('{{%product}}'));
         foreach ($query_barcode->all() as $row) {
             $barcodes[$row['barcode']] = $row['id'];
         }
 
         return [
-            'product' => $result,
-            'barcodes' => $barcodes
+            'products' => $products,
+            'barcodes' => $barcodes,
+            'prices' => $prices
         ];
     }
 

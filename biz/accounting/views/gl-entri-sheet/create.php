@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\GlHeader $model
+ * @var biz\accounting\models\GlHeader $model
  */
 
 $this->title = 'Create Gl Header';

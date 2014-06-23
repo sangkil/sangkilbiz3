@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\Cashdrawer;
+use biz\sales\models\Cashdrawer;
 
 /* @var $this yii\web\View */
-/* @var $model biz\models\Cashdrawer */
+/* @var $model biz\sales\models\Cashdrawer */
 
 $this->title = $model->idUser->username . ' : Cashier ' . $model->cashier_no;
 $this->params['breadcrumbs'][] = ['label' => 'Cashdrawers', 'url' => ['index']];

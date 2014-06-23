@@ -3,13 +3,13 @@
 namespace biz\master\tools;
 
 use yii\base\UserException;
-use biz\models\EntriSheet;
-use biz\models\Coa;
-use biz\models\GlHeader;
-use biz\models\GlDetail;
-use biz\models\InvoiceHdr;
-use biz\models\InvoiceDtl;
-use biz\models\AccPeriode;
+use biz\accounting\models\EntriSheet;
+use biz\accounting\models\Coa;
+use biz\accounting\models\GlHeader;
+use biz\accounting\models\GlDetail;
+use biz\accounting\models\InvoiceHdr;
+use biz\accounting\models\InvoiceDtl;
+use biz\accounting\models\AccPeriode;
 use biz\master\models\ProductStock;
 use biz\master\models\Cogs;
 use biz\master\models\Price;
@@ -19,6 +19,7 @@ use biz\master\models\Warehouse;
 use biz\master\models\Branch;
 use biz\master\models\ProductUom;
 use biz\master\models\UserToBranch;
+use biz\master\base\AccessHandler;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -364,8 +365,37 @@ class Helper
         if ($id_user === null) {
             return ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch');
         } else {
-            $query = UserToBranch::find()->with('idBranch')->where(['user_id'=>$id_user]);
+            $query = UserToBranch::find()->with('idBranch')->where(['user_id' => $id_user]);
             return ArrayHelper::map($query->all(), 'id_branch', 'idBranch.nm_branch');
+        }
+    }
+    /**
+     *
+     * @var AccessHandler[] 
+     */
+    private static $_accessHendler = [];
+
+    /**
+     * 
+     * @param string|AccessHandler $handler
+     */
+    public static function registerAccessHandler($handler)
+    {
+        if (!($handler instanceof AccessHandler)) {
+            $handler = \Yii::createObject($handler);
+        }
+        foreach ($handler->modelClasses() as $class) {
+            static::$_accessHendler[trim($class, '\\')] = $handler;
+        }
+    }
+
+    public static function checkAccess($action, $model)
+    {
+        if (isset(static::$_accessHendler[get_class($model)])) {
+            $handler = static::$_accessHendler[get_class($model)];
+            return $handler->check(\Yii::$app->getUser(), $action, $model);
+        } else {
+            return true;
         }
     }
 }

@@ -3,14 +3,14 @@
 namespace biz\accounting\controllers;
 
 use Yii;
-use biz\models\GlHeader;
-use biz\models\searchs\GlEntriSheet;
+use biz\accounting\models\GlHeader;
+use biz\accounting\models\searchs\GlEntriSheet;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\models\EntriSheet;
-use biz\models\EntriSheetDtl;
-use biz\models\GlDetail;
+use biz\accounting\models\EntriSheet;
+use biz\accounting\models\EntriSheetDtl;
+use biz\accounting\models\GlDetail;
 use yii\base\Model;
 
 /**

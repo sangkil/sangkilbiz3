@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'create_by',
             // 'update_date',
             // 'update_by',
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]);
     \yii\widgets\Pjax::end();

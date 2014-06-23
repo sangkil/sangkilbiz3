@@ -5,11 +5,11 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 use yii\widgets\DetailView;
-use biz\models\TransferNotice;
+use biz\inventory\models\TransferNotice;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\TransferNotice $model
+ * @var biz\inventory\models\TransferNotice $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

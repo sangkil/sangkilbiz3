@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use biz\master\tools\Helper;
-use biz\purchase\components\PurchaseAsset;
+use biz\purchase\assets\PurchaseAsset;
 use biz\master\assets\BizDataAsset;
 
 /**

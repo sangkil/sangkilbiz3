@@ -3,8 +3,8 @@
 namespace biz\accounting\controllers;
 
 use Yii;
-use biz\models\AccPeriode;
-use biz\models\searchs\AccPeriode as AccPeriodeSearch;
+use biz\accounting\models\AccPeriode;
+use biz\accounting\models\searchs\AccPeriode as AccPeriodeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

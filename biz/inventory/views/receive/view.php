@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\TransferHdr;
+use biz\inventory\models\TransferHdr;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\TransferHdr $model
+ * @var biz\inventory\models\TransferHdr $model
  */
 $this->title = $model->transfer_num;
 $this->params['breadcrumbs'][] = ['label' => 'Receive', 'url' => ['index']];

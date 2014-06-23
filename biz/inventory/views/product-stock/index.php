@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\ProductStockSearch $searchModel
+ * @var biz\inventory\models\ProductStockSearch $searchModel
  */
 $this->title = 'Product Stocks';
 $this->params['breadcrumbs'][] = $this->title;
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'create_by',
             // 'update_date',
             // 'update_by',
-            //['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'biz\master\components\ActionColumn'],
             ],
         ]);
         ?>

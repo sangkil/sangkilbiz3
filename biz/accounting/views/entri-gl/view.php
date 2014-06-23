@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\GlHeader $model
+ * @var biz\accounting\models\GlHeader $model
  */
 
 $this->title = $model->id_gl;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\InvoiceHdr $model
+ * @var biz\accounting\models\InvoiceHdr $model
  */
 
 $this->title = 'Create Invoice Hdr';

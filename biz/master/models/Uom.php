@@ -33,7 +33,7 @@ class Uom extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'uom';
+        return '{{%uom}}';
     }
 
     /**

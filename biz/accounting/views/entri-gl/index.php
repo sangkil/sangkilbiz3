@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\searchs\GlHeader $searchModel
+ * @var biz\accounting\models\searchs\GlHeader $searchModel
  */
 $this->title = 'Gl Headers';
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'status',
                     // 'update_date',
                     // 'update_by',
-                    ['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'biz\master\components\ActionColumn'],
                 ],
             ]);
             ?>

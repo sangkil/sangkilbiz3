@@ -71,7 +71,7 @@ class PriceHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\tools\Event $event
+     * @param \biz\master\base\Event $event
      */
     public function purchaseReceiveBody($event)
     {

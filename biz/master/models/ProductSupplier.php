@@ -24,7 +24,7 @@ class ProductSupplier extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'product_supplier';
+        return '{{%product_supplier}}';
     }
 
     /**

@@ -24,7 +24,6 @@
 	},
 	"require": {
 		"yiisoft/yii2": "*",
-		"sangkil/biz3-tools": "*",
 		"sangkil/biz3-master": "*"
 	},
 	"autoload": {

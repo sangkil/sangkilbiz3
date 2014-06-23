@@ -31,7 +31,7 @@ class Branch extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'branch';
+        return '{{%branch}}';
     }
 
     /**

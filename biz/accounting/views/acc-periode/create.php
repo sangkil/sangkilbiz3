@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\AccPeriode $model
+ * @var biz\accounting\models\AccPeriode $model
  */
 
 $this->title = 'Create Acc Periode';

@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 
 /* @var $form yii\widgets\ActiveForm */
-/* @var $details biz\models\EntriSheetDtl[] */
+/* @var $details biz\accounting\models\EntriSheetDtl[] */
 /* @var $this yii\web\View */
 ?>
 <table style="width: 98%">

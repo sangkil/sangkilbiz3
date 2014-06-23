@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\TransferNotice $model
+ * @var biz\inventory\models\TransferNotice $model
  */
 
 $this->title = 'Create Transfer Notice';

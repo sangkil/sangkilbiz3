@@ -8,7 +8,7 @@ use biz\tools\BizDataAsset;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\SalesHdr $model
+ * @var biz\sales\models\SalesHdr $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

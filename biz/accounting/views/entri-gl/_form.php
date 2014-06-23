@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\models\GlDetail;
+use biz\accounting\models\GlDetail;
+use biz\accounting\assets\EntryGlAsset;
 
-/* @var $model biz\models\GlHeader */
+/* @var $model biz\accounting\models\GlHeader */
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $details biz\models\GlDetails[] */
+/* @var $details biz\accounting\models\GlDetails[] */
 ?>
 
 <div class="gl-header-form">
@@ -40,7 +41,7 @@ use biz\models\GlDetail;
 
                 /**
                  * 
-                 * @param biz\models\GlDetail $model
+                 * @param biz\accounting\models\GlDetail $model
                  * @param integer $index
                  * @return string
                  */
@@ -82,4 +83,4 @@ use biz\models\GlDetail;
 
 </div>
 <?php
-$a = \biz\accounting\components\EntryGlAsset::register($this);
+$a = EntryGlAsset::register($this);

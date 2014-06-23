@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\models\Coa;
+use biz\accounting\models\Coa;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-use biz\tools\Helper;
+use biz\master\tools\Helper;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\\Coa $model
+ * @var biz\accounting\models\\Coa $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

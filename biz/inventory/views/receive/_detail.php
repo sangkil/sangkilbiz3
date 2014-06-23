@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use biz\models\TransferDtl;
-use biz\tools\Helper;
+use biz\inventory\models\TransferDtl;
+use biz\master\tools\Helper;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 

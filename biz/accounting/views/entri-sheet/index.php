@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\\EntriSheetSearch $searchModel
+ * @var biz\accounting\models\\EntriSheetSearch $searchModel
  */
 
 $this->title = 'Entri Sheets';
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'update_date',
             // 'update_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]); ?>
 

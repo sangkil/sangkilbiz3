@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\\EntriSheetDtlSearch $searchModel
+ * @var biz\accounting\models\\EntriSheetDtlSearch $searchModel
  */
 $this->title = 'Entri Sheet Dtls';
 $this->params['breadcrumbs'][] = $this->title;
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'id_esheet',
             'id_coa',
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]);
     ?>

@@ -3,15 +3,15 @@
 namespace biz\inventory\controllers;
 
 use Yii;
-use biz\models\TransferNotice;
-use biz\models\searchs\TransferNotice as TransferNoticeSearch;
+use biz\inventory\models\TransferNotice;
+use biz\inventory\models\searchs\TransferNotice as TransferNoticeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
-use biz\tools\Hooks;
+use biz\master\tools\Hooks;
 use yii\base\UserException;
-use biz\base\Event;
+use biz\master\base\Event;
 
 /**
  * NoticeController implements the CRUD actions for TransferNotice model.

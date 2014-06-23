@@ -26,12 +26,13 @@ use Yii;
  */
 class Warehouse extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'warehouse';
+        return '{{%warehouse}}';
     }
 
     /**

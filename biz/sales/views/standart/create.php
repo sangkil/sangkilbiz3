@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="purchase-hdr-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?= Html::dropDownList('price_ct', null, $price_category) ?>
     <?php
     echo $this->render('_form', [
         'model' => $model,

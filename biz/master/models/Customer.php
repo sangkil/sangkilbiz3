@@ -33,7 +33,7 @@ class Customer extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'customer';
+        return '{{%customer}}';
     }
 
     /**
@@ -93,9 +93,7 @@ class Customer extends \yii\db\ActiveRecord
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
-            [
-                'class'=>'biz\behaviors\StatusBehavior'
-            ]
+            'BizStatusConverter'
         ];
     }
 }

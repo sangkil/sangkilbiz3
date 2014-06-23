@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'update_by',
             // 'create_date',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]); ?>
 

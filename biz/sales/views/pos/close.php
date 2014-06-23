@@ -8,7 +8,7 @@ use biz\tools\BizDataAsset;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model biz\models\Cashdrawer */
+/* @var $model biz\sales\models\Cashdrawer */
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = $model->idUser->username . ' : Cashier ' . $model->cashier_no;

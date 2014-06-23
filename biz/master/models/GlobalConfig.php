@@ -23,7 +23,7 @@ class GlobalConfig extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'global_config';
+        return '{{%global_config}}';
     }
 
     /**

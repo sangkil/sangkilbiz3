@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\\CoaSearch $searchModel
+ * @var biz\accounting\models\\CoaSearch $searchModel
  */
 $this->title = 'Coas';
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'create_by',
             // 'update_date',
             // 'update_by',
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]);
     \yii\widgets\Pjax::end();

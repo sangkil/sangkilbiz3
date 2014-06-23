@@ -24,7 +24,7 @@ class Orgn extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'orgn';
+        return '{{%orgn}}';
     }
 
     /**

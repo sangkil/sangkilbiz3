@@ -3,13 +3,13 @@
 namespace biz\accounting\controllers;
 
 use Yii;
-use biz\models\Coa;
-use biz\models\searchs\Coa as CoaSearch;
+use biz\accounting\models\Coa;
+use biz\accounting\models\searchs\Coa as CoaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
-use biz\tools\Helper;
+use biz\master\tools\Helper;
 
 /**
  * CoaController implements the CRUD actions for Coa model.

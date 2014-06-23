@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\searchs\TransferNotice $model
+ * @var biz\inventory\models\searchs\TransferNotice $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

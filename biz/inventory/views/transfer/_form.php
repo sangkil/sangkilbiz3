@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\tools\Helper;
-use biz\inventory\components\TransferAsset;
-use biz\tools\BizDataAsset;
+use biz\master\tools\Helper;
+use biz\inventory\assets\TransferAsset;
+use biz\master\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this

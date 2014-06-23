@@ -3,12 +3,13 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use biz\models\TransferNotice;
+use biz\inventory\models\TransferNotice;
+use biz\master\tools\Helper;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\searchs\TransferNotice $searchModel
+ * @var biz\inventory\models\searchs\TransferNotice $searchModel
  */
 $this->title = 'Transfer Notices';
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,18 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'noticeDate',
             'nmStatus',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'biz\master\components\ActionColumn',
                 'template' => '{view} {update}',
-                'buttons' => [
-                    'update' => function ($url, $model) {
-                    if (Yii::$app->user->can('inventory.notice.update', ['model' => $model])) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                'title' => Yii::t('yii', 'Update'),
-                                'data-pjax' => '0',
-                        ]);
-                    }
-                }
-                ]
             ],
         ],
     ]);

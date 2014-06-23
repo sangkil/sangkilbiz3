@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\searchs\InvoiceHdr $searchModel
+ * @var biz\accounting\models\searchs\InvoiceHdr $searchModel
  */
 
 $this->title = 'Invoice Hdrs';
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'update_date',
             // 'update_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]); ?>
 

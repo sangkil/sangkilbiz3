@@ -8,31 +8,27 @@ use yii\db\Expression;
 use biz\master\hooks\CogsHook;
 use biz\master\hooks\PriceHook;
 use biz\master\hooks\StockHook;
-use biz\master\tools\UserProperties;
-use yii\helpers\ArrayHelper;
+use biz\master\components\UserProperties;
 
 /**
  * Description of Bootstrapt
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class Bootstrap implements \yii\base\BootstrapInterface
+class Bootstrap extends base\Bootstrap
 {
 
     /**
      * 
      * @param \yii\base\Application $app
      */
-    public function bootstrap($app)
+    protected function initialize($app, $config)
     {
-        if ($app instanceof \yii\web\Application) {
-            $bizConfig = ArrayHelper::getValue($app->params, 'biz_config', []);
-            $this->diConfig($bizConfig);
-            if (!isset($bizConfig['auto_user_attach']) || $bizConfig['auto_user_attach']) {
-                $this->attachUserProperty($app->getUser());
-            }
-            $this->attachHooks($app);
+        $this->diConfig($config);
+        if ($config['user_properties']) {
+            $this->attachUserProperty($app->getUser());
         }
+        $this->attachHooks($app);
     }
 
     /**
@@ -74,10 +70,6 @@ class Bootstrap implements \yii\base\BootstrapInterface
             ],
             'BizBlameableBehavior' => [
                 'class' => 'yii\behaviors\BlameableBehavior',
-                'attributes' => [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
-                    BaseActiveRecord::EVENT_BEFORE_UPDATE => 'updated_by',
-                ]
             ],
             'BizStatusConverter' => [
                 'class' => 'mdm\converter\EnumConverter',
@@ -94,5 +86,14 @@ class Bootstrap implements \yii\base\BootstrapInterface
             }
             Yii::$container->set($class, $definition);
         }
+    }
+
+    /**
+     * 
+     * @param \yii\web\Application $app
+     */
+    protected function autoDefineModule($app)
+    {
+        $app->setModule('master', Module::className());
     }
 }

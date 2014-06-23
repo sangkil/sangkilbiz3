@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'config_value',
             'description',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'biz\master\components\ActionColumn'],
         ],
     ]); ?>
 

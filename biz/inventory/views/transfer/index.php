@@ -2,9 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\models\TransferHdr;
-use yii\data\ActiveDataProvider;
 use yii\widgets\Pjax;
+use biz\master\tools\Helper;
 
 /**
  * @var yii\web\View $this
@@ -38,30 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'transferDate',
             'nmStatus',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'biz\master\components\ActionColumn',
                 'template' => '{view} {update} {delete} {issue}',
                 'buttons' => [
-                    'update' => function ($url, $model) {
-                        return $model->status == TransferHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                            'title' => Yii::t('yii', 'Update'),
-                            'data-pjax' => '0',
-                        ]) : '';
-                },
-                    'delete' => function ($url, $model) {
-                        return $model->status == TransferHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                            'title' => Yii::t('yii', 'Delete'),
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]) : '';
-                },
                     'issue' => function ($url, $model) {
-                        return $model->status == TransferHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
-                            'title' => Yii::t('yii', 'Issue'),
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to issue this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]) : '';
+                    if (Helper::checkAccess('issue', $model)) {
+                        return Html::a('<span class="glyphicon glyphicon-open"></span>', $url, [
+                                'title' => Yii::t('yii', 'Issue'),
+                                'data-confirm' => Yii::t('yii', 'Are you sure you want to issue this item?'),
+                                'data-method' => 'post',
+                                'data-pjax' => '0',
+                        ]);
+                    }
                 }
                 ]
             ],

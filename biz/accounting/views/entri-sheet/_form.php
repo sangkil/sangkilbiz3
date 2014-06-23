@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
-use biz\models\Coa;
-use biz\models\EntriSheetDtl;
+use biz\accounting\models\Coa;
+use biz\accounting\models\EntriSheetDtl;
 use yii\bootstrap\Modal;
-use biz\tools\Helper;
+use biz\master\tools\Helper;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\\EntriSheet $model
+ * @var biz\accounting\models\\EntriSheet $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -71,7 +71,7 @@ use biz\tools\Helper;
                     //'idCoa.cd_account',
                     'idCoa.nm_account',
                     'idCoa.normal_balance',
-                //['class' => 'yii\grid\ActionColumn'],
+                //['class' => 'biz\master\components\ActionColumn'],
                 ],
             ]);
 

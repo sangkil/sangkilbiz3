@@ -58,7 +58,7 @@ use biz\tools\Helper;
                     //'idCoa.cd_account',
                     'idCoa.nm_account',
                     //'idCoa.normal_balance',
-                //['class' => 'yii\grid\ActionColumn'],
+                //['class' => 'biz\master\components\ActionColumn'],
                 ],
             ]);
 

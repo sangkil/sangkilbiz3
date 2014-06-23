@@ -16,12 +16,18 @@ class Bootstrap implements \yii\base\BootstrapInterface
     {
         $bootstraps = [
             'biz\master\Bootstrap',
+            'biz\purchase\Bootstrap',
+            'biz\inventory\Bootstrap',
+            'biz\sales\Bootstrap',
+            'biz\accounting\Bootstrap',
         ];
 
         foreach ($bootstraps as $class) {
             /* @var $obj \yii\base\BootstrapInterface */
             $obj = Yii::createObject($class);
-            $obj->bootstrap($app);
+            if ($obj instanceof \yii\base\BootstrapInterface) {
+                $obj->bootstrap($app);
+            }
         }
     }
 }

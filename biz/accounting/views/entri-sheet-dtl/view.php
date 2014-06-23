@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\\EntriSheetDtl $model
+ * @var biz\accounting\models\\EntriSheetDtl $model
  */
 
 $this->title = $model->id_esheet;

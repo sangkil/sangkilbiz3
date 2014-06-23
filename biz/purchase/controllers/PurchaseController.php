@@ -12,7 +12,7 @@ use biz\purchase\models\PurchaseDtl;
 use \Exception;
 use yii\base\UserException;
 use biz\master\tools\Hooks;
-use biz\master\tools\Event;
+use biz\master\base\Event;
 
 /**
  * PurchaseHdrController implements the CRUD actions for PurchaseHdr model.

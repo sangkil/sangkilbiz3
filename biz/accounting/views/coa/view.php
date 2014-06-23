@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Coa $model
+ * @var biz\accounting\models\Coa $model
  */
 
 $this->title = $model->id_coa;

@@ -3,12 +3,12 @@
 namespace biz\accounting\controllers;
 
 use Yii;
-use biz\models\GlHeader;
-use biz\models\searchs\GlHeader as GlHeaderSearch;
+use biz\accounting\models\GlHeader;
+use biz\accounting\models\searchs\GlHeader as GlHeaderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\models\GlDetail;
+use biz\accounting\models\GlDetail;
 
 /**
  * EntriGlController implements the CRUD actions for GlHeader model.

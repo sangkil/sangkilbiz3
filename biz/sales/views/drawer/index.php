@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\CashdrawerSearch $searchModel
+ * @var biz\sales\models\CashdrawerSearch $searchModel
  */
 
 $this->title = 'Cashdrawers';
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nmStatus',
 //            'client_machine',
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => 'biz\master\components\ActionColumn',
                 'template' => "{view}"],
         ],
     ]); ?>

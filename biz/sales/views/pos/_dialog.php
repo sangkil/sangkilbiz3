@@ -2,8 +2,8 @@
 
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
-use biz\tools\Helper;
-use biz\models\Cashdrawer;
+use biz\master\tools\Helper;
+use biz\sales\models\Cashdrawer;
 
 $model = new Cashdrawer([
     'id_branch' => Yii::$app->clientIdBranch,

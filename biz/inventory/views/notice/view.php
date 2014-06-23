@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
-use biz\models\TransferNotice;
+use biz\inventory\models\TransferNotice;
 use yii\data\ActiveDataProvider;
 
 /**

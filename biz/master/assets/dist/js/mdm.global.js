@@ -62,7 +62,7 @@ yii.global = (function($) {
                 return;
             }
 
-            $.each(biz.master.product, function() {
+            $.each(biz.master.products, function() {
                 var product = this;
                 if (product.text.toLowerCase().indexOf(term) >= 0 || product.cd.toLowerCase().indexOf(term) >= 0) {
                     var id = product.id + '';

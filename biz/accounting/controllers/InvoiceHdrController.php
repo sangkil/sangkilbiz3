@@ -3,8 +3,8 @@
 namespace biz\accounting\controllers;
 
 use Yii;
-use biz\models\InvoiceHdr;
-use biz\models\searchs\InvoiceHdr as InvoiceHdrSearch;
+use biz\accounting\models\InvoiceHdr;
+use biz\accounting\models\searchs\InvoiceHdr as InvoiceHdrSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
