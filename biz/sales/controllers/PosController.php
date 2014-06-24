@@ -13,7 +13,7 @@ use yii\db\Query;
 use yii\web\Response;
 use biz\sales\models\Cashdrawer;
 use biz\sales\models\Cogs;
-use biz\master\models\Price;
+use biz\master\tools\Helper;
 
 /**
  * PosController implements the CRUD actions for SalesHdr model.
@@ -205,54 +205,7 @@ class PosController extends Controller
 
     public function getDataMaster()
     {
-        $prices = [];
-        foreach (Price::find()->asArray()->all() as $row) {
-            $prices[$row['id_product']][$row['id_price_category']] = $row['price'];
-        }
-
-        // master product
-        $query_master = (new Query())
-            ->select(['id' => 'p.id_product', 'cd' => 'p.cd_product', 'nm' => 'p.nm_product', 'u.id_uom', 'u.nm_uom', 'pu.isi'])
-            ->from(['p' => '{{%product}}'])
-            ->innerJoin(['pu' => '{{%product_uom}}'], 'pu.id_product=p.id_product')
-            ->innerJoin(['u' => '{{%uom}}'], 'u.id_uom=pu.id_uom')
-            ->orderBy(['p.id_product' => SORT_ASC, 'pu.isi' => SORT_ASC]);
-        $products = [];
-        foreach ($query_master->all() as $row) {
-            $id = $row['id'];
-            if (!isset($products[$id])) {
-                $products[$id] = [
-                    'id' => $row['id'],
-                    'cd' => $row['cd'],
-                    'text' => $row['nm'],
-                    'id_uom' => $row['id_uom'],
-                    'nm_uom' => $row['nm_uom'],
-                ];
-            }
-            $products[$id]['uoms'][$row['id_uom']] = [
-                'id' => $row['id_uom'],
-                'nm' => $row['nm_uom'],
-                'isi' => $row['isi']
-            ];
-        }
-
-        // barcodes
-        $barcodes = [];
-        $query_barcode = (new Query())
-            ->select(['barcode' => 'lower(barcode)', 'id' => 'id_product'])
-            ->from('{{%product_child}}')
-            ->union((new Query())
-            ->select(['lower(cd_product)', 'id_product'])
-            ->from('{{%product}}'));
-        foreach ($query_barcode->all() as $row) {
-            $barcodes[$row['barcode']] = $row['id'];
-        }
-
-        return [
-            'products' => $products,
-            'barcodes' => $barcodes,
-            'prices' => $prices
-        ];
+        return Helper::getMasters(['product', 'price', 'barcode']);
     }
 
     /**

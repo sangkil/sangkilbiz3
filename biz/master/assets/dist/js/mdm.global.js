@@ -46,18 +46,24 @@ yii.global = (function($) {
             }
         },
         log: function(data) {
-            if (biz.debug) {
+            if (biz.config.debug) {
                 console.log(data);
             }
         },
         sourceProduct: function(request, callback) {
             var result = [];
             var limit = biz.config.limit;
-            var checkStock = biz.config.checkStock && biz.master.ps !== undefined;
+            var checkStock = biz.config.checkStock && biz.master.product_stock !== undefined;
+            var checkSupp = biz.config.checkSupp && biz.master.product_supplier !== undefined;
 
             var term = request.term.toLowerCase();
             var whse = biz.config.whse;
-            if (checkStock && (whse == undefined || biz.master.ps[whse] == undefined)) {
+            if (checkStock && (whse == undefined || biz.master.product_stock[whse] == undefined)) {
+                callback([]);
+                return;
+            }
+            var supp = biz.config.supplier;
+            if (checkSupp && (supp == undefined || biz.master.product_supplier[supp] == undefined)) {
                 callback([]);
                 return;
             }
@@ -66,7 +72,7 @@ yii.global = (function($) {
                 var product = this;
                 if (product.text.toLowerCase().indexOf(term) >= 0 || product.cd.toLowerCase().indexOf(term) >= 0) {
                     var id = product.id + '';
-                    if (!checkStock || biz.master.ps[whse][id] > 0) {
+                    if ((!checkStock || biz.master.product_stock[whse][id] > 0) && (!checkSupp || biz.master.product_supplier[supp].indexOf(id) >= 0)) {
                         result.push(product);
                         limit--;
                         if (limit <= 0) {

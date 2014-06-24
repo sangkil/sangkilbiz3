@@ -21,6 +21,7 @@ use biz\master\models\ProductUom;
 use biz\master\models\UserToBranch;
 use biz\master\base\AccessHandler;
 use yii\helpers\ArrayHelper;
+use yii\db\Query;
 
 /**
  * Description of Helper
@@ -397,5 +398,112 @@ class Helper
         } else {
             return true;
         }
+    }
+
+    public static function getMasters($masters)
+    {
+        if (!is_array($masters)) {
+            $masters = preg_split('/\s*,\s*/', trim($masters), -1, PREG_SPLIT_NO_EMPTY);
+        }
+        $masters = array_flip($masters);
+        $result = [];
+
+        // master product
+        if (isset($masters['product'])) {
+            $products = [];
+            $query_master = (new Query())
+                ->select(['id' => 'p.id_product', 'cd' => 'p.cd_product', 'nm' => 'p.nm_product', 'u.id_uom', 'u.nm_uom', 'pu.isi'])
+                ->from(['p' => '{{%product}}'])
+                ->innerJoin(['pu' => '{{%product_uom}}'], 'pu.id_product=p.id_product')
+                ->innerJoin(['u' => '{{%uom}}'], 'u.id_uom=pu.id_uom')
+                ->orderBy(['p.id_product' => SORT_ASC, 'pu.isi' => SORT_ASC]);
+            foreach ($query_master->all() as $row) {
+                $id = $row['id'];
+                if (!isset($products[$id])) {
+                    $products[$id] = [
+                        'id' => $row['id'],
+                        'cd' => $row['cd'],
+                        'text' => $row['nm'],
+                        'id_uom' => $row['id_uom'],
+                        'nm_uom' => $row['nm_uom'],
+                    ];
+                }
+                $products[$id]['uoms'][$row['id_uom']] = [
+                    'id' => $row['id_uom'],
+                    'nm' => $row['nm_uom'],
+                    'isi' => $row['isi']
+                ];
+            }
+            $result['products'] = $products;
+        }
+
+        // barcodes
+        if (isset($masters['barcode'])) {
+            $barcodes = [];
+            $query_barcode = (new Query())
+                ->select(['barcode' => 'lower(barcode)', 'id' => 'id_product'])
+                ->from('{{%product_child}}')
+                ->union((new Query())
+                ->select(['lower(cd_product)', 'id_product'])
+                ->from('{{%product}}'));
+            foreach ($query_barcode->all() as $row) {
+                $barcodes[$row['barcode']] = $row['id'];
+            }
+            $result['barcodes'] = $barcodes;
+        }
+
+        // prices
+        if (isset($masters['price'])) {
+            $prices = [];
+            $query_prices = (new Query())
+                ->select(['id_product', 'id_price_category', 'price'])
+                ->from('{{%price}}');
+            foreach ($query_prices->all() as $row) {
+                $prices[$row['id_product']][$row['id_price_category']] = $row['price'];
+            }
+            $result['prices'] = $prices;
+        }
+
+        // customer
+        if (isset($masters['customer'])) {
+            $result['customers'] = (new Query())
+                ->select(['id' => 'id_customer', 'label' => 'nm_cust'])
+                ->from('{{%customer}}')
+                ->all();
+        }
+
+        // supplier
+        if (isset($masters['supplier'])) {
+            $result['suppliers'] = (new Query())
+                ->select(['id' => 'id_supplier', 'label' => 'nm_supplier'])
+                ->from('{{%supplier}}')
+                ->all();
+        }
+
+        // product_supplier
+        if (isset($masters['product_supplier'])) {
+            $prod_supp = [];
+            $query_prod_supp = (new Query())
+                ->select(['id_supplier', 'id_product'])
+                ->from('{{%product_supplier}}');
+            foreach ($query_prod_supp->all() as $row) {
+                $prod_supp[$row['id_supplier']][] = $row['id_product'];
+            }
+            $result['product_supplier'] = $prod_supp;
+        }
+
+        // product_stock
+        if (isset($masters['product_stock'])) {
+            $prod_stock = [];
+            $query_prod_stock = (new Query())
+                ->select(['id_whse', 'id_product', 'qty_stock'])
+                ->from('{{%product_stock}}');
+            foreach ($query_prod_stock->all() as $row) {
+                $prod_stock[$row['id_whse']][$row['id_product']] = $row['qty_stock'];
+            }
+            $result['product_stock'] = $prod_stock;
+        }
+
+        return $result;
     }
 }

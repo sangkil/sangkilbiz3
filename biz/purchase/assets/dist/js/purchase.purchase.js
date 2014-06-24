@@ -185,7 +185,7 @@ yii.purchase = (function($) {
     }
 
     var pub = {
-        sourceSupplier: biz.master.supp,
+        sourceSupplier: biz.master.supplier,
         init: function() {
             local.initObj();
             local.initRow();

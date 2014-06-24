@@ -198,7 +198,7 @@ yii.standart = (function($) {
         onCustomerOpen: function(event, ui) {
             $('#id_customer').val('');
         },
-        sourceCustomer: biz.master.cust,
+        sourceCustomer: biz.master.customer,
     };
     return pub;
 })(window.jQuery);
