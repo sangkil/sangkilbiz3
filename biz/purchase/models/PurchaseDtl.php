@@ -23,9 +23,11 @@ use biz\master\models\Warehouse;
  * @property PurchaseHdr $idPurchase
  * @property Product $idProduct
  * @property Warehouse $idWarehouse
+ * @property double[] $salesPrices Description
  */
 class PurchaseDtl extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -42,7 +44,8 @@ class PurchaseDtl extends \yii\db\ActiveRecord
         return [
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'selling_price'], 'required'],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom'], 'integer'],
-            [['purch_qty', 'purch_price', 'selling_price'], 'string']
+            [['purch_qty', 'purch_price', 'selling_price'], 'string'],
+            [['salesPrices'], 'safe']
         ];
     }
 
@@ -93,5 +96,44 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     public function getIdWarehouse()
     {
         return $this->hasOne(Warehouse::className(), ['id_warehouse' => 'id_warehouse']);
+    }
+    private $_salesPrices;
+
+    /**
+     * @return array
+     */
+    public function getSalesPrices()
+    {
+        if ($this->_salesPrices === null) {
+            $prices = PurchaseSalesPrice::findAll(['id_purchase_dtl' => $this->id_purchase_dtl]);
+            $this->_salesPrices = \yii\helpers\ArrayHelper::map($prices, 'id_price_category', 'price');
+        }
+        return $this->_salesPrices;
+    }
+
+    public function setSalesPrices($prices)
+    {
+        $this->_salesPrices = $prices;
+    }
+
+    public function afterSave($insert)
+    {
+        if ($this->_salesPrices !== null) {
+            PurchaseSalesPrice::deleteAll(['id_purchase_dtl' => $this->id_purchase_dtl]);
+            foreach ($this->_salesPrices as $id => $price) {
+                if ($price === null || $price === '') {
+                    continue;
+                }
+                $salesPrice = new PurchaseSalesPrice([
+                    'id_purchase_dtl' => $this->id_purchase_dtl,
+                    'id_price_category' => $id,
+                    'price' => $price,
+                ]);
+                if(!$salesPrice->save()){
+                    throw new \Exception(implode("\n", $salesPrice->firstErrors));
+                }
+            }
+        }
+        parent::afterSave($insert);
     }
 }

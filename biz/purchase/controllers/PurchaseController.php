@@ -13,6 +13,8 @@ use \Exception;
 use yii\base\UserException;
 use biz\master\tools\Hooks;
 use biz\master\base\Event;
+use biz\master\tools\Helper;
+use biz\master\models\PriceCategory;
 
 /**
  * PurchaseHdrController implements the CRUD actions for PurchaseHdr model.
@@ -77,6 +79,7 @@ class PurchaseController extends Controller
         if ($success) {
             return $this->redirect(['view', 'id' => $model->id_purchase]);
         }
+
         return $this->render('create', [
                 'model' => $model,
                 'details' => $details,
@@ -101,6 +104,7 @@ class PurchaseController extends Controller
         if ($success) {
             return $this->redirect(['view', 'id' => $model->id_purchase]);
         }
+
         return $this->render('update', [
                 'model' => $model,
                 'details' => $details,
@@ -238,56 +242,6 @@ class PurchaseController extends Controller
 
     public function getDataMaster()
     {
-        $db = Yii::$app->db;
-        $sql = "select p.id_product as id, p.cd_product as cd, p.nm_product as nm,
-			u.id_uom, u.nm_uom, pu.isi
-			from product p
-			join product_uom pu on(pu.id_product=p.id_product)
-			join uom u on(u.id_uom=pu.id_uom)
-			order by p.id_product,pu.isi";
-        $product = [];
-        foreach ($db->createCommand($sql)->query() as $row) {
-            $id = $row['id'];
-            if (!isset($product[$id])) {
-                $product[$id] = [
-                    'id' => $row['id'],
-                    'cd' => $row['cd'],
-                    'text' => $row['nm'],
-                    'id_uom' => $row['id_uom'],
-                    'nm_uom' => $row['nm_uom'],
-                ];
-            }
-            $product[$id]['uoms'][$row['id_uom']] = [
-                'id' => $row['id_uom'],
-                'nm' => $row['nm_uom'],
-                'isi' => $row['isi']
-            ];
-        }
-
-        // barcodes
-        $barcodes = [];
-        $sql_barcode = "select lower(barcode) as barcode,id_product as id"
-            . " from product_child"
-            . " union"
-            . " select lower(cd_product), id_product"
-            . " from product";
-        foreach ($db->createCommand($sql_barcode)->queryAll() as $row) {
-            $barcodes[$row['barcode']] = $row['id'];
-        }
-
-        $sql = "select id_supplier,id_product from product_supplier";
-        $ps = [];
-        foreach ($db->createCommand($sql)->queryAll() as $row) {
-            $ps[$row['id_supplier']][] = $row['id_product'];
-        }
-
-        $sql = "select id_supplier as id, nm_supplier as label from supplier";
-        $supp = $db->createCommand($sql)->queryAll();
-
-        return [
-            'product' => $product,
-            'ps' => $ps,
-            'barcodes' => $barcodes,
-            'supp' => $supp];
+        return Helper::getMasters(['product', 'barcode', 'supplier', 'product_supplier']);
     }
 }

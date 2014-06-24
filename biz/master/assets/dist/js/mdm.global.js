@@ -33,13 +33,13 @@ yii.global = (function($) {
         },
         pullMaster: function(url, param, callback) {
             var pullUrl = url ? url : biz.config.pullUrl;
-            var data = param!=undefined ? param : {};
+            var data = param != undefined ? param : {};
             if (pullUrl) {
                 $.getJSON(pullUrl, data, function(result) {
                     $.each(result, function(key, val) {
                         biz.master[key] = val;
                     });
-                    if(callback != undefined){
+                    if (callback != undefined) {
                         callback(result);
                     }
                 });
@@ -82,6 +82,25 @@ yii.global = (function($) {
                 }
             });
             callback(result);
+        },
+        searchProductByCode: function(cd) {
+            var checkStock = biz.config.checkStock && biz.master.product_stock !== undefined;
+            var checkSupp = biz.config.checkSupp && biz.master.product_supplier !== undefined;
+            var whse = biz.config.whse;
+            if (checkStock && (whse == undefined || biz.master.product_stock[whse] == undefined)) {
+                return false;
+            }
+            var supp = biz.config.supplier;
+            if (checkSupp && (supp == undefined || biz.master.product_supplier[supp] == undefined)) {
+                return false;
+            }
+
+            var id = biz.master.barcodes[cd] + '';
+            var product = biz.master.products[id];
+            if (product && (!checkStock || biz.master.product_stock[whse][id] > 0) && (!checkSupp || biz.master.product_supplier[supp].indexOf(id) >= 0)) {
+                return product;
+            }
+            return false;
         },
     }
     return pub;

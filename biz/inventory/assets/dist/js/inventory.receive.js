@@ -57,22 +57,8 @@ yii.receive = (function($) {
                 $is.css({color: 'red'});
             }
         },
-        searchProductByCode: function(cd) {
-            var whse = $('#transferhdr-id_warehouse_source').val();
-            if (local.checkStock && (whse == '' || biz.master.ps[whse] == undefined)) {
-                return false;
-            }
-            var id = biz.master.barcodes[cd] + '';
-            if (id && biz.master.product[id]) {
-                if (local.checkStock && (biz.master.ps[whse][id] == undefined || biz.master.ps[whse][id] <= 0)) {
-                    return false;
-                }
-                return biz.master.product[id];
-            }
-            return false;
-        },
         onProductChange: function() {
-            var item = local.searchProductByCode(this.value);
+            var item = yii.global.searchProductByCode(this.value);
             if (item !== false) {
                 local.addItem(item);
             }

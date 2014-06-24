@@ -57,22 +57,8 @@ yii.transfer = (function($) {
             $('#purchasehdr-purchase_value').val(total);
             $('#total-price').text(local.format(total));
         },
-        searchProductByCode: function(cd) {
-            var whse = $('#transferhdr-id_warehouse_source').val();
-            if (local.checkStock && (whse == '' || biz.master.ps[whse] == undefined)) {
-                return false;
-            }
-            var id = biz.master.barcodes[cd] + '';
-            if (id && biz.master.product[id]) {
-                if (local.checkStock && (biz.master.ps[whse][id] == undefined || biz.master.ps[whse][id] <= 0)) {
-                    return false;
-                }
-                return biz.master.product[id];
-            }
-            return false;
-        },
         onProductChange: function() {
-            var item = local.searchProductByCode(this.value);
+            var item = yii.global.searchProductByCode(this.value);
             if (item !== false) {
                 local.addItem(item);
             }
@@ -82,7 +68,7 @@ yii.transfer = (function($) {
         initRow: function() {
             $('#detail-grid > tbody > tr').each(function() {
                 var $row = $(this);
-                var product = biz.master.product[$row.find('[data-field="id_product"]').val()];
+                var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
                 if (product) {
                     $row.find('[data-field="id_uom"] > option').each(function() {
                         var $opt = $(this);

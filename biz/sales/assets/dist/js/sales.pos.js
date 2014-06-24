@@ -205,18 +205,8 @@ yii.pos = (function($) {
             yii.storage.saveSession(details);
             storage.listSession();
         },
-        searchProductByCode: function(cd) {
-            cd = cd.toLowerCase();
-            if (biz.master.barcodes[cd]) {
-                var id = biz.master.barcodes[cd] + '';
-                if (biz.master.products[id]) {
-                    return biz.master.products[id];
-                }
-            }
-            return false;
-        },
         onProductChange: function() {
-            var item = local.searchProductByCode(this.value);
+            var item = yii.global.searchProductByCode(this.value);
             if (item !== false) {
                 local.addItem(item);
             }

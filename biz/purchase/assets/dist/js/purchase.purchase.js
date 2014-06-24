@@ -69,17 +69,8 @@ yii.purchase = (function($) {
                 $('#bfore').hide();
             }
         },
-        searchProductByCode: function(cd) {
-            if (biz.master.barcodes[cd]) {
-                var id = biz.master.barcodes[cd] + '';
-                if (biz.master.product[id]) {
-                    return biz.master.product[id];
-                }
-            }
-            return false;
-        },
         onProductChange: function() {
-            var item = local.searchProductByCode(this.value);
+            var item = yii.global.searchProductByCode(this.value);
             if (item !== false) {
                 local.addItem(item);
             }
@@ -89,7 +80,7 @@ yii.purchase = (function($) {
         initRow: function() {
             $('#detail-grid > tbody > tr').each(function() {
                 var $row = $(this);
-                var product = biz.master.product[$row.find('[data-field="id_product"]').val()];
+                var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
                 if (product) {
                     $row.find('[data-field="id_uom"] > option').each(function() {
                         var $opt = $(this);
