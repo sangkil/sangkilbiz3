@@ -10,12 +10,12 @@ namespace biz\adminlte;
 class Theme extends \yii\base\Theme
 {
     public $pathMap = [
-        '@backend/views' => '@biz/adminlte/views',
-        '@biz/sales/views' => '@biz/adminlte/sales-views',
-        '@biz/inventory/views' => '@biz/adminlte/inventory-views',
-        '@biz/accounting/views' => '@biz/adminlte/accounting-views',
-        '@biz/master/views' => '@biz/adminlte/master-views',
-        '@biz/purchase/views' => '@biz/adminlte/purchase-views'
+        '@backend/views' => '@biz/adminlte/app/views',
+        '@biz/sales/views' => '@biz/adminlte/modules/sales/views',
+        '@biz/inventory/views' => '@biz/adminlte/modules/inventory/views',
+        '@biz/accounting/views' => '@biz/adminlte/modules/accounting/views',
+        '@biz/master/views' => '@biz/adminlte/modules/master/views',
+        '@biz/purchase/views' => '@biz/adminlte/modules/purchase/views'
     ];
 
 }
