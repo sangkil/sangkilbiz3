@@ -58,7 +58,7 @@ class TransferHdr extends \yii\db\ActiveRecord
     {
         return [
             [['id_warehouse_source', 'id_warehouse_dest', 'transferDate', 'status'], 'required'],
-            [['receiveDate'], 'required', 'on' => [static::SCENARIO_RECEIVE]],
+            [['receiveDate'], 'required', 'on' => [self::SCENARIO_RECEIVE]],
             [['id_warehouse_source', 'id_warehouse_dest', 'status'], 'integer'],
             [['transfer_date', 'receive_date'], 'safe']
         ];
