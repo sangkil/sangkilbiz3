@@ -21,6 +21,8 @@ use Yii;
  */
 class Payment extends \yii\db\ActiveRecord
 {
+    public $totalPaid;
+    
     /**
      * @inheritdoc
      */
@@ -63,7 +65,7 @@ class Payment extends \yii\db\ActiveRecord
      */
     public function getPaymentDtl()
     {
-        return $this->hasOne(PaymentDtl::className(), ['id_payment' => 'id_payment']);
+        return $this->hasMany(PaymentDtl::className(), ['id_payment' => 'id_payment']);
     }
 
     /**
@@ -87,7 +89,7 @@ class Payment extends \yii\db\ActiveRecord
                 'digit' => 4,
                 'group' => 'payment',
                 'attribute' => 'payment_num',
-                'value' => date('ymd.?')
+                'value' => 'PY-'.date('ymd').'.?'
             ],
             [
                 'class'=>'mdm\converter\DateConverter',
@@ -95,6 +97,7 @@ class Payment extends \yii\db\ActiveRecord
                     'paymentDate' => 'payment_date',
                 ]
             ],
+            'mdm\relation\RelationBehavior'
         ];
     }
 }

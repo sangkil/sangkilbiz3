@@ -8,12 +8,15 @@ use biz\accounting\models\searchs\InvoiceHdr as InvoiceHdrSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use biz\accounting\models\Payment;
+use biz\accounting\models\PaymentDtl;
 
 /**
  * InvoiceHdrController implements the CRUD actions for InvoiceHdr model.
  */
 class InvoiceHdrController extends Controller
 {
+
     public function behaviors()
     {
         return [
@@ -36,8 +39,8 @@ class InvoiceHdrController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
         ]);
     }
 
@@ -49,7 +52,7 @@ class InvoiceHdrController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                'model' => $this->findModel($id),
         ]);
     }
 
@@ -66,7 +69,7 @@ class InvoiceHdrController extends Controller
             return $this->redirect(['view', 'id' => $model->id_invoice]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                    'model' => $model,
             ]);
         }
     }
@@ -85,7 +88,7 @@ class InvoiceHdrController extends Controller
             return $this->redirect(['view', 'id' => $model->id_invoice]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                    'model' => $model,
             ]);
         }
     }

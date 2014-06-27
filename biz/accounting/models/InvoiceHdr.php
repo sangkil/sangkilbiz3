@@ -20,9 +20,11 @@ use Yii;
  * @property string $update_date
  * @property integer $update_by
  *
- * @property PaymentDtl $paymentDtl
+ * @property PaymentDtl[] $paymentDtl
  * @property Payment[] $idPayments
  * @property InvoiceDtl $invoiceDtl
+ * @property double $paid Description
+ * @property double $sisaBayar Description
  */
 class InvoiceHdr extends \yii\db\ActiveRecord
 {
@@ -76,7 +78,24 @@ class InvoiceHdr extends \yii\db\ActiveRecord
      */
     public function getPaymentDtl()
     {
-        return $this->hasOne(PaymentDtl::className(), ['id_invoice' => 'id_invoice']);
+        return $this->hasMany(PaymentDtl::className(), ['id_invoice' => 'id_invoice']);
+    }
+    private $_paid;
+
+    public function getPaid()
+    {
+        if ($this->_paid === null) {
+            $this->_paid = 0;
+            foreach ($this->paymentDtl as $dtl) {
+                $this->_paid+= $dtl->pay_val;
+            }
+        }
+        return $this->_paid;
+    }
+    
+    public function getSisaBayar()
+    {
+        return $this->inv_value - $this->paid;
     }
 
     /**
@@ -95,6 +114,13 @@ class InvoiceHdr extends \yii\db\ActiveRecord
         return $this->hasOne(InvoiceDtl::className(), ['id_invoice' => 'id_invoice']);
     }
 
+//    public function getGroupPaymentDtl()
+//    {
+//        return $this->hasOne(PaymentDtl::className(), ['id_invoice' => 'id_invoice'])
+//                ->select(['id_invoice', 'pay_val' => 'sum(pay_val)'])
+//                ->groupBy('id_invoice');
+//    }
+//
     /**
      * @inheritdoc
      */
@@ -111,10 +137,16 @@ class InvoiceHdr extends \yii\db\ActiveRecord
                 'value' => date('ymd.?')
             ],
             [
-                'class'=>'mdm\converter\DateConverter',
-                'attributes'=>[
+                'class' => 'mdm\converter\DateConverter',
+                'attributes' => [
                     'invDate' => 'inv_date',
                     'dueDate' => 'due_date',
+                ]
+            ],
+            [
+                'class' => 'mdm\converter\NumeralConverter',
+                'attributes' => [
+                    'invValue' => 'inv_value',
                 ]
             ],
         ];

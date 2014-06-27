@@ -1,69 +1,92 @@
 yii.numeric = (function($) {
-	function getCaret(element) {
-		if (element.selectionStart)
-			return element.selectionStart;
+    function getCaret(element) {
+        if (element.selectionStart)
+            return element.selectionStart;
 
-		else if (document.selection) { //IE specific
-			element.focus();
-			var r = document.selection.createRange();
-			if (r == null)
-				return 0;
+        else if (document.selection) { //IE specific
+            element.focus();
+            var r = document.selection.createRange();
+            if (r == null)
+                return 0;
 
-			var re = element.createTextRange(), rc = re.duplicate();
-			re.moveToBookmark(r.getBookmark());
-			rc.setEndPoint('EndToStart', re);
-			return rc.text.length;
-		}
+            var re = element.createTextRange(), rc = re.duplicate();
+            re.moveToBookmark(r.getBookmark());
+            rc.setEndPoint('EndToStart', re);
+            return rc.text.length;
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	var keypress = function(event) {
-			var allowFloat = event.data.allowFloat !== undefined ? event.data.allowFloat : true;
-			var allowNegative = event.data.allowNegative !== undefined ? event.data.allowNegative : false;
-			
-			var inputCode = event.which;
-			var currentValue = $(this).val();
+    var keypress = function(event) {
+        var allowFloat = event.data.allowFloat !== undefined ? event.data.allowFloat : true;
+        var allowNegative = event.data.allowNegative !== undefined ? event.data.allowNegative : false;
 
-			if (inputCode > 0 && (inputCode < 48 || inputCode > 57)) {	// Checks the if the character code is not a digit
-				if (allowFloat == true && inputCode == 46) {	// Conditions for a period (decimal point)
-					//Disallows a period before a negative
-					if (allowNegative == true && getCaret(this) == 0 && currentValue.charAt(0) == '-')
-						return false;
+        var inputCode = event.which;
+        var currentValue = $(this).val();
 
-					//Disallows more than one decimal point.
-					if (currentValue.match(/[.]/))
-						return false;
-				}
+        if (inputCode > 0 && (inputCode < 48 || inputCode > 57)) {	// Checks the if the character code is not a digit
+            if (allowFloat == true && inputCode == 46) {	// Conditions for a period (decimal point)
+                //Disallows a period before a negative
+                if (allowNegative == true && getCaret(this) == 0 && currentValue.charAt(0) == '-')
+                    return false;
 
-				else if (allowNegative == true && inputCode == 45) {	// Conditions for a decimal point
-					if (currentValue.charAt(0) == '-')
-						return false;
+                //Disallows more than one decimal point.
+                if (currentValue.match(/[.]/))
+                    return false;
+            }
 
-					if (getCaret(this) != 0)
-						return false;
-				}
+            else if (allowNegative == true && inputCode == 45) {	// Conditions for a decimal point
+                if (currentValue.charAt(0) == '-')
+                    return false;
 
-				else if (inputCode == 8) 	// Allows backspace
-					return true;
-				else								// Disallow non-numeric
-					return false;
-			}
+                if (getCaret(this) != 0)
+                    return false;
+            }
 
-			else if (inputCode > 0 && (inputCode >= 48 && inputCode <= 57)) {	// Disallows numbers before a negative.
-				if (allowNegative == true && currentValue.charAt(0) == '-' && getCaret(this) == 0)
-					return false;
-			}
-		}
-		
-	var pub = {
-		input:function($obj,sel,opt){
-			opt = $.extend({},{
-				allowFloat:true,
-				allowNegative:false,
-			},opt || {});
-			$obj.on('keypress',sel,opt,keypress);
-		}
-	}
-	return pub;
+            else if (inputCode == 8) 	// Allows backspace
+                return true;
+            else								// Disallow non-numeric
+                return false;
+        }
+
+        else if (inputCode > 0 && (inputCode >= 48 && inputCode <= 57)) {	// Disallows numbers before a negative.
+            if (allowNegative == true && currentValue.charAt(0) == '-' && getCaret(this) == 0)
+                return false;
+        }
+    }
+
+    var focus = function(event) {
+        var sp = event.data.sparator !== undefined ? event.data.sparator : ',';
+        if (this.value.indexOf(sp) >= 0) {
+            this.value = numeral().unformat(this.value);
+        }
+    }
+
+    var blur = function(event) {
+        var sp = event.data.sparator !== undefined ? event.data.sparator : ',';
+        if (this.value.indexOf(sp) == -1) {
+            this.value = numeral(this.value).format('0' + sp + '0');
+        }
+    }
+
+    var pub = {
+        input: function($obj, sel, opt) {
+            opt = $.extend({}, {
+                allowFloat: true,
+                allowNegative: false,
+            }, opt || {});
+            $obj.off('keypress.mdmNumericInput', sel)
+                .on('keypress.mdmNumericInput', sel, opt, keypress);
+        },
+        format: function($obj, sel, opt) {
+            opt = $.extend({}, {
+                sparator: ',',
+            }, opt || {});
+            $obj.off('focus.mdmNumericInput, blur.mdmNumericInput', sel)
+                .on('focus.mdmNumericInput', sel, opt, focus)
+                .on('blur.mdmNumericInput', sel, opt, blur);
+        },
+    }
+    return pub;
 })(window.jQuery);

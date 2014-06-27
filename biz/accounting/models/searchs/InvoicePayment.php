@@ -10,7 +10,7 @@ use biz\accounting\models\InvoiceHdr as InvoiceHdrModel;
 /**
  * InvoiceHdr represents the model behind the search form about `biz\accounting\models\InvoiceHdr`.
  */
-class InvoiceHdr extends InvoiceHdrModel
+class InvoicePayment extends InvoiceHdrModel
 {
     public function rules()
     {
@@ -28,7 +28,10 @@ class InvoiceHdr extends InvoiceHdrModel
 
     public function search($params)
     {
-        $query = InvoiceHdrModel::find();
+        $query = InvoiceHdrModel::find()
+            ->leftJoin('{{%payment_dtl}}', '{{%payment_dtl.id_invoice}}={{%invoice_hdr.id_invoice}}')
+            ->groupBy('{{%invoice_hdr.id_invoice}}')
+            ->having('{{%invoice_hdr.inv_value}}>sum({{%payment_dtl.pay_val}})');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
