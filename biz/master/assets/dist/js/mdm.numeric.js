@@ -56,17 +56,15 @@ yii.numeric = (function($) {
         }
     }
 
-    var focus = function(event) {
-        var sp = event.data.sparator !== undefined ? event.data.sparator : ',';
-        if (this.value.indexOf(sp) >= 0) {
+    var focus = function() {
+        if (this.value.indexOf(',') >= 0) {
             this.value = numeral().unformat(this.value);
         }
     }
 
-    var blur = function(event) {
-        var sp = event.data.sparator !== undefined ? event.data.sparator : ',';
-        if (this.value.indexOf(sp) == -1) {
-            this.value = numeral(this.value).format('0' + sp + '0');
+    var blur = function() {
+        if (this.value.indexOf(',') == -1) {
+            this.value = numeral(this.value).format('0,0');
         }
     }
 
@@ -79,13 +77,10 @@ yii.numeric = (function($) {
             $obj.off('keypress.mdmNumericInput', sel)
                 .on('keypress.mdmNumericInput', sel, opt, keypress);
         },
-        format: function($obj, sel, opt) {
-            opt = $.extend({}, {
-                sparator: ',',
-            }, opt || {});
+        format: function($obj, sel) {
             $obj.off('focus.mdmNumericInput, blur.mdmNumericInput', sel)
-                .on('focus.mdmNumericInput', sel, opt, focus)
-                .on('blur.mdmNumericInput', sel, opt, blur);
+                .on('focus.mdmNumericInput', sel, focus)
+                .on('blur.mdmNumericInput', sel, blur);
         },
     }
     return pub;

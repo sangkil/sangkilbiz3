@@ -2,8 +2,8 @@
 
 namespace biz\master\hooks;
 
-use biz\master\tools\Hooks;
-use biz\master\tools\Helper;
+use biz\app\Hooks;
+use biz\master\components\Helper;
 use biz\master\models\PriceCategory;
 use biz\master\models\Price;
 use yii\base\UserException;
@@ -71,7 +71,7 @@ class PriceHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\base\Event $event
+     * @param \biz\app\base\Event $event
      */
     public function purchaseReceiveBody($event)
     {

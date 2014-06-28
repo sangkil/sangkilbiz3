@@ -2,7 +2,7 @@
 
 namespace biz\accounting\hooks;
 
-use biz\master\tools\Hooks;
+use biz\app\Hooks;
 use biz\accounting\models\InvoiceHdr;
 use biz\accounting\models\InvoiceDtl;
 use yii\base\UserException;

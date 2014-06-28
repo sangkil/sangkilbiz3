@@ -1,41 +1,25 @@
 yii.entrygl = (function($) {
-    var template, counter = 0, $body;
-
     var pub = {
-        addRow: function() {
-            var $row = $(template.replace(/_index_/g, counter++));
-            $body.append($row);
-            pub.rearrange();
-        },
-        afterRow:function ($row){
-            
-        },
-        rearrange:function (){
-            var no = 1;
-            $body.children('tr').each(function (){
-                $(this).children('td.serial').text(no++);
+        afterRow: function($row) {
+            $row.find('.nm_account').autocomplete({
+                source: biz.master.coas,
+                select: function(event, ui) {
+                    var $row = $(event.target).closest('tr');
+                    $row.find('.id_account').val(ui.item.id);
+                    $row.find('.cd_account').text(ui.item.cd_coa);
+                    $row.find('.nm_account').val(ui.item.value);
+                    return false;
+                }
             });
         },
         init: function() {
-            $body = $('#tbl-gldetail > tbody');
-            template = $body.data('template');
-
-            $('#tbl-gldetail > thead a.fa').click(function() {
-                pub.addRow();
-                return false;
-            });
-
-            $('#tbl-gldetail').on('click', 'td.action > a.fa', function() {
-                $(this).closest('tr').remove();
-                pub.rearrange();
+            $('#tbl-glheader a[data-action="append"]').click(function() {
+                $('#tbl-gldetail').mdmEditableList('addRow');
                 return false;
             });
             
-            $body.children('tr').each(function (){
-                pub.afterRow($(this));
-            });
-            pub.rearrange();
-            console.log('ABCDE');
+            yii.numeric.input($('#tbl-glheader'),'input.amount');
+            yii.numeric.format($('#tbl-glheader'),'input.amount');
         }
     };
     return pub;

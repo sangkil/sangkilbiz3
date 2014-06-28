@@ -4,7 +4,7 @@ use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use yii\helpers\Html;
 use biz\purchase\models\PurchaseDtl;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 
 /**
  * @var PurchaseDtl $model

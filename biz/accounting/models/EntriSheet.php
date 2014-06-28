@@ -3,6 +3,7 @@
 namespace biz\accounting\models;
 
 use Yii;
+use biz\master\models\Branch;
 
 /**
  * This is the model class for table "entri_sheet".
@@ -16,6 +17,7 @@ use Yii;
  * @property integer $update_by
  *
  * @property EntriSheetDtl[] $entriSheetDtls
+ * @method array saveRelation(string $relation) Description
  */
 class EntriSheet extends \yii\db\ActiveRecord
 {
@@ -71,6 +73,7 @@ class EntriSheet extends \yii\db\ActiveRecord
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
+            'mdm\relation\RelationBehavior'
         ];
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-namespace biz\master\components;
+namespace biz\app\components;
 
 use yii\helpers\Html;
-use biz\master\tools\Helper;
 use Yii;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\master\tools;
+namespace biz\app;
 
 /**
  * Description of Hooks

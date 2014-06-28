@@ -11,7 +11,7 @@ class Module extends \yii\base\Module
 	{
 		parent::init();
         if(!isset($this->controllerMap['default'])){
-            $this->controllerMap['default'] = 'biz\master\components\DefaultController';
+            $this->controllerMap['default'] = 'biz\app\base\DefaultController';
         }
 
 		// custom initialization code goes here

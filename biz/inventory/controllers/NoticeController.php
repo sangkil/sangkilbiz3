@@ -9,9 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
-use biz\master\tools\Hooks;
+use biz\app\Hooks;
 use yii\base\UserException;
-use biz\master\base\Event;
+use biz\app\base\Event;
 
 /**
  * NoticeController implements the CRUD actions for TransferNotice model.

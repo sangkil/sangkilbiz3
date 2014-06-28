@@ -8,7 +8,7 @@ use biz\accounting\models\searchs\GlHeader as GlHeaderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\accounting\models\GlDetail;
+use biz\accounting\models\Coa;
 
 /**
  * EntriGlController implements the CRUD actions for GlHeader model.
@@ -63,126 +63,38 @@ class EntriGlController extends Controller
     public function actionCreate()
     {
         $model = new GlHeader;
-
-        list($details, $success) = $this->saveGl($model);
-        if ($success) {
-            return $this->redirect(['view', 'id' => $model->id_gl]);
-        } else {
-            $model->setIsNewRecord(true);
-            return $this->render('create', [
-                    'model' => $model,
-                    'details' => $details,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing GlHeader model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_gl]);
-        } else {
-            return $this->render('update', [
-                    'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * 
-     * @param GlHeader $model
-     * @return array
-     * @throws Exception
-     */
-    protected function saveGl($model)
-    {
-        $post = Yii::$app->request->post();
-        $details = $model->glDetails;
-        $success = false;
-
-        if ($model->load($post)) {
-            $transaction = Yii::$app->db->beginTransaction();
+        $details = [];
+        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+            $transaction = \Yii::$app->db->beginTransaction();
             try {
-                $formName = (new GlDetail)->formName();
-                $postDetails = empty($post[$formName]) ? [] : $post[$formName];
-                if ($postDetails === []) {
-                    throw new Exception('Detail tidak boleh kosong');
-                }
-                $objs = [];
-                foreach ($details as $detail) {
-                    $objs[$detail->id_gl_detail] = $detail;
-                }
-                if ($model->save()) {
-                    $success = true;
-                    $id_hdr = $model->id_transfer;
-                    $details = [];
-                    $amount = 0.0;
-                    foreach ($postDetails as $dataDetail) {
-                        $id_dtl = $dataDetail['id_gl_detail'];
-                        if (isset($objs[$id_dtl])) {
-                            $detail = $objs[$id_dtl];
-                            unset($objs[$id_dtl]);
-                        } else {
-                            $detail = new GlDetail;
-                        }
-
-                        $detail->setAttributes($dataDetail);
-                        $detail->id_gl = $id_hdr;
-                        if (!$detail->save()) {
-                            $success = false;
-                            $model->addError('', implode("\n", $detail->firstErrors));
-                            break;
-                        }
-                        $details[] = $detail;
-                        $amount += $detail->amount;
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('glDetails');
+                if ($saved === true && count($details) > 0) {
+                    $balance = 0.0;
+                    foreach ($details as $detail) {
+                        $balance += $detail->amount;
                     }
-                    if ($amount != 0.0) {
-                        throw new Exception("Not balance");
+                    if ($balance == 0) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id_gl]);
+                    }  else {
+                        $model->addError('', "Details should be balance");
                     }
-                    if ($success && count($objs)) {
-                        $success = GlDetail::deleteAll(['id_gl' => $id_hdr, 'id_gl_detail' => array_keys($objs)]);
-                    }
+                } elseif ($saved) {
+                    $model->addError('', "Detail cannot be blank");
                 }
-                if ($success) {
-                    $transaction->commit();
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (Exception $exc) {
-                $model->addError('', $exc->getMessage());
                 $transaction->rollBack();
-                $success = false;
-            }
-            if (!$success) {
-                $details = [];
-                foreach ($postDetails as $value) {
-                    $detail = new GlDetail();
-                    $detail->setAttributes($value);
-                    $details[] = $detail;
-                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                throw $exc;
             }
         }
-        return [$details, $success];
-    }
-
-    /**
-     * Deletes an existing GlHeader model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model->setIsNewRecord(true);
+        return $this->render('create', [
+                'model' => $model,
+                'details' => $details,
+                'masters' => \biz\accounting\components\Helper::getMasters(['coa'])
+        ]);
     }
 
     /**

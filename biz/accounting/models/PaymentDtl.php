@@ -32,8 +32,9 @@ class PaymentDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_payment', 'id_invoice', 'pay_val'], 'required'],
+            [['id_payment', 'id_invoice', 'payVal'], 'required'],
             [['id_payment', 'id_invoice'], 'integer'],
+            [['pay_val'],'double']
         ];
     }
 

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'id_esheet',
             'id_coa',
-            ['class' => 'biz\master\components\ActionColumn'],
+            ['class' => 'biz\app\components\ActionColumn'],
         ],
     ]);
     ?>

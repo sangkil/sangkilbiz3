@@ -2,8 +2,8 @@
 
 namespace biz\master\hooks;
 
-use biz\master\tools\Hooks;
-use biz\master\tools\Helper;
+use biz\app\Hooks;
+use biz\master\components\Helper;
 use biz\master\models\ProductStock;
 use yii\base\UserException;
 
@@ -70,7 +70,7 @@ class StockHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\base\Event $event
+     * @param \biz\app\base\Event $event
      */
     public function purchaseReceiveBody($event)
     {
@@ -88,7 +88,7 @@ class StockHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\base\Event $event
+     * @param \biz\app\base\Event $event
      */
     public function transferIssueBody($event)
     {
@@ -109,7 +109,7 @@ class StockHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\base\Event $event
+     * @param \biz\app\base\Event $event
      */
     public function salesStdrReleaseBody($event)
     {
@@ -127,7 +127,7 @@ class StockHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\base\Event $event
+     * @param \biz\app\base\Event $event
      */
     public function receiveReceiveBody($event)
     {
@@ -147,7 +147,7 @@ class StockHook extends \yii\base\Behavior
 
     /**
      * 
-     * @param \biz\master\base\Event $event
+     * @param \biz\app\base\Event $event
      */
     public function transferNoticeApproveBody($event)
     {

@@ -14,7 +14,7 @@ class EntryGlAsset extends \yii\web\AssetBundle
         'js/accounting.entrygl.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
+        'biz\master\assets\BizAsset',
     ];
 
 }

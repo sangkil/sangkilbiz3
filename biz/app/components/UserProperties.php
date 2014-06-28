@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\master\components;
+namespace biz\app\components;
 
 use biz\master\models\UserToBranch;
 

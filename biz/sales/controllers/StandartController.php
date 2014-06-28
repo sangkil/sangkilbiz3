@@ -17,7 +17,7 @@ use biz\base\Event;
 use biz\master\models\Price;
 use biz\master\models\PriceCategory;
 use yii\helpers\ArrayHelper;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 
 /**
  * PosController implements the CRUD actions for SalesHdr model.

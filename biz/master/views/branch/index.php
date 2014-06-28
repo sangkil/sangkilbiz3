@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_branch',
 			'cd_branch',
 			'nm_branch',
-			['class'=>'biz\master\components\ActionColumn']
+			['class'=>'biz\app\components\ActionColumn']
 		]
 	]); ?>
 

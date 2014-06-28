@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'status',
                     // 'update_date',
                     // 'update_by',
-                    ['class' => 'biz\master\components\ActionColumn'],
+                    ['class' => 'biz\app\components\ActionColumn'],
                 ],
             ]);
             ?>

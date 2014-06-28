@@ -9,7 +9,7 @@ use biz\purchase\models\PurchaseHdr;
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class AccessHandler extends \biz\master\base\AccessHandler
+class AccessHandler extends \biz\app\base\AccessHandler
 {
 
     protected function checkAction($user, $action, $model)

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use biz\inventory\models\TransferNotice;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'noticeDate',
             'nmStatus',
             [
-                'class' => 'biz\master\components\ActionColumn',
+                'class' => 'biz\app\components\ActionColumn',
                 'template' => '{view} {update}',
             ],
         ],

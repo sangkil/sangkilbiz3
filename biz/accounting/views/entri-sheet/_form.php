@@ -2,109 +2,90 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
-use biz\accounting\models\Coa;
 use biz\accounting\models\EntriSheetDtl;
-use yii\bootstrap\Modal;
-use biz\master\tools\Helper;
+use mdm\relation\EditableList;
 
-/**
- * @var yii\web\View $this
- * @var biz\accounting\models\\EntriSheet $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $model biz\accounting\models\GlHeader */
+/* @var $this yii\web\View */
+/* @var $form yii\widgets\ActiveForm */
+/* @var $details biz\accounting\models\GlDetails[] */
 ?>
 
-<style>
-    .tab-content {
-        border: 1px #e0e0e0 solid;
-        border-top: none;
-        padding: 20px;
-    }
-
-    .modal-header {
-        background-color: #428BCA;
-        border-color: #428BCA;
-        color: #FFFFFF;
-    }
-</style>
-<?php $form = ActiveForm::begin(); ?>
-<div class="entri-sheet-form col-lg-6">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Entry-Sheet Header</div>
+<div class="gl-header-form">
+    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $models = $details;
+    array_unshift($models, $model);
+    echo $form->errorSummary($models);
+    ?>
+    <div class="panel panel-primary col-lg-8 no-padding">
         <div class="panel-body">
+            <div class="col-lg-5">
             <?= $form->field($model, 'cd_esheet')->textInput(['maxlength' => 4]) ?>
             <?= $form->field($model, 'nm_esheet')->textInput(['maxlength' => 32]) ?>
+            </div>
+            <div class="col-lg-7">
+            </div>
         </div>
-        <div class="panel-footer" style="text-align: right;">
+        <table class ="table table-striped" id="tbl-entryheader">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>NM Detail Entry</th>
+                    <th>Account</th>
+                    <th><a class="fa fa-plus-square" href="#" data-action="append">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </th>                        
+                </tr>
+            </thead>
+            <?=
+            EditableList::widget([
+                'id' => 'tbl-entrydetail',
+                'allModels' => $details,
+                'modelClass' => EntriSheetDtl::className(),
+                'afterRow' => new yii\web\JsExpression('biz.config.entryAfterRow'),
+                'itemView' => '_detail',
+                'options' => ['tag' => 'tbody'],
+                'itemOptions' => ['tag' => 'tr']
+            ])
+            ?>
+        </table>
+        <div class="panel-footer">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
-</div>
-<!-- Tab panes -->
-<div class="col-lg-6">
-    <ul class="nav nav-tabs">
-        <li class="active btn-finish"><a href="#acc" data-toggle="tab">Detail Account</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="active tab-pane" id="acc">
-            <?php
-//            if ($model->isNewRecord):
-//                echo 'Save header first..';
-//            else:
-            echo (!$model->isNewRecord) ? '<a class=" pull-right" data-toggle="modal" data-target="#myModal"><span class="btn glyphicon glyphicon-plus"></span></a>' : '';
-            $dESheetD = new ActiveDataProvider([
-                'query' => $model->getEntriSheetDtls(),
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
-            ]);
-
-            echo GridView::widget([
-                'dataProvider' => $dESheetD,
-                'tableOptions' => ['class' => 'table table-striped'],
-                'layout' => '{items}',
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'nm_esheet_dtl',
-                    //'idCoa.cd_account',
-                    'idCoa.nm_account',
-                    'idCoa.normal_balance',
-                //['class' => 'biz\master\components\ActionColumn'],
-                ],
-            ]);
-
-//            endif;
-            ?>
-        </div>
-    </div>
+    <?php ActiveForm::end(); ?>
 </div>
 <?php
-ActiveForm::end();
-
-Modal::begin([
-    'id' => 'myModal',
-    'header' => '<h2 class="modal-title">Entri-Sheet Detail</h2>@' . $model->nm_esheet
+yii\jui\AutoCompleteAsset::register($this);
+yii\jui\ThemeAsset::register($this);
+biz\master\assets\BizAsset::register($this);
+$entryAfterRow = <<<JS
+function(\$row) {
+    \$row.find('.nm_account').autocomplete({
+        source: biz.master.coas,
+        select: function(event, ui) {
+            var \$row = $(event.target).closest('tr');
+            \$row.find('.id_account').val(ui.item.id);
+            \$row.find('.cd_account').text(ui.item.cd_coa);
+            \$row.find('.nm_account').val(ui.item.value);
+            return false;
+        }
+    });
+}
+JS;
+biz\master\assets\BizDataAsset::register($this, [
+    'master' => $masters,
+    'config' => [
+        'entryAfterRow' => new \yii\web\JsExpression($entryAfterRow)
+    ]
 ]);
+$js = <<<JS
+\$('#tbl-entryheader a[data-action="append"]').click(function() {
+    $('#tbl-entrydetail').mdmEditableList('addRow');
+    return false;
+});
+JS;
 
-$esd_model = new EntriSheetDtl;
-?>
-<?php $form2 = ActiveForm::begin(); ?>
-<div class="modal-body">
-    <?= $form->field($esd_model, 'id_esheet')->hiddenInput(['value' => $model->id_esheet])->label(false) ?>
-    <?php
-    //$dcoa = new Coa;
-    $list = Helper::getGroupedCoaList();
-    //$list = ['Swedish Cars' => ['1' => 'volvo', '2' => 'Saab'], 'German Cars' => ['3' => 'Mercedes']]; 
-    //$list = ArrayHelper::map(Coa::find()->orderBy('cd_account ASC')->all(), 'id_coa', 'nm_account');
-    ?>
-    <?= $form2->field($esd_model, 'id_coa')->dropDownList($list); ?>
-    <?= $form2->field($esd_model, 'nm_esheet_dtl')->textInput(['style' => 'width:160px;']) ?>
-</div>    
-<div class="form-group modal-footer" style="text-align: right; padding-bottom: 0px;">
-    <?= Html::submitButton($esd_model->isNewRecord ? 'Create' : 'Update', ['class' => $esd_model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-</div>
-<?php
-ActiveForm::end();
-Modal::end();
+$this->registerJs($js);

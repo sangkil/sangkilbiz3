@@ -2,13 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
-/**
- * @var yii\web\View $this
- * @var biz\accounting\models\GlHeader $model
- */
 
-$this->title = $model->id_gl;
+/* @var $this yii\web\View */
+/* @var $model biz\accounting\models\GlHeader */
+
+
+$this->title = $model->gl_num;
 $this->params['breadcrumbs'][] = ['label' => 'Gl Headers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,35 +17,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_gl], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_gl], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_gl',
             'glDate',
             'gl_num',
-            'gl_memo',
             'id_branch',
-            'id_periode',
-            'type_reff',
-            'id_reff',
+            'idPeriode.nm_periode',
             'description',
-            'status',
-            'create_date',
-            'create_by',
-            'update_date',
-            'update_by',
         ],
     ]) ?>
-
+    <?= GridView::widget([
+        'dataProvider' => Yii::createObject([
+            'class'=>'yii\data\ActiveDataProvider',
+            'query'=>$model->getGlDetails()]),
+        'layout'=>'{items}',
+        'columns'=>[
+            'idCoa.cd_account',
+            'idCoa.nm_account',
+            'debit',
+            'kredit'
+        ]
+    ]) ?>
 </div>

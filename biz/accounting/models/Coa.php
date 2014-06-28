@@ -113,7 +113,7 @@ class Coa extends \yii\db\ActiveRecord
      */
     public function getNmCoaType()
     {
-        return \biz\master\tools\Helper::getCoaType()[$this->coa_type];
+        return \biz\master\components\Helper::getCoaType()[$this->coa_type];
     }
 
     /**

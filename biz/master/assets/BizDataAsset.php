@@ -4,6 +4,7 @@ namespace biz\master\assets;
 
 use yii\web\View;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * Description of BizDataAsset
@@ -28,7 +29,7 @@ class BizDataAsset
                 'debug' => YII_ENV == 'dev'
             ]
         ];
-        $js = "\n biz = " . json_encode(ArrayHelper::merge($default, $data)) . ";\n";
+        $js = "\n biz = " . Json::encode(ArrayHelper::merge($default, $data)) . ";\n";
         $view->registerJs($js, $position);
     }
 }

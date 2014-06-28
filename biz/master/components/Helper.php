@@ -3,13 +3,6 @@
 namespace biz\master\tools;
 
 use yii\base\UserException;
-use biz\accounting\models\EntriSheet;
-use biz\accounting\models\Coa;
-use biz\accounting\models\GlHeader;
-use biz\accounting\models\GlDetail;
-use biz\accounting\models\InvoiceHdr;
-use biz\accounting\models\InvoiceDtl;
-use biz\accounting\models\AccPeriode;
 use biz\master\models\ProductStock;
 use biz\master\models\Cogs;
 use biz\master\models\Price;
@@ -19,7 +12,6 @@ use biz\master\models\Warehouse;
 use biz\master\models\Branch;
 use biz\master\models\ProductUom;
 use biz\master\models\UserToBranch;
-use biz\master\base\AccessHandler;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
 
@@ -30,197 +22,6 @@ use yii\db\Query;
  */
 class Helper
 {
-
-    /**
-     * 
-     * @param string $name Entri Sheet name
-     * @param array $values 
-     * @return array
-     * @throws UserException
-     */
-    public static function entriSheetToGlMaps($name, $values)
-    {
-        $gl_dtls = [];
-        $esheet = EntriSheet::findOne(['nm_esheet' => $name]);
-        if ($esheet) {
-            foreach ($esheet->entriSheetDtls as $eDtl) {
-                $coa = $eDtl->id_coa;
-                $nm = $eDtl->nm_esheet_dtl;
-
-                $dc = $eDtl->idCoa->normal_balance == 'D' ? 1 : -1;
-
-                if (isset($values[$nm])) {
-                    $ammount = $dc * $values[$nm];
-                } else {
-                    throw new UserException("Required account $nm ");
-                }
-                $gl_dtls[] = [
-                    'id_coa' => $coa,
-                    'ammount' => $ammount
-                ];
-            }
-        } else {
-            throw new UserException("Entrysheet $name not found");
-        }
-        return $gl_dtls;
-    }
-
-    private static function getCoaChild(&$result, $parent, $prefix, $tab)
-    {
-        foreach (Coa::find()->where(['id_coa_parent' => $parent])->orderBy(['cd_account' => SORT_ASC])->all() as $row) {
-            $result[$row['id_coa']] = $prefix . "[{$row['cd_account']}] {$row['nm_account']}";
-            static::getCoaChild($result, $row['id_coa'], $prefix . $tab, $tab);
-        }
-    }
-
-    public static function getGroupedCoaList($addSelf = false, $tab = 4)
-    {
-        $result = [];
-        $tab = str_pad('', $tab);
-        foreach (Coa::find()->where(['id_coa_parent' => null])->orderBy(['cd_account' => SORT_ASC])->all() as $row) {
-            if ($addSelf) {
-                $result[$row['nm_account']][$row['id_coa']] = "[{$row['cd_account']}] {$row['nm_account']}";
-            } else {
-                $result[$row['nm_account']] = [];
-            }
-            static::getCoaChild($result[$row['nm_account']], $row['id_coa'], $addSelf ? $tab : '', $tab);
-        }
-        return $result;
-    }
-
-    /**
-     * @return array()
-     */
-    public static function getCoaType()
-    {
-        return [
-            100000 => 'AKTIVA',
-            200000 => 'KEWAJIBAN',
-            300000 => 'MODAL',
-            400000 => 'PENDAPATAN',
-            500000 => 'HPP',
-            600000 => 'BIAYA'
-        ];
-    }
-
-    /**
-     * @return array()
-     */
-    public static function getBalanceType()
-    {
-        return [
-            'D' => 'DEBIT',
-            'K' => 'KREDIT',
-        ];
-    }
-
-    public static function getNormalBalanceOfType($coa_type)
-    {
-        $maps = [
-            100000 => 'D',
-            200000 => 'K',
-            300000 => 'K',
-            400000 => 'K',
-            500000 => 'D',
-            600000 => 'D'
-        ];
-        return $maps[(int) $coa_type];
-    }
-
-    /**
-     * @return integer Current accounting periode
-     */
-    public static function getCurrentIdAccPeriode()
-    {
-        $acc = AccPeriode::findOne(['status' => AccPeriode::STATUS_OPEN]);
-        if ($acc) {
-            return $acc->id_periode;
-        }
-        throw new UserException('Periode tidak ditemukan');
-    }
-
-    /**
-     * @return integer
-     */
-    public static function getAccountByName($name)
-    {
-        $coa = Coa::findOne(['lower(nm_account)' => strtolower($name)]);
-        if ($coa) {
-            return $coa->id_coa;
-        }
-        throw new UserException('Akun tidak ditemukan');
-    }
-
-    /**
-     * @return integer
-     */
-    public static function getAccountByCode($code)
-    {
-        $coa = Coa::findOne(['lower(cd_account)' => strtolower($code)]);
-        if ($coa) {
-            return $coa->id_coa;
-        }
-        throw new UserException('Akun tidak ditemukan');
-    }
-
-    public static function createGL($hdr, $dtls = [])
-    {
-        $blc = 0.0;
-        foreach ($dtls as $row) {
-            $blc += $row['ammount'];
-        }
-        if ($blc != 0) {
-            throw new UserException('GL Balance Failed');
-        }
-
-        $gl = new GlHeader();
-        $gl->gl_date = $hdr['date'];
-        $gl->id_reff = $hdr['id_reff'];
-        $gl->type_reff = $hdr['type_reff'];
-        $gl->gl_memo = $hdr['memo'];
-        $gl->description = $hdr['description'];
-
-        $gl->id_branch = $hdr['id_branch'];
-
-        $active_periode = AccPeriode::getCurrentPeriode();
-        $gl->id_periode = $active_periode['id_periode'];
-        $gl->status = 0;
-        if (!$gl->save()) {
-            throw new UserException(implode("\n", $gl->getFirstErrors()));
-        }
-
-        foreach ($dtls as $row) {
-            $glDtl = new GlDetail();
-            $glDtl->id_gl = $gl->id_gl;
-            $glDtl->id_coa = $row['id_coa'];
-            $glDtl->amount = $row['ammount'];
-            if (!$glDtl->save()) {
-                throw new UserException(implode("\n", $glDtl->getFirstErrors()));
-            }
-        }
-    }
-
-    public static function createInvoice($params)
-    {
-        $invoice = new InvoiceHdr();
-        $invoice->id_vendor = $params['id_vendor'];
-        $invoice->inv_date = $params['date'];
-        $invoice->inv_value = $params['value'];
-        $invoice->type = $params['type'];
-        $invoice->due_date = date('Y-m-d', strtotime('+1 month'));
-        $invoice->status = 0;
-        if (!$invoice->save()) {
-            throw new UserException(implode("\n", $invoice->getFirstErrors()));
-        }
-
-        $invDtl = new InvoiceDtl();
-        $invDtl->id_invoice = $invoice->id_invoice;
-        $invDtl->id_reff = $params['id_ref'];
-        $invDtl->trans_value = $params['value'];
-        if (!$invDtl->save()) {
-            throw new UserException(implode("\n", $invDtl->getFirstErrors()));
-        }
-    }
 
     public static function getCurrentStock($id_whse, $id_product)
     {
@@ -370,36 +171,7 @@ class Helper
             return ArrayHelper::map($query->all(), 'id_branch', 'idBranch.nm_branch');
         }
     }
-    /**
-     *
-     * @var AccessHandler[] 
-     */
-    private static $_accessHendler = [];
-
-    /**
-     * 
-     * @param string|AccessHandler $handler
-     */
-    public static function registerAccessHandler($handler)
-    {
-        if (!($handler instanceof AccessHandler)) {
-            $handler = \Yii::createObject($handler);
-        }
-        foreach ($handler->modelClasses() as $class) {
-            static::$_accessHendler[trim($class, '\\')] = $handler;
-        }
-    }
-
-    public static function checkAccess($action, $model)
-    {
-        if (isset(static::$_accessHendler[get_class($model)])) {
-            $handler = static::$_accessHendler[get_class($model)];
-            return $handler->check(\Yii::$app->getUser(), $action, $model);
-        } else {
-            return true;
-        }
-    }
-
+    
     public static function getMasters($masters)
     {
         if (!is_array($masters)) {

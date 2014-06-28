@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nmStatus',
 //            'client_machine',
             [
-                'class' => 'biz\master\components\ActionColumn',
+                'class' => 'biz\app\components\ActionColumn',
                 'template' => "{view}"],
         ],
     ]); ?>

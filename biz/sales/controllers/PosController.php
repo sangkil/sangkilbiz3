@@ -13,7 +13,7 @@ use yii\db\Query;
 use yii\web\Response;
 use biz\sales\models\Cashdrawer;
 use biz\sales\models\Cogs;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 
 /**
  * PosController implements the CRUD actions for SalesHdr model.

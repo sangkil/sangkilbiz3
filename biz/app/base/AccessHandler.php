@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\master\base;
+namespace biz\app\base;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

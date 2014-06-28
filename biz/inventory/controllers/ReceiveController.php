@@ -10,9 +10,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \Exception;
-use biz\master\tools\Hooks;
+use biz\app\Hooks;
 use yii\base\UserException;
-use biz\master\base\Event;
+use biz\app\base\Event;
 
 /**
  * TransferController implements the CRUD actions for TransferHdr model.

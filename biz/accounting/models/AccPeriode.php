@@ -87,9 +87,7 @@ class AccPeriode extends \yii\db\ActiveRecord
                     'dateTo' => 'date_to',
                 ]
             ],
-            [
-                'class'=>'biz\behaviors\StatusBehavior'
-            ]
+            'BizStatusConverter'
         ];
     }
 }

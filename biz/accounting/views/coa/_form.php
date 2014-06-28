@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use biz\accounting\models\Coa;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this

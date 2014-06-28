@@ -1,5 +1,5 @@
 {
-	"name": "sangkil/biz3-master",
+	"name": "sangkil/biz3-app",
 	"description": "Modul master for sangkilbiz3",
 	"keywords": ["yii2", "ERP"],
 	"homepage": "http://www.sangkilsoft.com/",
@@ -23,15 +23,14 @@
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
 	"require": {
-		"yiisoft/yii2": "*",
-		"sangkil/biz3-app": "*"		
+		"yiisoft/yii2": "*"	
 	},
 	"autoload": {
 		"psr-4": {
-			"biz\\master\\": ""
+			"biz\\app\\": ""
 		}
 	},
 	"extra": {
-		"bootstrap": "biz\\master\\Bootstrap"
+		"bootstrap": "biz\\app\\Bootstrap"
 	}
 }

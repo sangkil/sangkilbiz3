@@ -2,8 +2,8 @@
 
 namespace biz\accounting\hooks;
 
-use biz\master\tools\Hooks;
-use biz\master\tools\Helper;
+use biz\app\Hooks;
+use biz\master\components\Helper;
 use biz\accounting\models\GlHeader;
 use biz\accounting\models\GlDetail;
 use yii\base\UserException;

@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'create_by',
                     // 'update_date',
                     // 'update_by',
-                    //['class' => 'biz\master\components\ActionColumn'],
+                    //['class' => 'biz\app\components\ActionColumn'],
                     ],
                 ]);
                 ?>

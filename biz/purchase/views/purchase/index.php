@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\purchase\models\PurchaseHdr;
-use biz\master\tools\Helper;
+use biz\app\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -36,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'purchaseDate',
             'nmStatus',
             [
-                'class' => 'biz\master\components\ActionColumn',
+                'class' => 'biz\app\components\ActionColumn',
                 'template' => '{view} {update} {delete} {receive} {posting}',
                 'buttons' => [
                     'receive' => function ($url, $model) {

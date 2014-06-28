@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\master\components;
+namespace biz\app\base;
 
 use Yii;
 use yii\helpers\Inflector;
@@ -12,7 +12,7 @@ use yii\helpers\Inflector;
  */
 class DefaultController extends \yii\web\Controller
 {
-    public $viewFile = '@biz/master/components/views/index.php';
+    public $viewFile = '@biz/app/base/views/index.php';
 
     public function actionIndex()
     {

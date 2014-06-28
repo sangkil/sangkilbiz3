@@ -2,7 +2,7 @@
 
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 use biz\sales\models\Cashdrawer;
 
 $model = new Cashdrawer([

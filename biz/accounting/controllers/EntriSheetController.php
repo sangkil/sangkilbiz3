@@ -9,6 +9,7 @@ use biz\accounting\models\EntriSheetDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use biz\accounting\models\Coa;
 
 /**
  * EntriSheetController implements the CRUD actions for EntriSheet model.
@@ -63,14 +64,29 @@ class EntriSheetController extends Controller
     public function actionCreate()
     {
         $model = new EntriSheet;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id_esheet]);
-        } else {
-            return $this->render('create', [
-                    'model' => $model,
-            ]);
+        $details = [];
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('entriSheetDtls');
+                if ($saved == true) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $model->id_esheet]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                throw $exc;
+            }
+            $model->setIsNewRecord(true);
         }
+        return $this->render('create', [
+                'model' => $model,
+                'details' => $details,
+                'masters' => \biz\accounting\components\Helper::getMasters(['coa'])
+        ]);
     }
 
     /**
@@ -82,23 +98,28 @@ class EntriSheetController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $dval = Yii::$app->request->post();
-       
-        if(isset($dval['EntriSheetDtl'])):
-            $modelDtl = new EntriSheetDtl;
-            $modelDtl->load($dval);
-            if(!$modelDtl->save()){
-                print_r($modelDtl->errors);
+        $details = $model->entriSheetDtls;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('entriSheetDtls');
+                if ($saved == true) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $model->id_esheet]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                throw $exc;
             }
-        endif;
-        
-        if (isset($dval['EntriSheet']) && $model->load($dval) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_esheet]);
-        } else {
-            return $this->render('update', [
-                    'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+                'model' => $model,
+                'details' => $details,
+                'masters' => \biz\accounting\components\Helper::getMasters(['coa'])
+        ]);
     }
 
     /**
@@ -112,8 +133,8 @@ class EntriSheetController extends Controller
         $model = $this->findModel($id);
         try {
             $transaction = \Yii::$app->db->beginTransaction();
-            EntriSheetDtl::deleteAll(['id_esheet'=>$model->id_esheet]);
-            $model->delete();            
+            EntriSheetDtl::deleteAll(['id_esheet' => $model->id_esheet]);
+            $model->delete();
             $transaction->commit();
         } catch (\Exception $exc) {
             $transaction->rollBack();

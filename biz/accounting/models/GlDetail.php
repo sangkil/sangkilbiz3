@@ -36,8 +36,8 @@ class GlDetail extends \yii\db\ActiveRecord
         return [
             [['id_gl', 'id_coa', 'amount'], 'required'],
             [['id_gl', 'id_coa'], 'integer'],
-            [['amount', 'debit', 'kredit'], 'number'],
-            [['debit', 'kredit'], 'compare', 'operator' => '>', 'compareValue' => 0]
+            [['amount'], 'number'],
+            [['debit', 'kredit'], 'safe',]
         ];
     }
 
@@ -72,16 +72,18 @@ class GlDetail extends \yii\db\ActiveRecord
 
     public function getDebit()
     {
-        return $this->amount > 0 ? $this->amount : '';
+        return $this->amount > 0 ? number_format($this->amount) : '';
     }
 
     public function getKredit()
     {
-        return $this->amount < 0 ? -$this->amount : '';
+        return $this->amount < 0 ? number_format(-1*$this->amount) : '';
     }
 
     public function setDebit($value)
     {
+        $number = explode('.', $value, 2);
+        $value = str_replace(',', '', $number[0]) . (isset($number[1]) ? '.' . $number[1] : '');
         if ($value > 0.0) {
             $this->amount = $value;
         }
@@ -89,6 +91,8 @@ class GlDetail extends \yii\db\ActiveRecord
 
     public function setKredit($value)
     {
+        $number = explode('.', $value, 2);
+        $value = str_replace(',', '', $number[0]) . (isset($number[1]) ? '.' . $number[1] : '');
         if ($value > 0.0) {
             $this->amount = -$value;
         }

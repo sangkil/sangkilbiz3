@@ -2,7 +2,7 @@
 
 namespace biz\accounting;
 
-use biz\master\tools\Helper;
+use biz\app\components\Helper;
 use biz\accounting\hooks\GlHook;
 use biz\accounting\hooks\InvoiceHook;
 use biz\accounting\components\AccessHandler;
@@ -12,7 +12,7 @@ use biz\accounting\components\AccessHandler;
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class Bootstrap extends \biz\master\base\Bootstrap
+class Bootstrap extends \biz\app\base\Bootstrap
 {
 
     protected function autoDefineModule($app)

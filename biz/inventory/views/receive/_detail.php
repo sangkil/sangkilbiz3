@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use biz\inventory\models\TransferDtl;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 

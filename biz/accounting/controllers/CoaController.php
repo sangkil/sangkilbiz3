@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
-use biz\master\tools\Helper;
+use biz\master\components\Helper;
 
 /**
  * CoaController implements the CRUD actions for Coa model.

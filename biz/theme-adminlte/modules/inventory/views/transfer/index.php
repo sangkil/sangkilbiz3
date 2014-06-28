@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'raw'
                         ],
                         [
-                            'class' => 'biz\master\components\ActionColumn',
+                            'class' => 'biz\app\components\ActionColumn',
                             'template' => '{view} {update} {delete} {issue}',
                             'buttons' => [
                                 'update' => function ($url, $model) {

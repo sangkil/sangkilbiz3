@@ -2,7 +2,7 @@
 
 namespace biz\inventory;
 
-use biz\master\tools\Helper;
+use biz\app\components\Helper;
 use biz\inventory\components\AccessHandler;
 
 /**
@@ -10,7 +10,7 @@ use biz\inventory\components\AccessHandler;
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class Bootstrap extends \biz\master\base\Bootstrap
+class Bootstrap extends \biz\app\base\Bootstrap
 {
 
     protected function autoDefineModule($app)

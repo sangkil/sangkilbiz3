@@ -3,6 +3,7 @@
 namespace biz\accounting\models;
 
 use Yii;
+use biz\accounting\components\Helper;
 
 /**
  * This is the model class for table "gl_header".
@@ -26,11 +27,13 @@ use Yii;
  * @property GlDetail[] $glDetails
  * @property AccPeriode $idPeriode
  * @property Branch $idBranch
+ * @method boolean|GlDetail[] saveRelation(string $relation) Description
  */
 class GlHeader extends \yii\db\ActiveRecord
 {
     const TYPE_PURCHASE = 100;
     const TYPE_SALES = 200;
+    const STATUS_ACTIVE = 1;
 
     /**
      * @inheritdoc
@@ -46,9 +49,11 @@ class GlHeader extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id_periode'], 'default', 'value' => Helper::getCurrentIdAccPeriode()],
+            [['status'], 'default', 'value' => self::STATUS_ACTIVE],
             [['glDate', 'id_branch', 'id_periode', 'description', 'status'], 'required'],
             [['description'], 'string'],
-            [['gl_date'],'safe'],
+            [['gl_date'], 'safe'],
             [['id_branch', 'id_periode', 'type_reff', 'id_reff', 'status'], 'integer'],
             [['gl_memo'], 'string', 'max' => 128]
         ];
@@ -114,15 +119,16 @@ class GlHeader extends \yii\db\ActiveRecord
                 'digit' => 4,
                 'group' => 'gl',
                 'attribute' => 'gl_num',
-                'value' => 'GL'.date('ymd.?')
+                'value' => 'GL' . date('ymd.?')
             ],
             [
-                'class'=>'mdm\converter\DateConverter',
-                'physicalFormat'=>'Y-m-d H:i:s',
-                'attributes'=>[
+                'class' => 'mdm\converter\DateConverter',
+                'physicalFormat' => 'Y-m-d H:i:s',
+                'attributes' => [
                     'glDate' => 'gl_date'
                 ]
             ],
+            'mdm\relation\RelationBehavior'
         ];
     }
 }

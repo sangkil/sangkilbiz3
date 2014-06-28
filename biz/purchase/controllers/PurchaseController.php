@@ -11,9 +11,9 @@ use yii\filters\VerbFilter;
 use biz\purchase\models\PurchaseDtl;
 use \Exception;
 use yii\base\UserException;
-use biz\master\tools\Hooks;
-use biz\master\base\Event;
-use biz\master\tools\Helper;
+use biz\app\Hooks;
+use biz\app\base\Event;
+use biz\master\components\Helper;
 use biz\master\models\PriceCategory;
 
 /**
