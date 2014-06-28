@@ -23,6 +23,7 @@
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
 	"replace": {
+		"sangkil/biz3-app": "self.version",
 		"sangkil/biz3-master": "self.version",
 		"sangkil/biz3-purchase": "self.version",
 		"sangkil/biz3-sales": "self.version",
@@ -36,6 +37,7 @@
 	"autoload": {
 		"psr-4": {
 			"biz\\dev\\": "",
+			"biz\\app\\": "biz/app",
 			"biz\\master\\": "biz/master",
 			"biz\\purchase\\": "biz/purchase",
 			"biz\\sales\\": "biz/sales",

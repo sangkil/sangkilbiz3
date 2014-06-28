@@ -15,6 +15,7 @@ class Bootstrap implements \yii\base\BootstrapInterface
     public function bootstrap($app)
     {
         $bootstraps = [
+            'biz\app\Bootstrap',
             'biz\master\Bootstrap',
             'biz\purchase\Bootstrap',
             'biz\inventory\Bootstrap',
