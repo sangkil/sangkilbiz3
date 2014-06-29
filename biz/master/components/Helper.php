@@ -1,6 +1,6 @@
 <?php
 
-namespace biz\master\tools;
+namespace biz\master\components;
 
 use yii\base\UserException;
 use biz\master\models\ProductStock;

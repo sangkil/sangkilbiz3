@@ -1,25 +1,15 @@
 <?php
+
 use yii\helpers\Html;
 
 /* @var $form yii\widgets\ActiveForm */
-/* @var $details biz\accounting\models\EntriSheetDtl[] */
+/* @var $model biz\accounting\models\GlDetail */
+/* @var $key string */
 /* @var $this yii\web\View */
 ?>
-<table style="width: 98%">
-    <thead>
-        <tr>
-            <th style="width: 40%">Akun</th>
-            <th>Debit</th>
-            <th>Kredit</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($details as $name=>$detail): ?>
-        <tr>
-            <td><?= $name ?></td>
-            <td><?= $form->field($detail, "[$name]debit", ['template'=>"{input}\n{error}"]) ?></td>
-            <td><?= $form->field($detail, "[$name]kredit", ['template'=>"{input}\n{error}"]) ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+<td>
+<?= $key ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_coa") ?>
+</td>
+<td><?= Html::activeTextInput($model, "[$key]debit", ['class'=>'amount','style'=>'text-align:right'])?></td>
+<td><?= Html::activeTextInput($model, "[$key]kredit", ['class'=>'amount','style'=>'text-align:right']) ?></td>

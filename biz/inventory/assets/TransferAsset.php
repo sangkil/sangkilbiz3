@@ -14,7 +14,7 @@ class TransferAsset extends \yii\web\AssetBundle
         'js/inventory.transfer.js'
     ];
     public $depends = [
-        'biz\master\assets\BizAsset'
+        'biz\app\assets\BizAsset'
     ];
 
 }

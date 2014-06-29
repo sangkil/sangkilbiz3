@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\inventory\assets\ReceiveAsset;
-use biz\master\assets\BizDataAsset;
+use biz\app\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this

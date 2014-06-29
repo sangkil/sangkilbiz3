@@ -14,7 +14,7 @@ class PurchaseAsset extends \yii\web\AssetBundle
         'js/purchase.purchase.js'
     ];
     public $depends = [
-        'biz\master\assets\BizAsset'
+        'biz\app\assets\BizAsset'
     ];
 
 }

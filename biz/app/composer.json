@@ -23,7 +23,7 @@
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
 	"require": {
-		"yiisoft/yii2": "*"	
+		"yiisoft/yii2": "*"
 	},
 	"autoload": {
 		"psr-4": {

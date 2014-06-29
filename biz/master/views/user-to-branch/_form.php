@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\tools\Helper;
+use yii\helpers\ArrayHelper;
+use biz\master\models\Branch;
 
 /**
  * @var yii\web\View $this
@@ -16,7 +17,7 @@ use biz\tools\Helper;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= ''//$form->field($model, 'id_branch')->textInput() ?>
-    <?= $form->field($model, 'id_branch')->dropDownList(Helper::getBranchList()) ?>                 
+    <?= $form->field($model, 'id_branch')->dropDownList(ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch')) ?>                 
 
     <?= $form->field($model, 'id_user')->textInput() ?>
 

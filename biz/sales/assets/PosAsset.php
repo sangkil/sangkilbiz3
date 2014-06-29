@@ -15,7 +15,7 @@ class PosAsset extends \yii\web\AssetBundle
         'js/sales.storage.js'
     ];
     public $depends = [
-        'biz\master\assets\BizAsset'
+        'biz\app\assets\BizAsset'
     ];
 
 }

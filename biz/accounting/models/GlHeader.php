@@ -4,7 +4,7 @@ namespace biz\accounting\models;
 
 use Yii;
 use biz\accounting\components\Helper;
-
+use biz\master\models\Branch;
 /**
  * This is the model class for table "gl_header".
  *

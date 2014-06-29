@@ -78,21 +78,6 @@ class Helper
     /**
      * @return array()
      */
-    public static function getCoaType()
-    {
-        return [
-            100000 => 'AKTIVA',
-            200000 => 'KEWAJIBAN',
-            300000 => 'MODAL',
-            400000 => 'PENDAPATAN',
-            500000 => 'HPP',
-            600000 => 'BIAYA'
-        ];
-    }
-
-    /**
-     * @return array()
-     */
     public static function getBalanceType()
     {
         return [

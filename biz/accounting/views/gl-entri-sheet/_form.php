@@ -3,16 +3,20 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
+use mdm\relation\EditableList;
+use biz\accounting\models\GlDetail;
 
 /* @var $this yii\web\View */
 ?>
 
 <div class="gl-header-form">
 
-    <?php
-    echo Html::dropDownList('', $es, $sheets, ['id' => 'sheets', 'prompt' => '-']);
-    $form = ActiveForm::begin();
-    echo $form->errorSummary($model);
+    <?= Html::dropDownList('', $es, $sheets, ['id' => 'sheets', 'prompt' => '-']); ?>
+    <?php $form = ActiveForm::begin(); ?>
+    <?php 
+    $models = $details;
+    array_unshift($models, $model);
+    echo $form->errorSummary($models);
     ?>
 
     <?=
@@ -29,28 +33,41 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'description')->textInput() ?>
 
-    <?= $form->field($model, 'gl_memo')->textInput(['maxlength' => 128]) ?>
-
-    <?php
-    if (!empty($details)) {
-        echo $this->render('_detail', [
-            'form' => $form,
-            'details' => $details
-        ]);
-    }
-    ?>
+    <table style="width: 98%">
+        <thead>
+            <tr>
+                <th style="width: 40%">Akun</th>
+                <th>Debit</th>
+                <th>Kredit</th>
+            </tr>
+        </thead>
+        <?=
+        EditableList::widget([
+            'id'=>'gl-detail',
+            'allModels' => $details,
+            'modelClass' => GlDetail::className(),
+            'itemView' => '_detail',
+            'options' => ['tag' => 'tbody'],
+            'itemOptions' => ['tag' => 'tr'],
+            'viewParams'=>['form'=>$form]
+        ])
+        ?>
+    </table>
     <div class="form-group">
-<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>
-<?php 
+<?php
 $url = \yii\helpers\Url::toRoute(['create']);
 $js = <<<JS
-    \$('#sheets').change(function(){
-        window.location.href = '{$url}&es='+\$(this).val();
-   });
+yii.numeric.format(\$('#gl-detail'),'input.amount');
+
+\$('#sheets').change(function(){
+    window.location.href = '{$url}&es='+\$(this).val();
+});
 JS;
 $this->registerJs($js);
+biz\app\assets\BizAsset::register($this);

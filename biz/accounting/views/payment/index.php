@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Payment', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Payment', ['list-invoice'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,14 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_payment',
             'payment_num',
             'payment_type',
-            'payment_date',
-            'create_date',
-            // 'create_by',
-            // 'update_date',
-            // 'update_by',
+            'paymentDate',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

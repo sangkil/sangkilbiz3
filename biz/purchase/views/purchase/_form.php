@@ -5,8 +5,6 @@ use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use biz\master\components\Helper;
-use biz\purchase\assets\PurchaseAsset;
-use biz\master\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this
@@ -43,9 +41,9 @@ use biz\master\assets\BizDataAsset;
                         'attribute' => 'idSupplier[nm_supplier]',
                         'options' => ['class' => 'form-control', 'id' => $el_id],
                         'clientOptions' => [
-                            'source' => new JsExpression("yii.purchase.sourceSupplier"),
-                            'select' => new JsExpression("yii.purchase.onSupplierSelect"),
-                            'open' => new JsExpression("yii.purchase.onSupplierOpen"),
+                            'source' => new JsExpression("biz.master.supplier"),
+                            'select' => new JsExpression("function(event, ui){\$('#id_supplier').val(ui.item.id);}"),
+                            'open' => new JsExpression("function(event, ui){\$('#id_supplier').val('');}"),
                         ]
                 ]);
                 echo $field;
@@ -68,13 +66,11 @@ use biz\master\assets\BizDataAsset;
             </div>
         </div>
     </div>    
-    <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?> 
-    <?php ActiveForm::end(); ?>
+    <?=
+    $this->render('_detail', [
+        'model' => $model,
+        'details' => $details,
+        'masters' => $masters])
+    ?> 
+<?php ActiveForm::end(); ?>
 </div>
-<?php
-PurchaseAsset::register($this);
-BizDataAsset::register($this, [
-    'master'=>$masters
-]);
-$js_ready = '$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;';
-$this->registerJs($js_ready);

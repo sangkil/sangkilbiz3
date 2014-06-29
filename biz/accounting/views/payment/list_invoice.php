@@ -106,5 +106,5 @@ $js = <<<JS
     \$('#btn-execute').attr('href',url+ids);
 });
 JS;
-biz\master\assets\BizAsset::register($this);
+biz\app\assets\BizAsset::register($this);
 $this->registerJs($js);

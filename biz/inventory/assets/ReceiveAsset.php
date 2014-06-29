@@ -14,7 +14,7 @@ class ReceiveAsset extends \yii\web\AssetBundle
         'js/inventory.receive.js'
     ];
     public $depends = [
-        'biz\master\assets\BizAsset'
+        'biz\app\assets\BizAsset'
     ];
 
 }

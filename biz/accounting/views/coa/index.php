@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /**
  * @var yii\web\View $this
@@ -21,10 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('', ['create'], ['class' => 'btn btn-default glyphicon glyphicon-plus', 'title' => 'Create New', 'style' => 'width:100%;']) ?>
     </div>
 
-
-    <?php
-    \yii\widgets\Pjax::begin(['enablePushState' => false]);
-    echo GridView::widget([
+    <?php Pjax::begin(['enablePushState' => false]); ?>
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'tableOptions' => ['class' => 'table table-striped'],
         'layout' => '{items}{pager}',
@@ -37,15 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'coa_type',
             'nmCoaType',
             'normal_balance',
-            //'id_coa_parent',
-            // 'create_date',
-            // 'create_by',
-            // 'update_date',
-            // 'update_by',
             ['class' => 'biz\app\components\ActionColumn'],
         ],
     ]);
-    \yii\widgets\Pjax::end();
     ?>
-
+    <?php Pjax::end(); ?>
 </div>

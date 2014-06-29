@@ -15,7 +15,7 @@ class DrawerAsset extends \yii\web\AssetBundle
         'js/sales.drawer.js',
     ];
     public $depends = [
-        'biz\master\assets\BizAsset'
+        'biz\app\assets\BizAsset'
     ];
 
 }

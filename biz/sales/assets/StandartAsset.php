@@ -14,7 +14,7 @@ class StandartAsset extends \yii\web\AssetBundle
         'js/sales.standart.js'
     ];
     public $depends = [
-        'biz\master\assets\BizAsset'
+        'biz\app\assets\BizAsset'
     ];
 
 }

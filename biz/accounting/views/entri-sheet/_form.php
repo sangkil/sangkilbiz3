@@ -21,8 +21,8 @@ use mdm\relation\EditableList;
     <div class="panel panel-primary col-lg-8 no-padding">
         <div class="panel-body">
             <div class="col-lg-5">
-            <?= $form->field($model, 'cd_esheet')->textInput(['maxlength' => 4]) ?>
-            <?= $form->field($model, 'nm_esheet')->textInput(['maxlength' => 32]) ?>
+                <?= $form->field($model, 'cd_esheet')->textInput(['maxlength' => 4]) ?>
+                <?= $form->field($model, 'nm_esheet')->textInput(['maxlength' => 32]) ?>
             </div>
             <div class="col-lg-7">
             </div>
@@ -44,10 +44,12 @@ use mdm\relation\EditableList;
                 'id' => 'tbl-entrydetail',
                 'allModels' => $details,
                 'modelClass' => EntriSheetDtl::className(),
-                'afterRow' => new yii\web\JsExpression('biz.config.entryAfterRow'),
                 'itemView' => '_detail',
                 'options' => ['tag' => 'tbody'],
-                'itemOptions' => ['tag' => 'tr']
+                'itemOptions' => ['tag' => 'tr'],
+                'clientOptions' => [
+                    'afterAddRow' => new yii\web\JsExpression('biz.config.entryAfterAddRow'),
+                ]
             ])
             ?>
         </table>
@@ -60,8 +62,8 @@ use mdm\relation\EditableList;
 <?php
 yii\jui\AutoCompleteAsset::register($this);
 yii\jui\ThemeAsset::register($this);
-biz\master\assets\BizAsset::register($this);
-$entryAfterRow = <<<JS
+biz\app\assets\BizAsset::register($this);
+$jsFunc = <<<JS
 function(\$row) {
     \$row.find('.nm_account').autocomplete({
         source: biz.master.coas,
@@ -75,10 +77,10 @@ function(\$row) {
     });
 }
 JS;
-biz\master\assets\BizDataAsset::register($this, [
+biz\app\assets\BizDataAsset::register($this, [
     'master' => $masters,
     'config' => [
-        'entryAfterRow' => new \yii\web\JsExpression($entryAfterRow)
+        'entryAfterAddRow' => new \yii\web\JsExpression($jsFunc)
     ]
 ]);
 $js = <<<JS

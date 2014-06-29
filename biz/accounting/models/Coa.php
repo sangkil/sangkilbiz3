@@ -26,10 +26,16 @@ use Yii;
  */
 class Coa extends \yii\db\ActiveRecord
 {
+    const TYPE_AKTIVA = 100000;
+    const TYPE_KEWAJIBAN = 200000;
+    const TYPE_MODAL = 300000;
+    const TYPE_PENDAPATAN = 400000;
+    const TYPE_HPP = 500000;
+    const TYPE_BIAYA = 600000;
+
     /**
      * @inheritdoc
      */
-
     public static function tableName()
     {
         return '{{%coa}}';
@@ -53,10 +59,11 @@ class Coa extends \yii\db\ActiveRecord
     public function checkCoaCode($attribute)
     {
         $coa = $this->idCoaParent;
-        if($coa && strpos($this->$attribute, rtrim($coa->cd_account,'0'))!==0){
+        if ($coa && strpos($this->$attribute, rtrim($coa->cd_account, '0')) !== 0) {
             $this->addError($attribute, 'Code Account prefix invalid');
         }
     }
+
     /**
      * @inheritdoc
      */
@@ -109,14 +116,6 @@ class Coa extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return string
-     */
-    public function getNmCoaType()
-    {
-        return \biz\master\components\Helper::getCoaType()[$this->coa_type];
-    }
-
-    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -124,6 +123,13 @@ class Coa extends \yii\db\ActiveRecord
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
+            [
+                'class' => 'mdm\converter\EnumConverter',
+                'enumPrefix' => 'TYPE_',
+                'attributes' => [
+                    'nmCoaType' => 'coa_type'
+                ]
+            ]
         ];
     }
 }

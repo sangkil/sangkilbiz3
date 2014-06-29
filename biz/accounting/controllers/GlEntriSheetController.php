@@ -68,36 +68,30 @@ class GlEntriSheetController extends Controller
         $sheets = EntriSheet::find()->asArray()->all();
         $sheets = \yii\helpers\ArrayHelper::map($sheets, 'id_esheet', 'nm_esheet');
         $model = new GlHeader();
-            $details = [];
+        $details = [];
         if (!empty($es)) {
             foreach (EntriSheetDtl::findAll(['id_esheet' => $es]) as $eDtl) {
                 /* @var $eDtl EntriSheetDtl */
-                $glDtl = new GlDetail([
-                    'id_coa' => $eDtl->id_coa
-                ]);
-                $details[$eDtl->nm_esheet_dtl] = $glDtl;
+                $details[$eDtl->nm_esheet_dtl] = new GlDetail(['id_coa' => $eDtl->id_coa]);
             }
 
-            $post = Yii::$app->request->post();
-            if ($model->load($post) && Model::loadMultiple($details, $post)) {
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $amount = 0.0;
-                    $model->status = 1;
-                    if ($model->save()) {
-                        $id_hdr = $model->id_gl;
-                        foreach ($details as $detail) {
-                            $amount += $detail->amount;
-                            $detail->id_gl = $id_hdr;
-                            if (!$detail->save()) {
-                                throw new \Exception(implode("\n", $detail->firstErrors));
-                            }
+                    $model->save(false);
+                    list($saved, $details) = $model->saveRelation('glDetails');
+                    if ($saved == true) {
+                        $amount = 0.0;
+                        foreach ($details as $dtl) {
+                            $amount += $dtl->amount;
                         }
-                        if ($amount != 0.0) {
-                            throw new \Exception('Not balance');
+                        if ($amount == 0) {
+                            $transaction->commit();
+                            return $this->redirect(['view', 'id' => $model->id_gl]);
+                        } else {
+                            $transaction->rollBack();
+                            $model->addError('', 'Details not balance');
                         }
-                        $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id_gl]);
                     } else {
                         $transaction->rollBack();
                     }

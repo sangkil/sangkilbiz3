@@ -134,5 +134,5 @@ hitungTotal();
     .off('change.biz','input.pay_val')
     .on('change.biz','input.pay_val',hitungTotal);
 JS;
-biz\master\assets\BizAsset::register($this);
+biz\app\assets\BizAsset::register($this);
 $this->registerJs($js);

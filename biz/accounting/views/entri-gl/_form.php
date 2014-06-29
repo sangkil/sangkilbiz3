@@ -56,9 +56,11 @@ use mdm\relation\EditableList;
                 'allModels' => $details,
                 'itemView' => '_detail',
                 'modelClass' => GlDetail::className(),
-                'afterRow' => new yii\web\JsExpression('biz.config.glAfterRow'),
                 'options' => ['tag' => 'tbody'],
-                'itemOptions' => ['tag' => 'tr']
+                'itemOptions' => ['tag' => 'tr'],
+                'clientOptions' => [
+                    'afterAddRow' => new yii\web\JsExpression('biz.config.glAfterAddRow'),
+                ]
             ])
             ?>
         </table>
@@ -72,8 +74,8 @@ use mdm\relation\EditableList;
 <?php
 yii\jui\AutoCompleteAsset::register($this);
 yii\jui\ThemeAsset::register($this);
-biz\master\assets\BizAsset::register($this);
-$glAfterRow = <<<JS
+biz\app\assets\BizAsset::register($this);
+$jsFunc = <<<JS
 function(\$row) {
     \$row.find('.nm_account').autocomplete({
         source: biz.master.coas,
@@ -87,10 +89,10 @@ function(\$row) {
     });
 }
 JS;
-biz\master\assets\BizDataAsset::register($this, [
+biz\app\assets\BizDataAsset::register($this, [
     'master' => $masters,
     'config' => [
-        'glAfterRow' => new \yii\web\JsExpression($glAfterRow)
+        'glAfterAddRow' => new \yii\web\JsExpression($jsFunc)
     ]
 ]);
 $js = <<<JS

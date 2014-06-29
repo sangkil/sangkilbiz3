@@ -6,7 +6,7 @@ use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use biz\master\components\Helper;
 use biz\sales\assets\StandartAsset;
-use biz\master\assets\BizDataAsset;
+use biz\app\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this

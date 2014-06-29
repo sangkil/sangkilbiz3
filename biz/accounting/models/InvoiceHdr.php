@@ -113,14 +113,18 @@ class InvoiceHdr extends \yii\db\ActiveRecord
     {
         return $this->hasOne(InvoiceDtl::className(), ['id_invoice' => 'id_invoice']);
     }
-
-//    public function getGroupPaymentDtl()
-//    {
-//        return $this->hasOne(PaymentDtl::className(), ['id_invoice' => 'id_invoice'])
-//                ->select(['id_invoice', 'pay_val' => 'sum(pay_val)'])
-//                ->groupBy('id_invoice');
-//    }
-//
+    
+    public static function getTypes()
+    {
+        $class = new \ReflectionClass(self::className());
+        $result = [];
+        foreach ($class->getConstants() as $key => $value) {
+            if (strpos($key, 'TYPE_')===0) {
+                $result[substr($key, 5)] = $value;
+            }
+        }
+        return $result;
+    }
     /**
      * @inheritdoc
      */

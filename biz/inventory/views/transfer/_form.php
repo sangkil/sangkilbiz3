@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\components\Helper;
 use biz\inventory\assets\TransferAsset;
-use biz\master\assets\BizDataAsset;
+use biz\app\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this

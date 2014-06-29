@@ -8,13 +8,12 @@ use biz\purchase\models\searchs\PurchaseHdr as PurchaseHdrSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\purchase\models\PurchaseDtl;
 use \Exception;
 use yii\base\UserException;
 use biz\app\Hooks;
 use biz\app\base\Event;
 use biz\master\components\Helper;
-use biz\master\models\PriceCategory;
+use biz\app\components\Helper as AppHelper;
 
 /**
  * PurchaseHdrController implements the CRUD actions for PurchaseHdr model.
@@ -70,16 +69,29 @@ class PurchaseController extends Controller
      */
     public function actionCreate()
     {
-        $model = new PurchaseHdr;
-        $model->status = PurchaseHdr::STATUS_DRAFT;
-        $model->id_branch = Yii::$app->user->branch;
-        $model->purchase_date = date('Y-m-d');
-
-        list($details, $success) = $this->savePurchase($model);
-        if ($success) {
-            return $this->redirect(['view', 'id' => $model->id_purchase]);
+        $model = new PurchaseHdr([
+            'status' => PurchaseHdr::STATUS_DRAFT,
+            'id_branch' => Yii::$app->user->branch,
+            'purchase_date' => date('Y-m-d')
+        ]);
+        $details = [];
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('purchaseDtls');
+                if ($saved == true) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $model->id_purchase]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
+            }
+            $model->setIsNewRecord(true);
         }
-
         return $this->render('create', [
                 'model' => $model,
                 'details' => $details,
@@ -96,95 +108,34 @@ class PurchaseController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        Yii::$app->trigger(Hooks::E_PPUPD_1, new Event([$model]));
-        if (count($model->purchaseDtls)) {
-            $model->id_warehouse = $model->purchaseDtls[0]->id_warehouse;
+        if(!AppHelper::checkAccess('update', $model)){
+            throw new \yii\web\ForbiddenHttpException('Forbidden');
         }
-        list($details, $success) = $this->savePurchase($model);
-        if ($success) {
-            return $this->redirect(['view', 'id' => $model->id_purchase]);
+        $details = $model->purchaseDtls;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('purchaseDtls',[
+                    'extra'=>['id_warehouse'=>$model->id_warehouse]
+                ]);
+                if ($saved == true) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $model->id_purchase]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
+                throw $exc;
+            }
         }
-
         return $this->render('update', [
                 'model' => $model,
                 'details' => $details,
                 'masters' => $this->getDataMaster()
         ]);
-    }
-
-    /**
-     * 
-     * @param PurchaseHdr $model
-     * @return array
-     */
-    protected function savePurchase($model)
-    {
-        $post = Yii::$app->request->post();
-        $details = $model->purchaseDtls;
-        $success = false;
-
-        if ($model->load($post)) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $formName = (new PurchaseDtl)->formName();
-                $postDetails = empty($post[$formName]) ? [] : $post[$formName];
-                if ($postDetails === []) {
-                    throw new Exception('Detail tidak boleh kosong');
-                }
-                $objs = [];
-                foreach ($details as $detail) {
-                    $objs[$detail->id_purchase_dtl] = $detail;
-                }
-                if (empty($model->id_warehouse) && count($details)) {
-                    $model->id_warehouse = $details[0]->id_warehouse;
-                }
-                if ($model->save()) {
-                    $success = true;
-                    $id_hdr = $model->id_purchase;
-                    $id_whse = $model->id_warehouse;
-                    $details = [];
-                    foreach ($postDetails as $dataDetail) {
-                        $id_dtl = $dataDetail['id_purchase_dtl'];
-                        if (isset($objs[$id_dtl])) {
-                            $detail = $objs[$id_dtl];
-                            unset($objs[$id_dtl]);
-                        } else {
-                            $detail = new PurchaseDtl;
-                        }
-
-                        $detail->setAttributes($dataDetail);
-                        $detail->id_purchase = $id_hdr;
-                        $detail->id_warehouse = $id_whse;
-                        if (!$detail->save()) {
-                            $success = false;
-                            break;
-                        }
-                        $details[] = $detail;
-                    }
-                    if ($success && count($objs) > 0) {
-                        $success = PurchaseDtl::deleteAll(['id_purchase_dtl' => array_keys($objs)]);
-                    }
-                }
-                if ($success) {
-                    $transaction->commit();
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (Exception $exc) {
-                $success = false;
-                $model->addError('', $exc->getMessage());
-                $transaction->rollBack();
-            }
-            if (!$success) {
-                $details = [];
-                foreach ($postDetails as $value) {
-                    $detail = new PurchaseDtl();
-                    $detail->setAttributes($value);
-                    $details[] = $detail;
-                }
-            }
-        }
-        return [$details, $success];
     }
 
     /**

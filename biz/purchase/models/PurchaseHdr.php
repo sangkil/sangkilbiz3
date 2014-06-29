@@ -29,6 +29,8 @@ use biz\master\models\Branch;
  * @property Supplier $idSupplier
  * @property Branch $idBranch
  * @property PurchaseDtl[] $purchaseDtls
+ * 
+ * @method array saveRelation(string $relation) Description
  */
 class PurchaseHdr extends \yii\db\ActiveRecord
 {
@@ -124,7 +126,8 @@ class PurchaseHdr extends \yii\db\ActiveRecord
                     'purchaseDate' => 'purchase_date',
                 ]
             ],
-            'BizStatusConverter'
+            'BizStatusConverter',
+            'class'=>'mdm\relation\RelationBehavior',
         ];
     }
 }
