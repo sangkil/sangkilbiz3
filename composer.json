@@ -22,6 +22,14 @@
 		"issues": "https://github.com/sangkil/sangkilbiz3/issues?page=1&state=open",
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
+	"require": {
+		"yiisoft/yii2": "*",
+		"yiisoft/yii2-jui": "*",
+		"mdmsoft/yii2-autonumber": "dev-master",
+		"mdmsoft/yii2-logger": "dev-master",
+		"mdmsoft/yii2-format-converter": "dev-master",
+		"mdmsoft/yii2-ar-relation": "dev-master"
+	},
 	"replace": {
 		"sangkil/biz3-app": "self.version",
 		"sangkil/biz3-master": "self.version",
