@@ -20,20 +20,10 @@ use Yii;
  * @property ProductStock[] $productStocks
  * @property ProductGroup $idGroup
  * @property Category $idCategory
- * @property Price $price
- * @property PriceCategory[] $idPriceCategories
+ * @property Price[] $price
  * @property ProductUom[] $productUoms
- * @property NoticeDtl $noticeDtl
- * @property TransferHdr[] $idTransfers
  * @property Cogs $cogs
- * @property SalesDtl[] $salesDtls
- * @property StockAdjusmentDtl $stockAdjusmentDtl
- * @property PurchaseDtl[] $purchaseDtls
  * @property ProductChild[] $productChildren
- * @property ProductSupplier $productSupplier
- * @property Supplier[] $idSuppliers
- * @property StockOpnameDtl $stockOpnameDtl
- * @property TransferDtl $transferDtl
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -88,33 +78,9 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdGroup()
-    {
-        return $this->hasOne(ProductGroup::className(), ['id_group' => 'id_group']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdCategory()
-    {
-        return $this->hasOne(Category::className(), ['id_category' => 'id_category']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getPrice()
     {
-        return $this->hasOne(Price::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdPriceCategories()
-    {
-        return $this->hasMany(PriceCategory::className(), ['id_price_category' => 'id_price_category'])->viaTable('price', ['id_product' => 'id_product']);
+        return $this->hasMany(Price::className(), ['id_product' => 'id_product']);
     }
 
     /**
@@ -128,89 +94,14 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNoticeDtl()
-    {
-        return $this->hasOne(NoticeDtl::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdTransfers()
-    {
-        return $this->hasMany(TransferHdr::className(), ['id_transfer' => 'id_transfer'])->viaTable('transfer_dtl', ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getCogs()
     {
         return $this->hasOne(Cogs::className(), ['id_product' => 'id_product']);
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSalesDtls()
+    
+    public function getCogsValue()
     {
-        return $this->hasMany(SalesDtl::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStockAdjusmentDtl()
-    {
-        return $this->hasOne(StockAdjusmentDtl::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPurchaseDtls()
-    {
-        return $this->hasMany(PurchaseDtl::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductChildren()
-    {
-        return $this->hasMany(ProductChild::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductSupplier()
-    {
-        return $this->hasOne(ProductSupplier::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdSuppliers()
-    {
-        return $this->hasMany(Supplier::className(), ['id_supplier' => 'id_supplier'])->viaTable('product_supplier', ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStockOpnameDtl()
-    {
-        return $this->hasOne(StockOpnameDtl::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTransferDtl()
-    {
-        return $this->hasOne(TransferDtl::className(), ['id_product' => 'id_product']);
+        return $this->cogs->cogs;
     }
 
     /**

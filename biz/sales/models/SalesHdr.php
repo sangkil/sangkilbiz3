@@ -133,7 +133,8 @@ class SalesHdr extends \yii\db\ActiveRecord
                     'salesDate' => 'sales_date',
                 ]
             ],
-            'BizStatusConverter'
+            'BizStatusConverter',
+            'mdm\relation\RelationBehavior'
         ];
     }
 }

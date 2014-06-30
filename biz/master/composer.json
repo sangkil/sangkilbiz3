@@ -24,7 +24,12 @@
 	},
 	"require": {
 		"yiisoft/yii2": "*",
-		"sangkil/biz3-app": "*"		
+		"yiisoft/yii2-jui": "*",
+		"sangkil/biz3-app": "*",
+		"mdmsoft/yii2-autonumber": "*",
+		"mdmsoft/yii2-logger": "*",
+		"mdmsoft/yii2-format-converter": "*",
+		"mdmsoft/yii2-ar-relation": "*"
 	},
 	"autoload": {
 		"psr-4": {

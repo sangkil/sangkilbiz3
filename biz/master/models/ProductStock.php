@@ -95,7 +95,7 @@ class ProductStock extends \yii\db\ActiveRecord
             'BizBlameableBehavior',
             [
                 'class'=>'mdm\logger\RecordLogger',
-                'collectionName'=>'log_stock',
+                'name'=>'log_stock',
                 'attributes'=>['log_by','log_time1','log_time2','id_warehouse','id_product','id_uom','mv_qty','qty_stock','app','id_ref']
             ]
         ];

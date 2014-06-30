@@ -5,8 +5,6 @@ use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use biz\master\components\Helper;
-use biz\sales\assets\StandartAsset;
-use biz\app\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this
@@ -26,7 +24,12 @@ use biz\app\assets\BizDataAsset;
     $models[] = $model;
     echo $form->errorSummary($models)
     ?>
-    <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?> 
+    <?=
+    $this->render('_detail', [
+        'model' => $model,
+        'details' => $details,
+        'masters' => $masters])
+    ?> 
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -55,9 +58,9 @@ use biz\app\assets\BizDataAsset;
                         'attribute' => 'idCustomer[nm_cust]',
                         'options' => ['class' => 'form-control', 'id' => $id_input],
                         'clientOptions' => [
-                            'source' => new JsExpression('yii.standart.sourceCustomer'),
-                            'select' => new JsExpression('yii.standart.onCustomerSelect'),
-                            'open' => new JsExpression('yii.standart.onCustomerOpen'),
+                            'source' => new JsExpression('biz.master.customers'),
+                            'select' => new JsExpression('function(e,ui){$(\'#id_customer\').val(ui.item.id);}'),
+                            'open' => new JsExpression('function(e,ui){$(\'#id_customer\').val(\'\');}'),
                         ],
                 ]);
                 echo $field;
@@ -73,10 +76,3 @@ use biz\app\assets\BizDataAsset;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php
-StandartAsset::register($this);
-BizDataAsset::register($this, [
-    'master' => $masters,
-]);
-$js_ready = '$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;';
-$this->registerJs($js_ready);

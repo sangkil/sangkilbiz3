@@ -93,7 +93,7 @@ class Price extends \yii\db\ActiveRecord
             'BizBlameableBehavior',
             [
                 'class'=>'mdm\logger\RecordLogger',
-                'collectionName'=>'log_price',
+                'name'=>'log_price',
                 'attributes'=>['log_by','log_time1','log_time2','id_product','id_price_category', 'id_uom','price','app','id_ref']
             ],
         ];

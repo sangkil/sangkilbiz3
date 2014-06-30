@@ -11,7 +11,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
-            'ubdate_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
         ];
 
         $this->createTable('{{%orgn}}', array_merge([

@@ -5,19 +5,17 @@ namespace biz\sales\controllers;
 use Yii;
 use biz\sales\models\SalesHdr;
 use biz\sales\models\searchs\SalesHdr as SalesHdrSearch;
-use biz\sales\models\SalesDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \Exception;
 use yii\base\UserException;
-use biz\tools\Hooks;
-use yii\db\Query;
+use biz\app\Hooks;
 use biz\base\Event;
-use biz\master\models\Price;
 use biz\master\models\PriceCategory;
 use yii\helpers\ArrayHelper;
 use biz\master\components\Helper;
+use biz\app\components\Helper as AppHelper;
 
 /**
  * PosController implements the CRUD actions for SalesHdr model.
@@ -76,16 +74,32 @@ class StandartController extends Controller
             1 => 'Cash',
             2 => 'Bank',
         ];
-        $model = new SalesHdr;
-        $model->id_branch = Yii::$app->user->branch;
-        $model->status = 1;
-        $model->id_customer = 1;
-        $model->sales_date = date('Y-m-d');
-        list($details, $success) = $this->saveSales($model);
-        if ($success) {
-            return $this->redirect(['view', 'id' => $model->id_sales]);
+        $model = new SalesHdr([
+            'id_branch' => Yii::$app->user->branch,
+            'status' => SalesHdr::STATUS_DRAFT,
+            'sales_date' => date('Y-m-d')
+        ]);
+        $details = [];
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('salesDtls', [
+                    'extra' => ['id_warehouse' => $model->id_warehouse]
+                ]);
+                if ($saved) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $model->id_sales]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
+            }
+            $model->setIsNewRecord(true);
         }
-        $model->setIsNewRecord(true);
+
         $price_category = ArrayHelper::map(PriceCategory::find()->all(), 'id_price_category', 'nm_price_category');
         return $this->render('create', [
                 'model' => $model,
@@ -96,88 +110,12 @@ class StandartController extends Controller
         ]);
     }
 
-    /**
-     * 
-     * @param SalesHdr $model
-     * @return array
-     */
-    protected function saveSales($model)
-    {
-        $post = Yii::$app->request->post();
-        $details = $model->salesDtls;
-        $success = false;
-
-        if ($model->load($post)) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $formName = (new SalesDtl)->formName();
-                $postDetails = empty($post[$formName]) ? [] : $post[$formName];
-                if ($postDetails === []) {
-                    throw new Exception('Detail tidak boleh kosong');
-                }
-                $objs = [];
-                foreach ($details as $detail) {
-                    $objs[$detail->id_sales_dtl] = $detail;
-                }
-                if ($model->save()) {
-                    $success = true;
-                    $id_hdr = $model->id_sales;
-                    $id_whse = $model->id_warehouse;
-                    $details = [];
-                    foreach ($postDetails as $dataDetail) {
-                        $id_dtl = $dataDetail['id_sales_dtl'];
-                        if (isset($objs[$id_dtl])) {
-                            $detail = $objs[$id_dtl];
-                            unset($objs[$id_dtl]);
-                        } else {
-                            $detail = new SalesDtl;
-                        }
-
-                        $detail->setAttributes($dataDetail);
-                        $detail->id_sales = $id_hdr;
-                        $detail->id_warehouse = $id_whse;
-                        if ($detail->idCogs) {
-                            $detail->cogs = $detail->idCogs->cogs;
-                        } else {
-                            $detail->cogs = 0;
-                        }
-                        if (!$detail->save()) {
-                            $success = false;
-                            $model->addError('', implode("\n", $detail->firstErrors));
-                            break;
-                        }
-
-                        $details[] = $detail;
-                    }
-                    if ($success && count($objs) > 0) {
-                        $success = SalesDtl::deleteAll(['id_sales_dtl' => array_keys($objs)]);
-                    }
-                }
-                if ($success) {
-                    $transaction->commit();
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (Exception $exc) {
-                $success = false;
-                $model->addError('', $exc->getMessage());
-                $transaction->rollBack();
-            }
-            if (!$success) {
-                $details = [];
-                foreach ($postDetails as $value) {
-                    $detail = new SalesDtl();
-                    $detail->setAttributes($value);
-                    $details[] = $detail;
-                }
-            }
-        }
-        return [$details, $success];
-    }
-
     public function actionRelease($id)
     {
         $model = $this->findModel($id);
+        if (!AppHelper::checkAccess('release', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
         Yii::$app->trigger(Hooks::E_SSREL_1, new Event([$model]));
         $transaction = Yii::$app->db->beginTransaction();
         try {
@@ -200,7 +138,7 @@ class StandartController extends Controller
 
     public function getDataMaster()
     {
-        return Helper::getMasters(['product','barcode','price','customer']);
+        return Helper::getMasters(['product', 'barcode', 'price', 'customer']);
     }
 
     /**
@@ -212,21 +150,41 @@ class StandartController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        if (!AppHelper::checkAccess('update', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
         $payment_methods = [
             1 => 'Cash',
             2 => 'Bank',
         ];
+        $details = $model->salesDtls;
 
-        list($details, $success) = $this->saveSales($model);
-        if ($success) {
-            return $this->redirect(['view', 'id' => $model->id_sales]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->save(false);
+                list($saved, $details) = $model->saveRelation('salesDtls', [
+                    'extra' => ['id_warehouse' => $model->id_warehouse]
+                ]);
+                if ($saved) {
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id' => $model->id_sales]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
+                $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
+            }
         }
-        return $this->render('update', [
+
+        $price_category = ArrayHelper::map(PriceCategory::find()->all(), 'id_price_category', 'nm_price_category');
+        return $this->render('create', [
                 'model' => $model,
                 'details' => $details,
                 'payment_methods' => $payment_methods,
-                'masters' => $this->getDataMaster()
+                'masters' => $this->getDataMaster(),
+                'price_category' => $price_category,
         ]);
     }
 
@@ -240,24 +198,6 @@ class StandartController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
-    }
-
-    /**
-     * 
-     * @param string $action
-     * @param SalesHdr $model
-     * @return boolean Description
-     */
-    public function checkAccess($action, $model)
-    {
-        \Yii::$app->user->can($action);
-        switch ($action) {
-            case 'update':
-                return $model->status == SalesHdr::STATUS_DRAFT;
-
-            default:
-                return true;
-        }
     }
 
     /**

@@ -45,6 +45,8 @@ class SalesDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['cogs'],'default','value'=>function($obj){
+                                return $obj->idProduct->cogs->cogs;}],
             [['id_sales', 'id_product', 'id_uom', 'id_warehouse', 'sales_price', 'sales_qty', 'cogs'], 'required'],
             [['id_sales', 'id_product', 'id_uom', 'id_warehouse'], 'integer'],
             [['sales_price', 'sales_qty', 'discount', 'cogs', 'tax'], 'number'],
