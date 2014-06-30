@@ -34,10 +34,10 @@
 	"require": {
 		"yiisoft/yii2": "*",
 		"yiisoft/yii2-jui": "*",
-		"mdmsoft/yii2-autonumber": "*",
-		"mdmsoft/yii2-logger": "*",
-		"mdmsoft/yii2-format-converter": "*",
-		"mdmsoft/yii2-ar-relation": "*"
+		"mdmsoft/yii2-autonumber": "dev-master",
+		"mdmsoft/yii2-logger": "dev-master",
+		"mdmsoft/yii2-format-converter": "dev-master",
+		"mdmsoft/yii2-ar-relation": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
