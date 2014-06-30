@@ -31,14 +31,6 @@
 		"sangkil/biz3-accounting": "self.version",
 		"sangkil/biz3-theme-adminlte": "self.version"
 	},
-	"require": {
-		"yiisoft/yii2": "*",
-		"yiisoft/yii2-jui": "*",
-		"mdmsoft/yii2-autonumber": "dev-master",
-		"mdmsoft/yii2-logger": "dev-master",
-		"mdmsoft/yii2-format-converter": "dev-master",
-		"mdmsoft/yii2-ar-relation": "dev-master"
-	},
 	"autoload": {
 		"psr-4": {
 			"biz\\dev\\": "",
