@@ -20,7 +20,7 @@ use biz\master\models\Warehouse;
  * @property string $selling_price
  *
  * @property Uom $idUom
- * @property PurchaseHdr $idPurchase
+ * @property Purchase $idPurchase
  * @property Product $idProduct
  * @property Warehouse $idWarehouse
  * @property double[] $salesPrices Description
@@ -79,7 +79,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
      */
     public function getIdPurchase()
     {
-        return $this->hasOne(PurchaseHdr::className(), ['id_purchase' => 'id_purchase']);
+        return $this->hasOne(Purchase::className(), ['id_purchase' => 'id_purchase']);
     }
 
     /**
@@ -116,7 +116,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
         $this->_salesPrices = $prices;
     }
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
         if ($this->_salesPrices !== null) {
             PurchaseSalesPrice::deleteAll(['id_purchase_dtl' => $this->id_purchase_dtl]);
@@ -134,6 +134,6 @@ class PurchaseDtl extends \yii\db\ActiveRecord
                 }
             }
         }
-        parent::afterSave($insert);
+        parent::afterSave($insert, $changedAttributes);
     }
 }

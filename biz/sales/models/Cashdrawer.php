@@ -17,14 +17,14 @@ use common\models\User;
  * @property string $close_cash
  * @property string $variants
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Branch $idBranch
  * @property User $idUser
- * @property SalesHdr[] $salesHdrs
+ * @property Sales[] $salesHdrs
  */
 class Cashdrawer extends \yii\db\ActiveRecord
 {
@@ -76,9 +76,9 @@ class Cashdrawer extends \yii\db\ActiveRecord
             'close_cash' => 'Close Cash',
             'variants' => 'Variants',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }
@@ -102,9 +102,9 @@ class Cashdrawer extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSalesHdrs()
+    public function getSaless()
     {
-        return $this->hasMany(SalesHdr::className(), ['id_cashdrawer' => 'id_cashdrawer']);
+        return $this->hasMany(Sales::className(), ['id_cashdrawer' => 'id_cashdrawer']);
     }
 
     /**
@@ -120,7 +120,7 @@ class Cashdrawer extends \yii\db\ActiveRecord
                 'physicalFormat' => 'Y-m-d H:i:s.u',
                 'logicalFormat' => 'd-m-Y H:i:s',
                 'attributes' => [
-                    'open_time' => 'create_date'
+                    'open_time' => 'create_at'
                 ]
             ],
             'BizStatusConverter'

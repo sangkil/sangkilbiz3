@@ -2,7 +2,7 @@
 
 namespace biz\sales\components;
 
-use biz\sales\models\SalesHdr;
+use biz\sales\models\Sales;
 use biz\sales\models\Cashdrawer;
 
 /**
@@ -21,7 +21,7 @@ class AccessHandler extends \biz\app\base\AccessHandler
     public function modelClasses()
     {
         return[
-            SalesHdr::className(),
+            Sales::className(),
             Cashdrawer::className(),
         ];
     }

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\SalesHdr $model
+ * @var biz\models\Sales $model
  */
 $this->title = 'Sales-Retail';
 $this->params['breadcrumbs'][] = ['label' => 'Sales Hdrs', 'url' => ['index']];

@@ -2,7 +2,7 @@
 
 namespace biz\inventory\components;
 
-use biz\inventory\models\TransferHdr;
+use biz\inventory\models\Transfer;
 use biz\inventory\models\TransferNotice;
 
 /**
@@ -21,7 +21,7 @@ class AccessHandler extends \biz\app\base\AccessHandler
     public function modelClasses()
     {
         return[
-            TransferHdr::className(),
+            Transfer::className(),
             TransferNotice::className()
         ];
     }

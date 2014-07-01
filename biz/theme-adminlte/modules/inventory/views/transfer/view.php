@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\TransferHdr;
+use biz\models\Transfer;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdr $model
+ * @var biz\purchase\models\Purchase $model
  */
 $this->title = 'Inventory Transfer #'.$model->transfer_num;
 $this->params['breadcrumbs'][] = ['label' => 'Transfer', 'url' => ['index']];
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="box-footer" style="text-align: right;">
             <?php
-            if ($model->status == TransferHdr::STATUS_DRAFT) {
+            if ($model->status == Transfer::STATUS_DRAFT) {
                 echo Html::a('Update', ['update', 'id' => $model->id_transfer], ['class' => 'btn btn-primary']) . ' ';
                 echo Html::a('Delete', ['delete', 'id' => $model->id_transfer], [
                     'class' => 'btn btn-danger',
@@ -46,13 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'data-method' => 'post',
                 ]);
             }
-            if ($model->status == TransferHdr::STATUS_CONFIRM) {
-                echo Html::a('Approve', ['confirm', 'confirm' => TransferHdr::STATUS_CONFIRM_APPROVE, 'id' => $model->id_transfer], [
+            if ($model->status == Transfer::STATUS_CONFIRM) {
+                echo Html::a('Approve', ['confirm', 'confirm' => Transfer::STATUS_CONFIRM_APPROVE, 'id' => $model->id_transfer], [
                     'class' => 'btn btn-primary',
                     'data-confirm' => Yii::t('app', 'Are you sure to approve this item?'),
                     'data-method' => 'post',
                 ]) . ' ';
-                echo Html::a('Reject', ['confirm', 'confirm' => TransferHdr::STATUS_CONFIRM_REJECT, 'id' => $model->id_transfer], [
+                echo Html::a('Reject', ['confirm', 'confirm' => Transfer::STATUS_CONFIRM_REJECT, 'id' => $model->id_transfer], [
                     'class' => 'btn btn-primary',
                     'data-confirm' => Yii::t('app', 'Are you sure to reject this item?'),
                     'data-method' => 'post',

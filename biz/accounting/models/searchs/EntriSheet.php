@@ -16,7 +16,7 @@ class EntriSheet extends EntriSheetModel
     {
         return [
             [['id_esheet', 'create_by', 'update_by'], 'integer'],
-            [['cd_esheet', 'nm_esheet', 'create_date', 'update_date'], 'safe'],
+            [['cd_esheet', 'nm_esheet', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class EntriSheet extends EntriSheetModel
 
         $query->andFilterWhere(['like', 'cd_esheet', $this->cd_esheet])
             ->andFilterWhere(['like', 'nm_esheet', $this->nm_esheet])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

@@ -5,10 +5,10 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\sales\models\SalesHdr $model
+ * @var biz\sales\models\Sales $model
  */
 
-$this->title = $model->id_sales_hdr;
+$this->title = $model->id_sales;
 $this->params['breadcrumbs'][] = ['label' => 'Sales Hdrs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	<h1><?= Html::encode($this->title) ?></h1>
 
 	<p>
-		<?= Html::a('Update', ['update', 'id' => $model->id_sales_hdr], ['class' => 'btn btn-primary']) ?>
-		<?php echo Html::a('Delete', ['delete', 'id' => $model->id_sales_hdr], [
+		<?= Html::a('Update', ['update', 'id' => $model->id_sales], ['class' => 'btn btn-primary']) ?>
+		<?php echo Html::a('Delete', ['delete', 'id' => $model->id_sales], [
 			'class' => 'btn btn-danger',
 			'data' => [
 				'confirm' => Yii::t('app', 'Are you sure to delete this item?'),
@@ -30,14 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php echo DetailView::widget([
 		'model' => $model,
 		'attributes' => [
-			'id_sales_hdr',
+			'id_sales',
 			'sales_num',
 			'id_warehouse',
 			'id_customer',
 			'update_by',
-			'update_date',
+			'update_at',
 			'create_by',
-			'create_date',
+			'create_at',
 			'sales_date',
 		],
 	]); ?>

@@ -4,14 +4,14 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\inventory\models\ProductStock $model
+ * @var biz\accounting\models\Invoice $model
  */
 
-$this->title = 'Create Product Stock';
-$this->params['breadcrumbs'][] = ['label' => 'Product Stocks', 'url' => ['index']];
+$this->title = 'Create Invoice Hdr';
+$this->params['breadcrumbs'][] = ['label' => 'Invoice Hdrs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-stock-create">
+<div class="invoice-hdr-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

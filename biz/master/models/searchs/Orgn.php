@@ -16,7 +16,7 @@ class Orgn extends OrgnModel
     {
         return [
             [['id_orgn', 'create_by', 'update_by'], 'integer'],
-            [['cd_orgn', 'nm_orgn', 'create_date', 'update_date'], 'safe'],
+            [['cd_orgn', 'nm_orgn', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class Orgn extends OrgnModel
 
         $query->andFilterWhere(['like', 'cd_orgn', $this->cd_orgn])
             ->andFilterWhere(['like', 'nm_orgn', $this->nm_orgn])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

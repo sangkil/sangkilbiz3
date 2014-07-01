@@ -16,7 +16,7 @@ class Coa extends CoaModel
     {
         return [
             [['id_coa', 'id_coa_parent', 'coa_type', 'create_by', 'update_by'], 'integer'],
-            [['cd_account', 'nm_account', 'normal_balance', 'create_date', 'update_date'], 'safe'],
+            [['cd_account', 'nm_account', 'normal_balance', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -49,8 +49,8 @@ class Coa extends CoaModel
         $query->andFilterWhere(['like', 'cd_account', $this->cd_account])
             ->andFilterWhere(['like', 'nm_account', $this->nm_account])
             ->andFilterWhere(['like', 'normal_balance', $this->normal_balance])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

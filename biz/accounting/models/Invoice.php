@@ -5,19 +5,19 @@ namespace biz\accounting\models;
 use Yii;
 
 /**
- * This is the model class for table "invoice_hdr".
+ * This is the model class for table "invoice".
  *
  * @property integer $id_invoice
- * @property string $inv_num
- * @property integer $type
- * @property string $inv_date
+ * @property string $invoice_num
+ * @property integer $invoice_type
+ * @property string $invoice_date
  * @property string $due_date
  * @property integer $id_vendor
- * @property string $inv_value
+ * @property string $invoice_value
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property PaymentDtl[] $paymentDtl
@@ -26,7 +26,7 @@ use Yii;
  * @property double $paid Description
  * @property double $sisaBayar Description
  */
-class InvoiceHdr extends \yii\db\ActiveRecord
+class Invoice extends \yii\db\ActiveRecord
 {
     const TYPE_PURCHASE = 100;
     const TYPE_SALES = 200;
@@ -36,7 +36,7 @@ class InvoiceHdr extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%invoice_hdr}}';
+        return '{{%invoice}}';
     }
 
     /**
@@ -45,10 +45,10 @@ class InvoiceHdr extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'invDate', 'dueDate', 'id_vendor', 'inv_value', 'status'], 'required'],
-            [['type', 'id_vendor', 'status'], 'integer'],
-            [['inv_date', 'due_date'], 'safe'],
-            [['inv_value'], 'number']
+            [['invoice_type', 'invDate', 'dueDate', 'id_vendor', 'invoice_value', 'status'], 'required'],
+            [['invoice_type', 'id_vendor', 'status'], 'integer'],
+            [['invoice_date', 'due_date'], 'safe'],
+            [['invoice_value'], 'number']
         ];
     }
 
@@ -59,16 +59,16 @@ class InvoiceHdr extends \yii\db\ActiveRecord
     {
         return [
             'id_invoice' => 'Id Invoice',
-            'inv_num' => 'Inv Num',
-            'type' => 'Type',
-            'inv_date' => 'Inv Date',
+            'invoice_num' => 'Inv Num',
+            'invoice_type' => 'Type',
+            'invoice_date' => 'Inv Date',
             'due_date' => 'Due Date',
             'id_vendor' => 'Id Vendor',
-            'inv_value' => 'Inv Value',
+            'invoice_value' => 'Inv Value',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }
@@ -87,7 +87,7 @@ class InvoiceHdr extends \yii\db\ActiveRecord
         if ($this->_paid === null) {
             $this->_paid = 0;
             foreach ($this->paymentDtl as $dtl) {
-                $this->_paid+= $dtl->pay_val;
+                $this->_paid+= $dtl->payment_value;
             }
         }
         return $this->_paid;
@@ -95,7 +95,7 @@ class InvoiceHdr extends \yii\db\ActiveRecord
     
     public function getSisaBayar()
     {
-        return $this->inv_value - $this->paid;
+        return $this->invoice_value - $this->paid;
     }
 
     /**
@@ -137,20 +137,20 @@ class InvoiceHdr extends \yii\db\ActiveRecord
                 'class' => 'mdm\autonumber\Behavior',
                 'digit' => 4,
                 'group' => 'inv',
-                'attribute' => 'inv_num',
+                'attribute' => 'invoice_num',
                 'value' => date('ymd.?')
             ],
             [
                 'class' => 'mdm\converter\DateConverter',
                 'attributes' => [
-                    'invDate' => 'inv_date',
+                    'invDate' => 'invoice_date',
                     'dueDate' => 'due_date',
                 ]
             ],
             [
                 'class' => 'mdm\converter\NumeralConverter',
                 'attributes' => [
-                    'invValue' => 'inv_value',
+                    'invValue' => 'invoice_value',
                 ]
             ],
         ];

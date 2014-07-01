@@ -3,7 +3,7 @@
 namespace biz\sales\controllers;
 
 use Yii;
-use biz\sales\models\SalesHdr;
+use biz\sales\models\Sales;
 use biz\sales\models\SalesDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -16,7 +16,7 @@ use biz\sales\models\Cogs;
 use biz\master\components\Helper;
 
 /**
- * PosController implements the CRUD actions for SalesHdr model.
+ * PosController implements the CRUD actions for Sales model.
  */
 class PosController extends Controller
 {
@@ -43,7 +43,7 @@ class PosController extends Controller
     }
 
     /**
-     * Creates a new SalesHdr model.
+     * Creates a new Sales model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -114,7 +114,7 @@ class PosController extends Controller
                 'status' => Cashdrawer::STATUS_OPEN,
         ]);
         if ($model) {
-            if ($model->create_date > date('Y-m-d 00:00:00')) {
+            if ($model->create_at > date('Y-m-d 00:00:00')) {
                 $app->clientIdBranch = $model->id_branch;
                 $app->clientCashierNo = $model->cashier_no;
                 return [
@@ -164,7 +164,7 @@ class PosController extends Controller
         try {
             $transaction = Yii::$app->db->beginTransaction();
             $drawer = Cashdrawer::findOne(['id_cashdrawer' => $post['id_drawer']]);
-            $hdr = new SalesHdr([
+            $hdr = new Sales([
                 'id_cashdrawer' => $post['id_drawer'],
                 'id_branch' => $drawer->id_branch,
                 'create_by' => $drawer->id_user,
@@ -209,15 +209,15 @@ class PosController extends Controller
     }
 
     /**
-     * Finds the SalesHdr model based on its primary key value.
+     * Finds the Sales model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return SalesHdr the loaded model
+     * @return Sales the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SalesHdr::findOne($id)) !== null) {
+        if (($model = Sales::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

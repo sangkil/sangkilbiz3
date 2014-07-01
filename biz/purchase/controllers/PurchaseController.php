@@ -3,8 +3,8 @@
 namespace biz\purchase\controllers;
 
 use Yii;
-use biz\purchase\models\PurchaseHdr;
-use biz\purchase\models\searchs\PurchaseHdr as PurchaseHdrSearch;
+use biz\purchase\models\Purchase;
+use biz\purchase\models\searchs\Purchase as PurchaseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,7 +16,7 @@ use biz\master\components\Helper;
 use biz\app\components\Helper as AppHelper;
 
 /**
- * PurchaseHdrController implements the CRUD actions for PurchaseHdr model.
+ * PurchaseController implements the CRUD actions for Purchase model.
  */
 class PurchaseController extends Controller
 {
@@ -35,12 +35,12 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Lists all PurchaseHdr models.
+     * Lists all Purchase models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PurchaseHdrSearch;
+        $searchModel = new PurchaseSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
         $dataProvider->query->andWhere(['status' => [1]]);
 
@@ -51,7 +51,7 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Displays a single PurchaseHdr model.
+     * Displays a single Purchase model.
      * @param integer $id
      * @return mixed
      */
@@ -63,14 +63,14 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Creates a new PurchaseHdr model.
+     * Creates a new Purchase model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PurchaseHdr([
-            'status' => PurchaseHdr::STATUS_DRAFT,
+        $model = new Purchase([
+            'status' => Purchase::STATUS_DRAFT,
             'id_branch' => Yii::$app->user->branch,
             'purchase_date' => date('Y-m-d')
         ]);
@@ -100,7 +100,7 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Updates an existing PurchaseHdr model.
+     * Updates an existing Purchase model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -139,7 +139,7 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Deletes an existing PurchaseHdr model.
+     * Deletes an existing Purchase model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -158,7 +158,7 @@ class PurchaseController extends Controller
         Yii::$app->trigger(Hooks::E_PPREC_1, new Event([$model]));
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model->status = PurchaseHdr::STATUS_RECEIVE;
+            $model->status = Purchase::STATUS_RECEIVE;
             if (!$model->save()) {
                 throw new UserException(implode(",\n", $model->firstErrors));
             }
@@ -176,15 +176,15 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Finds the PurchaseHdr model based on its primary key value.
+     * Finds the Purchase model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PurchaseHdr the loaded model
+     * @return Purchase the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PurchaseHdr::findOne($id)) !== null) {
+        if (($model = Purchase::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

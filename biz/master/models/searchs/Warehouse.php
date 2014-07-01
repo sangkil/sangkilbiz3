@@ -16,7 +16,7 @@ class Warehouse extends WarehouseModel
     {
         return [
             [['id_warehouse', 'id_branch', 'create_by', 'update_by'], 'integer'],
-            [['cd_whse', 'nm_whse', 'create_date', 'update_date'], 'safe'],
+            [['cd_whse', 'nm_whse', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -47,8 +47,8 @@ class Warehouse extends WarehouseModel
 
         $query->andFilterWhere(['like', 'cd_whse', $this->cd_whse])
             ->andFilterWhere(['like', 'nm_whse', $this->nm_whse])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

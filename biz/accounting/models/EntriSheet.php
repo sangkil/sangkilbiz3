@@ -11,9 +11,9 @@ use biz\master\models\Branch;
  * @property integer $id_esheet
  * @property string $cd_esheet
  * @property string $nm_esheet
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property EntriSheetDtl[] $entriSheetDtls
@@ -50,9 +50,9 @@ class EntriSheet extends \yii\db\ActiveRecord
             'id_esheet' => 'Id Esheet',
             'cd_esheet' => 'Cd Esheet',
             'nm_esheet' => 'Nm Esheet',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

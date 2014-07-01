@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_branch',
             'id_user',
-            'create_date',
+            'create_at',
             'create_by',
-            'update_date',
+            'update_at',
             'update_by',
         ],
     ]) ?>

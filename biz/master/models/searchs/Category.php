@@ -16,7 +16,7 @@ class Category extends CategoryModel
     {
         return [
             [['id_category', 'create_by', 'update_by'], 'integer'],
-            [['cd_category', 'nm_category', 'create_date', 'update_date'], 'safe'],
+            [['cd_category', 'nm_category', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class Category extends CategoryModel
 
         $query->andFilterWhere(['like', 'cd_category', $this->cd_category])
             ->andFilterWhere(['like', 'nm_category', $this->nm_category])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

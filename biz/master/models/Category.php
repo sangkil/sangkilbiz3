@@ -10,9 +10,9 @@ use Yii;
  * @property integer $id_category
  * @property string $cd_category
  * @property string $nm_category
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Product[] $products
@@ -50,9 +50,9 @@ class Category extends \yii\db\ActiveRecord
             'id_category' => 'Id Category',
             'cd_category' => 'Cd Category',
             'nm_category' => 'Nm Category',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

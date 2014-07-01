@@ -9,9 +9,9 @@ use Yii;
  *
  * @property integer $id_product
  * @property integer $id_supplier
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Supplier $idSupplier
@@ -46,9 +46,9 @@ class ProductSupplier extends \yii\db\ActiveRecord
         return [
             'id_product' => 'Id Product',
             'id_supplier' => 'Id Supplier',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

@@ -16,7 +16,7 @@ class Branch extends BranchModel
     {
         return [
             [['id_branch', 'id_orgn', 'create_by', 'update_by'], 'integer'],
-            [['cd_branch', 'nm_branch', 'create_date', 'update_date'], 'safe'],
+            [['cd_branch', 'nm_branch', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -47,8 +47,8 @@ class Branch extends BranchModel
 
         $query->andFilterWhere(['like', 'cd_branch', $this->cd_branch])
             ->andFilterWhere(['like', 'nm_branch', $this->nm_branch])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\sales\models\SalesHdrSearch $searchModel
+ * @var biz\sales\models\SalesSearch $searchModel
  */
 
 $this->title = 'Sales Hdrs';
@@ -28,14 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
 		'columns' => [
 			['class' => 'yii\grid\SerialColumn'],
 
-			'id_sales_hdr',
+			'id_sales',
 			'sales_num',
 			'id_warehouse',
 			'id_customer',
 			'update_by',
-			// 'update_date',
+			// 'update_at',
 			// 'create_by',
-			// 'create_date',
+			// 'create_at',
 			// 'sales_date',
 
 			['class' => 'biz\app\components\ActionColumn'],

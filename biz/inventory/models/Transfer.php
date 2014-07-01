@@ -7,7 +7,7 @@ use Yii;
 use biz\master\models\Warehouse;
 
 /**
- * This is the model class for table "transfer_hdr".
+ * This is the model class for table "transfer".
  *
  * @property integer $id_transfer
  * @property string $transfer_num
@@ -16,9 +16,9 @@ use biz\master\models\Warehouse;
  * @property string $transfer_date
  * @property string $receive_date
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  * 
  * @property string $nmStatus
@@ -31,7 +31,7 @@ use biz\master\models\Warehouse;
  * @property TransferNoticeDtl[] $transferNoticeDtls
  * @property TransferNotice $transferNotice
  */
-class TransferHdr extends \yii\db\ActiveRecord
+class Transfer extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_ISSUE = 2;
@@ -48,7 +48,7 @@ class TransferHdr extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%transfer_hdr}}';
+        return '{{%transfer}}';
     }
 
     /**
@@ -77,9 +77,9 @@ class TransferHdr extends \yii\db\ActiveRecord
             'transfer_date' => 'Transfer Date',
             'receive_date' => 'Receive Date',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

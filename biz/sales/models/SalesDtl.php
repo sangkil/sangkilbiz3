@@ -23,7 +23,7 @@ use biz\master\models\Warehouse;
  * @property string $tax
  *
  * @property Uom $idUom
- * @property SalesHdr $idSales
+ * @property Sales $idSales
  * @property Product $idProduct
  * @property Cogs $idCogs
  * @property Warehouse $idWarehouse
@@ -85,7 +85,7 @@ class SalesDtl extends \yii\db\ActiveRecord
      */
     public function getIdSales()
     {
-        return $this->hasOne(SalesHdr::className(), ['id_sales' => 'id_sales']);
+        return $this->hasOne(Sales::className(), ['id_sales' => 'id_sales']);
     }
 
     /**

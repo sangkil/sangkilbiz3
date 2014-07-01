@@ -15,12 +15,12 @@ use Yii;
  * @property integer $status
  * @property integer $update_by
  * @property integer $create_by
- * @property string $update_date
- * @property string $create_date
+ * @property string $update_at
+ * @property string $create_at
  * @property string $nmStatus
  *
  * @property CustomerDetail $customerDetail
- * @property SalesHdr[] $salesHdrs
+ * @property Sales[] $salesHdrs
  */
 class Customer extends \yii\db\ActiveRecord
 {
@@ -64,8 +64,8 @@ class Customer extends \yii\db\ActiveRecord
             'status' => 'Status',
             'update_by' => 'Update By',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
-            'create_date' => 'Create Date',
+            'update_at' => 'Update At',
+            'create_at' => 'Create At',
         ];
     }
 
@@ -80,9 +80,9 @@ class Customer extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSalesHdrs()
+    public function getSaless()
     {
-        return $this->hasMany(SalesHdr::className(), ['id_customer' => 'id_customer']);
+        return $this->hasMany(Sales::className(), ['id_customer' => 'id_customer']);
     }
 
     /**

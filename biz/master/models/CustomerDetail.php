@@ -16,9 +16,9 @@ use Yii;
  * @property integer $id_kab
  * @property integer $id_kec
  * @property integer $id_kel
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Customer $idCustomer
@@ -61,9 +61,9 @@ class CustomerDetail extends \yii\db\ActiveRecord
             'id_kab' => 'Id Kab',
             'id_kec' => 'Id Kec',
             'id_kel' => 'Id Kel',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

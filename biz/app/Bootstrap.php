@@ -47,8 +47,8 @@ class Bootstrap extends \biz\app\base\Bootstrap
             'BizTimestampBehavior' => [
                 'class' => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['create_date', 'update_date'],
-                    BaseActiveRecord::EVENT_BEFORE_UPDATE => 'update_date',
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['create_at', 'update_at'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE => 'update_at',
                 ],
                 'value' => new Expression('NOW()')
             ],

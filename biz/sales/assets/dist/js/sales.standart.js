@@ -41,15 +41,15 @@ yii.standart = (function($) {
             $.each($grid.mdmEditableList('getAllRows'), function() {
                 var $row = $(this);
                 var pid = $row.find('input[data-field="id_product"]').val();
-                var q = $row.find('input[data-field="sales_qty"]').val();
-                q = q == '' ? 1 : q;
-                var d = $row.find('input[data-field="discount"]').val();
-                d = d == '' ? 0 : d;
+                var qty = $row.find('input[data-field="sales_qty"]').val();
+                var diskon = $row.find('input[data-field="discount"]').val() * 1;
                 var isi = $row.find('[data-field="id_uom"] > :selected').data('isi');
-                isi = isi ? isi : 1;
                 var price = biz.master.prices[pid][pc];
                 $row.find('input[data-field="sales_price"]').val(price);
-                var t = isi * q * (price - d);
+
+                qty = qty == '' ? 1 : qty;
+                isi = isi == undefined ? 1 : isi;
+                var t = isi * qty * (price - diskon);
 
                 $row.find('span.total-price').text(local.format(t));
                 $row.find('input[data-field="total_price"]').val(t);
@@ -131,6 +131,10 @@ yii.standart = (function($) {
             $('#product').change(local.onProductChange);
             $('#product').focus();
 
+            $('#price_ct').change(function() {
+                local.normalizeItem();
+            });
+
             $(window).keydown(function(event) {
                 if (event.keyCode == 13) {
                     if ($(event.target).is('#product')) {
@@ -141,6 +145,7 @@ yii.standart = (function($) {
                     return false;
                 }
             });
+
             local.normalizeItem();
         }
     };

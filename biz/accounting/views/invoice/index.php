@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\accounting\models\searchs\InvoiceHdr $searchModel
+ * @var biz\accounting\models\searchs\Invoice $searchModel
  */
 
 $this->title = 'Invoice Hdrs';
@@ -29,16 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id_invoice',
-            'inv_num',
-            'type',
-            'inv_date',
+            'invoice_num',
+            'invoice_type',
+            'invoice_date',
             'due_date',
             // 'id_vendor',
-            // 'inv_value',
+            // 'invoice_value',
             // 'status',
-            // 'create_date',
+            // 'create_at',
             // 'create_by',
-            // 'update_date',
+            // 'update_at',
             // 'update_by',
 
             ['class' => 'biz\app\components\ActionColumn'],

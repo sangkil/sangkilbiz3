@@ -16,7 +16,7 @@ class ProductStock extends ProductStockModel
     {
         return [
             [['id_stock', 'id_warehouse', 'id_product', 'id_uom', 'create_by', 'update_by'], 'integer'],
-            [['qty_stock', 'create_date', 'update_date'], 'safe'],
+            [['qty_stock', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -48,8 +48,8 @@ class ProductStock extends ProductStockModel
         ]);
 
         $query->andFilterWhere(['like', 'qty_stock', $this->qty_stock])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

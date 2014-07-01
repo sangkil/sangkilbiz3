@@ -12,7 +12,7 @@ use Yii;
  * @property string $description
  * @property string $trans_value
  *
- * @property InvoiceHdr $idInvoice
+ * @property Invoice $idInvoice
  */
 class InvoiceDtl extends \yii\db\ActiveRecord
 {
@@ -56,6 +56,6 @@ class InvoiceDtl extends \yii\db\ActiveRecord
      */
     public function getIdInvoice()
     {
-        return $this->hasOne(InvoiceHdr::className(), ['id_invoice' => 'id_invoice']);
+        return $this->hasOne(Invoice::className(), ['id_invoice' => 'id_invoice']);
     }
 }

@@ -66,7 +66,7 @@ class GlHook extends \yii\base\Behavior
      */
     public function purchaseReceiveEnd($event)
     {
-        /* @var $model \biz\accounting\models\PurchaseHdr */
+        /* @var $model \biz\accounting\models\Purchase */
         $model = $event->params[0];
         // GL *************
         $glHdr = [

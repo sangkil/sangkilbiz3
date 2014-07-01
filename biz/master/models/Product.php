@@ -12,9 +12,9 @@ use Yii;
  * @property string $nm_product
  * @property integer $id_category
  * @property integer $id_group
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property ProductStock[] $productStocks
@@ -60,9 +60,9 @@ class Product extends \yii\db\ActiveRecord
             'nm_product' => 'Nm Product',
             'id_category' => 'Id Category',
             'id_group' => 'Id Group',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

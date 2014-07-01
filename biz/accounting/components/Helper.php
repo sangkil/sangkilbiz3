@@ -6,7 +6,7 @@ use biz\accounting\models\EntriSheet;
 use biz\accounting\models\Coa;
 use biz\accounting\models\GlHeader;
 use biz\accounting\models\GlDetail;
-use biz\accounting\models\InvoiceHdr;
+use biz\accounting\models\Invoice;
 use biz\accounting\models\InvoiceDtl;
 use biz\accounting\models\AccPeriode;
 
@@ -174,11 +174,11 @@ class Helper
 
     public static function createInvoice($params)
     {
-        $invoice = new InvoiceHdr();
+        $invoice = new Invoice();
         $invoice->id_vendor = $params['id_vendor'];
-        $invoice->inv_date = $params['date'];
-        $invoice->inv_value = $params['value'];
-        $invoice->type = $params['type'];
+        $invoice->invoice_date = $params['date'];
+        $invoice->invoice_value = $params['value'];
+        $invoice->invoice_type = $params['type'];
         $invoice->due_date = date('Y-m-d', strtotime('+1 month'));
         $invoice->status = 0;
         if (!$invoice->save()) {

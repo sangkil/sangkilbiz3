@@ -9,8 +9,8 @@ use Yii;
  *
  * @property string $barcode
  * @property integer $id_product
- * @property string $create_date
- * @property string $update_date
+ * @property string $create_at
+ * @property string $update_at
  * @property integer $create_by
  * @property integer $update_by
  * @property string $nm_product
@@ -48,8 +48,8 @@ class ProductChild extends \yii\db\ActiveRecord
         return [
             'barcode' => 'Barcode',
             'id_product' => 'Id Product',
-            'create_date' => 'Create Date',
-            'update_date' => 'Update Date',
+            'create_at' => 'Create At',
+            'update_at' => 'Update At',
             'create_by' => 'Create By',
             'update_by' => 'Update By',
             'nm_product' => 'Nm Product',

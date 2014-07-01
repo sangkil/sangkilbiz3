@@ -13,14 +13,14 @@ use Yii;
  * @property integer $status
  * @property integer $update_by
  * @property integer $create_by
- * @property string $create_date
- * @property string $update_date
+ * @property string $create_at
+ * @property string $update_at
  * 
  * @property string $nmStatus
  * @property string $noticeDate
  *
  * @property TransferNoticeDtl[] $transferNoticeDtls
- * @property TransferHdr $idTransfer
+ * @property Transfer $idTransfer
  */
 class TransferNotice extends \yii\db\ActiveRecord
 {
@@ -61,8 +61,8 @@ class TransferNotice extends \yii\db\ActiveRecord
             'status' => 'Status',
             'update_by' => 'Update By',
             'create_by' => 'Create By',
-            'create_date' => 'Create Date',
-            'update_date' => 'Update Date',
+            'create_at' => 'Create At',
+            'update_at' => 'Update At',
         ];
     }
 
@@ -79,7 +79,7 @@ class TransferNotice extends \yii\db\ActiveRecord
      */
     public function getIdTransfer()
     {
-        return $this->hasOne(TransferHdr::className(), ['id_transfer' => 'id_transfer']);
+        return $this->hasOne(Transfer::className(), ['id_transfer' => 'id_transfer']);
     }
 
     /**

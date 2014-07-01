@@ -5,18 +5,18 @@ namespace biz\inventory\models\searchs;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use biz\inventory\models\TransferHdr as TransferHdrModel;
+use biz\inventory\models\Transfer as TransferModel;
 
 /**
- * TransferHdr represents the model behind the search form about `biz\inventory\models\TransferHdr`.
+ * Transfer represents the model behind the search form about `biz\inventory\models\Transfer`.
  */
-class TransferHdr extends TransferHdrModel
+class Transfer extends TransferModel
 {
     public function rules()
     {
         return [
             [['id_transfer', 'id_warehouse_source', 'id_warehouse_dest', 'status', 'create_by', 'update_by'], 'integer'],
-            [['transfer_num', 'transfer_date', 'receive_date', 'create_date', 'update_date'], 'safe'],
+            [['transfer_num', 'transfer_date', 'receive_date', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -28,7 +28,7 @@ class TransferHdr extends TransferHdrModel
 
     public function search($params)
     {
-        $query = TransferHdrModel::find();
+        $query = TransferModel::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -50,8 +50,8 @@ class TransferHdr extends TransferHdrModel
         ]);
 
         $query->andFilterWhere(['like', 'transfer_num', $this->transfer_num])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

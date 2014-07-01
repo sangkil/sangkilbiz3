@@ -16,7 +16,7 @@ class AccPeriode extends AccPeriodeModel
     {
         return [
             [['id_periode', 'status', 'create_by', 'update_by'], 'integer'],
-            [['nm_periode', 'date_from', 'date_to', 'create_date', 'update_date'], 'safe'],
+            [['nm_periode', 'date_from', 'date_to', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -48,8 +48,8 @@ class AccPeriode extends AccPeriodeModel
         ]);
 
         $query->andFilterWhere(['like', 'nm_periode', $this->nm_periode])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

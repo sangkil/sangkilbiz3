@@ -10,12 +10,12 @@ use Yii;
  * @property integer $id_supplier
  * @property string $cd_supplier
  * @property string $nm_supplier
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
- * @property PurchaseHdr[] $purchaseHdrs
+ * @property Purchase[] $purchaseHdrs
  * @property ProductSupplier $productSupplier
  * @property Product[] $idProducts
  */
@@ -51,9 +51,9 @@ class Supplier extends \yii\db\ActiveRecord
             'id_supplier' => 'Id Supplier',
             'cd_supplier' => 'Cd Supplier',
             'nm_supplier' => 'Nm Supplier',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }
@@ -61,9 +61,9 @@ class Supplier extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPurchaseHdrs()
+    public function getPurchases()
     {
-        return $this->hasMany(PurchaseHdr::className(), ['id_supplier' => 'id_supplier']);
+        return $this->hasMany(Purchase::className(), ['id_supplier' => 'id_supplier']);
     }
 
     /**

@@ -18,9 +18,9 @@ use biz\master\models\Branch;
  * @property integer $id_reff
  * @property string $description
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  * @property string $glDate
  *
@@ -75,9 +75,9 @@ class GlHeader extends \yii\db\ActiveRecord
             'id_reff' => 'Id Reff',
             'description' => 'Description',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

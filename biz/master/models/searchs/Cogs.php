@@ -16,7 +16,7 @@ class Cogs extends CogsModel
     {
         return [
             [['id_product', 'id_uom', 'create_by', 'update_by'], 'integer'],
-            [['cogs', 'create_date', 'update_date'], 'safe'],
+            [['cogs', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class Cogs extends CogsModel
         ]);
 
         $query->andFilterWhere(['like', 'cogs', $this->cogs])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

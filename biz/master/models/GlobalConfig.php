@@ -11,9 +11,9 @@ use Yii;
  * @property string $config_name
  * @property string $config_value
  * @property string $description
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  */
 class GlobalConfig extends \yii\db\ActiveRecord
@@ -50,9 +50,9 @@ class GlobalConfig extends \yii\db\ActiveRecord
             'config_name' => 'Config Name',
             'config_value' => 'Config Value',
             'description' => 'Description',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

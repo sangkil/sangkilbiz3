@@ -38,11 +38,11 @@ use yii\widgets\ActiveForm;
         <?php $itemGroup = \biz\tools\Helper::getProductGroupList() ?>
         <?= $form->field($model, 'id_group')->dropDownList($itemGroup, ['prompt' => '--All Groups--']) ?>
 
-        <?php // echo $form->field($model, 'create_date') ?>
+        <?php // echo $form->field($model, 'create_at') ?>
 
         <?php // echo $form->field($model, 'create_by') ?>
 
-        <?php // echo $form->field($model, 'update_date') ?>
+        <?php // echo $form->field($model, 'update_at') ?>
 
         <?php // echo $form->field($model, 'update_by')  ?>
 

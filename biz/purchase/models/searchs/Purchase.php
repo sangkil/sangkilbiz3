@@ -5,18 +5,18 @@ namespace biz\purchase\models\searchs;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use biz\purchase\models\PurchaseHdr as PurchaseHdrModel;
+use biz\purchase\models\Purchase as PurchaseModel;
 
 /**
- * PurchaseHdr represents the model behind the search form about `biz\models\PurchaseHdr`.
+ * Purchase represents the model behind the search form about `biz\models\Purchase`.
  */
-class PurchaseHdr extends PurchaseHdrModel
+class Purchase extends PurchaseModel
 {
     public function rules()
     {
         return [
             [['id_purchase', 'id_supplier', 'id_branch', 'status', 'create_by', 'update_by'], 'integer'],
-            [['purchase_num', 'purchase_date', 'purchase_value', 'item_discount', 'create_date', 'update_date'], 'safe'],
+            [['purchase_num', 'purchase_date', 'purchase_value', 'item_discount', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -28,7 +28,7 @@ class PurchaseHdr extends PurchaseHdrModel
 
     public function search($params)
     {
-        $query = PurchaseHdrModel::find();
+        $query = PurchaseModel::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,8 +51,8 @@ class PurchaseHdr extends PurchaseHdrModel
         $query->andFilterWhere(['like', 'purchase_num', $this->purchase_num])
             ->andFilterWhere(['like', 'purchase_value', $this->purchase_value])
             ->andFilterWhere(['like', 'item_discount', $this->item_discount])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

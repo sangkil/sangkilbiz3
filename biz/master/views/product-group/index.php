@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_group',
             'cd_group',
             'nm_group',
-            'create_date',
+            'create_at',
             'create_by',
-            // 'update_date',
+            // 'update_at',
             // 'update_by',
 
             ['class' => 'biz\app\components\ActionColumn'],

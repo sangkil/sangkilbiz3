@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var biz\sales\models\SalesHdrSearch $model
+ * @var biz\sales\models\SalesSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 		'method' => 'get',
 	]); ?>
 
-		<?= $form->field($model, 'id_sales_hdr') ?>
+		<?= $form->field($model, 'id_sales') ?>
 
 		<?= $form->field($model, 'sales_num') ?>
 
@@ -27,11 +27,11 @@ use yii\widgets\ActiveForm;
 
 		<?= $form->field($model, 'update_by') ?>
 
-		<?php // echo $form->field($model, 'update_date') ?>
+		<?php // echo $form->field($model, 'update_at') ?>
 
 		<?php // echo $form->field($model, 'create_by') ?>
 
-		<?php // echo $form->field($model, 'create_date') ?>
+		<?php // echo $form->field($model, 'create_at') ?>
 
 		<?php // echo $form->field($model, 'sales_date') ?>
 

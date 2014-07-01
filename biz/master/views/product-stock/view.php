@@ -37,9 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'id_uom',
 			'qty_stock',
 			'status_closing',
-			'create_date',
+			'create_at',
 			'create_by',
-			'update_date',
+			'update_at',
 			'update_by',
 		],
 	]) ?>

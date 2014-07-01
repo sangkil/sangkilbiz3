@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\models\PurchaseHdr;
+use biz\models\Purchase;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use biz\purchase\assets\PurchaseAsset;
@@ -10,7 +10,7 @@ use biz\tools\BizDataAsset;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\PurchaseHdrSearch $model
+ * @var biz\models\PurchaseSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -60,7 +60,7 @@ use biz\tools\BizDataAsset;
                     ],
         ]);
         ?>
-        <?= $form->field($model, 'status')->dropDownList([PurchaseHdr::STATUS_DRAFT => 'Draft', PurchaseHdr::STATUS_RECEIVE => 'Receive'], ['prompt' => '--status--']) ?>
+        <?= $form->field($model, 'status')->dropDownList([Purchase::STATUS_DRAFT => 'Draft', Purchase::STATUS_RECEIVE => 'Receive'], ['prompt' => '--status--']) ?>
     </div>
 
     <div class="box-footer">

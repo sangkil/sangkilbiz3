@@ -7,14 +7,7 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
 
     public function safeUp()
     {
-        $history_columns = [
-            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
-            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
-            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ];
-
-        $this->createTable('{{%purchase}}', array_merge([
+        $this->createTable('{{%purchase}}', [
             'id_purchase' => Schema::TYPE_PK,
             'purchase_num' => Schema::TYPE_STRING . '(16) NOT NULL',
             'id_supplier' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -24,9 +17,14 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
             'purchase_value' => Schema::TYPE_FLOAT . ' NOT NULL',
             'item_discount' => Schema::TYPE_FLOAT . ' NULL',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
-                ], $history_columns));
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ]);
 
-        $this->createTable('{{%purchase_dtl}}', array_merge([
+        $this->createTable('{{%purchase_dtl}}', [
             'id_purchase_dtl' => Schema::TYPE_PK,
             'id_purchase' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_warehouse' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -35,14 +33,23 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
             'purch_qty' => Schema::TYPE_FLOAT . ' NOT NULL',
             'purch_price' => Schema::TYPE_FLOAT . ' NOT NULL',
             'sales_price' => Schema::TYPE_FLOAT . ' NOT NULL',
+            // constrain
             'FOREIGN KEY (id_purchase) REFERENCES {{%purchase}} (id_purchase) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]));
+        ]);
+
+        $this->createTable('{{%purchase_sales_price}}', [
+            'id_purchase_dtl' => Schema::TYPE_PK,
+            'id_price_category' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'price' => Schema::TYPE_FLOAT,
+            // constrain
+            'FOREIGN KEY (id_purchase_dtl) REFERENCES {{%purchase_dtl}} (id_purchase_dtl) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
     }
 
     public function safeDown()
     {
-        echo "m140624_050030_create_table_purchase cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%purchase_sales_price}}');
+        $this->dropTable('{{%purchase_dtl}}');
+        $this->dropTable('{{%purchase}}');
     }
 }

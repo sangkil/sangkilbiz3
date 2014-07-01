@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\models\TransferHdr;
+use biz\models\Transfer;
 use yii\widgets\Pjax;
 use yii\grid\DataColumn;
 use yii\widgets\LinkPager;
@@ -10,7 +10,7 @@ use yii\widgets\LinkPager;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\purchase\models\PurchaseHdrSearch $searchModel
+ * @var biz\purchase\models\PurchaseSearch $searchModel
  */
 $this->title = 'Inventory Receive';
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,22 +42,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                         $warnaStatus = 'label-warning';
                         switch ($model->status) {
-                            case TransferHdr::STATUS_DRAFT:
+                            case Transfer::STATUS_DRAFT:
                                 $warnaStatus = 'label-danger';
                                 break;
-                            case TransferHdr::STATUS_ISSUE:
+                            case Transfer::STATUS_ISSUE:
                                 $warnaStatus = 'label-warning';
                                 break;
-                            case TransferHdr::STATUS_DRAFT_RECEIVE:
+                            case Transfer::STATUS_DRAFT_RECEIVE:
                                 $warnaStatus = 'label-info';
                                 break;
-                            case TransferHdr::STATUS_CONFIRM_REJECT:
+                            case Transfer::STATUS_CONFIRM_REJECT:
                                 $warnaStatus = 'label-info';
                                 break;
-                            case TransferHdr::STATUS_CONFIRM_APPROVE:
+                            case Transfer::STATUS_CONFIRM_APPROVE:
                                 $warnaStatus = 'label-primary';
                                 break;
-                            case TransferHdr::STATUS_RECEIVE:
+                            case Transfer::STATUS_RECEIVE:
                                 $warnaStatus = 'label-success';
                                 break;
                         }
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => '{view} {update} {receive}',
                             'buttons' => [
                                 'update' => function ($url, $model) {
-                            $allowUpdate = [TransferHdr::STATUS_ISSUE, TransferHdr::STATUS_DRAFT_RECEIVE];
+                            $allowUpdate = [Transfer::STATUS_ISSUE, Transfer::STATUS_DRAFT_RECEIVE];
                             return in_array($model->status, $allowUpdate) ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                         'title' => Yii::t('yii', 'Update'),
                                         'data-pjax' => '0',
@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                                 'receive' => function ($url, $model) {
                             $url = ['receive', 'id' => $model->id_transfer];
-                            return $model->status == TransferHdr::STATUS_DRAFT_RECEIVE ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
+                            return $model->status == Transfer::STATUS_DRAFT_RECEIVE ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
                                         'title' => Yii::t('yii', 'Receive'),
                                         'data-confirm' => Yii::t('yii', 'Are you sure you want to receive this item?'),
                                         'data-method' => 'post',

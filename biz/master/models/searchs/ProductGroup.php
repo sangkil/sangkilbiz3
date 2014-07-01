@@ -16,7 +16,7 @@ class ProductGroup extends ProductGroupModel
     {
         return [
             [['id_group', 'create_by', 'update_by'], 'integer'],
-            [['cd_group', 'nm_group', 'create_date', 'update_date'], 'safe'],
+            [['cd_group', 'nm_group', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class ProductGroup extends ProductGroupModel
 
         $query->andFilterWhere(['like', 'cd_group', $this->cd_group])
             ->andFilterWhere(['like', 'nm_group', $this->nm_group])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

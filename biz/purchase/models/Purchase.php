@@ -8,7 +8,7 @@ use biz\master\models\Supplier;
 use biz\master\models\Branch;
 
 /**
- * This is the model class for table "purchase_hdr".
+ * This is the model class for table "purchase".
  *
  * @property integer $id_purchase
  * @property string $purchase_num
@@ -18,9 +18,9 @@ use biz\master\models\Branch;
  * @property string $purchase_value
  * @property string $item_discount
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  * 
  * @property string $nmStatus
@@ -32,7 +32,7 @@ use biz\master\models\Branch;
  * 
  * @method array saveRelation(string $relation) Description
  */
-class PurchaseHdr extends \yii\db\ActiveRecord
+class Purchase extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RECEIVE = 2;
@@ -44,7 +44,7 @@ class PurchaseHdr extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%purchase_hdr}}';
+        return '{{%purchase}}';
     }
 
     /**
@@ -74,9 +74,9 @@ class PurchaseHdr extends \yii\db\ActiveRecord
             'purchase_value' => 'Purchase Value',
             'item_discount' => 'Item Discount',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

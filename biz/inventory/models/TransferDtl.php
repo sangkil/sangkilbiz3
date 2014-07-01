@@ -17,7 +17,7 @@ use biz\master\models\Uom;
  *
  * @property Uom $idUom
  * @property Product $idProduct
- * @property TransferHdr $idTransfer
+ * @property Transfer $idTransfer
  * @property TransferNoticeDtl $transferNoticeDtl Description
  */
 class TransferDtl extends \yii\db\ActiveRecord
@@ -78,7 +78,7 @@ class TransferDtl extends \yii\db\ActiveRecord
      */
     public function getIdTransfer()
     {
-        return $this->hasOne(TransferHdr::className(), ['id_transfer' => 'id_transfer']);
+        return $this->hasOne(Transfer::className(), ['id_transfer' => 'id_transfer']);
     }
 
     /**

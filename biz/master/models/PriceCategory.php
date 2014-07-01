@@ -11,9 +11,9 @@ use Yii;
  * @property string $nm_price_category
  * @property string $formula
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
- * @property string $create_date
+ * @property string $create_at
  *
  * @property Price[] $prices
  * @property Product[] $idProducts
@@ -35,7 +35,6 @@ class PriceCategory extends \yii\db\ActiveRecord
     {
         return [
             [['nm_price_category'], 'required'],
-            [['squence_price'],'safe'],
             [['nm_price_category', 'formula'], 'string']
         ];
     }
@@ -50,9 +49,9 @@ class PriceCategory extends \yii\db\ActiveRecord
             'nm_price_category' => 'Nm Price Category',
             'formula' => 'Formula',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
         ];
     }
 

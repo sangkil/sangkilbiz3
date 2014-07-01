@@ -16,7 +16,7 @@ class Cashdrawer extends CashdrawerModel
     {
         return [
             [['id_cashdrawer', 'id_branch', 'cashier_no', 'id_user', 'status', 'create_by', 'update_by'], 'integer'],
-            [['client_machine', 'create_date', 'update_date'], 'safe'],
+            [['client_machine', 'create_at', 'update_at'], 'safe'],
             [['init_cash', 'close_cash', 'variants'], 'number'],
         ];
     }
@@ -51,9 +51,9 @@ class Cashdrawer extends CashdrawerModel
             'close_cash' => $this->close_cash,
             'variants' => $this->variants,
             'status' => $this->status,
-            'create_date' => $this->create_date,
+            'create_at' => $this->create_at,
             'create_by' => $this->create_by,
-            'update_date' => $this->update_date,
+            'update_at' => $this->update_at,
             'update_by' => $this->update_by,
         ]);
 

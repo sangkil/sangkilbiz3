@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\searchs\InvoiceHdr $searchModel
+ * @var biz\models\searchs\Invoice $searchModel
  */
 $this->title = 'Invoice Hdrs';
 $this->params['breadcrumbs'][] = $this->title;
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id_invoice',
-                'inv_num',
+                'invoice_num',
                 'invoiceDtl.idPurchase.purchase_num',
                 'idSupplier.nm_supplier',
                 //'invDate',
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'id_vendor',
                 ['class' => 'yii\grid\DataColumn',
                     'header' => 'Nilai Invoice',
-                    'value' => 'inv_value',
+                    'value' => 'invoice_value',
                     'format' => 'number',
                     'footer' => number_format($jmlInv),
                     'footerOptions' => ['style' => 'text-align:right; font-weight: bold;'],
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'yii\grid\DataColumn',
                     'header' => 'Sisa Harus diBayar',
                     'value' => function ($model) {
-                return ($model->inv_value - $model->paid);
+                return ($model->invoice_value - $model->paid);
             },
                     'format' => 'number',
                     'footer' => number_format($jmlRemain),
@@ -91,13 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
             },
                     'format' => 'raw'
                 ],
-            // 'type',
-            // 'status',
-            // 'create_date',
-            // 'create_by',
-            // 'update_date',
-            // 'update_by',
-            // ['class' => 'yii\grid\ActionColumn'],
+            // 'invoice_type',
             ],
         ]);
         ?>

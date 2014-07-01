@@ -2,7 +2,7 @@
 
 namespace biz\purchase\components;
 
-use biz\purchase\models\PurchaseHdr;
+use biz\purchase\models\Purchase;
 
 /**
  * Description of AccessHandler
@@ -20,7 +20,7 @@ class AccessHandler extends \biz\app\base\AccessHandler
     public function modelClasses()
     {
         return[
-            PurchaseHdr::className()
+            Purchase::className()
         ];
     }
 }

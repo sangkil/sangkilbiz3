@@ -13,9 +13,9 @@ use Yii;
  * @property string $nm_account
  * @property integer $coa_type
  * @property string $normal_balance
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  * @property string $nmCoaType
  *
@@ -76,9 +76,9 @@ class Coa extends \yii\db\ActiveRecord
             'nm_account' => 'Nm Account',
             'coa_type' => 'Coa Type',
             'normal_balance' => 'Normal Balance',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

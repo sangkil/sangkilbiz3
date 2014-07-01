@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'idBranch.nm_branch',
                 'idUser.username',
                 'idUser.email',
-                'create_date',
+                'create_at',
                 'create_by'
             ],
         ])

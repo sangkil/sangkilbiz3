@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\purchase\models\PurchaseHdr;
+use biz\purchase\models\Purchase;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdr $model
+ * @var biz\purchase\models\Purchase $model
  */
 $this->title = $model->purchase_num;
 $this->params['breadcrumbs'][] = ['label' => 'Purchase', 'url' => ['index']];
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <div class="panel-footer" style="text-align: right;">
             <?php
-            if ($model->status == PurchaseHdr::STATUS_DRAFT) {
+            if ($model->status == Purchase::STATUS_DRAFT) {
                 echo Html::a('Update', ['update', 'id' => $model->id_purchase], ['class' => 'btn btn-primary']) . ' ';
                 echo Html::a('Delete', ['delete', 'id' => $model->id_purchase], [
                     'class' => 'btn btn-danger',

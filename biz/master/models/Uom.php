@@ -10,9 +10,9 @@ use Yii;
  * @property integer $id_uom
  * @property string $cd_uom
  * @property string $nm_uom
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property ProductStock[] $productStocks
@@ -58,9 +58,9 @@ class Uom extends \yii\db\ActiveRecord
             'id_uom' => 'Id Uom',
             'cd_uom' => 'Cd Uom',
             'nm_uom' => 'Nm Uom',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

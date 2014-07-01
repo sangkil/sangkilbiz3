@@ -3,8 +3,8 @@
 namespace biz\sales\controllers;
 
 use Yii;
-use biz\sales\models\SalesHdr;
-use biz\sales\models\searchs\SalesHdr as SalesHdrSearch;
+use biz\sales\models\Sales;
+use biz\sales\models\searchs\Sales as SalesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,7 +18,7 @@ use biz\master\components\Helper;
 use biz\app\components\Helper as AppHelper;
 
 /**
- * PosController implements the CRUD actions for SalesHdr model.
+ * PosController implements the CRUD actions for Sales model.
  */
 class StandartController extends Controller
 {
@@ -37,12 +37,12 @@ class StandartController extends Controller
     }
 
     /**
-     * Lists all SalesHdr models.
+     * Lists all Sales models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SalesHdrSearch;
+        $searchModel = new SalesSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
@@ -52,7 +52,7 @@ class StandartController extends Controller
     }
 
     /**
-     * Displays a single SalesHdr model.
+     * Displays a single Sales model.
      * @param integer $id
      * @return mixed
      */
@@ -64,7 +64,7 @@ class StandartController extends Controller
     }
 
     /**
-     * Creates a new SalesHdr model.
+     * Creates a new Sales model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -74,9 +74,9 @@ class StandartController extends Controller
             1 => 'Cash',
             2 => 'Bank',
         ];
-        $model = new SalesHdr([
+        $model = new Sales([
             'id_branch' => Yii::$app->user->branch,
-            'status' => SalesHdr::STATUS_DRAFT,
+            'status' => Sales::STATUS_DRAFT,
             'sales_date' => date('Y-m-d')
         ]);
         $details = [];
@@ -119,7 +119,7 @@ class StandartController extends Controller
         Yii::$app->trigger(Hooks::E_SSREL_1, new Event([$model]));
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model->status = SalesHdr::STATUS_RELEASE;
+            $model->status = Sales::STATUS_RELEASE;
             if (!$model->save()) {
                 throw new UserException(implode("\n", $model->getFirstErrors()));
             }
@@ -142,7 +142,7 @@ class StandartController extends Controller
     }
 
     /**
-     * Updates an existing SalesHdr model.
+     * Updates an existing Sales model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -189,7 +189,7 @@ class StandartController extends Controller
     }
 
     /**
-     * Deletes an existing SalesHdr model.
+     * Deletes an existing Sales model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -201,15 +201,15 @@ class StandartController extends Controller
     }
 
     /**
-     * Finds the SalesHdr model based on its primary key value.
+     * Finds the Sales model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return SalesHdr the loaded model
+     * @return Sales the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SalesHdr::findOne($id)) !== null) {
+        if (($model = Sales::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

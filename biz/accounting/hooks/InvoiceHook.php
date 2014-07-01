@@ -3,7 +3,7 @@
 namespace biz\accounting\hooks;
 
 use biz\app\Hooks;
-use biz\accounting\models\InvoiceHdr;
+use biz\accounting\models\Invoice;
 use biz\accounting\models\InvoiceDtl;
 use yii\base\UserException;
 
@@ -24,11 +24,11 @@ class InvoiceHook extends \yii\base\Behavior
 
     protected function createInvoice($params)
     {
-        $invoice = new InvoiceHdr();
+        $invoice = new Invoice();
         $invoice->id_vendor = $params['id_vendor'];
-        $invoice->inv_date = $params['date'];
-        $invoice->inv_value = $params['value'];
-        $invoice->type = $params['type'];
+        $invoice->invoice_date = $params['date'];
+        $invoice->invoice_value = $params['value'];
+        $invoice->invoice_type = $params['type'];
         $invoice->due_date = date('Y-m-d', strtotime('+1 month'));
         $invoice->status = 0;
         if (!$invoice->save()) {
@@ -50,11 +50,11 @@ class InvoiceHook extends \yii\base\Behavior
      */
     public function purchaseReceiveEnd($event)
     {
-        /* @var $model \biz\accounting\models\PurchaseHdr */
+        /* @var $model \biz\accounting\models\Purchase */
         $model = $event->params[0];
         $this->createInvoice([
             'id_vendor' => $model->id_supplier,
-            'type' => InvoiceHdr::TYPE_PURCHASE,
+            'invoice_type' => Invoice::TYPE_PURCHASE,
             'value' => $model->purchase_value * (1 - $model->item_discount * 0.01),
             'date' => $model->purchase_date,
             'id_ref' => $model->id_purchase,

@@ -16,7 +16,7 @@ class ProductUom extends ProductUomModel
     {
         return [
             [['id_puom', 'id_product', 'id_uom', 'isi', 'create_by', 'update_by'], 'integer'],
-            [['create_date', 'update_date'], 'safe'],
+            [['create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -47,8 +47,8 @@ class ProductUom extends ProductUomModel
             'update_by' => $this->update_by,
         ]);
 
-        $query->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+        $query->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

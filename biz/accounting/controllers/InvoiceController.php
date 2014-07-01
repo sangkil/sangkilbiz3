@@ -3,18 +3,16 @@
 namespace biz\accounting\controllers;
 
 use Yii;
-use biz\accounting\models\InvoiceHdr;
-use biz\accounting\models\searchs\InvoiceHdr as InvoiceHdrSearch;
+use biz\accounting\models\Invoice;
+use biz\accounting\models\searchs\Invoice as InvoiceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\accounting\models\Payment;
-use biz\accounting\models\PaymentDtl;
 
 /**
- * InvoiceHdrController implements the CRUD actions for InvoiceHdr model.
+ * InvoiceController implements the CRUD actions for Invoice model.
  */
-class InvoiceHdrController extends Controller
+class InvoiceController extends Controller
 {
 
     public function behaviors()
@@ -30,12 +28,12 @@ class InvoiceHdrController extends Controller
     }
 
     /**
-     * Lists all InvoiceHdr models.
+     * Lists all Invoice models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new InvoiceHdrSearch;
+        $searchModel = new InvoiceSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
@@ -45,7 +43,7 @@ class InvoiceHdrController extends Controller
     }
 
     /**
-     * Displays a single InvoiceHdr model.
+     * Displays a single Invoice model.
      * @param integer $id
      * @return mixed
      */
@@ -57,13 +55,13 @@ class InvoiceHdrController extends Controller
     }
 
     /**
-     * Creates a new InvoiceHdr model.
+     * Creates a new Invoice model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new InvoiceHdr;
+        $model = new Invoice;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_invoice]);
@@ -75,7 +73,7 @@ class InvoiceHdrController extends Controller
     }
 
     /**
-     * Updates an existing InvoiceHdr model.
+     * Updates an existing Invoice model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -94,7 +92,7 @@ class InvoiceHdrController extends Controller
     }
 
     /**
-     * Deletes an existing InvoiceHdr model.
+     * Deletes an existing Invoice model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +105,15 @@ class InvoiceHdrController extends Controller
     }
 
     /**
-     * Finds the InvoiceHdr model based on its primary key value.
+     * Finds the Invoice model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return InvoiceHdr the loaded model
+     * @return Invoice the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = InvoiceHdr::findOne($id)) !== null) {
+        if (($model = Invoice::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

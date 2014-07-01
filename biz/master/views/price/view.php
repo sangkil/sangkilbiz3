@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_price_category',
             'id_uom',
             'price',
-            'create_date',
+            'create_at',
             'create_by',
-            'update_date',
+            'update_at',
             'update_by',
         ],
     ]) ?>

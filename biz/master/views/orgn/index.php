@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			//'id_orgn',
 			'cd_orgn',
 			'nm_orgn',
-			'create_date',
+			'create_at',
 			'create_by',
-			// 'update_date',
+			// 'update_at',
 			// 'update_by',
 
 			['class' => 'biz\app\components\ActionColumn'],

@@ -7,7 +7,7 @@ use biz\master\models\Customer;
 use biz\master\models\Branch;
 
 /**
- * This is the model class for table "sales_hdr".
+ * This is the model class for table "sales".
  *
  * @property integer $id_sales
  * @property string $sales_num
@@ -17,9 +17,9 @@ use biz\master\models\Branch;
  * @property string $discount
  * @property string $sales_date
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  * 
  * @property string $nmStatus
@@ -30,7 +30,7 @@ use biz\master\models\Branch;
  * @property Cashdrawer $idCashdrawer
  * @property SalesDtl[] $salesDtls
  */
-class SalesHdr extends \yii\db\ActiveRecord
+class Sales extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RELEASE = 2;
@@ -43,7 +43,7 @@ class SalesHdr extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%sales_hdr}}';
+        return '{{%sales}}';
     }
 
     /**
@@ -73,9 +73,9 @@ class SalesHdr extends \yii\db\ActiveRecord
             'discount' => 'Discount',
             'sales_date' => 'Sales Date',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

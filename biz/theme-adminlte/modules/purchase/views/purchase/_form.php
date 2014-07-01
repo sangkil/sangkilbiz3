@@ -10,7 +10,7 @@ use biz\tools\BizDataAsset;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\PurchaseHdr $model
+ * @var biz\models\Purchase $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

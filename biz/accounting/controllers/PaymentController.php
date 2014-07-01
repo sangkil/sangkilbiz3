@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use biz\accounting\models\searchs\InvoicePayment as InvoicePaymentSearch;
 use yii\db\Query;
-use biz\accounting\models\InvoiceHdr;
+use biz\accounting\models\Invoice;
 use biz\accounting\models\PaymentDtl;
 
 /**
@@ -61,7 +61,7 @@ class PaymentController extends Controller
     public function actionListInvoice($type)
     {
         $searchModel = new InvoicePaymentSearch([
-            'type' => $type,
+            'invoice_type' => $type,
         ]);
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
         /* @var $query \yii\db\ActiveQuery */
@@ -74,7 +74,7 @@ class PaymentController extends Controller
             ->scalar();
 
         $jmlPaid = (new Query())
-            ->select('sum({{dtl.pay_val}})')
+            ->select('sum({{dtl.payment_value}})')
             ->from(['dtl' => '{{%payment_dtl}}'])
             ->innerJoin(['q' => $query], '{{q.id_invoice}}={{dtl.id_invoice}}')
             ->scalar();
@@ -114,8 +114,8 @@ class PaymentController extends Controller
                 $model->addError('', $e->getMessage());
             }
         }
-        $query = InvoiceHdr::find()->where([
-            'type' => $type,
+        $query = Invoice::find()->where([
+            'invoice_type' => $type,
             'id_invoice' => explode(',', $ids)
         ]);
         $jmlInv = (new Query())
@@ -125,7 +125,7 @@ class PaymentController extends Controller
             ->scalar();
 
         $jmlPaid = (new Query())
-            ->select('sum({{dtl.pay_val}})')
+            ->select('sum({{dtl.payment_value}})')
             ->from(['dtl' => '{{%payment_dtl}}'])
             ->innerJoin(['q' => $query], '{{q.id_invoice}}={{dtl.id_invoice}}')
             ->scalar();

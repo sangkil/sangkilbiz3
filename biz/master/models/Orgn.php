@@ -10,9 +10,9 @@ use Yii;
  * @property integer $id_orgn
  * @property string $cd_orgn
  * @property string $nm_orgn
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Branch[] $branches
@@ -48,9 +48,9 @@ class Orgn extends \yii\db\ActiveRecord
             'id_orgn' => 'Id Orgn',
             'cd_orgn' => 'Cd Orgn',
             'nm_orgn' => 'Nm Orgn',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

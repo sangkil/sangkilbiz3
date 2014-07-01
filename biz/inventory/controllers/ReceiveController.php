@@ -3,8 +3,8 @@
 namespace biz\inventory\controllers;
 
 use Yii;
-use biz\inventory\models\TransferHdr;
-use biz\inventory\models\searchs\TransferHdr as TransferHdrSearch;
+use biz\inventory\models\Transfer;
+use biz\inventory\models\searchs\Transfer as TransferSearch;
 use biz\inventory\models\TransferDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,7 +15,7 @@ use yii\base\UserException;
 use biz\app\base\Event;
 
 /**
- * TransferController implements the CRUD actions for TransferHdr model.
+ * TransferController implements the CRUD actions for Transfer model.
  */
 class ReceiveController extends Controller
 {
@@ -33,12 +33,12 @@ class ReceiveController extends Controller
     }
 
     /**
-     * Lists all TransferHdr models.
+     * Lists all Transfer models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TransferHdrSearch;
+        $searchModel = new TransferSearch;
         $params = Yii::$app->request->getQueryParams();
         $dataProvider = $searchModel->search($params);
         $dataProvider->query->andWhere('status > 1');
@@ -50,7 +50,7 @@ class ReceiveController extends Controller
     }
 
     /**
-     * Displays a single TransferHdr model.
+     * Displays a single Transfer model.
      * @param integer $id
      * @return mixed
      */
@@ -60,7 +60,7 @@ class ReceiveController extends Controller
     }
 
     /**
-     * Updates an existing PurchaseHdr model.
+     * Updates an existing Purchase model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -68,7 +68,7 @@ class ReceiveController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = TransferHdrSearch::SCENARIO_RECEIVE;
+        $model->scenario = TransferSearch::SCENARIO_RECEIVE;
         Yii::$app->trigger(Hooks::E_IRUPD_1, new Event([$model]));
         list($details, $success) = $this->saveReceive($model);
         if ($success) {
@@ -83,7 +83,7 @@ class ReceiveController extends Controller
 
     /**
      * 
-     * @param TransferHdr $model
+     * @param Transfer $model
      * @return array
      */
     protected function saveReceive($model)
@@ -105,7 +105,7 @@ class ReceiveController extends Controller
                     $objs[$detail->id_product] = $detail;
                 }
 
-                $model->status = TransferHdr::STATUS_DRAFT_RECEIVE;
+                $model->status = Transfer::STATUS_DRAFT_RECEIVE;
                 if ($model->save()) {
                     $success = true;
                     $id_hdr = $model->id_transfer;
@@ -160,7 +160,7 @@ class ReceiveController extends Controller
         Yii::$app->trigger(Hooks::E_IRREC_1, new Event([$model]));
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model->status = TransferHdr::STATUS_RECEIVE;
+            $model->status = Transfer::STATUS_RECEIVE;
             if (!$model->save()) {
                 throw new UserException(implode(",\n", $model->firstErrors));
             }
@@ -179,15 +179,15 @@ class ReceiveController extends Controller
     }
 
     /**
-     * Finds the TransferHdr model based on its primary key value.
+     * Finds the Transfer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TransferHdr the loaded model
+     * @return Transfer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = TransferHdr::findOne($id)) !== null) {
+        if (($model = Transfer::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

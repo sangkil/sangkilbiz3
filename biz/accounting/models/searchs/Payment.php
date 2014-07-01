@@ -19,7 +19,7 @@ class Payment extends PaymentModel
     {
         return [
             [['id_payment', 'payment_type', 'create_by', 'update_by'], 'integer'],
-            [['payment_num', 'payment_date', 'create_date', 'update_date'], 'safe'],
+            [['payment_num', 'payment_date', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -52,9 +52,9 @@ class Payment extends PaymentModel
             'id_payment' => $this->id_payment,
             'payment_type' => $this->payment_type,
             'payment_date' => $this->payment_date,
-            'create_date' => $this->create_date,
+            'create_at' => $this->create_at,
             'create_by' => $this->create_by,
-            'update_date' => $this->update_date,
+            'update_at' => $this->update_at,
             'update_by' => $this->update_by,
         ]);
 

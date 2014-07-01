@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\models\PurchaseHdr;
+use biz\models\Purchase;
 use yii\widgets\LinkPager;
 use yii\grid\DataColumn;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\PurchaseHdrSearch $searchModel
+ * @var biz\models\PurchaseSearch $searchModel
  */
 $this->title = 'Purchase Hdrs';
 $this->params['breadcrumbs'][] = $this->title;
@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function ($model) {
                     $warnaStatus = 'label-warning';
                     switch ($model->status) {
-                        case PurchaseHdr::STATUS_DRAFT:
+                        case Purchase::STATUS_DRAFT:
                             $warnaStatus = 'label-warning';
                             break;
-                        case PurchaseHdr::STATUS_RECEIVE:
+                        case Purchase::STATUS_RECEIVE:
                             $warnaStatus = 'label-success';
                             break;
                     }
@@ -56,13 +56,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{view} {update} {delete} {receive} {posting}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                        return $model->status == PurchaseHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                        return $model->status == Purchase::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                     'title' => Yii::t('yii', 'Update'),
                                     'data-pjax' => '0',
                                 ]) : '';
                     },
                             'delete' => function ($url, $model) {
-                        return $model->status == PurchaseHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                        return $model->status == Purchase::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                                     'title' => Yii::t('yii', 'Delete'),
                                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                     'data-method' => 'post',
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]) : '';
                     },
                             'receive' => function ($url, $model) {
-                        return $model->status == PurchaseHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
+                        return $model->status == Purchase::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
                                     'title' => Yii::t('yii', 'Receive'),
                                     'data-confirm' => Yii::t('yii', 'Are you sure you want to Receive this item?'),
                                     'data-method' => 'post',

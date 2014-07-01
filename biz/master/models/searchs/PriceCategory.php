@@ -16,7 +16,7 @@ class PriceCategory extends PriceCategoryModel
     {
         return [
             [['id_price_category', 'create_by', 'update_by'], 'integer'],
-            [['nm_price_category', 'formula', 'update_date', 'create_date'], 'safe'],
+            [['nm_price_category', 'formula', 'update_at', 'create_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class PriceCategory extends PriceCategoryModel
 
         $query->andFilterWhere(['like', 'nm_price_category', $this->nm_price_category])
             ->andFilterWhere(['like', 'formula', $this->formula])
-            ->andFilterWhere(['like', 'update_date', $this->update_date])
-            ->andFilterWhere(['like', 'create_date', $this->create_date]);
+            ->andFilterWhere(['like', 'update_at', $this->update_at])
+            ->andFilterWhere(['like', 'create_at', $this->create_at]);
 
         return $dataProvider;
     }

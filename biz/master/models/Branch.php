@@ -11,16 +11,16 @@ use Yii;
  * @property integer $id_orgn
  * @property string $cd_branch
  * @property string $nm_branch
- * @property string $create_date
- * @property string $update_date
+ * @property string $create_at
+ * @property string $update_at
  * @property integer $create_by
  * @property integer $update_by
  *
  * @property GlHeader[] $glHeaders
  * @property Orgn $idOrgn
  * @property Cashdrawer[] $cashdrawers
- * @property SalesHdr[] $salesHdrs
- * @property PurchaseHdr[] $purchaseHdrs
+ * @property Sales[] $salesHdrs
+ * @property Purchase[] $purchaseHdrs
  * @property Warehouse[] $warehouses
  */
 class Branch extends \yii\db\ActiveRecord
@@ -58,8 +58,8 @@ class Branch extends \yii\db\ActiveRecord
             'id_orgn' => 'Id Orgn',
             'cd_branch' => 'Cd Branch',
             'nm_branch' => 'Nm Branch',
-            'create_date' => 'Create Date',
-            'update_date' => 'Update Date',
+            'create_at' => 'Create At',
+            'update_at' => 'Update At',
             'create_by' => 'Create By',
             'update_by' => 'Update By',
         ];
@@ -92,17 +92,17 @@ class Branch extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSalesHdrs()
+    public function getSaless()
     {
-        return $this->hasMany(SalesHdr::className(), ['id_branch' => 'id_branch']);
+        return $this->hasMany(Sales::className(), ['id_branch' => 'id_branch']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPurchaseHdrs()
+    public function getPurchases()
     {
-        return $this->hasMany(PurchaseHdr::className(), ['id_branch' => 'id_branch']);
+        return $this->hasMany(Purchase::className(), ['id_branch' => 'id_branch']);
     }
 
     /**

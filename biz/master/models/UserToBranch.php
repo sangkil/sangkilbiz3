@@ -9,9 +9,9 @@ use Yii;
  *
  * @property integer $id_branch
  * @property integer $id_user
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Branch $idBranch
@@ -45,9 +45,9 @@ class UserToBranch extends \yii\db\ActiveRecord
         return [
             'id_branch' => 'Id Branch',
             'id_user' => 'Id User',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }
@@ -58,14 +58,6 @@ class UserToBranch extends \yii\db\ActiveRecord
     public function getIdBranch()
     {
         return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
-    }
-    
-        /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdUser()
-    {
-        return $this->hasOne(Yii::$app->user->identityClass, ['id' => 'id_user']);
     }
 
     /**

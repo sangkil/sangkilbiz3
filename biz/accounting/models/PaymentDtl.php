@@ -9,10 +9,10 @@ use Yii;
  *
  * @property integer $id_payment
  * @property integer $id_invoice
- * @property double $pay_val
+ * @property double $payment_value
  *
  * @property Payment $idPayment
- * @property InvoiceHdr $idInvoice
+ * @property Invoice $idInvoice
  * @property string $payVal Description
  */
 class PaymentDtl extends \yii\db\ActiveRecord
@@ -34,7 +34,7 @@ class PaymentDtl extends \yii\db\ActiveRecord
         return [
             [['id_payment', 'id_invoice', 'payVal'], 'required'],
             [['id_payment', 'id_invoice'], 'integer'],
-            [['pay_val'],'double']
+            [['payment_value'],'double']
         ];
     }
 
@@ -46,7 +46,7 @@ class PaymentDtl extends \yii\db\ActiveRecord
         return [
             'id_payment' => 'Id Payment',
             'id_invoice' => 'Id Invoice',
-            'pay_val' => 'Pay Val',
+            'payment_value' => 'Pay Val',
         ];
     }
 
@@ -63,7 +63,7 @@ class PaymentDtl extends \yii\db\ActiveRecord
      */
     public function getIdInvoice()
     {
-        return $this->hasOne(InvoiceHdr::className(), ['id_invoice' => 'id_invoice']);
+        return $this->hasOne(Invoice::className(), ['id_invoice' => 'id_invoice']);
     }
 
     public function behaviors()
@@ -72,7 +72,7 @@ class PaymentDtl extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\converter\NumeralConverter',
                 'attributes' => [
-                    'payVal' => 'pay_val',
+                    'payVal' => 'payment_value',
                 ]
             ]
         ];

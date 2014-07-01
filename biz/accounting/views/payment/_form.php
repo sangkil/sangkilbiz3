@@ -68,7 +68,7 @@ use yii\grid\GridView;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             //'id_invoice',
-            'idInvoice.inv_num',
+            'idInvoice.invoice_num',
 //            'invoiceDtl.idPurchase.purchase_num',
 //            'idSupplier.nm_supplier',
             //'invDate',
@@ -76,7 +76,7 @@ use yii\grid\GridView;
             //'id_vendor',
             ['class' => 'yii\grid\DataColumn',
                 'header' => 'Nilai Invoice',
-                'attribute' => 'idInvoice.inv_value',
+                'attribute' => 'idInvoice.invoice_value',
                 'format' => 'number',
                 'footer' => number_format($jmlInv),
                 'footerOptions' => ['style' => 'text-align:right; font-weight: bold;'],
@@ -103,7 +103,7 @@ use yii\grid\GridView;
                 'value' => function ($model, $key, $index) {
                 return Html::activeTextInput($model, "[$index]payVal", [
                         'style' => 'text-align:right',
-                        'class' => 'pay_val',
+                        'class' => 'payment_value',
                         'value' => number_format($model->idInvoice->sisaBayar)
                     ]) .
                     Html::activeHiddenInput($model, "[$index]id_invoice");
@@ -120,19 +120,19 @@ use yii\grid\GridView;
 </div>
 <?php
 $js = <<<JS
-yii.numeric.format(\$('#payment-form'),'input.pay_val');
+yii.numeric.format(\$('#payment-form'),'input.payment_value');
     
 function hitungTotal(){
     var total=0;
-    \$('#payment-form input.pay_val').each(function(){
+    \$('#payment-form input.payment_value').each(function(){
         total += numeral().unformat(this.value);
     });
     \$('#total-paid').val(numeral(total).format('0,0'));
 }
 hitungTotal();
 \$('#payment-form')
-    .off('change.biz','input.pay_val')
-    .on('change.biz','input.pay_val',hitungTotal);
+    .off('change.biz','input.payment_value')
+    .on('change.biz','input.payment_value',hitungTotal);
 JS;
 biz\app\assets\BizAsset::register($this);
 $this->registerJs($js);

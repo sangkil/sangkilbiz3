@@ -10,9 +10,9 @@ use Yii;
  * @property integer $id_product
  * @property integer $id_uom
  * @property string $cogs
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property Uom $idUom
@@ -49,9 +49,9 @@ class Cogs extends \yii\db\ActiveRecord
             'id_product' => 'Id Product',
             'id_uom' => 'Id Uom',
             'cogs' => 'Cogs',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

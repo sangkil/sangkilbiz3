@@ -5,18 +5,18 @@ namespace biz\accounting\models\searchs;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use biz\accounting\models\InvoiceHdr as InvoiceHdrModel;
+use biz\accounting\models\Invoice as InvoiceModel;
 
 /**
- * InvoiceHdr represents the model behind the search form about `biz\accounting\models\InvoiceHdr`.
+ * Invoice represents the model behind the search form about `biz\accounting\models\Invoice`.
  */
-class InvoiceHdr extends InvoiceHdrModel
+class Invoice extends InvoiceModel
 {
     public function rules()
     {
         return [
-            [['id_invoice', 'type', 'id_vendor', 'status', 'create_by', 'update_by'], 'integer'],
-            [['inv_num', 'inv_date', 'due_date', 'inv_value', 'create_date', 'update_date'], 'safe'],
+            [['id_invoice', 'invoice_type', 'id_vendor', 'status', 'create_by', 'update_by'], 'integer'],
+            [['invoice_num', 'invoice_date', 'due_date', 'invoice_value', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -28,7 +28,7 @@ class InvoiceHdr extends InvoiceHdrModel
 
     public function search($params)
     {
-        $query = InvoiceHdrModel::find();
+        $query = InvoiceModel::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -42,8 +42,8 @@ class InvoiceHdr extends InvoiceHdrModel
 
         $query->andFilterWhere([
             'id_invoice' => $this->id_invoice,
-            'type' => $this->type,
-            'inv_date' => $this->inv_date,
+            'invoice_type' => $this->invoice_type,
+            'invoice_date' => $this->invoice_date,
             'due_date' => $this->due_date,
             'id_vendor' => $this->id_vendor,
             'status' => $this->status,
@@ -51,10 +51,10 @@ class InvoiceHdr extends InvoiceHdrModel
             'update_by' => $this->update_by,
         ]);
 
-        $query->andFilterWhere(['like', 'inv_num', $this->inv_num])
-            ->andFilterWhere(['like', 'inv_value', $this->inv_value])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+        $query->andFilterWhere(['like', 'invoice_num', $this->invoice_num])
+            ->andFilterWhere(['like', 'invoice_value', $this->invoice_value])
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

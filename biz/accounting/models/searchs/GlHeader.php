@@ -16,7 +16,7 @@ class GlHeader extends GlHeaderModel
     {
         return [
             [['id_gl', 'id_branch', 'id_periode', 'type_reff', 'id_reff', 'status', 'create_by', 'update_by'], 'integer'],
-            [['gl_date', 'gl_num', 'gl_memo', 'description', 'create_date', 'update_date'], 'safe'],
+            [['gl_date', 'gl_num', 'gl_memo', 'description', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -53,8 +53,8 @@ class GlHeader extends GlHeaderModel
             ->andFilterWhere(['like', 'gl_num', $this->gl_num])
             ->andFilterWhere(['like', 'gl_memo', $this->gl_memo])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

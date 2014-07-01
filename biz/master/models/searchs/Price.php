@@ -16,7 +16,7 @@ class Price extends PriceModel
     {
         return [
             [['id_product', 'id_price_category', 'id_uom', 'create_by', 'update_by'], 'integer'],
-            [['price', 'create_date', 'update_date'], 'safe'],
+            [['price', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -47,8 +47,8 @@ class Price extends PriceModel
         ]);
 
         $query->andFilterWhere(['like', 'price', $this->price])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

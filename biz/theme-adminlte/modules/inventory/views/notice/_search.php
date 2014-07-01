@@ -57,9 +57,9 @@ use yii\widgets\ActiveForm;
         
         <?php // echo $form->field($model, 'create_by') ?>
 
-        <?php // echo $form->field($model, 'create_date') ?>
+        <?php // echo $form->field($model, 'create_at') ?>
 
-        <?php // echo $form->field($model, 'update_date')  ?>
+        <?php // echo $form->field($model, 'update_at')  ?>
 
     </div>
     <div class="form-group box-footer">

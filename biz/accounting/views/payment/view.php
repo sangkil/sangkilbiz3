@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'payment_num',
             'payment_type',
             'payment_date',
-            'create_date',
+            'create_at',
             'create_by',
-            'update_date',
+            'update_at',
             'update_by',
         ],
     ]) ?>

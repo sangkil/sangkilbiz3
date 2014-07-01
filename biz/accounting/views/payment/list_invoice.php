@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\searchs\InvoiceHdr $searchModel
+ * @var biz\models\searchs\Invoice $searchModel
  */
 $this->title = 'Invoice Hdrs';
 $this->params['breadcrumbs'][] = $this->title;
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id_invoice',
-                'inv_num',
+                'invoice_num',
 //                ['class' => 'yii\grid\DataColumn',
 //                    'attribute' => 'invoiceDtl.idPurchase.purchase_num',
 //                    'filter' => Html::activeTextInput($searchModel, 'purc_num', ['class' => 'form-control'])
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'id_vendor',
                 ['class' => 'yii\grid\DataColumn',
                     'header' => 'Nilai Invoice',
-                    'attribute' => 'inv_value',
+                    'attribute' => 'invoice_value',
                     'format' => 'number',
                     'footer' => number_format($jmlInv),
                     'footerOptions' => ['style' => 'text-align:right; font-weight: bold;'],

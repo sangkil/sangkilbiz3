@@ -4,148 +4,146 @@ use yii\db\Schema;
 
 class m140624_050135_create_table_accounting extends \yii\db\Migration
 {
+
     public function up()
     {
-        $history_columns = [
+        $this->createTable('{{%coa}}', [
+            'id_coa' => Schema::TYPE_PK,
+            'id_parent' => Schema::TYPE_INTEGER,
+            'cd_account' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'nm_account' => Schema::TYPE_STRING . '(64) NOT NULL',
+            'coa_type' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'normal_balance' => Schema::TYPE_STRING . '(1) NOT NULL',
+            // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ];
+        ]);
 
-        $this->createTable('{{%acc_periode}}', array_merge([
+        $this->createTable('{{%acc_periode}}', [
             'id_periode' => Schema::TYPE_PK,
             'nm_periode' => Schema::TYPE_STRING . '(32) NOT NULL',
             'date_from' => Schema::TYPE_DATE . ' NOT NULL',
             'date_to' => Schema::TYPE_DATE . ' NOT NULL',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
-                ], $history_columns));
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ]);
 
-        $this->createTable('{{%coa}}', array_merge([
-            'id_coa' => Schema::TYPE_PK,
-            'id_parent' => Schema::TYPE_INTEGER,
-            'cd_account' => Schema::TYPE_STRING . '(16) NOT NULL',
-            'nm_account' => Schema::TYPE_STRING . '(64) NOT NULL',
-            'coa_type' => Schema::TYPE_INTEGER.' NOT NULL',
-            'normal_balance' => Schema::TYPE_STRING . '(1) NOT NULL',
-                ], $history_columns));
+        $this->createTable('{{%entri_sheet}}', [
+            'id_esheet' => Schema::TYPE_PK,
+            'cd_esheet' => Schema::TYPE_STRING . '(4) NOT NULL',
+            'nm_esheet' => Schema::TYPE_STRING . '(32) NOT NULL',
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ]);
 
-        $this->createTable('{{%warehouse}}', array_merge([
-            'id_warehouse' => Schema::TYPE_PK,
+        $this->createTable('{{%entri_sheet_dtl}}', [
+            'id_esheet' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'nm_esheet_dtl' => Schema::TYPE_STRING . '(32) NOT NULL',
+            'id_coa' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // constrain
+            'PRIMARY KEY (id_esheet, nm_esheet_dtl)',
+            'FOREIGN KEY (id_esheet) REFERENCES {{%entri_sheet}} (id_esheet) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
+
+        $this->createTable('{{%gl_header}}', [
+            'id_gl' => Schema::TYPE_PK,
+            'gl_num' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'gl_date' => Schema::TYPE_DATE . ' NOT NULL',
+            'id_periode' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_branch' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'cd_whse' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_whse' => Schema::TYPE_STRING . '(32) NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%product_group}}', array_merge([
-            'id_group' => Schema::TYPE_PK,
-            'cd_group' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_group' => Schema::TYPE_STRING . '(32) NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%category}}', array_merge([
-            'id_category' => Schema::TYPE_PK,
-            'cd_category' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_group' => Schema::TYPE_STRING . '(32) NOT NULL',
-                ], $history_columns));
-
-
-        $this->createTable('{{%product}}', array_merge([
-            'id_product' => Schema::TYPE_PK,
-            'id_group' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'id_category' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'cd_product' => Schema::TYPE_STRING . '(13) NOT NULL',
-            'nm_product' => Schema::TYPE_STRING . '(32) NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%product_child}}', array_merge([
-            'barcode' => Schema::TYPE_STRING . '(13) PRIMARY KEY',
-            'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'nm_product' => Schema::TYPE_STRING . '(64) NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%uom}}', array_merge([
-            'id_uom' => Schema::TYPE_PK,
-            'cd_uom' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_uom' => Schema::TYPE_STRING . '(32) NOT NULL',
-            'isi' => Schema::TYPE_INTEGER . ' NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%product_uom}}', array_merge([
-            'id_puom' => Schema::TYPE_PK,
-            'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'isi' => Schema::TYPE_INTEGER . ' NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%supplier}}', array_merge([
-            'id_supplier' => Schema::TYPE_PK,
-            'cd_supplier' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_supplier' => Schema::TYPE_STRING . '(64) NOT NULL',
-                ], $history_columns));
-
-        $this->createTable('{{%product_supplier}}', array_merge([
-            'id_product' => Schema::TYPE_INTEGER,
-            'id_supplier' => Schema::TYPE_INTEGER,
-                ], $history_columns, [
-            'PRIMARY KEY (id_product , id_supplier )'
-        ]));
-
-        $this->createTable('{{%customer}}', array_merge([
-            'id_customer' => Schema::TYPE_PK,
-            'cd_cust' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_cust' => Schema::TYPE_STRING . '(64) NOT NULL',
-            'contact_name' => Schema::TYPE_STRING . '(64)',
-            'contact_number' => Schema::TYPE_STRING . '(64)',
+            'type_reff' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_reff' => Schema::TYPE_INTEGER,
+            'description' => Schema::TYPE_STRING . ' NOT NULL',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
-                ], $history_columns));
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // constrain
+            'FOREIGN KEY (id_periode) REFERENCES {{%acc_periode}} (id_periode) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
 
-        $this->createTable('{{%customer_detail}}', array_merge([
-            'id_customer' => Schema::TYPE_INTEGER . ' PRIMARY KEY',
-            'id_distric' => Schema::TYPE_INTEGER,
-            'addr1' => Schema::TYPE_STRING . '(128)',
-            'addr2' => Schema::TYPE_STRING . '(128)',
-            'latitude' => Schema::TYPE_FLOAT,
-            'longtitude' => Schema::TYPE_FLOAT,
-            'id_kab' => Schema::TYPE_INTEGER,
-            'id_kec' => Schema::TYPE_INTEGER,
-            'id_kel' => Schema::TYPE_INTEGER,
-                ], $history_columns));
+        $this->createTable('{{%gl_detail}}', [
+            'id_gl_detail' => Schema::TYPE_PK,
+            'id_gl' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_coa' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'amount' => Schema::TYPE_FLOAT . ' NOT NULL',
+            // constrain
+            'FOREIGN KEY (id_gl) REFERENCES {{%gl_header}} (id_gl) ON DELETE CASCADE ON UPDATE CASCADE',
+            'FOREIGN KEY (id_coa) REFERENCES {{%coa}} (id_coa) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
 
-        $this->createTable('{{%price_category}}', array_merge([
-            'id_price_category' => Schema::TYPE_PK,
-            'nm_price_category' => Schema::TYPE_STRING . '(64) NOT NULL',
-            'formula' => Schema::TYPE_STRING . '(256)',
-                ], $history_columns));
+        $this->createTable('{{%invoice}}', [
+            'id_invoice' => Schema::TYPE_PK,
+            'invoice_num' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'invoice_date' => Schema::TYPE_DATE . ' NOT NULL',
+            'due_date' => Schema::TYPE_DATE . ' NOT NULL',
+            'invoice_type' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_vendor' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'invoice_value' => Schema::TYPE_FLOAT . ' NOT NULL',
+            'status' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ]);
 
-        $this->createTable('{{%price}}', array_merge([
-            'id_product' => Schema::TYPE_INTEGER,
-            'id_price_category' => Schema::TYPE_INTEGER,
-            'id_uom' => Schema::TYPE_INTEGER,
-            'price' => Schema::TYPE_FLOAT,
-                ], $history_columns, [
-            'PRIMARY KEY (id_product , id_price_category )'
-        ]));
+        $this->createTable('{{%invoice_dtl}}', [
+            'id_invoice' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_reff' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'description' => Schema::TYPE_STRING . '(64) NOT NULL',
+            'trans_value' => Schema::TYPE_FLOAT . ' NOT NULL',
+            // constrain
+            'PRIMARY KEY (id_invoice, id_reff)',
+            'FOREIGN KEY (id_invoice) REFERENCES {{%invoice}} (id_invoice) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
 
-        $this->createTable('{{%cogs}}', array_merge([
-            'id_product' => Schema::TYPE_INTEGER . ' PRIMARY KEY',
-            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'cogs' => Schema::TYPE_FLOAT,
-                ], $history_columns, [
-        ]));
 
-        $this->createTable('{{%user_to_branch}}', array_merge([
-            'id_branch' => Schema::TYPE_INTEGER,
-            'id_user' => Schema::TYPE_INTEGER,
-                ], $history_columns, [
-            'PRIMARY KEY (id_branch , id_user )'
-        ]));
+        $this->createTable('{{%payment}}', [
+            'id_payment' => Schema::TYPE_PK,
+            'payment_num' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'payment_date' => Schema::TYPE_DATE . ' NOT NULL',
+            'payment_type' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+        ]);
+
+        $this->createTable('{{%payment_dtl}}', [
+            'id_payment' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_invoice' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'payment_value' => Schema::TYPE_FLOAT . ' NOT NULL',
+            // constrain
+            'PRIMARY KEY (id_payment, id_invoice)',
+            'FOREIGN KEY (id_payment) REFERENCES {{%payment}} (id_payment) ON DELETE CASCADE ON UPDATE CASCADE',
+            'FOREIGN KEY (id_invoice) REFERENCES {{%invoice}} (id_invoice) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
     }
 
     public function down()
     {
-        echo "m140624_050135_create_table_accounting cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%payment_dtl}}');
+        $this->dropTable('{{%payment}}');
+        $this->dropTable('{{%invoice_dtl}}');
+        $this->dropTable('{{%invoice}}');
+        $this->dropTable('{{%gl_detail}}');
+        $this->dropTable('{{%gl_header}}');
+        $this->dropTable('{{%entri_sheet_dtl}}');
+        $this->dropTable('{{%entri_sheet}}');
+        $this->dropTable('{{%acc_periode}}');
+        $this->dropTable('{{%coa}}');
     }
 }

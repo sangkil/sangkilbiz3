@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'nm_product',
                 'id_category',
                 'id_group',
-                'create_date',
+                'create_at',
                 'create_by',
-                'update_date',
+                'update_at',
                 'update_by',
             ],
         ])

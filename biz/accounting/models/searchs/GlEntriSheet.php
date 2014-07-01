@@ -16,7 +16,7 @@ class GlEntriSheet extends GlHeader
     {
         return [
             [['id_gl', 'id_branch', 'id_periode', 'type_reff', 'id_reff', 'status', 'create_by', 'update_by'], 'integer'],
-            [['gl_date', 'gl_num', 'gl_memo', 'description', 'create_date', 'update_date'], 'safe'],
+            [['gl_date', 'gl_num', 'gl_memo', 'description', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,9 +46,9 @@ class GlEntriSheet extends GlHeader
             'type_reff' => $this->type_reff,
             'id_reff' => $this->id_reff,
             'status' => $this->status,
-            'create_date' => $this->create_date,
+            'create_at' => $this->create_at,
             'create_by' => $this->create_by,
-            'update_date' => $this->update_date,
+            'update_at' => $this->update_at,
             'update_by' => $this->update_by,
         ]);
 

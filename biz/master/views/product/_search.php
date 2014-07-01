@@ -27,11 +27,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_group') ?>
 
-    <?php // echo $form->field($model, 'create_date') ?>
+    <?php // echo $form->field($model, 'create_at') ?>
 
     <?php // echo $form->field($model, 'create_by') ?>
 
-    <?php // echo $form->field($model, 'update_date') ?>
+    <?php // echo $form->field($model, 'update_at') ?>
 
     <?php // echo $form->field($model, 'update_by') ?>
 

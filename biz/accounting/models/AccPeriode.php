@@ -12,9 +12,9 @@ use Yii;
  * @property string $date_from
  * @property string $date_to
  * @property integer $status
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  * @property string $nmStatus
  *
@@ -57,9 +57,9 @@ class AccPeriode extends \yii\db\ActiveRecord
             'date_from' => 'Date From',
             'date_to' => 'Date To',
             'status' => 'Status',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

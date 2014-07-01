@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'nm_price_category',
             'formula',
             'create_by',
-            'update_date',
+            'update_at',
             // 'update_by',
-            // 'create_date',
+            // 'create_at',
 
             ['class' => 'biz\app\components\ActionColumn'],
         ],

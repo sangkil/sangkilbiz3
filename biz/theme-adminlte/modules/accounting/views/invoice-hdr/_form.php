@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\InvoiceHdr $model
+ * @var biz\models\Invoice $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -14,15 +14,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?= $form->field($model, 'invoice_type')->textInput() ?>
 
-    <?= $form->field($model, 'inv_date')->textInput() ?>
+    <?= $form->field($model, 'invoice_date')->textInput() ?>
 
     <?= $form->field($model, 'due_date')->textInput() ?>
 
     <?= $form->field($model, 'id_vendor')->textInput() ?>
 
-    <?= $form->field($model, 'inv_value')->textInput() ?>
+    <?= $form->field($model, 'invoice_value')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 

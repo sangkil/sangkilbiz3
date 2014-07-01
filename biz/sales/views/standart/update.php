@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdr $model
+ * @var biz\purchase\models\Purchase $model
  */
 $this->title = 'Update Sales: ' . $model->sales_num;
 $this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];

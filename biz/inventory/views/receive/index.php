@@ -8,7 +8,7 @@ use biz\app\components\Helper;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\purchase\models\PurchaseHdrSearch $searchModel
+ * @var biz\purchase\models\PurchaseSearch $searchModel
  */
 $this->title = 'Receive';
 $this->params['breadcrumbs'][] = $this->title;

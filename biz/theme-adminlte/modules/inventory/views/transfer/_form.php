@@ -8,7 +8,7 @@ use yii\web\View;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdr $model
+ * @var biz\purchase\models\Purchase $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

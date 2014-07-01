@@ -9,7 +9,7 @@ use biz\purchase\assets\PurchaseAsset;
 use biz\app\assets\BizDataAsset;
 
 /* @var $details PurchaseDtl[] */
-/* @var $model biz\purchase\models\PurchaseHdr */
+/* @var $model biz\purchase\models\Purchase */
 /* @var $this yii\web\View */
 ?>
 <div class="col-lg-9">

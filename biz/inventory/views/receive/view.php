@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\inventory\models\TransferHdr;
+use biz\inventory\models\Transfer;
 
 /**
  * @var yii\web\View $this
- * @var biz\inventory\models\TransferHdr $model
+ * @var biz\inventory\models\Transfer $model
  */
 $this->title = $model->transfer_num;
 $this->params['breadcrumbs'][] = ['label' => 'Receive', 'url' => ['index']];
@@ -56,10 +56,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
     <?php
-    if ($model->status == TransferHdr::STATUS_ISSUE or $model->status == TransferHdr::STATUS_DRAFT_RECEIVE) {
+    if ($model->status == Transfer::STATUS_ISSUE or $model->status == Transfer::STATUS_DRAFT_RECEIVE) {
         echo Html::a('Update', ['update', 'id' => $model->id_transfer], ['class' => 'btn btn-primary']) . ' ';
     }
-    if ($model->status == TransferHdr::STATUS_DRAFT_RECEIVE) {
+    if ($model->status == Transfer::STATUS_DRAFT_RECEIVE) {
         echo Html::a('Receive', ['receive', 'id' => $model->id_transfer], [
             'class' => 'btn btn-primary',
             'data-confirm' => Yii::t('app', 'Are you sure to receive this item?'),

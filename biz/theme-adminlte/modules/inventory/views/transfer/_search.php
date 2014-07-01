@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdrSearch $model
+ * @var biz\purchase\models\PurchaseSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -59,13 +59,13 @@ use yii\widgets\ActiveForm;
         echo $field;
         ?>
 
-        <?php // echo $form->field($model, 'update_date') ?>
+        <?php // echo $form->field($model, 'update_at') ?>
 
         <?php // echo $form->field($model, 'update_by') ?>
 
         <?php // echo $form->field($model, 'create_by') ?>
 
-        <?php // echo $form->field($model, 'create_date')  ?>
+        <?php // echo $form->field($model, 'create_at')  ?>
 
 
     </div>

@@ -16,7 +16,7 @@ class TransferNotice extends TransferNoticeModel
     {
         return [
             [['id_transfer', 'status', 'update_by', 'create_by'], 'integer'],
-            [['notice_date', 'description', 'create_date', 'update_date'], 'safe'],
+            [['notice_date', 'description', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -47,8 +47,8 @@ class TransferNotice extends TransferNoticeModel
         ]);
 
         $query->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

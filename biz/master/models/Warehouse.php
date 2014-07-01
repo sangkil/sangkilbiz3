@@ -11,13 +11,13 @@ use Yii;
  * @property integer $id_branch
  * @property string $cd_whse
  * @property string $nm_whse
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property ProductStock[] $productStocks
- * @property TransferHdr[] $transferHdrs
+ * @property Transfer[] $transferHdrs
  * @property StockOpname[] $stockOpnames
  * @property SalesDtl[] $salesDtls
  * @property PurchaseDtl[] $purchaseDtls
@@ -58,9 +58,9 @@ class Warehouse extends \yii\db\ActiveRecord
             'id_branch' => 'Id Branch',
             'cd_whse' => 'Cd Whse',
             'nm_whse' => 'Nm Whse',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }
@@ -76,9 +76,9 @@ class Warehouse extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTransferHdrs()
+    public function getTransfers()
     {
-        return $this->hasMany(TransferHdr::className(), ['id_warehouse_dest' => 'id_warehouse']);
+        return $this->hasMany(Transfer::className(), ['id_warehouse_dest' => 'id_warehouse']);
     }
 
     /**

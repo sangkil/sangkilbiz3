@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\searchs\InvoiceHdr $model
+ * @var biz\models\searchs\Invoice $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

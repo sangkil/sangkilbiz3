@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdr $model
+ * @var biz\purchase\models\Purchase $model
  */
 $this->title = 'Update Transfer: ' . $model->transfer_num;
 $this->params['breadcrumbs'][] = ['label' => 'Transfer', 'url' => ['index']];

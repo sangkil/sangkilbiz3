@@ -16,7 +16,7 @@ class Supplier extends SupplierModel
     {
         return [
             [['id_supplier', 'create_by', 'update_by'], 'integer'],
-            [['cd_supplier', 'nm_supplier', 'create_date', 'update_date'], 'safe'],
+            [['cd_supplier', 'nm_supplier', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class Supplier extends SupplierModel
 
         $query->andFilterWhere(['like', 'cd_supplier', $this->cd_supplier])
             ->andFilterWhere(['like', 'nm_supplier', $this->nm_supplier])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

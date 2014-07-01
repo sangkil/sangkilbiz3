@@ -16,7 +16,7 @@ class Uom extends UomModel
     {
         return [
             [['id_uom', 'create_by', 'update_by'], 'integer'],
-            [['cd_uom', 'nm_uom', 'create_date', 'update_date'], 'safe'],
+            [['cd_uom', 'nm_uom', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -46,8 +46,8 @@ class Uom extends UomModel
 
         $query->andFilterWhere(['like', 'cd_uom', $this->cd_uom])
             ->andFilterWhere(['like', 'nm_uom', $this->nm_uom])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

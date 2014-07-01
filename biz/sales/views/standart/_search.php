@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var biz\purchase\models\PurchaseHdrSearch $model
+ * @var biz\purchase\models\PurchaseSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 		'method' => 'get',
 	]); ?>
 
-		<?= $form->field($model, 'id_purchase_hdr') ?>
+		<?= $form->field($model, 'id_purchase') ?>
 
 		<?= $form->field($model, 'purchase_num') ?>
 
@@ -29,13 +29,13 @@ use yii\widgets\ActiveForm;
 
 		<?php // echo $form->field($model, 'id_status') ?>
 
-		<?php // echo $form->field($model, 'update_date') ?>
+		<?php // echo $form->field($model, 'update_at') ?>
 
 		<?php // echo $form->field($model, 'update_by') ?>
 
 		<?php // echo $form->field($model, 'create_by') ?>
 
-		<?php // echo $form->field($model, 'create_date') ?>
+		<?php // echo $form->field($model, 'create_at') ?>
 
 		<div class="form-group">
 			<?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -11,9 +11,9 @@ use Yii;
  * @property integer $id_price_category
  * @property integer $id_uom
  * @property string $price
- * @property string $create_date
+ * @property string $create_at
  * @property integer $create_by
- * @property string $update_date
+ * @property string $update_at
  * @property integer $update_by
  *
  * @property PriceCategory $idPriceCategory
@@ -52,9 +52,9 @@ class Price extends \yii\db\ActiveRecord
             'id_price_category' => 'Id Price Category',
             'id_uom' => 'Id Uom',
             'price' => 'Price',
-            'create_date' => 'Create Date',
+            'create_at' => 'Create At',
             'create_by' => 'Create By',
-            'update_date' => 'Update Date',
+            'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
     }

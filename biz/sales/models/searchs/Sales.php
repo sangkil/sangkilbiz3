@@ -5,18 +5,18 @@ namespace biz\sales\models\searchs;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use biz\sales\models\SalesHdr as SalesHdrModel;
+use biz\sales\models\Sales as SalesModel;
 
 /**
- * SalesHdr represents the model behind the search form about `biz\sales\models\SalesHdr`.
+ * Sales represents the model behind the search form about `biz\sales\models\Sales`.
  */
-class SalesHdr extends SalesHdrModel
+class Sales extends SalesModel
 {
     public function rules()
     {
         return [
             [['id_sales', 'id_branch', 'id_customer', 'id_cashdrawer', 'status', 'create_by', 'update_by'], 'integer'],
-            [['sales_num', 'discount', 'sales_date', 'create_date', 'update_date'], 'safe'],
+            [['sales_num', 'discount', 'sales_date', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -28,7 +28,7 @@ class SalesHdr extends SalesHdrModel
 
     public function search($params)
     {
-        $query = SalesHdrModel::find();
+        $query = SalesModel::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,8 +51,8 @@ class SalesHdr extends SalesHdrModel
 
         $query->andFilterWhere(['like', 'sales_num', $this->sales_num])
             ->andFilterWhere(['like', 'discount', $this->discount])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }

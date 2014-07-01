@@ -92,7 +92,7 @@ class StockHook extends \yii\base\Behavior
      */
     public function transferIssueBody($event)
     {
-        /* @var $model \biz\master\models\TransferHdr */
+        /* @var $model \biz\master\models\Transfer */
         /* @var $detail \biz\master\models\TransferDtl */
         $model = $event->params[0];
         $detail = $event->params[1];
@@ -131,7 +131,7 @@ class StockHook extends \yii\base\Behavior
      */
     public function receiveReceiveBody($event)
     {
-        /* @var $model \biz\master\models\TransferHdr */
+        /* @var $model \biz\master\models\Transfer */
         /* @var $detail \biz\master\models\TransferDtl */
         $model = $event->params[0];
         $detail = $event->params[1];

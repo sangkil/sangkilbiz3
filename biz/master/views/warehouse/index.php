@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'id_warehouse',
 			'cd_whse',
 			'nm_whse',
-			'create_date',
+			'create_at',
 			'create_by',
-			// 'update_date',
+			// 'update_at',
 			// 'update_by',
 
 			['class' => 'biz\app\components\ActionColumn'],

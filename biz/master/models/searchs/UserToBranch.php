@@ -16,7 +16,7 @@ class UserToBranch extends UserToBranchModel
     {
         return [
             [['id_branch', 'id_user', 'create_by', 'update_by'], 'integer'],
-            [['create_date', 'update_date'], 'safe'],
+            [['create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -42,9 +42,9 @@ class UserToBranch extends UserToBranchModel
             'id_branch' => $this->id_branch,
             'id_user' => $this->id_user,
             'is_active' => $this->is_active,
-            'create_date' => $this->create_date,
+            'create_at' => $this->create_at,
             'create_by' => $this->create_by,
-            'update_date' => $this->update_date,
+            'update_at' => $this->update_at,
             'update_by' => $this->update_by,
         ]);
 

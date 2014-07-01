@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\models\TransferHdr;
+use biz\models\Transfer;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 use yii\grid\DataColumn;
@@ -10,7 +10,7 @@ use yii\grid\DataColumn;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\purchase\models\PurchaseHdrSearch $searchModel
+ * @var biz\purchase\models\PurchaseSearch $searchModel
  */
 $this->title = 'Inventory Transfer';
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,22 +42,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                         $warnaStatus = 'label-warning';
                         switch ($model->status) {
-                            case TransferHdr::STATUS_DRAFT:
+                            case Transfer::STATUS_DRAFT:
                                 $warnaStatus = 'label-danger';
                                 break;
-                            case TransferHdr::STATUS_ISSUE:
+                            case Transfer::STATUS_ISSUE:
                                 $warnaStatus = 'label-warning';
                                 break;
-                            case TransferHdr::STATUS_DRAFT_RECEIVE:
+                            case Transfer::STATUS_DRAFT_RECEIVE:
                                 $warnaStatus = 'label-info';
                                 break;
-                            case TransferHdr::STATUS_CONFIRM_REJECT:
+                            case Transfer::STATUS_CONFIRM_REJECT:
                                 $warnaStatus = 'label-info';
                                 break;
-                            case TransferHdr::STATUS_CONFIRM_APPROVE:
+                            case Transfer::STATUS_CONFIRM_APPROVE:
                                 $warnaStatus = 'label-primary';
                                 break;
-                            case TransferHdr::STATUS_RECEIVE:
+                            case Transfer::STATUS_RECEIVE:
                                 $warnaStatus = 'label-success';
                                 break;
                         }
@@ -70,13 +70,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'template' => '{view} {update} {delete} {issue}',
                             'buttons' => [
                                 'update' => function ($url, $model) {
-                            return $model->status == TransferHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                            return $model->status == Transfer::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                         'title' => Yii::t('yii', 'Update'),
                                         'data-pjax' => '0',
                                     ]) : '';
                         },
                                 'delete' => function ($url, $model) {
-                            return $model->status == TransferHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                            return $model->status == Transfer::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                                         'title' => Yii::t('yii', 'Delete'),
                                         'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                         'data-method' => 'post',
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]) : '';
                         },
                                 'issue' => function ($url, $model) {
-                            return $model->status == TransferHdr::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
+                            return $model->status == Transfer::STATUS_DRAFT ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
                                         'title' => Yii::t('yii', 'Issue'),
                                         'data-confirm' => Yii::t('yii', 'Are you sure you want to issue this item?'),
                                         'data-method' => 'post',

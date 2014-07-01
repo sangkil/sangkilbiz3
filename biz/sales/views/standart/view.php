@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\sales\models\SalesHdr;
+use biz\sales\models\Sales;
 
 /**
  * @var yii\web\View $this
- * @var biz\sales\models\SalesHdr $model
+ * @var biz\sales\models\Sales $model
  */
 $this->title = $model->sales_num;
 $this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
     <?php
-    if ($model->status == SalesHdr::STATUS_DRAFT) {
+    if ($model->status == Sales::STATUS_DRAFT) {
         echo Html::a('Update', ['update', 'id' => $model->id_sales], ['class' => 'btn btn-primary']) . ' ';
         echo Html::a('Delete', ['delete', 'id' => $model->id_sales], [
             'class' => 'btn btn-danger',
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data-confirm' => Yii::t('app', 'Are you sure to release this item?'),
             'data-method' => 'post',
         ]);
-    } elseif ($model->status == SalesHdr::STATUS_RELEASE) {
+    } elseif ($model->status == Sales::STATUS_RELEASE) {
         echo Html::a('Posting', ['posting', 'id' => $model->id_sales], [
             'class' => 'btn btn-success',
             'data-confirm' => Yii::t('app', 'Are you sure to post this item?'),

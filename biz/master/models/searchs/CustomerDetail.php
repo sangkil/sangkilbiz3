@@ -16,7 +16,7 @@ class CustomerDetail extends CustomerDetailModel
     {
         return [
             [['id_customer', 'id_distric', 'id_kab', 'id_kec', 'id_kel', 'create_by', 'update_by'], 'integer'],
-            [['addr1', 'addr2', 'latitude', 'longtitude', 'create_date', 'update_date'], 'safe'],
+            [['addr1', 'addr2', 'latitude', 'longtitude', 'create_at', 'update_at'], 'safe'],
         ];
     }
 
@@ -52,8 +52,8 @@ class CustomerDetail extends CustomerDetailModel
             ->andFilterWhere(['like', 'addr2', $this->addr2])
             ->andFilterWhere(['like', 'latitude', $this->latitude])
             ->andFilterWhere(['like', 'longtitude', $this->longtitude])
-            ->andFilterWhere(['like', 'create_date', $this->create_date])
-            ->andFilterWhere(['like', 'update_date', $this->update_date]);
+            ->andFilterWhere(['like', 'create_at', $this->create_at])
+            ->andFilterWhere(['like', 'update_at', $this->update_at]);
 
         return $dataProvider;
     }
