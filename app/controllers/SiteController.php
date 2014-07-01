@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 use Yii;
@@ -13,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class SiteController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -56,12 +58,26 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $parent = $this->module;
+        $modules = [];
+        foreach ($parent->modules as $id => $module) {
+            $module = $parent->getModule($id);
+            $class = new \ReflectionClass($module);
+            $comment = strtr(trim(preg_replace('/^\s*\**( |\t)?/m', '', trim($class->getDocComment(), '/'))), "\r", '');
+            if (preg_match('/^\s*@\w+/m', $comment, $matches, PREG_OFFSET_CAPTURE)) {
+                $comment = trim(substr($comment, 0, $matches[0][1]));
+            }
+            $modules[$module->uniqueId] = [
+                'name' => \yii\helpers\Inflector::camel2words($module->id),
+                'comment' => $comment
+            ];
+        }
+        return $this->render('index', ['modules' => $modules]);
     }
 
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -70,7 +86,7 @@ class SiteController extends Controller
             return $this->goBack();
         } else {
             return $this->render('login', [
-                'model' => $model,
+                    'model' => $model,
             ]);
         }
     }
@@ -94,7 +110,7 @@ class SiteController extends Controller
         }
 
         return $this->render('signup', [
-            'model' => $model,
+                'model' => $model,
         ]);
     }
 }
