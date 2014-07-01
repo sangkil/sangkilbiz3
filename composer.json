@@ -22,6 +22,7 @@
 		"issues": "https://github.com/sangkil/sangkilbiz3/issues?page=1&state=open",
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
+	"minimum-stability": "dev",	
 	"require": {
 		"php": ">=5.4.0",
 		"yiisoft/yii2": "*",
@@ -38,15 +39,6 @@
 		"yiisoft/yii2-codeception": "*",
 		"yiisoft/yii2-debug": "*",
 		"yiisoft/yii2-gii": "*"
-	},
-	"replace": {
-		"sangkil/biz3-app": "self.version",
-		"sangkil/biz3-master": "self.version",
-		"sangkil/biz3-purchase": "self.version",
-		"sangkil/biz3-sales": "self.version",
-		"sangkil/biz3-inventory": "self.version",
-		"sangkil/biz3-accounting": "self.version",
-		"sangkil/biz3-theme-adminlte": "self.version"
 	},
 	"scripts": {
 		"post-create-project-cmd": [
