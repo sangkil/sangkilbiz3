@@ -16,8 +16,8 @@ use biz\master\models\GlobalConfig;
 	<?php $form = ActiveForm::begin(); ?>
 
 	<?php
-	$groups = GlobalConfig::find()->select('config_group')->distinct(true)->column();
-	echo $form->field($model, 'config_group')->widget('yii\jui\AutoComplete', [
+	$groups = GlobalConfig::find()->select('group')->distinct(true)->column();
+	echo $form->field($model, 'group')->widget('yii\jui\AutoComplete', [
 		'options' => ['class' => 'form-control', 'maxlength' => 16],
 		'clientOptions' => [
 			'source' => $groups
@@ -25,9 +25,9 @@ use biz\master\models\GlobalConfig;
 	])
 	?>
 
-	<?= $form->field($model, 'config_name')->textInput(['maxlength' => 32]) ?>
+	<?= $form->field($model, 'name')->textInput(['maxlength' => 32]) ?>
 
-	<?= $form->field($model, 'config_value')->textInput() ?>
+	<?= $form->field($model, 'value')->textInput() ?>
 
 	<?= $form->field($model, 'description')->textInput(['maxlength' => 128]) ?>
 

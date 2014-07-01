@@ -7,9 +7,9 @@ use Yii;
 /**
  * This is the model class for table "global_config".
  *
- * @property string $config_group
- * @property string $config_name
- * @property string $config_value
+ * @property string $group
+ * @property string $name
+ * @property string $value
  * @property string $description
  * @property string $create_at
  * @property integer $create_by
@@ -32,10 +32,10 @@ class GlobalConfig extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['config_group', 'config_name', 'config_value'], 'required'],
-            [['config_value'], 'string'],
-            [['config_group'], 'string', 'max' => 16],
-            [['config_name'], 'string', 'max' => 32],
+            [['group', 'name', 'value'], 'required'],
+            [['value'], 'string'],
+            [['group'], 'string', 'max' => 16],
+            [['name'], 'string', 'max' => 32],
             [['description'], 'string', 'max' => 128]
         ];
     }
@@ -46,9 +46,9 @@ class GlobalConfig extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'config_group' => 'Config Group',
-            'config_name' => 'Config Name',
-            'config_value' => 'Config Value',
+            'group' => 'Config Group',
+            'name' => 'Config Name',
+            'value' => 'Config Value',
             'description' => 'Description',
             'create_at' => 'Create At',
             'create_by' => 'Create By',

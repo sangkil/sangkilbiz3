@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var biz\master\models\GlobalConfig $model
  */
 
-$this->title = $model->config_group;
+$this->title = $model->group;
 $this->params['breadcrumbs'][] = ['label' => 'Global Configs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'config_group' => $model->config_group, 'config_name' => $model->config_name], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'config_group' => $model->config_group, 'config_name' => $model->config_name], [
+        <?= Html::a('Update', ['update', 'group' => $model->group, 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'group' => $model->group, 'name' => $model->name], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'config_group',
-            'config_name',
-            'config_value',
+            'group',
+            'name',
+            'value',
             'description',
         ],
     ]) ?>

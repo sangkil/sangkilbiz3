@@ -149,8 +149,8 @@ class Helper
 
     public static function getConfigValue($group, $name, $default = null)
     {
-        $model = GlobalConfig::findOne(['config_group' => $group, 'config_name' => $name]);
-        return $model ? $model->config_value : $default;
+        $model = GlobalConfig::findOne(['group' => $group, 'name' => $name]);
+        return $model ? $model->value : $default;
     }
 
     public static function getWarehouseList($branch = false)

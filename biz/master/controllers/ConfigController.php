@@ -43,14 +43,14 @@ class ConfigController extends Controller
 
     /**
      * Displays a single GlobalConfig model.
-     * @param string $config_group
-     * @param string $config_name
+     * @param string $group
+     * @param string $name
      * @return mixed
      */
-    public function actionView($config_group, $config_name)
+    public function actionView($group, $name)
     {
         return $this->render('view', [
-            'model' => $this->findModel($config_group, $config_name),
+            'model' => $this->findModel($group, $name),
         ]);
     }
 
@@ -64,7 +64,7 @@ class ConfigController extends Controller
         $model = new GlobalConfig;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'config_group' => $model->config_group, 'config_name' => $model->config_name]);
+            return $this->redirect(['view', 'group' => $model->group, 'name' => $model->name]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,16 +75,16 @@ class ConfigController extends Controller
     /**
      * Updates an existing GlobalConfig model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $config_group
-     * @param string $config_name
+     * @param string $group
+     * @param string $name
      * @return mixed
      */
-    public function actionUpdate($config_group, $config_name)
+    public function actionUpdate($group, $name)
     {
-        $model = $this->findModel($config_group, $config_name);
+        $model = $this->findModel($group, $name);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'config_group' => $model->config_group, 'config_name' => $model->config_name]);
+            return $this->redirect(['view', 'group' => $model->group, 'name' => $model->name]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -95,13 +95,13 @@ class ConfigController extends Controller
     /**
      * Deletes an existing GlobalConfig model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $config_group
-     * @param string $config_name
+     * @param string $group
+     * @param string $name
      * @return mixed
      */
-    public function actionDelete($config_group, $config_name)
+    public function actionDelete($group, $name)
     {
-        $this->findModel($config_group, $config_name)->delete();
+        $this->findModel($group, $name)->delete();
 
         return $this->redirect(['index']);
     }
@@ -109,14 +109,14 @@ class ConfigController extends Controller
     /**
      * Finds the GlobalConfig model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $config_group
-     * @param string $config_name
+     * @param string $group
+     * @param string $name
      * @return GlobalConfig the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($config_group, $config_name)
+    protected function findModel($group, $name)
     {
-        if (($model = GlobalConfig::findOne(['config_group' => $config_group, 'config_name' => $config_name])) !== null) {
+        if (($model = GlobalConfig::findOne(['group' => $group, 'name' => $name])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

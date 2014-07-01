@@ -15,7 +15,7 @@ class ProductStock extends ProductStockModel
     public function rules()
     {
         return [
-            [['id_stock', 'id_warehouse', 'id_product', 'id_uom', 'create_by', 'update_by'], 'integer'],
+            [['id_warehouse', 'id_product', 'id_uom', 'create_by', 'update_by'], 'integer'],
             [['qty_stock', 'create_at', 'update_at'], 'safe'],
         ];
     }
@@ -39,7 +39,6 @@ class ProductStock extends ProductStockModel
         }
 
         $query->andFilterWhere([
-            'id_stock' => $this->id_stock,
             'id_warehouse' => $this->id_warehouse,
             'id_product' => $this->id_product,
             'id_uom' => $this->id_uom,

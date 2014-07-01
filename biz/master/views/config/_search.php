@@ -17,11 +17,11 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'config_group') ?>
+    <?= $form->field($model, 'group') ?>
 
-    <?= $form->field($model, 'config_name') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'config_value') ?>
+    <?= $form->field($model, 'value') ?>
 
     <?= $form->field($model, 'description') ?>
 

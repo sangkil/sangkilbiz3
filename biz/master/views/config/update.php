@@ -7,9 +7,9 @@ use yii\helpers\Html;
  * @var biz\master\models\GlobalConfig $model
  */
 
-$this->title = 'Update Global Config: ' . $model->config_group;
+$this->title = 'Update Global Config: ' . $model->group;
 $this->params['breadcrumbs'][] = ['label' => 'Global Configs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->config_group, 'url' => ['view', 'config_group' => $model->config_group, 'config_name' => $model->config_name]];
+$this->params['breadcrumbs'][] = ['label' => $model->group, 'url' => ['view', 'group' => $model->group, 'name' => $model->name]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="global-config-update">

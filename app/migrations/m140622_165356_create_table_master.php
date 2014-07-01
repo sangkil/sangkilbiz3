@@ -125,6 +125,23 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
         ]);
 
+        $this->createTable('{{%product_stock}}', [
+            'id_warehouse' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'qty_stock' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // constrain
+            'PRIMARY KEY (id_warehouse , id_product )',
+            'FOREIGN KEY (id_warehouse) REFERENCES {{%warehouse}} (id_warehouse) ON DELETE CASCADE ON UPDATE CASCADE',
+            'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
+            'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
+        ]);
+
         $this->createTable('{{%supplier}}', [
             'id_supplier' => Schema::TYPE_PK,
             'cd_supplier' => Schema::TYPE_STRING . '(4) NOT NULL',
@@ -238,15 +255,31 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'PRIMARY KEY (id_branch , id_user )',
             'FOREIGN KEY (id_branch) REFERENCES {{%branch}} (id_branch) ON DELETE CASCADE ON UPDATE CASCADE',
         ]);
+
+        $this->createTable('{{%global_config}}', [
+            'group' => Schema::TYPE_STRING.'(16) NOT NULL',
+            'name' => Schema::TYPE_STRING.'(32) NOT NULL',
+            'value' => Schema::TYPE_STRING,
+            'description' => Schema::TYPE_STRING,
+            // history column
+            'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+            'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // constrain
+            'PRIMARY KEY (group , name)',
+        ]);
     }
 
     public function safeDown()
     {
+        $this->dropTable('{{%global_config}}');
         $this->dropTable('{{%user_to_branch}}');
         $this->dropTable('{{%cogs}}');
         $this->dropTable('{{%price}}');
         $this->dropTable('{{%price_category}}');
         $this->dropTable('{{%product_supplier}}');
+        $this->dropTable('{{%product_stock}}');
         $this->dropTable('{{%product_uom}}');
         $this->dropTable('{{%product_child}}');
         $this->dropTable('{{%product}}');

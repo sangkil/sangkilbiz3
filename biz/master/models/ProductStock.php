@@ -28,7 +28,7 @@ class ProductStock extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'product_stock';
+        return '{{%product_stock}}';
     }
 
     /**
@@ -49,7 +49,6 @@ class ProductStock extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_stock' => 'Id Stock',
             'id_warehouse' => 'Id Warehouse',
             'id_product' => 'Id Product',
             'id_uom' => 'Id Uom',

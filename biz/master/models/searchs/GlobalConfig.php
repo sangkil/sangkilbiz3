@@ -15,7 +15,7 @@ class GlobalConfig extends GlobalConfigModel
     public function rules()
     {
         return [
-            [['config_group', 'config_name', 'config_value', 'description', 'create_at', 'update_at'], 'safe'],
+            [['group', 'name', 'value', 'description', 'create_at', 'update_at'], 'safe'],
             [['create_by', 'update_by'], 'integer'],
         ];
     }
@@ -43,9 +43,9 @@ class GlobalConfig extends GlobalConfigModel
             'update_by' => $this->update_by,
         ]);
 
-        $query->andFilterWhere(['like', 'config_group', $this->config_group])
-            ->andFilterWhere(['like', 'config_name', $this->config_name])
-            ->andFilterWhere(['like', 'config_value', $this->config_value])
+        $query->andFilterWhere(['like', 'group', $this->group])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'value', $this->value])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'create_at', $this->create_at])
             ->andFilterWhere(['like', 'update_at', $this->update_at]);

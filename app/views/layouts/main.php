@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\helpers\Inflector;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -55,7 +56,7 @@ AppAsset::register($this);
         $breadcrumbs = isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [];
         foreach (Yii::$app->controller->modules as $module) {
             if($module != Yii::$app){
-                array_unshift($breadcrumbs, ['label' => $module->id, 'url' => ['/'.$module->uniqueId]]);
+                array_unshift($breadcrumbs, ['label' => Inflector::camel2words($module->id), 'url' => ['/'.$module->uniqueId]]);
             }
         }
         ?>
