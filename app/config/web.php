@@ -21,7 +21,7 @@ return [
     'modules' => [],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
         'log' => [

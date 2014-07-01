@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $model app\models\LoginForm */
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;

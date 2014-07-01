@@ -1,5 +1,5 @@
-web-local.php
-console-local.php
-common-local.php
-params-local.php
 bootstrap-local.php
+common-local.php
+console-local.php
+main-local.php
+params-local.php
