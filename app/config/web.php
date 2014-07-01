@@ -1,16 +1,23 @@
 <?php
+
 $params = array_merge(
-    require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/../../common/config/params-local.php'),
-    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params.php'), 
     require(__DIR__ . '/params-local.php')
 );
 
 return [
-    'id' => 'sangkilbiz',
+    'id' => 'app-web',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'app\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'biz\app\Bootstrap',
+        'biz\master\Bootstrap',
+        'biz\purchase\Bootstrap',
+        'biz\inventory\Bootstrap',
+        'biz\sales\Bootstrap',
+        'biz\accounting\Bootstrap',
+    ],
     'modules' => [],
     'components' => [
         'user' => [

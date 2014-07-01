@@ -1,9 +1,9 @@
 {
-	"name": "sangkil/biz3-dev",
+	"name": "sangkil/sangkilbiz3",
 	"description": "Simple ERP",
 	"keywords": ["yii2", "ERP"],
 	"homepage": "http://www.sangkilsoft.com/",
-	"type": "yii2-extension",
+	"type": "project",
 	"license": "BSD-3-Clause",
 	"authors": [
 		{
@@ -23,12 +23,21 @@
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
 	"require": {
+		"php": ">=5.4.0",
 		"yiisoft/yii2": "*",
+		"yiisoft/yii2-bootstrap": "*",
 		"yiisoft/yii2-jui": "*",
-		"mdmsoft/yii2-autonumber": "dev-master",
-		"mdmsoft/yii2-logger": "dev-master",
-		"mdmsoft/yii2-format-converter": "dev-master",
-		"mdmsoft/yii2-ar-relation": "dev-master"
+		"yiisoft/yii2-mongodb": "*",
+		"mdmsoft/yii2-admin": "*",
+		"mdmsoft/yii2-autonumber": "*",
+		"mdmsoft/yii2-logger": "*",
+		"mdmsoft/yii2-format-converter": "*",
+		"mdmsoft/yii2-ar-relation": "*"
+	},
+	"require-dev": {
+		"yiisoft/yii2-codeception": "*",
+		"yiisoft/yii2-debug": "*",
+		"yiisoft/yii2-gii": "*"
 	},
 	"replace": {
 		"sangkil/biz3-app": "self.version",
@@ -39,19 +48,18 @@
 		"sangkil/biz3-accounting": "self.version",
 		"sangkil/biz3-theme-adminlte": "self.version"
 	},
-	"autoload": {
-		"psr-4": {
-			"biz\\dev\\": "",
-			"biz\\app\\": "biz/app",
-			"biz\\master\\": "biz/master",
-			"biz\\purchase\\": "biz/purchase",
-			"biz\\sales\\": "biz/sales",
-			"biz\\inventory\\": "biz/inventory",
-			"biz\\accounting\\": "biz/accounting",
-			"biz\\adminlte\\": "biz/theme-adminlte"
-		}
+	"scripts": {
+		"post-create-project-cmd": [
+			"yii\\composer\\Installer::setPermission"
+		]
+	},
+	"config": {
+		"process-timeout": 1800
 	},
 	"extra": {
-		"bootstrap": "biz\\dev\\Bootstrap"
+		"writable": [
+			"app/runtime",
+			"app/web/assets"
+		]
 	}
 }
