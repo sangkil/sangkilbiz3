@@ -2,14 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\inventory\assets\ReceiveAsset;
-use biz\app\assets\BizDataAsset;
 
-/**
- * @var yii\web\View $this
- * @var biz\purchase\models\Purchase $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $this yii\web\View */
+/* @var $model biz\purchase\models\Purchase */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="receive-form">
@@ -54,10 +50,3 @@ use biz\app\assets\BizDataAsset;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php
-ReceiveAsset::register($this);
-BizDataAsset::register($this, [
-    'master'=>$masters
-]);
-$js_ready = '$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;';
-$this->registerJs($js_ready);

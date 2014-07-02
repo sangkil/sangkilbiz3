@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\components\Helper;
-use biz\inventory\assets\TransferAsset;
-use biz\app\assets\BizDataAsset;
 
 /**
  * @var yii\web\View $this
@@ -24,7 +22,7 @@ use biz\app\assets\BizDataAsset;
     array_unshift($models, $model);
     echo $form->errorSummary($models)
     ?>
-<?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?> 
+    <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?> 
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -51,13 +49,5 @@ use biz\app\assets\BizDataAsset;
             ?>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
-
+    <?php ActiveForm::end(); ?>
 </div>
-<?php
-TransferAsset::register($this);
-BizDataAsset::register($this, [
-    'master'=>$masters
-]);
-$js_ready = '$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;';
-$this->registerJs($js_ready);

@@ -8,10 +8,10 @@ use biz\inventory\models\searchs\TransferNotice as TransferNoticeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\base\Model;
 use biz\app\Hooks;
 use yii\base\UserException;
 use biz\app\base\Event;
+use biz\app\components\Helper as AppHelper;
 
 /**
  * NoticeController implements the CRUD actions for TransferNotice model.
@@ -60,24 +60,6 @@ class NoticeController extends Controller
     }
 
     /**
-     * Creates a new TransferNotice model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new TransferNotice;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_transfer]);
-        } else {
-            return $this->render('create', [
-                    'model' => $model,
-            ]);
-        }
-    }
-
-    /**
      * Updates an existing TransferNotice model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -86,27 +68,27 @@ class NoticeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $details = $model->getTransferNoticeDtls()->with('transferDtl')->indexBy('id_product')->all();
-        if ($post = Yii::$app->request->post()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->status = TransferNotice::STATUS_UPDATE;
-                if ($model->save() && Model::loadMultiple($details, $post) && Model::validateMultiple($details)) {
-                    foreach ($details as $detail) {
-                        $detail->save();
-                    }
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id_transfer]);
-                }
-                $transaction->rollBack();
-            } catch (\Exception $exc) {
-                $model->addError('', $exc->getMessage());
+        if (!AppHelper::checkAccess('update', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
+        $model->getTransferNoticeDtls()->indexBy('id_product');
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('transferNoticeDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $transaction->commit();
+                return $this->redirect(['view', 'id' => $model->id_transfer]);
+            } else {
                 $transaction->rollBack();
             }
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
+
         return $this->render('update', [
                 'model' => $model,
-                'details' => $details
+                'details' => $model->transferNoticeDtls
         ]);
     }
 
@@ -114,6 +96,9 @@ class NoticeController extends Controller
     {
         $model = $this->findModel($id);
         Yii::$app->trigger(Hooks::E_INAPP_1, new Event([$model]));
+        if (!AppHelper::checkAccess('approve', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model->status = TransferNotice::STATUS_APPROVE;
@@ -141,8 +126,12 @@ class NoticeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        Yii::$app->trigger(Hooks::E_INDEL_1, new Event([$model]));
+        if (!AppHelper::checkAccess('delete', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
+        $model->delete();
         return $this->redirect(['index']);
     }
 

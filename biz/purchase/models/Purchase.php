@@ -3,7 +3,6 @@
 namespace biz\purchase\models;
 
 use Yii;
-
 use biz\master\models\Supplier;
 use biz\master\models\Branch;
 
@@ -30,14 +29,12 @@ use biz\master\models\Branch;
  * @property Branch $idBranch
  * @property PurchaseDtl[] $purchaseDtls
  * 
- * @method array saveRelation(string $relation) Description
+ * @method array saveRelation(string $relation, array $data, array $options) Description
  */
 class Purchase extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RECEIVE = 2;
-
-    public $id_warehouse;
 
     /**
      * @inheritdoc
@@ -53,10 +50,10 @@ class Purchase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_supplier', 'id_branch', 'purchaseDate', 'purchase_value', 'status'], 'required'],
+            [['id_supplier', 'id_branch', 'id_warehouse', 'purchaseDate', 'purchase_value', 'status'], 'required'],
             [['id_branch', 'status'], 'integer'],
-            [['purchase_date', 'id_warehouse'], 'safe'],
-            [['item_discount'],'number']
+            [['purchase_date'], 'safe'],
+            [['item_discount'], 'number']
         ];
     }
 
@@ -84,22 +81,6 @@ class Purchase extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdSupplier()
-    {
-        return $this->hasOne(Supplier::className(), ['id_supplier' => 'id_supplier']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdBranch()
-    {
-        return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getPurchaseDtls()
     {
         return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase']);
@@ -121,13 +102,13 @@ class Purchase extends \yii\db\ActiveRecord
                 'value' => 'PU' . date('y.?')
             ],
             [
-                'class'=>'mdm\converter\DateConverter',
-                'attributes'=>[
+                'class' => 'mdm\converter\DateConverter',
+                'attributes' => [
                     'purchaseDate' => 'purchase_date',
                 ]
             ],
             'BizStatusConverter',
-            'class'=>'mdm\relation\RelationBehavior',
+            'mdm\relation\RelationBehavior',
         ];
     }
 }

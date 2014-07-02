@@ -5,7 +5,6 @@ namespace biz\inventory\controllers;
 use Yii;
 use biz\inventory\models\Transfer;
 use biz\inventory\models\searchs\Transfer as TransferSearch;
-use biz\inventory\models\TransferDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,6 +12,8 @@ use \Exception;
 use biz\app\Hooks;
 use yii\base\UserException;
 use biz\app\base\Event;
+use biz\master\components\Helper as MasterHelper;
+use biz\app\components\Helper as AppHelper;
 
 /**
  * TransferController implements the CRUD actions for Transfer model.
@@ -70,94 +71,38 @@ class ReceiveController extends Controller
         $model = $this->findModel($id);
         $model->scenario = TransferSearch::SCENARIO_RECEIVE;
         Yii::$app->trigger(Hooks::E_IRUPD_1, new Event([$model]));
-        list($details, $success) = $this->saveReceive($model);
-        if ($success) {
-            return $this->redirect(['view', 'id' => $model->id_transfer]);
+        if (!AppHelper::checkAccess('update', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
         }
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('transferDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $transaction->commit();
+                return $this->redirect(['view', 'id' => $model->id_transfer]);
+            } else {
+                $transaction->rollBack();
+            }
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
+        }
+        
         return $this->render('update', [
                 'model' => $model,
-                'details' => $details,
+                'details' => $model->transferDtls,
                 'masters' => $this->getDataMaster()
         ]);
     }
 
-    /**
-     * 
-     * @param Transfer $model
-     * @return array
-     */
-    protected function saveReceive($model)
-    {
-        $post = Yii::$app->request->post();
-        $details = $model->transferDtls;
-        $success = false;
-
-        if ($model->load($post)) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $formName = (new TransferDtl)->formName();
-                $postDetails = empty($post[$formName]) ? [] : $post[$formName];
-                if ($postDetails === []) {
-                    throw new Exception('Detail tidak boleh kosong');
-                }
-                $objs = [];
-                foreach ($details as $detail) {
-                    $objs[$detail->id_product] = $detail;
-                }
-
-                $model->status = Transfer::STATUS_DRAFT_RECEIVE;
-                if ($model->save()) {
-                    $success = true;
-                    $id_hdr = $model->id_transfer;
-                    $details = [];
-                    foreach ($postDetails as $dataDetail) {
-                        $id_dtl = $dataDetail['id_product'];
-                        if (isset($objs[$id_dtl])) {
-                            $detail = $objs[$id_dtl];
-                            unset($objs[$id_dtl]);
-                        } else {
-                            $detail = new TransferDtl;
-                        }
-
-                        $detail->setAttributes($dataDetail);
-                        $detail->id_transfer = $id_hdr;
-                        if (!$detail->save()) {
-                            $success = false;
-                            $model->addError('', implode("\n", $detail->firstErrors));
-                            break;
-                        }
-                        $details[] = $detail;
-                    }
-                    if ($success && count($objs)) {
-                        $success = TransferDtl::deleteAll(['id_transfer' => $id_hdr, 'id_product' => array_keys($objs)]);
-                    }
-                }
-                if ($success) {
-                    $transaction->commit();
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (Exception $exc) {
-                $model->addError('', $exc->getMessage());
-                $transaction->rollBack();
-                $success = false;
-            }
-            if (!$success) {
-                $details = [];
-                foreach ($postDetails as $value) {
-                    $detail = new TransferDtl();
-                    $detail->setAttributes($value);
-                    $details[] = $detail;
-                }
-            }
-        }
-        return [$details, $success];
-    }
 
     public function actionReceive($id)
     {
         $model = $this->findModel($id);
         Yii::$app->trigger(Hooks::E_IRREC_1, new Event([$model]));
+        if (!AppHelper::checkAccess('receive', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model->status = Transfer::STATUS_RECEIVE;
@@ -196,51 +141,6 @@ class ReceiveController extends Controller
 
     public function getDataMaster()
     {
-        $db = Yii::$app->db;
-        $sql = "select p.id_product as id, p.cd_product as cd, p.nm_product as nm,
-			u.id_uom, u.nm_uom, pu.isi
-			from product p
-			join product_uom pu on(pu.id_product=p.id_product)
-			join uom u on(u.id_uom=pu.id_uom)
-			order by p.id_product,pu.isi";
-        $product = [];
-        foreach ($db->createCommand($sql)->query() as $row) {
-            $id = $row['id'];
-            if (!isset($product[$id])) {
-                $product[$id] = [
-                    'id' => $row['id'],
-                    'cd' => $row['cd'],
-                    'text' => $row['nm'],
-                    'id_uom' => $row['id_uom'],
-                    'nm_uom' => $row['nm_uom'],
-                ];
-            }
-            $product[$id]['uoms'][$row['id_uom']] = [
-                'id' => $row['id_uom'],
-                'nm' => $row['nm_uom'],
-                'isi' => $row['isi']
-            ];
-        }
-
-        // barcodes
-        $barcodes = [];
-        $sql_barcode = "select lower(barcode) as barcode,id_product as id"
-            . " from product_child"
-            . " union"
-            . " select lower(cd_product), id_product"
-            . " from product";
-        foreach ($db->createCommand($sql_barcode)->queryAll() as $row) {
-            $barcodes[$row['barcode']] = $row['id'];
-        }
-
-        $sql = "select id_warehouse,id_product,qty_stock from product_stock";
-        $ps = [];
-        foreach ($db->createCommand($sql)->queryAll() as $row) {
-            $ps[$row['id_warehouse']][$row['id_product']] = $row['qty_stock'];
-        }
-        return [
-            'product' => $product,
-            'ps' => $ps
-        ];
+        return MasterHelper::getMasters('product, barcode, product_stock');
     }
 }

@@ -74,27 +74,25 @@ class PurchaseController extends Controller
             'id_branch' => Yii::$app->user->branch,
             'purchase_date' => date('Y-m-d')
         ]);
-        $details = [];
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->save(false);
-                list($saved, $details) = $model->saveRelation('purchaseDtls');
-                if ($saved == true) {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id_purchase]);
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $exc) {
+
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('purchaseDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $transaction->commit();
+                return $this->redirect(['view', 'id' => $model->id_purchase]);
+            } else {
                 $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
             }
-            $model->setIsNewRecord(true);
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
+
+        $model->setIsNewRecord(true);
         return $this->render('create', [
                 'model' => $model,
-                'details' => $details,
+                'details' => $model->purchaseDtls,
                 'masters' => $this->getDataMaster()
         ]);
     }
@@ -108,32 +106,25 @@ class PurchaseController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(!AppHelper::checkAccess('update', $model)){
+        if (!AppHelper::checkAccess('update', $model)) {
             throw new \yii\web\ForbiddenHttpException('Forbidden');
         }
-        $details = $model->purchaseDtls;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->save(false);
-                list($saved, $details) = $model->saveRelation('purchaseDtls',[
-                    'extra'=>['id_warehouse'=>$model->id_warehouse]
-                ]);
-                if ($saved == true) {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id_purchase]);
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $exc) {
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('purchaseDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $transaction->commit();
+                return $this->redirect(['view', 'id' => $model->id_purchase]);
+            } else {
                 $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
-                throw $exc;
             }
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
         return $this->render('update', [
                 'model' => $model,
-                'details' => $details,
+                'details' => $model->purchaseDtls,
                 'masters' => $this->getDataMaster()
         ]);
     }

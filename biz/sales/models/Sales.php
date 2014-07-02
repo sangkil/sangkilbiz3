@@ -3,8 +3,6 @@
 namespace biz\sales\models;
 
 use Yii;
-use biz\master\models\Customer;
-use biz\master\models\Branch;
 
 /**
  * This is the model class for table "sales".
@@ -25,10 +23,8 @@ use biz\master\models\Branch;
  * @property string $nmStatus
  * @property string $salesDate
  *
- * @property Customer $idCustomer
- * @property Branch $idBranch
- * @property Cashdrawer $idCashdrawer
  * @property SalesDtl[] $salesDtls
+ * @method boolean|integer saveRelation(string $relation, array $data, array $options)
  */
 class Sales extends \yii\db\ActiveRecord
 {
@@ -52,7 +48,7 @@ class Sales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_branch', 'id_customer', 'salesDate', 'status'], 'required'],
+            [['id_branch', 'id_customer', 'id_warehouse', 'salesDate', 'status'], 'required'],
             [['id_branch', 'id_cashdrawer', 'status', 'id_warehouse'], 'integer'],
             [['discount'], 'number'],
             [['sales_date'], 'safe']
@@ -78,30 +74,6 @@ class Sales extends \yii\db\ActiveRecord
             'update_at' => 'Update At',
             'update_by' => 'Update By',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdCustomer()
-    {
-        return $this->hasOne(Customer::className(), ['id_customer' => 'id_customer']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdBranch()
-    {
-        return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdCashdrawer()
-    {
-        return $this->hasOne(Cashdrawer::className(), ['id_cashdrawer' => 'id_cashdrawer']);
     }
 
     /**

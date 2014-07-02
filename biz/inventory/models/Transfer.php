@@ -147,7 +147,8 @@ class Transfer extends \yii\db\ActiveRecord
                     'receiveDate' => 'receive_date'
                 ]
             ],
-            'BizStatusConverter'
+            'BizStatusConverter',
+            'mdm\relation\RelationBehavior',            
         ];
     }
 }

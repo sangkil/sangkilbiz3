@@ -3,9 +3,6 @@
 namespace biz\purchase\models;
 
 use Yii;
-use biz\master\models\Product;
-use biz\master\models\Uom;
-use biz\master\models\Warehouse;
 
 /**
  * This is the model class for table "purchase_dtl".
@@ -19,10 +16,7 @@ use biz\master\models\Warehouse;
  * @property string $purch_price
  * @property string $selling_price
  *
- * @property Uom $idUom
  * @property Purchase $idPurchase
- * @property Product $idProduct
- * @property Warehouse $idWarehouse
  * @property double[] $salesPrices Description
  */
 class PurchaseDtl extends \yii\db\ActiveRecord
@@ -42,6 +36,9 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id_warehouse'],'default','value'=>function($model){
+                return $model->idPurchase->id_warehouse;
+            }],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'selling_price'], 'required'],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom'], 'integer'],
             [['purch_qty', 'purch_price', 'selling_price'], 'string'],
@@ -69,34 +66,15 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUom()
-    {
-        return $this->hasOne(Uom::className(), ['id_uom' => 'id_uom']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getIdPurchase()
     {
         return $this->hasOne(Purchase::className(), ['id_purchase' => 'id_purchase']);
     }
-
+    
     /**
-     * @return \yii\db\ActiveQuery
+     *
+     * @var array 
      */
-    public function getIdProduct()
-    {
-        return $this->hasOne(Product::className(), ['id_product' => 'id_product']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdWarehouse()
-    {
-        return $this->hasOne(Warehouse::className(), ['id_warehouse' => 'id_warehouse']);
-    }
     private $_salesPrices;
 
     /**

@@ -79,31 +79,24 @@ class StandartController extends Controller
             'status' => Sales::STATUS_DRAFT,
             'sales_date' => date('Y-m-d')
         ]);
-        $details = [];
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->save(false);
-                list($saved, $details) = $model->saveRelation('salesDtls', [
-                    'extra' => ['id_warehouse' => $model->id_warehouse]
-                ]);
-                if ($saved) {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id_sales]);
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $exc) {
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('salesDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $transaction->commit();
+                return $this->redirect(['view', 'id' => $model->id_sales]);
+            } else {
                 $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
             }
-            $model->setIsNewRecord(true);
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
-
+        $model->setIsNewRecord(true);
         $price_category = ArrayHelper::map(PriceCategory::find()->all(), 'id_price_category', 'nm_price_category');
         return $this->render('create', [
                 'model' => $model,
-                'details' => $details,
+                'details' => $model->salesDtls,
                 'payment_methods' => $payment_methods,
                 'masters' => $this->getDataMaster(),
                 'price_category' => $price_category,
@@ -157,31 +150,25 @@ class StandartController extends Controller
             1 => 'Cash',
             2 => 'Bank',
         ];
-        $details = $model->salesDtls;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->save(false);
-                list($saved, $details) = $model->saveRelation('salesDtls', [
-                    'extra' => ['id_warehouse' => $model->id_warehouse]
-                ]);
-                if ($saved) {
-                    $transaction->commit();
-                    return $this->redirect(['view', 'id' => $model->id_sales]);
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $exc) {
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('salesDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $transaction->commit();
+                return $this->redirect(['view', 'id' => $model->id_sales]);
+            } else {
                 $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
             }
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
 
         $price_category = ArrayHelper::map(PriceCategory::find()->all(), 'id_price_category', 'nm_price_category');
         return $this->render('create', [
                 'model' => $model,
-                'details' => $details,
+                'details' => $model->salesDtls,
                 'payment_methods' => $payment_methods,
                 'masters' => $this->getDataMaster(),
                 'price_category' => $price_category,
@@ -196,7 +183,11 @@ class StandartController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (!AppHelper::checkAccess('delete', $model)) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
+        $model->delete();
         return $this->redirect(['index']);
     }
 
