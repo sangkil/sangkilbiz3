@@ -7,8 +7,8 @@ use biz\master\components\Helper;
 ?>
 <td style="width: 50px">
     <a data-action="delete" title="Delete" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-    <?= Html::activeHiddenInput($model, "[$index]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
-    <?= Html::activeHiddenInput($model, "[$index]id_sales_dtl", ['data-field' => 'id_sales_dtl', 'id' => false]) ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_sales_dtl", ['data-field' => 'id_sales_dtl', 'id' => false]) ?>
 </td>
 <td class="items" style="width: 45%">
     <ul class="nav nav-list">
@@ -16,15 +16,15 @@ use biz\master\components\Helper;
             - <span class="nm_product"><?= Html::getAttributeValue($model, 'idProduct[nm_product]') ?></span></li>
         <li>
             Jumlah <?=
-            Html::activeTextInput($model, "[$index]sales_qty", [
+            Html::activeTextInput($model, "[$key]sales_qty", [
                 'data-field' => 'sales_qty',
                 'size' => 5, 'id' => false,
                 'required' => true])
             ?>
-            <?= Html::activeDropDownList($model, "[$index]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
+            <?= Html::activeDropDownList($model, "[$key]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
         </li>
         <li>
-            <?= Html::activeHiddenInput($model, "[$index]sales_price", ['data-field' => 'sales_price', 'id' => false]) ?>
+            <?= Html::activeHiddenInput($model, "[$key]sales_price", ['data-field' => 'sales_price', 'id' => false]) ?>
             Price Rp <span class="sales_price"><?= Html::getAttributeValue($model, 'sales_price') ?></span> 
         </li>
     </ul>
@@ -48,7 +48,7 @@ use biz\master\components\Helper;
         </li>
         <li>
             Discon Rp <?=
-            Html::activeTextInput($model, "[$index]discount", [
+            Html::activeTextInput($model, "[$key]discount", [
                 'data-field' => 'discount',
                 'size' => 16, 'id' => false,
                 'required' => false])

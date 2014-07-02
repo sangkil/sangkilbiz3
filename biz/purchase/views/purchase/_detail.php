@@ -7,6 +7,7 @@ use biz\purchase\models\PurchaseDtl;
 use mdm\relation\EditableList;
 use biz\purchase\assets\PurchaseAsset;
 use biz\app\assets\BizDataAsset;
+use biz\master\components\Helper as MasterHelper;
 
 /* @var $details PurchaseDtl[] */
 /* @var $model biz\purchase\models\Purchase */
@@ -57,7 +58,7 @@ use biz\app\assets\BizDataAsset;
 <?php
 PurchaseAsset::register($this);
 BizDataAsset::register($this, [
-    'master'=>$masters
+    'master'=>  MasterHelper::getMasters('product, barcode, supplier, product_supplier')
 ]);
 $js = <<<JS
 yii.purchase.onReady();

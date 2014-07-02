@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'idProduct.nm_product',
             'purch_qty',
             'purch_price',
-            'selling_price',
+            'sales_price',
             'idUom.nm_uom',
         ]
     ]);

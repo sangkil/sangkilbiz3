@@ -1,11 +1,10 @@
 yii.transfer = (function($) {
-    var $grid, $form, template, counter = 0;
 
     var local = {
         checkStock: true,
         addItem: function(item) {
             var has = false;
-            $('#detail-grid > tbody > tr').each(function() {
+            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
                 var $row = $(this);
                 if ($row.find('input[data-field="id_product"]').val() == item.id) {
                     has = true;
@@ -18,7 +17,7 @@ yii.transfer = (function($) {
                 }
             });
             if (!has) {
-                var $row = $(template.replace(/_index_/g, counter++));
+                var $row = $('#detail-grid').mdmEditableList('addRow');
 
                 $row.find('span.cd_product').text(item.cd);
                 $row.find('span.nm_product').text(item.text);
@@ -30,9 +29,7 @@ yii.transfer = (function($) {
                     $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
                 });
 
-                $grid.find('tbody > tr').removeClass('selected');
-                $row.addClass('selected');
-                $grid.children('tbody').append($row);
+                $('#detail-grid').mdmEditableList('selectRow', $row);
                 $row.find('input[data-field="transfer_qty_send"]').focus();
             }
             //local.normalizeItem();
@@ -42,7 +39,7 @@ yii.transfer = (function($) {
         },
         normalizeItem: function() {
             var total = 0.0;
-            $('#detail-grid > tbody > tr').each(function() {
+            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
                 var $row = $(this);
                 var q = $row.find('input[data-field="purch_qty"]').val();
                 q = q == '' ? 1 : q;
@@ -65,39 +62,11 @@ yii.transfer = (function($) {
             this.value = '';
             $(this).autocomplete("close");
         },
-        initRow: function() {
-            $('#detail-grid > tbody > tr').each(function() {
-                var $row = $(this);
-                var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
-                if (product) {
-                    $row.find('[data-field="id_uom"] > option').each(function() {
-                        var $opt = $(this);
-                        var isi = product.uoms[$opt.val()].isi;
-                        $opt.attr('data-isi', isi);
-                        //$opt.data('isi',isi);
-                    });
-                }
-                counter++;
-            });
-            local.normalizeItem();
-        },
-        initObj: function() {
-            $grid = $('#detail-grid');
-            $form = $('#purchase-form');
-            template = $('#detail-grid > tbody').data('template');
-        },
-        initEvent: function() {
-            $grid.on('click', '[data-action="delete"]', function() {
-                $(this).closest('tr').remove();
-                local.normalizeItem();
-                return false;
-            });
+    }
 
-            $grid.on('click', 'tr', function() {
-                $grid.find('tbody > tr').removeClass('selected');
-                $(this).addClass('selected');
-            });
-
+    var pub = {
+        onReady: function() {
+            var $grid = $('#detail-grid');
             $grid.on('keydown', ':input[data-field]', function(e) {
                 if (e.keyCode == 13) {
                     var $this = $(this);
@@ -120,13 +89,13 @@ yii.transfer = (function($) {
                         var p = $row.find('input[data-field="purch_price"]').val();
                         var m = $row.find('input[data-field="markup_price"]').val();
                         var s = p / (1 - 0.01 * m);
-                        $row.find('input[data-field="selling_price"]').val(s.toFixed(2));
+                        $row.find('input[data-field="sales_price"]').val(s.toFixed(2));
                         break;
 
                     case 'purch_price':
-                    case 'selling_price':
+                    case 'sales_price':
                         var p = $row.find('input[data-field="purch_price"]').val();
-                        var s = $row.find('input[data-field="selling_price"]').val();
+                        var s = $row.find('input[data-field="sales_price"]').val();
                         var m = s > 0 ? 100 * (s - p) / s : 0;
                         $row.find('input[data-field="markup_price"]').val(m.toFixed(2));
                         break;
@@ -158,19 +127,21 @@ yii.transfer = (function($) {
                     return false;
                 }
             });
-
-        }
-    }
-
-    var pub = {
-        init: function() {
-            local.initObj();
-            local.initRow();
-            local.initEvent();
             yii.numeric.input($grid, 'input[data-field]');
         },
         onProductSelect: function(event, ui) {
             local.addItem(ui.item);
+        },
+        initRow: function($row) {
+            var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
+            if (product) {
+                $row.find('[data-field="id_uom"] > option').each(function() {
+                    var $opt = $(this);
+                    var isi = product.uoms[$opt.val()].isi;
+                    $opt.attr('data-isi', isi);
+                    //$opt.data('isi',isi);
+                });
+            }
         },
     };
     return pub;

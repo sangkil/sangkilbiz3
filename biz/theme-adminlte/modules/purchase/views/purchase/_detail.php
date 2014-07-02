@@ -81,8 +81,8 @@ use biz\tools\Helper;
                         <li>
                             <?php
                             $purch_price = $model->purch_price;
-                            $selling_price = $model->selling_price;
-                            $markup = $selling_price > 0 ? 100 * ($selling_price - $purch_price) / $selling_price : 0;
+                            $sales_price = $model->sales_price;
+                            $markup = $sales_price > 0 ? 100 * ($sales_price - $purch_price) / $sales_price : 0;
                             $markup = round($markup, 2);
                             ?>
                             Markup <?=
@@ -94,8 +94,8 @@ use biz\tools\Helper;
                         </li>
                         <li>
                             Price Rp <?=
-                            Html::activeTextInput($model, "[$index]selling_price", [
-                                'data-field' => 'selling_price',
+                            Html::activeTextInput($model, "[$index]sales_price", [
+                                'data-field' => 'sales_price',
                                 'size' => 16, 'id' => false,
                                 'required' => true])
                             ?>

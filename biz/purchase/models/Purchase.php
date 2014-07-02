@@ -50,9 +50,10 @@ class Purchase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_supplier', 'id_branch', 'id_warehouse', 'purchaseDate', 'purchase_value', 'status'], 'required'],
+            [['nmSupplier'],'exist','targetClass'=>  Supplier::className(),'targetAttribute'=>'nm_supplier'],
+            [['nmSupplier', 'id_branch', 'id_warehouse', 'purchaseDate', 'purchase_value', 'status'], 'required'],
             [['id_branch', 'status'], 'integer'],
-            [['purchase_date'], 'safe'],
+            [['id_supplier', 'purchase_date'], 'safe'],
             [['item_discount'], 'number']
         ];
     }
@@ -84,6 +85,42 @@ class Purchase extends \yii\db\ActiveRecord
     public function getPurchaseDtls()
     {
         return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase']);
+    }
+    
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getIdSupplier()
+//    {
+//        return $this->hasOne(Supplier::className(), ['id_supplier' => 'id_supplier']);
+//    }
+//    
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getIdBranch()
+//    {
+//        return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
+//    }
+    
+    public function getNmSupplier()
+    {
+        $supp = Supplier::findOne(['id_supplier'=>  $this->id_supplier]);
+        if($supp){
+            return $supp->nm_supplier;
+        }  else {
+            return null;
+        }
+    }
+    
+    public function setNmSupplier($value)
+    {
+        $supp = Supplier::findOne(['nm_supplier'=>$value]);
+        if($supp){
+            $this->id_supplier = $supp->id_supplier;
+        }  else {
+            $this->id_supplier = null;
+        }
     }
 
     /**

@@ -268,10 +268,10 @@ class Helper
         if (isset($masters['product_stock'])) {
             $prod_stock = [];
             $query_prod_stock = (new Query())
-                ->select(['id_whse', 'id_product', 'qty_stock'])
+                ->select(['id_warehouse', 'id_product', 'qty_stock'])
                 ->from('{{%product_stock}}');
             foreach ($query_prod_stock->all() as $row) {
-                $prod_stock[$row['id_whse']][$row['id_product']] = $row['qty_stock'];
+                $prod_stock[$row['id_warehouse']][$row['id_product']] = $row['qty_stock'];
             }
             $result['product_stock'] = $prod_stock;
         }

@@ -92,8 +92,7 @@ class PurchaseController extends Controller
         $model->setIsNewRecord(true);
         return $this->render('create', [
                 'model' => $model,
-                'details' => $model->purchaseDtls,
-                'masters' => $this->getDataMaster()
+                'details' => $model->purchaseDtls
         ]);
     }
 
@@ -124,8 +123,7 @@ class PurchaseController extends Controller
         }
         return $this->render('update', [
                 'model' => $model,
-                'details' => $model->purchaseDtls,
-                'masters' => $this->getDataMaster()
+                'details' => $model->purchaseDtls
         ]);
     }
 
@@ -180,10 +178,5 @@ class PurchaseController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function getDataMaster()
-    {
-        return Helper::getMasters(['product', 'barcode', 'supplier', 'product_supplier']);
     }
 }

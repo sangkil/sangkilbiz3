@@ -5,7 +5,6 @@ namespace biz\app;
 use Yii;
 use yii\db\BaseActiveRecord;
 use yii\db\Expression;
-use biz\app\components\UserProperties;
 use yii\validators\Validator;
 
 /**
@@ -23,18 +22,6 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected function initialize($app, $config)
     {
         $this->diConfig($config);
-        if ($config['user_properties']) {
-            $this->attachUserProperty($app->getUser());
-        }
-    }
-
-    /**
-     * 
-     * @param \yii\web\User $user
-     */
-    protected function attachUserProperty($user)
-    {
-        $user->attachBehavior(UserProperties::className(), UserProperties::className());
     }
 
     /**

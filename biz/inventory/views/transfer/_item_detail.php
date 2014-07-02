@@ -1,14 +1,16 @@
 <?php
 
 use yii\helpers\Html;
+use biz\master\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\TransferDtl */
 /* @var $index string */
+/* @var $key string */
 ?>
 <td style="width: 50px">
     <a data-action="delete" title="Delete" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-    <?= Html::activeHiddenInput($model, "[$index]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
 </td>
 <td class="items" style="width: 45%">
     <ul class="nav nav-list">
@@ -16,12 +18,12 @@ use yii\helpers\Html;
             - <span class="nm_product"><?= Html::getAttributeValue($model, 'idProduct[nm_product]') ?></span></li>
         <li>
             Jumlah <?=
-            Html::activeTextInput($model, "[$index]transfer_qty_send", [
+            Html::activeTextInput($model, "[$key]transfer_qty_send", [
                 'data-field' => 'transfer_qty_send',
                 'size' => 5, 'id' => false,
                 'required' => true])
             ?>
-            <?= Html::activeDropDownList($model, "[$index]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
+            <?= Html::activeDropDownList($model, "[$key]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
         </li>
         <li>
         </li>
@@ -32,7 +34,7 @@ use yii\helpers\Html;
         <li>Receive</li>
         <li>
             Jumlah <?=
-            Html::activeTextInput($model, "[$index]transfer_qty_receive", [
+            Html::activeTextInput($model, "[$key]transfer_qty_receive", [
                 'data-field' => 'transfer_qty_receive',
                 'size' => 5, 'id' => false,
                 'readonly' => true])

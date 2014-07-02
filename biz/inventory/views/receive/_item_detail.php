@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use biz\master\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\TransferDtl */
@@ -8,15 +9,15 @@ use yii\helpers\Html;
 ?>
 
 <td style="width: 50px">
-    <div class="serial">
-        <?php if ($index === '_index_' || $model->transfer_qty_send == 0): ?>
+    <div>
+        <?php if ($key === '_key_' || $model->transfer_qty_send == 0): ?>
             <a data-action="delete" title="Delete" href="#" class="pull-right">
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
         <?php endif; ?>
-        <span><?= $index + 1; ?></span>
+        <span class="serial"><?= $index + 1; ?></span>
     </div>
-    <?= Html::activeHiddenInput($model, "[$index]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
 </td>
 <td class="items" style="width: 45%">
     <ul class="nav nav-list">
@@ -24,15 +25,15 @@ use yii\helpers\Html;
             - <span class="nm_product"><?= Html::getAttributeValue($model, 'idProduct[nm_product]') ?></span></li>
         <li>
             Jumlah <?=
-            Html::activeTextInput($model, "[$index]transfer_qty_send", [
+            Html::activeTextInput($model, "[$key]transfer_qty_send", [
                 'data-field' => 'transfer_qty_send',
                 'size' => 5, 'id' => false,
                 'readonly' => true])
             ?> &nbsp;
-            <?php if ($index === '_index_' || $model->transfer_qty_send == 0): ?>
-                <?= Html::activeDropDownList($model, "[$index]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
+            <?php if ($key === '_key_' || $model->transfer_qty_send == 0): ?>
+                <?= Html::activeDropDownList($model, "[$key]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
             <?php else: ?>
-                <?= Html::activeHiddenInput($model, "[$index]id_uom"); ?>
+                <?= Html::activeHiddenInput($model, "[$key]id_uom"); ?>
                 <span ><?= Html::getAttributeValue($model, 'idUom[nm_uom]') ?></span>
             <?php endif; ?>
         </li>
@@ -45,7 +46,7 @@ use yii\helpers\Html;
         <li>Receive</li>
         <li>
             Jumlah <?=
-            Html::activeTextInput($model, "[$index]transfer_qty_receive", [
+            Html::activeTextInput($model, "[$key]transfer_qty_receive", [
                 'data-field' => 'transfer_qty_receive',
                 'size' => 5, 'id' => false,
                 'value' => is_null($model->transfer_qty_receive) ? $model->transfer_qty_send : $model->transfer_qty_receive,

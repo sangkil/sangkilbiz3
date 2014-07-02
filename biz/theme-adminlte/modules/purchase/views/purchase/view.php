@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'purch_qty',
             'idUom.cd_uom',
             'purch_price',
-            'selling_price',
+            'sales_price',
         ]
     ]);
     ?>

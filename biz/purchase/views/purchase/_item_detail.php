@@ -8,8 +8,8 @@ use biz\master\components\Helper;
 ?>
 <td style="width: 50px">
     <a data-action="delete" title="Delete" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-    <?= Html::activeHiddenInput($model, "[$index]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
-    <?= Html::activeHiddenInput($model, "[$index]id_purchase_dtl", ['data-field' => 'id_purchase_dtl', 'id' => false]) ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
+    <?= Html::activeHiddenInput($model, "[$key]id_purchase_dtl", ['data-field' => 'id_purchase_dtl', 'id' => false]) ?>
 </td>
 <td class="items" style="width: 45%">
     <ul class="nav nav-list">
@@ -17,16 +17,16 @@ use biz\master\components\Helper;
             - <span class="nm_product"><?= Html::getAttributeValue($model, 'idProduct[nm_product]') ?></span></li>
         <li>
             Jumlah <?=
-            Html::activeTextInput($model, "[$index]purch_qty", [
+            Html::activeTextInput($model, "[$key]purch_qty", [
                 'data-field' => 'purch_qty',
                 'size' => 5, 'id' => false,
                 'required' => true])
             ?>
-            <?= Html::activeDropDownList($model, "[$index]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
+            <?= Html::activeDropDownList($model, "[$key]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
         </li>
         <li>
             Price Rp <?=
-            Html::activeTextInput($model, "[$index]purch_price", [
+            Html::activeTextInput($model, "[$key]purch_price", [
                 'data-field' => 'purch_price',
                 'size' => 16, 'id' => false,
                 'required' => true])
@@ -40,8 +40,8 @@ use biz\master\components\Helper;
         <li>
             <?php
             $purch_price = $model->purch_price;
-            $selling_price = $model->selling_price;
-            $markup = $selling_price > 0 ? 100 * ($selling_price - $purch_price) / $selling_price : 0;
+            $sales_price = $model->sales_price;
+            $markup = $sales_price > 0 ? 100 * ($sales_price - $purch_price) / $sales_price : 0;
             $markup = round($markup, 2);
             ?>
             Markup <?=
@@ -53,8 +53,8 @@ use biz\master\components\Helper;
         </li>
         <li>
             Price Rp <?=
-            Html::activeTextInput($model, "[$index]selling_price", [
-                'data-field' => 'selling_price',
+            Html::activeTextInput($model, "[$key]sales_price", [
+                'data-field' => 'sales_price',
                 'size' => 16, 'id' => false,
                 'required' => true])
             ?>

@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
-use yii\jui\AutoComplete;
 use biz\master\components\Helper;
 
 /**
@@ -31,26 +30,18 @@ use biz\master\components\Helper;
             </div>
             <div class="panel-body">
                 <?= $form->field($model, 'purchase_num')->textInput(['maxlength' => 16, 'readonly' => true]); ?>
-                <?php
-                $el_id = Html::getInputId($model, 'id_supplier');
-                $field = $form->field($model, "id_supplier", ['template' => "{label}\n{input}{text}\n{hint}\n{error}"]);
-                $field->labelOptions['for'] = $el_id;
-                $field->hiddenInput(['id' => 'id_supplier']);
-                $field->parts['{text}'] = AutoComplete::widget([
-                        'model' => $model,
-                        'attribute' => 'idSupplier[nm_supplier]',
-                        'options' => ['class' => 'form-control', 'id' => $el_id],
+                <?=
+                    $form->field($model, 'nmSupplier')
+                    ->widget('yii\jui\AutoComplete', [
+                        'options' => ['class' => 'form-control'],
                         'clientOptions' => [
-                            'source' => new JsExpression("biz.master.supplier"),
-                            'select' => new JsExpression("function(event, ui){\$('#id_supplier').val(ui.item.id);}"),
-                            'open' => new JsExpression("function(event, ui){\$('#id_supplier').val('');}"),
+                            'source' => new JsExpression("biz.master.suppliers"),
                         ]
                 ]);
-                echo $field;
                 ?>
                 <?= $form->field($model, 'id_warehouse')->dropDownList(Helper::getWarehouseList()); ?>
-                <?php
-                echo $form->field($model, 'purchaseDate')
+                <?=
+                    $form->field($model, 'purchaseDate')
                     ->widget('yii\jui\DatePicker', [
                         'options' => ['class' => 'form-control', 'style' => 'width:50%'],
                         'clientOptions' => [
@@ -69,8 +60,8 @@ use biz\master\components\Helper;
     <?=
     $this->render('_detail', [
         'model' => $model,
-        'details' => $details,
-        'masters' => $masters])
+        'details' => $details
+    ])
     ?> 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 </div>

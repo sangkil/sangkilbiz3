@@ -6,6 +6,7 @@ use Yii;
 use biz\master\hooks\CogsHook;
 use biz\master\hooks\PriceHook;
 use biz\master\hooks\StockHook;
+use biz\master\components\UserProperties;
 
 /**
  * Description of Bootstrapt
@@ -26,6 +27,18 @@ class Bootstrap extends \biz\app\base\Bootstrap
             PriceHook::className() => PriceHook::className(),
             StockHook::className() => StockHook::className()
         ]);
+        if ($config['user_properties']) {
+            $this->attachUserProperty($app->getUser());
+        }
+    }
+
+    /**
+     * 
+     * @param \yii\web\User $user
+     */
+    protected function attachUserProperty($user)
+    {
+        $user->attachBehavior(UserProperties::className(), UserProperties::className());
     }
 
     /**

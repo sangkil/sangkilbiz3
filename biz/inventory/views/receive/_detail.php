@@ -6,6 +6,7 @@ use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use biz\inventory\assets\ReceiveAsset;
 use biz\app\assets\BizDataAsset;
+use mdm\relation\EditableList;
 
 /**
  * @var TransferDtl[] $model

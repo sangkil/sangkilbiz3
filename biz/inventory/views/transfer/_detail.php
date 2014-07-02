@@ -33,6 +33,9 @@ use biz\master\components\Helper as MasterHelper;
                 'itemView' => '_item_detail',
                 'options' => ['tag' => 'tbody'],
                 'itemOptions' => ['tag' => 'tr'],
+                'clientOptions'=>[
+                    'initRow'=>new JsExpression('yii.transfer.initRow')
+                ]
             ])
             ?>
         </table>
@@ -46,5 +49,6 @@ BizDataAsset::register($this, [
 ]);
 $js_ready = <<< JS
 \$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;
+yii.transfer.onReady();
 JS;
 $this->registerJs($js_ready);

@@ -2,8 +2,6 @@
 
 namespace biz\app\components;
 
-use biz\master\models\UserToBranch;
-
 /**
  * Description of UserBehavior
  *
@@ -17,24 +15,16 @@ class UserProperties extends \yii\base\Behavior
      * @var array 
      */
     private $_properties;
+    
+    protected function getUserProperties()
+    {
+        
+    }
 
     private function initProperties()
     {
         if ($this->_properties === null) {
-            $userId = $this->owner->getId();
-            if ($userId !== null) {
-                $this->_properties = [
-                    'branchs' => UserToBranch::find()
-                        ->select('id_branch')
-                        ->where(['id_user' => $userId])
-                        ->column(),
-                ];
-
-                $this->_properties['branch'] = \Yii::$app->getSession()->get('_branch_active');
-                $this->_properties['branch'] = 1;
-            } else {
-                $this->_properties = [];
-            }
+            $this->_properties = $this->getUserProperties();
         }
     }
 

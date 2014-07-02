@@ -82,7 +82,7 @@ class PriceHook extends \yii\base\Behavior
         $this->updatePrice([
             'id_product' => $detail->id_product,
             'id_uom' => $smallest_uom,
-            'price' => $detail->selling_price,
+            'price' => $detail->sales_price,
             'app' => 'purchase',
             'id_ref' => $detail->id_purchase_dtl,
         ]);

@@ -3,6 +3,7 @@
 namespace biz\purchase\models;
 
 use Yii;
+use biz\master\models\Product;
 
 /**
  * This is the model class for table "purchase_dtl".
@@ -14,7 +15,7 @@ use Yii;
  * @property integer $id_uom
  * @property string $purch_qty
  * @property string $purch_price
- * @property string $selling_price
+ * @property string $sales_price
  *
  * @property Purchase $idPurchase
  * @property double[] $salesPrices Description
@@ -39,9 +40,9 @@ class PurchaseDtl extends \yii\db\ActiveRecord
             [['id_warehouse'],'default','value'=>function($model){
                 return $model->idPurchase->id_warehouse;
             }],
-            [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'selling_price'], 'required'],
+            [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'sales_price'], 'required'],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom'], 'integer'],
-            [['purch_qty', 'purch_price', 'selling_price'], 'string'],
+            [['purch_qty', 'purch_price', 'sales_price'], 'string'],
             [['salesPrices'], 'safe']
         ];
     }
@@ -59,7 +60,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
             'id_uom' => 'Id Uom',
             'purch_qty' => 'Purch Qty',
             'purch_price' => 'Purch Price',
-            'selling_price' => 'Selling Price',
+            'sales_price' => 'Selling Price',
         ];
     }
 
@@ -94,6 +95,11 @@ class PurchaseDtl extends \yii\db\ActiveRecord
         $this->_salesPrices = $prices;
     }
 
+    public function getIdProduct()
+    {
+        return $this->hasOne(Product::className(), ['id_product'=>'id_product']);
+    }
+    
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->_salesPrices !== null) {
