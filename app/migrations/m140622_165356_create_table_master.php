@@ -267,7 +267,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
-            'PRIMARY KEY (group , name)',
+            'PRIMARY KEY ([[group]] , [[name]])',
         ]);
     }
 
