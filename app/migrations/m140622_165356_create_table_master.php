@@ -60,7 +60,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
         $this->createTable('{{%category}}', [
             'id_category' => Schema::TYPE_PK,
             'cd_category' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_group' => Schema::TYPE_STRING . '(32) NOT NULL',
+            'nm_category' => Schema::TYPE_STRING . '(32) NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -74,7 +74,8 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'id_group' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_category' => Schema::TYPE_INTEGER . ' NOT NULL',
             'cd_product' => Schema::TYPE_STRING . '(13) NOT NULL',
-            'nm_product' => Schema::TYPE_STRING . '(32) NOT NULL',
+            'nm_product' => Schema::TYPE_STRING . '(64) NOT NULL',
+            'status' => Schema::TYPE_INTEGER . ' NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
