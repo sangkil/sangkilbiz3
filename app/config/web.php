@@ -1,8 +1,7 @@
 <?php
 
 $params = array_merge(
-    require(__DIR__ . '/params.php'), 
-    require(__DIR__ . '/params-local.php')
+    require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -18,7 +17,14 @@ return [
         'biz\sales\Bootstrap',
         'biz\accounting\Bootstrap',
     ],
-    'modules' => [],
+    'modules' => [
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'allowActions' => [
+                '*'
+            ]
+        ]
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'app\models\User',
@@ -36,6 +42,9 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager'
+        ]
     ],
     'params' => $params,
 ];
