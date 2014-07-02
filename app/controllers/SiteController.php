@@ -25,7 +25,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup'],
+                        'actions' => ['login', 'error', 'signup', 'page'],
                         'allow' => true,
                     ],
                     [
@@ -112,5 +112,10 @@ class SiteController extends Controller
         return $this->render('signup', [
                 'model' => $model,
         ]);
+    }
+
+    public function actionPage($view = 'index')
+    {
+        return $this->render('pages/' . $view);
     }
 }
