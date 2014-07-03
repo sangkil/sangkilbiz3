@@ -112,7 +112,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
         ]);
 
         $this->createTable('{{%product_uom}}', [
-            'id_puom' => Schema::TYPE_PK,
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
             'isi' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -122,6 +121,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
+            'PRIMARY KEY (id_product, id_uom)',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
         ]);

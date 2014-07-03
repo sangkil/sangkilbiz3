@@ -32,9 +32,9 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
             'id_branch' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_warehouse' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_cashdrawer' => Schema::TYPE_INTEGER,
-            'purchase_date' => Schema::TYPE_DATE . ' NOT NULL',
-            'purchase_value' => Schema::TYPE_FLOAT . ' NOT NULL',
-            'item_discount' => Schema::TYPE_FLOAT . ' NULL',
+            'sales_date' => Schema::TYPE_DATE . ' NOT NULL',
+            'sales_value' => Schema::TYPE_FLOAT . ' NOT NULL',
+            'discount' => Schema::TYPE_FLOAT . ' NULL',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
