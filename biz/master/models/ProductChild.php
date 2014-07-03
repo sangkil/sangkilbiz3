@@ -13,7 +13,6 @@ use Yii;
  * @property string $update_at
  * @property integer $create_by
  * @property integer $update_by
- * @property string $nm_product
  *
  * @property Product $idProduct
  */
@@ -33,10 +32,9 @@ class ProductChild extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['barcode', 'id_product', 'nm_product'], 'required'],
+            [['barcode', 'id_product'], 'required'],
             [['id_product'], 'integer'],
             [['barcode'], 'string', 'max' => 13],
-            [['nm_product'], 'string', 'max' => 64]
         ];
     }
 
@@ -52,7 +50,6 @@ class ProductChild extends \yii\db\ActiveRecord
             'update_at' => 'Update At',
             'create_by' => 'Create By',
             'update_by' => 'Update By',
-            'nm_product' => 'Nm Product',
         ];
     }
 

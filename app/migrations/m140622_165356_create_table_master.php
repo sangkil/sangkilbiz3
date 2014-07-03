@@ -89,7 +89,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
         $this->createTable('{{%product_child}}', [
             'barcode' => Schema::TYPE_STRING . '(13) PRIMARY KEY',
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'nm_product' => Schema::TYPE_STRING . '(64) NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',

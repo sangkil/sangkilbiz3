@@ -14,23 +14,25 @@ yii.global = (function($) {
             return $("<li>").append($a).appendTo(ul);
         },
         isChangeOrEnter: function($obj, sel, func) {
-            $obj.on('change keydown', sel, function(e) {
-                var args = arguments;
-                if (e.type === 'keydown') {
-                    if (e.keyCode !== 13) {
-                        return; // only react to enter key
+            $obj
+                .off('change.changeOrEnter, keydown.changeOrEnter', sel)
+                .on('change.changeOrEnter, keydown.changeOrEnter', sel, function(e) {
+                    var args = arguments;
+                    if (e.type === 'keydown') {
+                        if (e.keyCode !== 13) {
+                            return; // only react to enter key
+                        } else {
+                            enterPressed = true;
+                        }
                     } else {
-                        enterPressed = true;
+                        // prevent processing for both keydown and change events
+                        if (enterPressed) {
+                            enterPressed = false;
+                            return;
+                        }
                     }
-                } else {
-                    // prevent processing for both keydown and change events
-                    if (enterPressed) {
-                        enterPressed = false;
-                        return;
-                    }
-                }
-                return func.apply(e.target,args);
-            });
+                    return func.apply(e.target, args);
+                });
         },
         pullMaster: function(url, param, callback) {
             var pullUrl = url ? url : biz.config.pullUrl;

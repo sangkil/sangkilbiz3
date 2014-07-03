@@ -9,6 +9,8 @@ use biz\master\models\ProductUom;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use biz\master\models\Uom;
+use yii\widgets\Pjax;
+use yii\bootstrap\Tabs;
 
 /* @var $this yii\web\View */
 /* @var $model biz\master\models\Product */
@@ -34,6 +36,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ])
         ?>
+        <div class="panel-footer">
+            <?= Html::a('Update', ['update', 'id' => $model->id_product], ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::a('Delete', ['delete', 'id' => $model->id_product], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        </div>
     </div>
 </div>
 <div class="col-lg-6">
@@ -44,73 +58,41 @@ $this->params['breadcrumbs'][] = $this->title;
             padding: 20px;
         }
     </style>
-
+    <?php
+    Pjax::begin([
+        'id' => 'pjax',
+        'enablePushState'=>false,
+        'clientOptions' => [
+            'url' => \yii\helpers\Url::canonical()
+        ]
+    ])
+    ?>
     <?=
-    \yii\bootstrap\Tabs::widget([
+    Html::beginForm('', 'post', [
+        'id' => 'input-form',
+        'data-pjax' => '#pjax'
+    ])
+    ?>
+    <?= Html::hiddenInput('action') ?>
+    <?=
+    Tabs::widget([
         'items' => [
             [
                 'label' => 'Uoms',
-                'content' => GridView::widget([
-                    'dataProvider' => new ActiveDataProvider([
-                        'query' => $model->getProductUoms()
-                        ]),
-                    'tableOptions' => ['class' => 'table table-striped'],
-                    'layout' => '{items}',
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'idUom.nm_uom',
-                        'idUom.cd_uom',
-                        'isi'
-                    ],
-                ]),
+                'content' => $this->render('_form_uom', ['model' => $model]),
+                'active' => $active == 'uom'
             ],
             [
                 'label' => 'Barcode',
-                'content' => GridView::widget([
-                    'dataProvider' => new ActiveDataProvider([
-                        'query' => $model->getBarcodes()
-                        ]),
-                    'tableOptions' => ['class' => 'table table-striped'],
-                    'layout' => '{items}',
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'barcode',
-                    ],
-                ]),
+                'content' => $this->render('_form_barcode', ['model' => $model]),
+                'active' => $active == 'barcode'
             ],
         ]
     ]);
     ?>
-
-    <br>
-    <?= Html::a('Update', ['update', 'id' => $model->id_product], ['class' => 'btn btn-primary']) ?>
-    <?=
-    Html::a('Delete', ['delete', 'id' => $model->id_product], [
-        'class' => 'btn btn-danger',
-        'data' => [
-            'confirm' => 'Are you sure you want to delete this item?',
-            'method' => 'post',
-        ],
-    ])
-    ?>
 </div>
 
-<?php 
-Modal::begin([
-    'id' => 'myModal',
-    'header' => '<h4 class="modal-title">Product Uoms</h4>@' . $model->nm_product
-]);
-$umodel = new ProductUom;
-?>
-<?php $form = ActiveForm::begin(); ?>
-<div class="modal-body">
-    <?= $form->field($umodel, 'id_product')->hiddenInput(['value' => $model->id_product])->label(false) ?>    
-    <?= $form->field($umodel, 'id_uom')->dropDownList(ArrayHelper::map(Uom::find()->all(), 'id_uom', 'nm_uom'), ['style' => 'width:200px;']); ?>
-    <?= $form->field($umodel, 'isi')->textInput(['style' => 'width:120px;']) ?>
-</div>    
-<div class="form-group modal-footer" style="text-align: right; padding-bottom: 0px;">
-    <?= Html::submitButton($umodel->isNewRecord ? 'Create' : 'Update', ['class' => $umodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-</div>
+<?= Html::endForm() ?>
 <?php
-ActiveForm::end();
-Modal::end();
+Pjax::end();
+\biz\app\assets\BizAsset::register($this);

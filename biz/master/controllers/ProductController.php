@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use biz\master\models\ProductUom;
+use biz\master\models\ProductChild;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -50,8 +51,29 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $post = Yii::$app->request->post();
+        $active = 'uom';
+        if (isset($post['action'])) {
+            if ($post['action'] == 'uom') {
+                $puom = new ProductUom([
+                    'id_product' => $model->id_product,
+                    'id_uom' => $post['id_uom'],
+                    'isi' => $post['isi_uom'],
+                ]);
+                $puom->save();
+            } else {
+                $pchild = new ProductChild([
+                    'id_product' => $model->id_product,
+                    'barcode' => $post['barcode'],
+                ]);
+                $pchild->save();
+                $active = 'barcode';
+            }
+        }
         return $this->render('view', [
-                'model' => $this->findModel($id),
+                'model' => $model,
+                'active' => $active
         ]);
     }
 
@@ -92,7 +114,7 @@ class ProductController extends Controller
         if (isset($dPost['ProductUom'])):
             $modelDtl = new ProductUom;
             $modelDtl->load($dPost);
-            
+
             if (!$modelDtl->save()) {
                 print_r($modelDtl->errors);
             }
@@ -124,6 +146,34 @@ class ProductController extends Controller
         }
     }
 
+    public function actionDeleteUom($id_product,$id_uom)
+    {
+        $model = $this->findModel($id_product);
+        $puom = ProductUom::findOne([
+            'id_product'=>$id_product,
+            'id_uom'=>$id_uom
+        ]);
+        $puom->delete();
+        return $this->render('view', [
+                'model' => $model,
+                'active' => 'uom'
+        ]);
+    }
+
+    public function actionDeleteBarcode($id_product,$barcode)
+    {
+        $model = $this->findModel($id_product);
+        $child = ProductChild::findOne([
+            'id_product'=>$id_product,
+            'barcode'=>$barcode
+        ]);
+        $child->delete();
+        return $this->render('view', [
+                'model' => $model,
+                'active' => 'barcode'
+        ]);
+    }
+    
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -153,5 +203,4 @@ class ProductController extends Controller
         $data = $dCmd->queryAll();
         return json_encode($data);
     }
-
 }

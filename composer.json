@@ -52,6 +52,9 @@
 		"writable": [
 			"app/runtime",
 			"app/web/assets"
+		],
+		"executable":[
+			"yii"
 		]
 	}
 }

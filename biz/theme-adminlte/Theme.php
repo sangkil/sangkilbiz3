@@ -10,7 +10,7 @@ namespace biz\adminlte;
 class Theme extends \yii\base\Theme
 {
     public $pathMap = [
-        '@backend/views' => '@biz/adminlte/app/views',
+        '@app/views' => '@biz/adminlte/app/views',
         '@biz/sales/views' => '@biz/adminlte/modules/sales/views',
         '@biz/inventory/views' => '@biz/adminlte/modules/inventory/views',
         '@biz/accounting/views' => '@biz/adminlte/modules/accounting/views',
