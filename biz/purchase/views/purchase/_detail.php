@@ -30,11 +30,11 @@ use biz\master\components\Helper as MasterHelper;
             ?>
             <div class="pull-right">
                 Item Discount:                
-                <?= Html::activeTextInput($model, 'item_discount', ['style' => 'width:60px;']); ?>
+                <?= Html::activeTextInput($model, 'item_discount', ['style' => 'width:60px;','id'=>'item-discount']); ?>
             </div>
         </div>
         <div class="panel-body" style="text-align: right;">
-            <?= Html::activeHiddenInput($model, 'purchase_value'); ?>
+            <?= Html::activeHiddenInput($model, 'purchase_value', ['id'=>'purchase-value']); ?>
             <h4 id="bfore" style="display: none;">Rp <span id="purchase-val">0</span>-<span id="disc-val">0</span></h4>
             <h2>Rp <span id="total-price"></span></h2>
         </div>
@@ -48,7 +48,7 @@ use biz\master\components\Helper as MasterHelper;
                 'itemOptions' => ['tag' => 'tr'],
                 'itemView'=>'_item_detail',
                 'clientOptions'=>[
-                    'initRow' => new JsExpression('yii.purchase.initRow')
+                    
                 ]
             ])
             ?>

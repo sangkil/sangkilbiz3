@@ -20,7 +20,7 @@ use biz\behaviors\StatusBehavior;
             New Cutomer
         </div>
         <div class="panel-body">
-            <?= $form->field($model, 'cd_cust')->textInput(['maxlength' => 13, 'style'=>'width:120px;']) ?>
+            <?= $form->field($model, 'cd_cust')->textInput(['maxlength' => 13, 'style' => 'width:120px;']) ?>
 
             <?= $form->field($model, 'nm_cust')->textInput(['maxlength' => 64]) ?>
 
@@ -28,15 +28,21 @@ use biz\behaviors\StatusBehavior;
 
             <?= $form->field($model, 'contact_number')->textInput(['maxlength' => 64]) ?>
 
-            <?= $form->field($model, 'status')->dropDownList(StatusBehavior::statusList(Customer::className()), ['style' => 'width:200px;']); ?>
+            <?=
+            $form->field($model, 'status')->dropDownList([
+                Customer::STATUS_INACTIVE => 'Inactive',
+                Customer::STATUS_ACTIVE => 'Active',
+                Customer::STATUS_BLOCKED => 'Blocked',
+                ], ['style' => 'width:200px;']);
+            ?>
 
         </div>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 </div>

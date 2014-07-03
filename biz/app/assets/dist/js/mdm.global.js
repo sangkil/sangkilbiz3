@@ -15,6 +15,7 @@ yii.global = (function($) {
         },
         isChangeOrEnter: function($obj, sel, func) {
             $obj.on('change keydown', sel, function(e) {
+                var args = arguments;
                 if (e.type === 'keydown') {
                     if (e.keyCode !== 13) {
                         return; // only react to enter key
@@ -28,7 +29,7 @@ yii.global = (function($) {
                         return;
                     }
                 }
-                return func.apply(e.target);
+                return func.apply(e.target,args);
             });
         },
         pullMaster: function(url, param, callback) {
@@ -102,6 +103,16 @@ yii.global = (function($) {
             }
             return false;
         },
+        format: function(n) {
+            if (n.indexOf(',') == -1) {
+                return numeral(n).format('0,0');
+            }
+        },
+        unformat: function(n) {
+            if (n.indexOf(',') >= 0) {
+                return numeral().unformat(n);
+            }
+        }
     }
     return pub;
 })(window.jQuery);

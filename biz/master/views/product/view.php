@@ -4,12 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use yii\bootstrap\Modal;
+use biz\master\models\ProductUom;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use biz\master\models\Uom;
 
-/**
- * @var yii\web\View $this
- * @var biz\master\models\Product $model
- */
-$this->title = $model->id_product;
+/* @var $this yii\web\View */
+/* @var $model biz\master\models\Product */
+
+$this->title = $model->nm_product;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,15 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
         DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'id_product',
                 'cd_product',
                 'nm_product',
-                'id_category',
-                'id_group',
-                'create_at',
-                'create_by',
-                'update_at',
-                'update_by',
+                'idCategory.nm_category',
+                'idGroup.nm_group',
             ],
         ])
         ?>
@@ -46,30 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
         }
     </style>
 
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#uoms" data-toggle="tab">Uoms</a></li>
-        <li><a href="#cogs" data-toggle="tab">Cogs</a></li>
-        <li><a href="#price" data-toggle="tab">Price</a></li>
-    </ul>
-
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div class="tab-pane active" id="uoms">
-            <?php
-            if ($model->isNewRecord):
-                echo $form->field($model, 'productUoms[id_uom]')->dropDownList(ArrayHelper::map(Uom::find()->all(), 'id_uom', 'nm_uom'), ['style' => 'width:200px;']);
-                echo $form->field($model, 'productUoms[isi]')->textInput(['style' => 'width:120px;']);
-            else:
-                $dPro = new ActiveDataProvider([
-                    'query' => $model->getProductUoms(),
-                    'pagination' => [
-                        'pageSize' => 10,
-                    ],
-                ]);
-
-                echo GridView::widget([
-                    'dataProvider' => $dPro,
+    <?=
+    \yii\bootstrap\Tabs::widget([
+        'items' => [
+            [
+                'label' => 'Uoms',
+                'content' => GridView::widget([
+                    'dataProvider' => new ActiveDataProvider([
+                        'query' => $model->getProductUoms()
+                        ]),
                     'tableOptions' => ['class' => 'table table-striped'],
                     'layout' => '{items}',
                     'columns' => [
@@ -78,39 +62,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         'idUom.cd_uom',
                         'isi'
                     ],
-                ]);
-            endif;
-            ?>
-        </div>
-        <div class="tab-pane" id="cogs">
-            <?php
-            if (!$model->isNewRecord):
-                $dCogs = new ActiveDataProvider([
-                    'query' => $model->getCogs(),
-                    'pagination' => [
-                        'pageSize' => 10,
-                    ],
-                ]);
-
-                echo GridView::widget([
-                    'dataProvider' => $dCogs,
+                ]),
+            ],
+            [
+                'label' => 'Barcode',
+                'content' => GridView::widget([
+                    'dataProvider' => new ActiveDataProvider([
+                        'query' => $model->getBarcodes()
+                        ]),
                     'tableOptions' => ['class' => 'table table-striped'],
                     'layout' => '{items}',
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'idUom.nm_uom',
-                        'idUom.cd_uom',
-                        [ 'header' => 'Cogs',
-                            'value' => function($model) {
-                            return number_format($model->cogs, 2);
-                        }]
+                        'barcode',
                     ],
-                ]);
-            endif;
-            ?>
-        </div>
-        <div class="tab-pane" id="price"></div>
-    </div>
+                ]),
+            ],
+        ]
+    ]);
+    ?>
 
     <br>
     <?= Html::a('Update', ['update', 'id' => $model->id_product], ['class' => 'btn btn-primary']) ?>
@@ -125,3 +95,22 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 </div>
 
+<?php 
+Modal::begin([
+    'id' => 'myModal',
+    'header' => '<h4 class="modal-title">Product Uoms</h4>@' . $model->nm_product
+]);
+$umodel = new ProductUom;
+?>
+<?php $form = ActiveForm::begin(); ?>
+<div class="modal-body">
+    <?= $form->field($umodel, 'id_product')->hiddenInput(['value' => $model->id_product])->label(false) ?>    
+    <?= $form->field($umodel, 'id_uom')->dropDownList(ArrayHelper::map(Uom::find()->all(), 'id_uom', 'nm_uom'), ['style' => 'width:200px;']); ?>
+    <?= $form->field($umodel, 'isi')->textInput(['style' => 'width:120px;']) ?>
+</div>    
+<div class="form-group modal-footer" style="text-align: right; padding-bottom: 0px;">
+    <?= Html::submitButton($umodel->isNewRecord ? 'Create' : 'Update', ['class' => $umodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+</div>
+<?php
+ActiveForm::end();
+Modal::end();

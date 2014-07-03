@@ -6,6 +6,7 @@ use biz\sales\models\SalesDtl;
 use mdm\relation\EditableList;
 use biz\sales\assets\StandartAsset;
 use biz\app\assets\BizDataAsset;
+use biz\master\components\Helper as MasterHelper;
 ?>
 <div class="col-lg-9" style="padding-left: 0px;">
     <div class="panel panel-info">
@@ -47,11 +48,9 @@ use biz\app\assets\BizDataAsset;
 <?php
 StandartAsset::register($this);
 BizDataAsset::register($this, [
-    'master' => $masters,
+    'master' => MasterHelper::getMasters('product, barcode, price, price_category, customer'),
 ]);
 $js_ready = <<<JS
-$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;
-yii.numeric.input(\$('#detail-grid'), 'input[data-field]');
 yii.standart.onReady();
 JS;
 $this->registerJs($js_ready);

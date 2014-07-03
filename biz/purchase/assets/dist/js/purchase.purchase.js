@@ -3,7 +3,7 @@
  */
 
 yii.purchase = (function($) {
-    var pub = {
+    var local = {
         format: function(n) {
             return $.number(n, 0);
         },
@@ -19,27 +19,22 @@ yii.purchase = (function($) {
             });
             if (!has) {
                 var $row = $('#detail-grid').mdmEditableList('addRow');
-                pub.applyProduct($row, item, true);
-                $('#detail-grid').mdmEditableList('selectRow', $row);
-                $row.find('input[data-field="purch_qty"]').focus();
-            }
-            pub.normalizeItem();
-        },
-        applyProduct: function($row, item, isNew) {
-            if (typeof item != 'object') {
-                item = biz.master.products[item];
-            }
-            if (isNew) {
+
                 $row.find('span.cd_product').text(item.cd);
                 $row.find('span.nm_product').text(item.text);
                 $row.find('input[data-field="id_product"]').val(item.id);
                 $row.find('input[data-field="purch_qty"]').val('1');
+
+                // apply uoms
+                var $select = $row.find('select[data-field="id_uom"]').html('');
+                $.each(item.uoms, function() {
+                    $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
+                });
+
+                $('#detail-grid').mdmEditableList('selectRow', $row);
+                $row.find('input[data-field="purch_qty"]').focus();
             }
-            // apply uoms
-            var $select = $row.find('select[data-field="id_uom"]').html('');
-            $.each(item.uoms, function() {
-                $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
-            });
+            local.normalizeItem();
         },
         normalizeItem: function() {
             var total = 0.0;
@@ -47,19 +42,19 @@ yii.purchase = (function($) {
                 var $row = $(this);
                 var q = $row.find('input[data-field="purch_qty"]').val();
                 q = (q == '' ? 1 : q);
-                var isi = 1; //$row.find('[data-field="id_uom"] > :selected').data('isi');
+                var isi = $row.find('[data-field="id_uom"] > :selected').data('isi');
                 isi = isi ? isi : 1;
                 var t = isi * q * $row.find('input[data-field="purch_price"]').val();
-                $row.find('span.total-price').text(pub.format(t));
+                $row.find('span.total-price').text(local.format(t));
                 $row.find('input[data-field="total_price"]').val(t);
                 total += t;
             });
-            $('#purchasehdr-purchase_value').val(total);
-            $('#total-price').text(pub.format(total));
+            $('#purchase-value').val(total);
+            $('#total-price').text(local.format(total));
         },
         showDiscount: function() {
-            var purch_val = $('#purchasehdr-purchase_value').val();
-            var disc_val = $('#purchasehdr-item_discount').val();
+            var purch_val = $('#purchase-value').val();
+            var disc_val = $('#item-discount').val();
             if (disc_val * 1 != 0) {
                 $('#bfore').show();
                 var disc_val = purch_val * disc_val * 0.01;
@@ -71,6 +66,16 @@ yii.purchase = (function($) {
                 $('#bfore').hide();
             }
         },
+        onProductChange: function() {
+            var item = yii.global.searchProductByCode(this.value);
+            if (item !== false) {
+                local.addItem(item);
+            }
+            this.value = '';
+            $(this).autocomplete("close");
+        },
+    }
+    var pub = {
         onReady: function() {
             $('#detail-grid')
                 .off('keydown.purchase', ':input[data-field]')
@@ -108,7 +113,7 @@ yii.purchase = (function($) {
                             $row.find('input[data-field="markup_price"]').val(m.toFixed(2));
                             break;
                     }
-                    pub.normalizeItem();
+                    local.normalizeItem();
                 });
 
             var clicked = false;
@@ -125,14 +130,12 @@ yii.purchase = (function($) {
                     }
                 });
 
-            yii.purchase.normalizeItem();
-
-            $('#product').change(yii.purchase.onProductChange);
+            $('#product').change(local.onProductChange);
             $('#product').focus();
             $('#product').data('ui-autocomplete')._renderItem = yii.global.renderItem;
 
-            yii.purchase.showDiscount();
-            $('#purchasehdr-item_discount').change(yii.purchase.showDiscount);
+            local.showDiscount();
+            yii.global.isChangeOrEnter($('#item-discount'),'',local.showDiscount);
 
             $(window).keydown(function(event) {
                 if (event.keyCode == 13) {
@@ -145,23 +148,26 @@ yii.purchase = (function($) {
                     return false;
                 }
             });
+            
+            // inisialisasi uom
+            $.each($grid.mdmEditableList('getAllRows'), function() {
+                var $row = $(this);
+                var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
+                if (product) {
+                    $row.find('[data-field="id_uom"] > option').each(function() {
+                        var $opt = $(this);
+                        var isi = product.uoms[$opt.val()].isi;
+                        $opt.attr('data-isi', isi);
+                    });
+                }
+            });
 
             yii.numeric.input($('#detail-grid'), 'input[data-field]');
-        },
-        // ****
-        onProductChange: function() {
-            var item = yii.global.searchProductByCode(this.value);
-            if (item !== false) {
-                pub.addItem(item);
-            }
-            this.value = '';
-            $(this).autocomplete("close");
+            local.normalizeItem();
+
         },
         onProductSelect: function(event, ui) {
-            pub.addItem(ui.item);
-        },
-        initRow: function($row) {
-            pub.applyProduct($row, $row.find('[data-field="id_product"]').val(), false);
+            local.addItem(ui.item);
         }
     };
     return pub;

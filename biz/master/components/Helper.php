@@ -224,6 +224,18 @@ class Helper
             $result['barcodes'] = $barcodes;
         }
 
+        // price_category
+        if (isset($masters['price_category'])) {
+            $price_category = [];
+            $query_price_category = (new Query())
+                ->select(['id_price_category', 'nm_price_category'])
+                ->from('{{%price_category}}');
+            foreach ($query_price_category->all() as $row) {
+                $price_category[$row['id_price_category']] = $row['nm_price_category'];
+            }
+            $result['price_category'] = $price_category;
+        }
+        
         // prices
         if (isset($masters['price'])) {
             $prices = [];

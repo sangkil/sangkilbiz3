@@ -4,6 +4,7 @@ namespace biz\purchase\models;
 
 use Yii;
 use biz\master\models\Product;
+use biz\master\models\Uom;
 
 /**
  * This is the model class for table "purchase_dtl".
@@ -99,6 +100,12 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::className(), ['id_product'=>'id_product']);
     }
+
+    public function getIdUom()
+    {
+        return $this->hasOne(Uom::className(), ['id_uom'=>'id_uom']);
+    }
+    
     
     public function afterSave($insert, $changedAttributes)
     {

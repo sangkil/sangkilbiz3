@@ -71,17 +71,12 @@ yii.standart = (function($) {
         onProductSelect: function(event, ui) {
             local.addItem(ui.item);
         },
-        initRow: function($row) {
-            var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
-            if (product) {
-                $row.find('[data-field="id_uom"] > option').each(function() {
-                    var $opt = $(this);
-                    var isi = product.uoms[$opt.val()].isi;
-                    $opt.attr('data-isi', isi);
-                });
-            }
-        },
         onReady: function() {
+            $('#price_ct').html('');
+            $.each(biz.master.price_category, function(key, val) {
+                $('<option>').text(val).val(key).appendTo($('#price_ct'));
+            });
+
             $grid = $('#detail-grid');
 
             $grid
@@ -145,6 +140,22 @@ yii.standart = (function($) {
                     return false;
                 }
             });
+            
+            // inisialisasi uom
+            $.each($grid.mdmEditableList('getAllRows'), function() {
+                var $row = $(this);
+                var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
+                if (product) {
+                    $row.find('[data-field="id_uom"] > option').each(function() {
+                        var $opt = $(this);
+                        var isi = product.uoms[$opt.val()].isi;
+                        $opt.attr('data-isi', isi);
+                    });
+                }
+            });
+
+            $("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;
+            yii.numeric.input($('#detail-grid'), 'input[data-field]');
 
             local.normalizeItem();
         }

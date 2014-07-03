@@ -27,6 +27,9 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+
     /**
      * @inheritdoc
      */
@@ -94,14 +97,40 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getBarcodes()
+    {
+        return $this->hasMany(ProductChild::className(), ['id_product' => 'id_product']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCogs()
     {
         return $this->hasOne(Cogs::className(), ['id_product' => 'id_product']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdCategory()
+    {
+        return $this->hasOne(Category::className(), ['id_category' => 'id_category']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdGroup()
+    {
+        return $this->hasOne(ProductGroup::className(), ['id_group' => 'id_group']);
+    }
     
     public function getCogsValue()
     {
-        return $this->cogs->cogs;
+        if($this->cogs){
+            return $this->cogs->cogs;
+        }        
     }
 
     /**
@@ -112,6 +141,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
+            'BizStatusConverter',
         ];
     }
 }

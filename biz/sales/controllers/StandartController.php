@@ -93,13 +93,10 @@ class StandartController extends Controller
             $model->addError('', $exc->getMessage());
         }
         $model->setIsNewRecord(true);
-        $price_category = ArrayHelper::map(PriceCategory::find()->all(), 'id_price_category', 'nm_price_category');
         return $this->render('create', [
                 'model' => $model,
                 'details' => $model->salesDtls,
                 'payment_methods' => $payment_methods,
-                'masters' => $this->getDataMaster(),
-                'price_category' => $price_category,
         ]);
     }
 
@@ -127,11 +124,6 @@ class StandartController extends Controller
             throw new UserException($exc->getMessage());
         }
         return $this->redirect(['view', 'id' => $id]);
-    }
-
-    public function getDataMaster()
-    {
-        return Helper::getMasters(['product', 'barcode', 'price', 'customer']);
     }
 
     /**
@@ -165,13 +157,10 @@ class StandartController extends Controller
             $model->addError('', $exc->getMessage());
         }
 
-        $price_category = ArrayHelper::map(PriceCategory::find()->all(), 'id_price_category', 'nm_price_category');
         return $this->render('create', [
                 'model' => $model,
                 'details' => $model->salesDtls,
                 'payment_methods' => $payment_methods,
-                'masters' => $this->getDataMaster(),
-                'price_category' => $price_category,
         ]);
     }
 

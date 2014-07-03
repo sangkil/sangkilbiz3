@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 'purchase_num',
-                'idSupplier.nm_supplier',
+                'nmSupplier',
                 'purchaseDate',
                 'nmStatus',
             ],
@@ -64,7 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]),
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'idWarehouse.nm_whse',
             'idProduct.nm_product',
             'purch_qty',
             'purch_price',

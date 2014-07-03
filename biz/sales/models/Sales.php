@@ -3,6 +3,7 @@
 namespace biz\sales\models;
 
 use Yii;
+use biz\master\models\Customer;
 
 /**
  * This is the model class for table "sales".
@@ -24,6 +25,7 @@ use Yii;
  * @property string $salesDate
  *
  * @property SalesDtl[] $salesDtls
+ * @property Customer $idCustomer
  * @method boolean|integer saveRelation(string $relation, array $data, array $options)
  */
 class Sales extends \yii\db\ActiveRecord
@@ -48,6 +50,7 @@ class Sales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nmCustomer'], 'exist', 'targetClass' => Customer::className(), 'targetAttribute' => 'nm_customer'],
             [['id_branch', 'id_customer', 'id_warehouse', 'salesDate', 'status'], 'required'],
             [['id_branch', 'id_cashdrawer', 'status', 'id_warehouse'], 'integer'],
             [['discount'], 'number'],
@@ -82,6 +85,29 @@ class Sales extends \yii\db\ActiveRecord
     public function getSalesDtls()
     {
         return $this->hasMany(SalesDtl::className(), ['id_sales' => 'id_sales'])->with('idCogs');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdCustomer()
+    {
+        return $this->hasOne(Customer::className(), ['id_customer' => 'id_customer']);
+    }
+
+    public function getNmCustomer()
+    {
+        if ($this->idCustomer) {
+            return $this->idCustomer->nm_customer;
+        }
+    }
+
+    public function setNmCustomer($value)
+    {
+        $cust = Customer::findOne(['nm_customer' => $value]);
+        if ($cust) {
+            $this->id_customer = $cust->id_customer;
+        }
     }
 
     /**
