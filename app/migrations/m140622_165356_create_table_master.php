@@ -169,8 +169,8 @@ class m140622_165356_create_table_master extends \yii\db\Migration
 
         $this->createTable('{{%customer}}', [
             'id_customer' => Schema::TYPE_PK,
-            'cd_cust' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_cust' => Schema::TYPE_STRING . '(64) NOT NULL',
+            'cd_customer' => Schema::TYPE_STRING . '(4) NOT NULL',
+            'nm_customer' => Schema::TYPE_STRING . '(64) NOT NULL',
             'contact_name' => Schema::TYPE_STRING . '(64)',
             'contact_number' => Schema::TYPE_STRING . '(64)',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',

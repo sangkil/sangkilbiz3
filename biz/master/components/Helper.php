@@ -251,7 +251,7 @@ class Helper
         // customer
         if (isset($masters['customer'])) {
             $result['customers'] = (new Query())
-                ->select(['id' => 'id_customer', 'label' => 'nm_cust'])
+                ->select(['id' => 'id_customer', 'label' => 'nm_customer'])
                 ->from('{{%customer}}')
                 ->all();
         }

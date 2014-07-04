@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "customer".
  *
  * @property integer $id_customer
- * @property string $cd_cust
- * @property string $nm_cust
+ * @property string $cd_customer
+ * @property string $nm_customer
  * @property string $contact_name
  * @property string $contact_number
  * @property integer $status
@@ -42,11 +42,11 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cd_cust', 'nm_cust'], 'required'],
+            [['cd_customer', 'nm_customer'], 'required'],
             [['status'], 'integer'],
-            [['cd_cust'], 'string', 'max' => 13],
-            [['nm_cust', 'contact_name', 'contact_number'], 'string', 'max' => 64],
-            [['cd_cust'], 'unique']
+            [['cd_customer'], 'string', 'max' => 13],
+            [['nm_customer', 'contact_name', 'contact_number'], 'string', 'max' => 64],
+            [['cd_customer'], 'unique']
         ];
     }
 
@@ -57,8 +57,8 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
             'id_customer' => 'Id Customer',
-            'cd_cust' => 'Cd Cust',
-            'nm_cust' => 'Nm Cust',
+            'cd_customer' => 'Cd Cust',
+            'nm_customer' => 'Nm Cust',
             'contact_name' => 'Contact Name',
             'contact_number' => 'Contact Number',
             'status' => 'Status',

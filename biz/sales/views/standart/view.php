@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 'sales_num',
-                'idCustomer.nm_cust',
+                'idCustomer.nm_customer',
                 'idBranch.nm_branch',
                 'sales_date',
                 'nmStatus',

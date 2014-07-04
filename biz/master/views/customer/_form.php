@@ -20,9 +20,9 @@ use biz\behaviors\StatusBehavior;
             New Cutomer
         </div>
         <div class="panel-body">
-            <?= $form->field($model, 'cd_cust')->textInput(['maxlength' => 13, 'style' => 'width:120px;']) ?>
+            <?= $form->field($model, 'cd_customer')->textInput(['maxlength' => 13, 'style' => 'width:120px;']) ?>
 
-            <?= $form->field($model, 'nm_cust')->textInput(['maxlength' => 64]) ?>
+            <?= $form->field($model, 'nm_customer')->textInput(['maxlength' => 64]) ?>
 
             <?= $form->field($model, 'contact_name')->textInput(['maxlength' => 64]) ?>
 

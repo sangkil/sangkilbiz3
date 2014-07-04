@@ -12,6 +12,7 @@ use biz\master\models\Customer;
  * @property string $sales_num
  * @property integer $id_branch
  * @property integer $id_customer
+ * @property integer $id_warehouse
  * @property integer $id_cashdrawer
  * @property string $discount
  * @property string $sales_date
@@ -33,8 +34,6 @@ class Sales extends \yii\db\ActiveRecord
     const STATUS_DRAFT = 1;
     const STATUS_RELEASE = 2;
     const STATUS_CLOSE = 10;
-
-    public $id_warehouse;
 
     /**
      * @inheritdoc

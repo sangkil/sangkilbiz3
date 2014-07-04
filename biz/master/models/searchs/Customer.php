@@ -16,7 +16,7 @@ class Customer extends CustomerModel
     {
         return [
             [['id_customer', 'update_by', 'create_by'], 'integer'],
-            [['cd_cust', 'nm_cust', 'contact_name', 'contact_number', 'status', 'update_at', 'create_at'], 'safe'],
+            [['cd_customer', 'nm_customer', 'contact_name', 'contact_number', 'status', 'update_at', 'create_at'], 'safe'],
         ];
     }
 
@@ -44,8 +44,8 @@ class Customer extends CustomerModel
             'create_by' => $this->create_by,
         ]);
 
-        $query->andFilterWhere(['like', 'cd_cust', $this->cd_cust])
-            ->andFilterWhere(['like', 'nm_cust', $this->nm_cust])
+        $query->andFilterWhere(['like', 'cd_customer', $this->cd_customer])
+            ->andFilterWhere(['like', 'nm_customer', $this->nm_customer])
             ->andFilterWhere(['like', 'contact_name', $this->contact_name])
             ->andFilterWhere(['like', 'contact_number', $this->contact_number])
             ->andFilterWhere(['like', 'status', $this->status])
