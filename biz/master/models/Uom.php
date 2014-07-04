@@ -26,23 +26,21 @@ use Yii;
  * @property StockOpnameDtl $stockOpnameDtl
  * @property TransferDtl[] $transferDtls
  */
-class Uom extends \yii\db\ActiveRecord
-{
+class Uom extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%uom}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['cd_uom', 'nm_uom'], 'required'],
+            [['cd_uom', 'nm_uom', 'isi'], 'required'],
             [['cd_uom'], 'string', 'max' => 4],
             [['nm_uom'], 'string', 'max' => 32],
             [['cd_uom'], 'unique']
@@ -52,12 +50,12 @@ class Uom extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id_uom' => 'Id Uom',
             'cd_uom' => 'Cd Uom',
             'nm_uom' => 'Nm Uom',
+            'isi' => 'Isi',
             'create_at' => 'Create At',
             'create_by' => 'Create By',
             'update_at' => 'Update At',
@@ -68,91 +66,81 @@ class Uom extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductStocks()
-    {
+    public function getProductStocks() {
         return $this->hasMany(ProductStock::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPrices()
-    {
+    public function getPrices() {
         return $this->hasMany(Price::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductUoms()
-    {
+    public function getProductUoms() {
         return $this->hasMany(ProductUom::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNoticeDtls()
-    {
+    public function getNoticeDtls() {
         return $this->hasMany(NoticeDtl::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCogs()
-    {
+    public function getCogs() {
         return $this->hasMany(Cogs::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSalesDtls()
-    {
+    public function getSalesDtls() {
         return $this->hasMany(SalesDtl::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStockAdjusmentDtl()
-    {
+    public function getStockAdjusmentDtl() {
         return $this->hasOne(StockAdjusmentDtl::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPurchaseDtls()
-    {
+    public function getPurchaseDtls() {
         return $this->hasMany(PurchaseDtl::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStockOpnameDtl()
-    {
+    public function getStockOpnameDtl() {
         return $this->hasOne(StockOpnameDtl::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTransferDtls()
-    {
+    public function getTransferDtls() {
         return $this->hasMany(TransferDtl::className(), ['id_uom' => 'id_uom']);
     }
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
         ];
     }
+
 }
