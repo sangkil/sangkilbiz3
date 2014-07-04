@@ -4,6 +4,7 @@ namespace biz\accounting;
 
 /**
  * Module accounting
+ * 
  */
 class Module extends \yii\base\Module
 {
