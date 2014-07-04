@@ -12,7 +12,6 @@ use \Exception;
 use yii\base\UserException;
 use biz\app\Hooks;
 use biz\app\base\Event;
-use biz\master\components\Helper as MasterHelper;
 use biz\app\components\Helper as AppHelper;
 
 /**
@@ -90,7 +89,6 @@ class TransferController extends Controller
         $model->setIsNewRecord(true);
         return $this->render('create', [
                 'model' => $model,
-                'details' => $model->transferDtls,
         ]);
     }
 
@@ -124,7 +122,6 @@ class TransferController extends Controller
         
         return $this->render('update', [
                 'model' => $model,
-                'details' => $model->transferDtls,
         ]);
     }
 

@@ -3,15 +3,14 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
-use biz\master\components\Helper;
+use biz\master\components\Helper as MasterHelper;
 
-/**
- * @var yii\web\View $this
- * @var biz\purchase\models\Purchase $model
- * @var yii\widgets\ActiveForm $form
- */
+
+/* @var $this yii\web\View */
+/* @var $model biz\sales\models\Sales */
+/* @var $form yii\widgets\ActiveForm */
+ 
 ?>
-
 <div class="sales-form">
     <?php
     $form = ActiveForm::begin([
@@ -19,14 +18,12 @@ use biz\master\components\Helper;
     ]);
     ?>
     <?php
-    $models = $details;
+    $models = $model->salesDtls;
     $models[] = $model;
     echo $form->errorSummary($models)
     ?>
     <?=
-    $this->render('_detail', [
-        'model' => $model,
-        'details' => $details])
+    $this->render('_detail', ['model' => $model])
     ?> 
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
@@ -35,7 +32,7 @@ use biz\master\components\Helper;
             </div>
             <div class="panel-body">
                 <?= $form->field($model, 'sales_num')->textInput(['readonly' => true]); ?>
-                <?= $form->field($model, 'id_warehouse')->dropDownList(Helper::getWarehouseList()); ?>
+                <?= $form->field($model, 'id_warehouse')->dropDownList(MasterHelper::getWarehouseList()); ?>
                 <?= $form->field($model, 'salesDate')
                     ->widget('yii\jui\DatePicker', [
                         'options' => ['class' => 'form-control', 'style' => 'width:50%'],

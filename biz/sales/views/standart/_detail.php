@@ -7,9 +7,21 @@ use mdm\relation\EditableList;
 use biz\sales\assets\StandartAsset;
 use biz\app\assets\BizDataAsset;
 use biz\master\components\Helper as MasterHelper;
+use biz\master\models\PriceCategory;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+
+/* @var $this yii\web\View */
+/* @var $model biz\sales\models\Sales */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="col-lg-9" style="padding-left: 0px;">
     <div class="panel panel-info">
+        Price :
+        <?=
+        Html::dropDownList('price_ct', null, ArrayHelper::map(PriceCategory::findAll([]), 'id_price_category', 'nm_price_category'), ['id' => 'price_ct'])
+        ?>
+
         <div class="panel-heading">
             Product :
             <?php
@@ -31,7 +43,7 @@ use biz\master\components\Helper as MasterHelper;
             <?=
             EditableList::widget([
                 'id' => 'detail-grid',
-                'allModels' => $details,
+                'allModels' => $model->salesDtls,
                 'modelClass' => SalesDtl::className(),
                 'options' => ['tag' => 'tbody'],
                 'itemOptions' => ['tag' => 'tr'],

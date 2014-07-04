@@ -12,7 +12,8 @@ use yii\helpers\Url;
 
 GridView::widget([
     'dataProvider' => new ActiveDataProvider([
-        'query' => $model->getBarcodes()
+        'query' => $model->getBarcodes(),
+        'sort'=>false,
         ]),
     'tableOptions' => ['class' => 'table table-striped'],
     'layout' => '{items}',

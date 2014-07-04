@@ -1,14 +1,11 @@
 <?php
-
-namespace biz\app\components;
-
+namespace biz\app\base;
 /**
- * Description of UserBehavior
+ * Description of PropertiBehavior
  *
- * @property \yii\web\User $owner
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class UserProperties extends \yii\base\Behavior
+class PropertiBehavior extends \yii\base\Behavior
 {
     /**
      *
@@ -18,7 +15,7 @@ class UserProperties extends \yii\base\Behavior
     
     protected function getUserProperties()
     {
-        
+        throw new \yii\base\NotSupportedException();
     }
 
     private function initProperties()

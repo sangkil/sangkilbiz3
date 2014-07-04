@@ -24,6 +24,8 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'delete-uom' => ['post'],
+                    'delete-barcode' => ['post'],
                 ],
             ],
         ];
@@ -53,7 +55,8 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
         $post = Yii::$app->request->post();
-        $active = 'uom';
+        $session = Yii::$app->session;
+        $active = $session->getFlash('_flash_action', 'uom');
         if (isset($post['action'])) {
             if ($post['action'] == 'uom') {
                 $puom = new ProductUom([
@@ -146,34 +149,28 @@ class ProductController extends Controller
         }
     }
 
-    public function actionDeleteUom($id_product,$id_uom)
+    public function actionDeleteUom($id_product, $id_uom)
     {
-        $model = $this->findModel($id_product);
         $puom = ProductUom::findOne([
-            'id_product'=>$id_product,
-            'id_uom'=>$id_uom
+                'id_product' => $id_product,
+                'id_uom' => $id_uom
         ]);
         $puom->delete();
-        return $this->render('view', [
-                'model' => $model,
-                'active' => 'uom'
-        ]);
+        Yii::$app->session->setFlash('_flash_action', 'uom');
+        return $this->redirect(['view', 'id' => $id_product]);
     }
 
-    public function actionDeleteBarcode($id_product,$barcode)
+    public function actionDeleteBarcode($id_product, $barcode)
     {
-        $model = $this->findModel($id_product);
         $child = ProductChild::findOne([
-            'id_product'=>$id_product,
-            'barcode'=>$barcode
+                'id_product' => $id_product,
+                'barcode' => $barcode
         ]);
         $child->delete();
-        return $this->render('view', [
-                'model' => $model,
-                'active' => 'barcode'
-        ]);
+        Yii::$app->session->setFlash('_flash_action', 'barcode');
+        return $this->redirect(['view', 'id' => $id_product]);
     }
-    
+
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

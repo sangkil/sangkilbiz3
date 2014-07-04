@@ -13,11 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="purchase-hdr-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::dropDownList('', null) ?>
     <?php
     echo $this->render('_form', [
         'model' => $model,
-        'details' => $details,
     ]);
     ?>
 

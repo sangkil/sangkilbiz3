@@ -7,6 +7,10 @@ use mdm\relation\EditableList;
 use biz\inventory\assets\TransferAsset;
 use biz\app\assets\BizDataAsset;
 use biz\master\components\Helper as MasterHelper;
+
+/* @var $this yii\web\View */
+/* @var $model biz\inventory\models\Transfer */
+
 ?>
 <div class="col-lg-9" style="padding-left: 0px;">
     <div class="panel panel-info">
@@ -28,7 +32,7 @@ use biz\master\components\Helper as MasterHelper;
             <?=
             EditableList::widget([
                 'id' => 'detail-grid',
-                'allModels' => $details,
+                'allModels' => $model->transferDtls,
                 'modelClass' => TransferDtl::className(),
                 'itemView' => '_item_detail',
                 'options' => ['tag' => 'tbody'],

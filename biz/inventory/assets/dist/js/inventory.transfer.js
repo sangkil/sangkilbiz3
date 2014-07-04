@@ -1,7 +1,6 @@
 yii.transfer = (function($) {
 
     var local = {
-        checkStock: true,
         addItem: function(item) {
             var has = false;
             $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
@@ -32,7 +31,7 @@ yii.transfer = (function($) {
                 $('#detail-grid').mdmEditableList('selectRow', $row);
                 $row.find('input[data-field="transfer_qty_send"]').focus();
             }
-            //local.normalizeItem();
+            local.normalizeItem();
         },
         format: function(n) {
             return $.number(n, 0);

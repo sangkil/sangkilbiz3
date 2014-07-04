@@ -4,11 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\components\Helper;
 
-/**
- * @var yii\web\View $this
- * @var biz\purchase\models\Purchase $model
- * @var yii\widgets\ActiveForm $form
- */
+
+/* @var $this yii\web\View */
+/* @var $model biz\inventory\models\Transfer */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="purchase-hdr-form">
@@ -18,11 +17,11 @@ use biz\master\components\Helper;
     ]);
     ?>
     <?php
-    $models = $details;
+    $models = $model->transferDtls;
     array_unshift($models, $model);
     echo $form->errorSummary($models)
     ?>
-    <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?> 
+    <?= $this->render('_detail', ['model' => $model]) ?> 
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">

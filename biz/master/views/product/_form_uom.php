@@ -2,9 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\jui\AutoComplete;
 use biz\master\models\Uom;
-use yii\web\JsExpression;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 
@@ -12,19 +10,14 @@ use yii\helpers\Url;
 /* @var $model biz\master\models\Product */
 ?>
 <?php
-
-$uoms = Uom::find()->select(['label' => 'nm_uom', 'value' => 'id_uom'])->asArray()->all();
-$onSelect = <<<JS
-function(event,ui){
-    \$('#input-form [name="isi_uom"]').focus().select();
-}
-JS;
+$uoms = \yii\helpers\ArrayHelper::map(Uom::findAll([]), 'id_uom', 'nm_uom');
 ?>
 <?=
 
 GridView::widget([
     'dataProvider' => new ActiveDataProvider([
-        'query' => $model->getProductUoms()
+        'query' => $model->getProductUoms(),
+        'sort'=>false,
         ]),
     'tableOptions' => ['class' => 'table table-striped'],
     'layout' => '{items}',
@@ -33,14 +26,7 @@ GridView::widget([
         ['class' => 'yii\grid\SerialColumn'],
         [
             'attribute' => 'idUom.cd_uom',
-            'footer' => AutoComplete::widget([
-                'id'=>'id-uom',
-                'name' => 'id_uom',
-                'clientOptions' => [
-                    'source' => $uoms,
-                    'select' => new JsExpression($onSelect)
-                ]
-            ]),
+            'footer' => Html::dropDownList('id_uom', '', $uoms),
         ],
         'idUom.cd_uom',
         [
@@ -61,6 +47,9 @@ GridView::widget([
 <?php
 
 $js = <<<JS
+yii.global.isChangeOrEnter(\$(document),'#input-form [name="id_uom"]',function(){
+    \$('#input-form [name="isi_uom"]').focus().select();
+});
 yii.global.isChangeOrEnter(\$(document),'#input-form [name="isi_uom"]',function(){
     \$('#input-form [name="action"]').val('uom');
     if(\$('#id-uom').val() != ''){

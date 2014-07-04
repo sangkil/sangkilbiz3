@@ -9,7 +9,7 @@ use biz\master\models\UserToBranch;
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class UserProperties extends \biz\app\components\UserProperties
+class UserProperties extends \biz\app\base\PropertiBehavior
 {
 
     protected function getUserProperties()
