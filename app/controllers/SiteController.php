@@ -29,7 +29,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'user-list'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -111,6 +111,16 @@ class SiteController extends Controller
 
         return $this->render('signup', [
                 'model' => $model,
+        ]);
+    }
+    
+    public function actionUserList(){
+        $searchModel = new \app\models\UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+
+        return $this->render('user-list', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
         ]);
     }
 
