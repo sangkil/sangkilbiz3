@@ -7,9 +7,9 @@ use yii\helpers\Html;
  * @var biz\accounting\models\AccPeriode $model
  */
 
-$this->title = 'Update Acc Periode: ' . ' ' . $model->id_periode;
+$this->title = 'Update Acc Periode: ' . ' ' . $model->nm_periode;
 $this->params['breadcrumbs'][] = ['label' => 'Acc Periodes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_periode, 'url' => ['view', 'id' => $model->id_periode]];
+$this->params['breadcrumbs'][] = ['label' => $model->nm_periode, 'url' => ['view', 'id' => $model->id_periode]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="acc-periode-update">

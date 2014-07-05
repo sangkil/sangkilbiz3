@@ -7,14 +7,18 @@ use mdm\relation\EditableList;
 use biz\accounting\models\GlDetail;
 
 /* @var $this yii\web\View */
+/* @var $model biz\accounting\models\GlHeader */
 ?>
 
 <div class="gl-header-form">
 
-    <?= Html::dropDownList('', $es, $sheets, ['id' => 'sheets', 'prompt' => '-']); ?>
+    <?php
+    $sheets = biz\accounting\models\EntriSheet::find()->all();
+    $sheets = \yii\helpers\ArrayHelper::map($sheets, 'id_esheet', 'nm_esheet');
+    echo Html::dropDownList('', $es, $sheets, ['id' => 'sheets', 'prompt' => '-']); ?>
     <?php $form = ActiveForm::begin(); ?>
     <?php 
-    $models = $details;
+    $models = $model->glDetails;
     array_unshift($models, $model);
     echo $form->errorSummary($models);
     ?>
@@ -44,7 +48,7 @@ use biz\accounting\models\GlDetail;
         <?=
         EditableList::widget([
             'id'=>'gl-detail',
-            'allModels' => $details,
+            'allModels' => $model->glDetails,
             'modelClass' => GlDetail::className(),
             'itemView' => '_detail',
             'options' => ['tag' => 'tbody'],

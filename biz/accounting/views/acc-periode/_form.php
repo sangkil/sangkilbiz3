@@ -4,38 +4,39 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 
-/**
- * @var yii\web\View $this
- * @var biz\accounting\models\\AccPeriode $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $this yii\web\View */
+/* @var $model biz\accounting\models\AccPeriode */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="acc-periode-form">
 
-	<?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(); ?>
+    <?= $form->errorSummary($model) ?>
+    <?= $form->field($model, 'nm_periode')->textInput(['maxlength' => 32]) ?>
 
-	<?= $form->field($model, 'nm_periode')->textInput(['maxlength' => 32]) ?>
+    <?=
+    $form->field($model, 'dateFrom')->widget(DatePicker::className(), [
+        'options' => ['class' => 'form-control'],
+        'clientOptions' => [
+            'dateFormat' => 'dd-mm-yy',
+        ],])
+    ?>
 
-	<?=
-	$form->field($model, 'date_from')->widget(DatePicker::className(), [
-		'options' => ['class' => 'form-control'],
-		'clientOptions' => [
-			'dateFormat' => 'yy-mm-dd',
-		],])
-	?>
+    <?=
+    $form->field($model, 'dateTo')->widget(DatePicker::className(), [
+        'options' => ['class' => 'form-control'],
+        'clientOptions' => [
+            'dateFormat' => 'dd-mm-yy',
+        ],])
+    ?>
 
-<?= $form->field($model, 'date_to')->widget(DatePicker::className(), [
-	'options' => ['class' => 'form-control'],
-		'clientOptions' => [
-			'dateFormat' => 'yy-mm-dd',
-		],])
-?>
+    <?= $form->field($model, 'nmStatus')->textInput(['readonly'=>true]) ?>
+    
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
 
-	<div class="form-group">
-	<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	</div>
-
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>
