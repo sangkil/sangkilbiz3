@@ -22,9 +22,9 @@ use Yii;
  */
 class AccPeriode extends \yii\db\ActiveRecord
 {
-    const STATUS_OPEN = 0;
-    const STATUS_CLOSE = 1;
-    
+    const STATUS_OPEN = 1;
+    const STATUS_CLOSE = 2;
+
     /**
      * @inheritdoc
      */
@@ -39,6 +39,7 @@ class AccPeriode extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['status'], 'unique', 'filter'=>['status'=>  self::STATUS_OPEN]],
             [['nm_periode', 'dateFrom', 'dateTo'], 'required'],
             [['date_from', 'date_to'], 'safe'],
             [['status'], 'integer'],
@@ -81,8 +82,8 @@ class AccPeriode extends \yii\db\ActiveRecord
             'BizTimestampBehavior',
             'BizBlameableBehavior',
             [
-                'class'=>'mdm\converter\DateConverter',
-                'attributes'=>[
+                'class' => 'mdm\converter\DateConverter',
+                'attributes' => [
                     'dateFrom' => 'date_from',
                     'dateTo' => 'date_to',
                 ]

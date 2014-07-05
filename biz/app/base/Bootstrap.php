@@ -19,19 +19,16 @@ class Bootstrap implements \yii\base\BootstrapInterface
     public function bootstrap($app)
     {
         if ($app instanceof \yii\web\Application) {
-            $config = array_merge([
-                'user_properties' => true,
-                'self_define_module' => true,
-                ], ArrayHelper::getValue($app->params, 'biz_config', []));
+            $config = ArrayHelper::getValue($app->params, 'biz_config', []);
 
-            $this->initialize($app,$config);
-            if ($config['self_define_module']) {
+            $this->initialize($app, $config);
+            if (ArrayHelper::getValue($config, 'auto_define_module', true)) {
                 $this->autoDefineModule($app);
             }
         }
     }
 
-    protected function initialize($app,$config)
+    protected function initialize($app, $config)
     {
         
     }

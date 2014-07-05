@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var biz\accounting\models\AccPeriode $model
  */
 
-$this->title = $model->id_periode;
+$this->title = $model->nm_periode;
 $this->params['breadcrumbs'][] = ['label' => 'Acc Periodes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,15 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_periode',
             'nm_periode',
-            'date_from',
-            'date_to',
-            'status',
-            'create_at',
-            'create_by',
-            'update_at',
-            'update_by',
+            'dateFrom',
+            'dateTo',
+            'nmStatus',
         ],
     ]) ?>
 
