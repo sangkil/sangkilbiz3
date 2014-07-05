@@ -30,3 +30,11 @@ and open the template in the editor.
 .panel-footer{
     text-align: right;
 }
+
+.nav .nav-tabs > li{
+    border-top-color: #3c8dbc;
+}
+
+.tab-content .tab-pane{
+    background-color: #fff;
+}

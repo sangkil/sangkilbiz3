@@ -2,13 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
-use yii\bootstrap\Modal;
-use biz\master\models\ProductUom;
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use biz\master\models\Uom;
 use yii\widgets\Pjax;
 use yii\bootstrap\Tabs;
 
@@ -21,22 +14,25 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-view col-lg-6" style="padding-left: 0px;">
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            Product
+    <div class="box box-primary">
+        <div class="box-header">
+            <i class="fa fa-code"></i>
+            <h3 class="box-title">Product</h3>
         </div>
-        <?=
-        DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                'cd_product',
-                'nm_product',
-                'idCategory.nm_category',
-                'idGroup.nm_group',
-            ],
-        ])
-        ?>
-        <div class="panel-footer">
+        <div class="box-body no-padding">
+            <?=
+            DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'cd_product',
+                    'nm_product',
+                    'idCategory.nm_category',
+                    'idGroup.nm_group',
+                ],
+            ])
+            ?>
+        </div>
+        <div class="box-footer">
             <?= Html::a('Update', ['update', 'id' => $model->id_product], ['class' => 'btn btn-primary']) ?>
             <?=
             Html::a('Delete', ['delete', 'id' => $model->id_product], [
@@ -61,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     Pjax::begin([
         'id' => 'pjax',
-        'enablePushState'=>false,
+        'enablePushState' => false,
         'clientOptions' => [
             'url' => \yii\helpers\Url::canonical()
         ]
