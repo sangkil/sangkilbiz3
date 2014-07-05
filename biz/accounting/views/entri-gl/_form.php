@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\accounting\models\GlDetail;
 use mdm\relation\EditableList;
+use biz\accounting\components\Helper as AccHelper;
 
 /* @var $model biz\accounting\models\GlHeader */
 /* @var $this yii\web\View */
@@ -53,7 +54,7 @@ use mdm\relation\EditableList;
             <?=
             EditableList::widget([
                 'id' => 'tbl-gldetail',
-                'allModels' => $details,
+                'allModels' => $model->glDetails,
                 'itemView' => '_detail',
                 'modelClass' => GlDetail::className(),
                 'options' => ['tag' => 'tbody'],
@@ -90,7 +91,7 @@ function(\$row) {
 }
 JS;
 biz\app\assets\BizDataAsset::register($this, [
-    'master' => $masters,
+    'master' => AccHelper::getMasters('coa'),
     'config' => [
         'glAfterAddRow' => new \yii\web\JsExpression($jsFunc)
     ]
