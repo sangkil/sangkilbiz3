@@ -3,27 +3,34 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
-use biz\models\Category;
-use biz\models\ProductGroup;
-use yii\bootstrap\Modal;
-use biz\models\Uom;
-use biz\models\ProductUom;
+use biz\master\models\Category;
+use biz\master\models\ProductGroup;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use yii\bootstrap\Tabs;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Product $model
+ * @var biz\master\models\Product $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
-<?php $form = ActiveForm::begin(); ?>
-<div class="product col-lg-7">
-    <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">Product</h3>
-        </div>
+<style>
+    .tab-content {
+        border: 1px #e0e0e0 solid;
+        border-top: none;
+        padding: 20px;
+    }
 
+    .modal-header {
+        background-color: #428BCA;
+        border-color: #428BCA;
+        color: #FFFFFF;
+    }
+</style>
+<?php $form = ActiveForm::begin(); ?>
+<div class=" product col-lg-6">
+    <div class="box box-primary">
         <div class="box-body">
 
             <?= $form->field($model, 'cd_product')->textInput(['maxlength' => 13, 'style' => 'width:160px;']) ?>
@@ -35,71 +42,55 @@ use yii\grid\GridView;
             <?= $form->field($model, 'id_group')->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'id_group', 'nm_group'), ['style' => 'width:200px;']); ?>
 
         </div>   
-
-    </div>
-
-</div>
-
-<div class="col-lg-5">
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active btn-finish"><a href="#uoms" data-toggle="tab">Uoms</a></li>
-            <li><a href="#aliases" data-toggle="tab">Aliases</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div class="tab-pane active" id="uoms">
-                <?php echo $this->render('_isi',['model'=>$model]);?>                
-            </div>
-            <div class="tab-pane" id="aliases">                
-                <?php echo $this->render('_alias',['model'=>$model]);?> 
-            </div>
+        <div class="box-footer">
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+</div>
+<style>
+    .tab-content {
+        border: 1px #e0e0e0 solid;
+        border-top: none;
+        padding: 20px;
+    }
+</style>
+<div class="col-lg-6">
+    <?=
+    Tabs::widget([
+        'items' => [
+            [
+                'label' => 'Uoms',
+                'content' => GridView::widget([
+                    'dataProvider' => new ActiveDataProvider([
+                        'query' => $model->getProductUoms()
+                            ]),
+                    'tableOptions' => ['class' => 'table table-striped'],
+                    'layout' => '{items}',
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'idUom.nm_uom',
+                        'idUom.cd_uom',
+                        'isi'
+                    ],
+                ]),
+            ],
+            [
+                'label' => 'Barcode',
+                'content' => GridView::widget([
+                    'dataProvider' => new ActiveDataProvider([
+                        'query' => $model->getBarcodes()
+                            ]),
+                    'tableOptions' => ['class' => 'table table-striped'],
+                    'layout' => '{items}',
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        'barcode',
+                    ],
+                ]),
+            ],
+        ]
+    ]);
+    ?>
 </div>
 <?php
 ActiveForm::end();
-
-Modal::begin([
-    'id' => 'myModal',
-    'header' => '<h4 class="modal-title">Product Uoms</h4>@' . $model->nm_product
-]);
-$umodel = new ProductUom;
-?>
-<?php $form2 = ActiveForm::begin(); ?>
-<div class="modal-body">
-    <?= $form2->field($umodel, 'id_product')->hiddenInput(['value' => $model->id_product])->label(false) ?>    
-    <?= $form2->field($umodel, 'id_uom')->dropDownList(ArrayHelper::map(Uom::find()->all(), 'id_uom', 'nm_uom'), ['style' => 'width:200px;']); ?>
-    <?= $form2->field($umodel, 'isi')->textInput(['style' => 'width:120px;']) ?>
-</div>    
-<div class="form-group modal-footer" style="text-align: right; padding-bottom: 0px;">
-    <?= Html::submitButton($umodel->isNewRecord ? 'Create' : 'Update', ['class' => $umodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-</div>
-<?php
-ActiveForm::end();
-Modal::end();
-
-//=========================
-Modal::begin([
-    'id' => 'aliasModal',
-    'header' => '<h4 class="modal-title">Product Alias</h4>@parent:' . $model->nm_product
-]);
-$amodel = new \biz\models\ProductChild;
-?>
-
-<?php $form3 = ActiveForm::begin(); ?>
-<div class="modal-body">
-    <?= $form3->field($amodel, 'id_product')->hiddenInput(['value' => $model->id_product])->label(false) ?>    
-    <?= $form3->field($amodel, 'barcode')->textInput(['style' => 'width:120px;']); ?>
-    <?= $form3->field($amodel, 'nm_product')->textInput() ?>
-</div>    
-<div class="form-group modal-footer" style="text-align: right; padding-bottom: 0px;">
-    <?= Html::submitButton($amodel->isNewRecord ? 'Create' : 'Update', ['class' => $amodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-</div>
-<?php
-ActiveForm::end();
-Modal::end();

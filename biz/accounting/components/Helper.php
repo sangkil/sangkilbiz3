@@ -150,7 +150,6 @@ class Helper
         $gl->gl_date = $hdr['date'];
         $gl->id_reff = $hdr['id_reff'];
         $gl->type_reff = $hdr['type_reff'];
-        $gl->gl_memo = $hdr['memo'];
         $gl->description = $hdr['description'];
 
         $gl->id_branch = $hdr['id_branch'];

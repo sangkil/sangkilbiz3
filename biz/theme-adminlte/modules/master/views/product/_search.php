@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use \biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -20,7 +21,7 @@ use yii\widgets\ActiveForm;
     ?>
     <div class="box-header" style="padding-bottom: 0px;">
         <i class="fa fa-filter"></i>
-        <h3 class="box-title">Filter Purchase</h3>
+        <h3 class="box-title">Filter Product</h3>
         <div class="box-tools pull-right">
             <?= Html::a('', ['create'], ['class' => 'btn btn-success btn-sm fa fa-plus', 'title' => 'New Purchase']) ?>            
             <?= Html::a('', '#', ['class' => 'btn btn-info btn-sm fa fa-search', 'title' => 'Min/Maximize', 'id' => 'kecilin', 'data-widget' => 'collapse']) ?>
@@ -32,10 +33,10 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'nm_product') ?>
 
-        <?php $itemWhse = \biz\tools\Helper::getProductCategoryList() ?>
+        <?php $itemWhse = Helper::getCategoryList(); ?>
         <?= $form->field($model, 'id_category')->dropDownList($itemWhse, ['prompt' => '--All Category--']) ?>
 
-        <?php $itemGroup = \biz\tools\Helper::getProductGroupList() ?>
+        <?php $itemGroup = Helper::getProductGroupList() ?>
         <?= $form->field($model, 'id_group')->dropDownList($itemGroup, ['prompt' => '--All Groups--']) ?>
 
         <?php // echo $form->field($model, 'create_at') ?>

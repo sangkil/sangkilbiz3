@@ -11,7 +11,6 @@ use biz\master\models\Branch;
  * @property integer $id_gl
  * @property string $gl_date
  * @property string $gl_num
- * @property string $gl_memo
  * @property integer $id_branch
  * @property integer $id_periode
  * @property integer $type_reff
@@ -54,8 +53,7 @@ class GlHeader extends \yii\db\ActiveRecord
             [['glDate', 'id_branch', 'id_periode', 'description', 'status'], 'required'],
             [['description'], 'string'],
             [['gl_date'], 'safe'],
-            [['id_branch', 'id_periode', 'type_reff', 'id_reff', 'status'], 'integer'],
-            [['gl_memo'], 'string', 'max' => 128]
+            [['id_branch', 'id_periode', 'type_reff', 'id_reff', 'status'], 'integer']
         ];
     }
 
@@ -68,7 +66,6 @@ class GlHeader extends \yii\db\ActiveRecord
             'id_gl' => 'Id Gl',
             'gl_date' => 'Gl Date',
             'gl_num' => 'Gl Num',
-            'gl_memo' => 'Gl Memo',
             'id_branch' => 'Id Branch',
             'id_periode' => 'Id Periode',
             'type_reff' => 'Type Reff',
