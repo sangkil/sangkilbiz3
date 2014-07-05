@@ -56,7 +56,9 @@ class CogsHook extends \yii\base\Behavior
      */
     public function purchaseReceiveBody($event)
     {
+        /* @var $model \biz\master\models\Purchase */
         /* @var $detail \biz\master\models\PurchaseDtl */
+        $model = $event->params[0];
         $detail = $event->params[1];
         $this->updateCogs([
             'id_product' => $detail->id_product,

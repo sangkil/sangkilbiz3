@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $model biz\master\models\Product */
 ?>
 <?php
-$uoms = \yii\helpers\ArrayHelper::map(Uom::findAll([]), 'id_uom', 'nm_uom');
+$uoms = \yii\helpers\ArrayHelper::map(Uom::find()->all(), 'id_uom', 'nm_uom');
 ?>
 <?=
 

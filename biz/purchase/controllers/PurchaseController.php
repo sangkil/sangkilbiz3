@@ -28,7 +28,7 @@ class PurchaseController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                    'receive' => ['post'],
+                //    'receive' => ['post'],
                 ],
             ],
         ];
@@ -159,7 +159,7 @@ class PurchaseController extends Controller
             $transaction->commit();
         } catch (Exception $exc) {
             $transaction->rollBack();
-            throw new UserException($exc->getMessage());
+            throw $exc;
         }
         return $this->redirect(['index']);
     }

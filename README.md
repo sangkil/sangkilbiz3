@@ -36,3 +36,6 @@ the installed application. You only need to do these once for all.
 
 To login into the application, you need to first sign up, with any of your email address, username and password.
 Then, you can login into the application with same email address and password at any time.
+
+This appcilation require other extension that need special treatment. Please read documentation of the extension. They are
+[mdmsoft/yii2-admin](https://github.com/mdmsoft/yii2-admin) and [mdmsoft/yii2-autonumber](https://github.com/mdmsoft/yii2-admin)

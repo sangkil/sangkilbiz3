@@ -6,6 +6,7 @@ use Yii;
 use yii\db\BaseActiveRecord;
 use yii\db\Expression;
 use yii\validators\Validator;
+use yii\db\Connection;
 
 /**
  * Description of Bootstrapt
@@ -22,6 +23,9 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected function initialize($app, $config)
     {
         $this->diConfig($config);
+        $app->db->on(Connection::EVENT_BEGIN_TRANSACTION, ['mdm\logger\RecordLogger','begin']);
+        $app->db->on(Connection::EVENT_COMMIT_TRANSACTION, ['mdm\logger\RecordLogger','commit']);
+        $app->db->on(Connection::EVENT_ROLLBACK_TRANSACTION, ['mdm\logger\RecordLogger','rollback']);
     }
 
     /**
@@ -54,8 +58,11 @@ class Bootstrap extends \biz\app\base\Bootstrap
                 'enumPrefix' => 'STATUS_'
             ],
         ];
-
+        $currentDefinitions = Yii::$container->definitions;
         foreach ($config as $class => $definition) {
+            if(isset($currentDefinitions[$class])){
+                continue;
+            }
             if (isset($params[$class]) && is_array($params[$class])) {
                 $definition = array_merge($definition, $params[$class]);
             }

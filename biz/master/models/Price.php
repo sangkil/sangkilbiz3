@@ -38,7 +38,7 @@ class Price extends \yii\db\ActiveRecord
         return [
             [['id_product', 'id_price_category', 'id_uom', 'price'], 'required'],
             [['id_product', 'id_price_category', 'id_uom'], 'integer'],
-            [['price'], 'string']
+            [['price'], 'double']
         ];
     }
 
