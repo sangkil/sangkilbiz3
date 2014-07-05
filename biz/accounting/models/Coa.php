@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "coa".
  *
  * @property integer $id_coa
- * @property integer $id_coa_parent
+ * @property integer $id_parent
  * @property string $cd_account
  * @property string $nm_account
  * @property integer $coa_type
@@ -48,7 +48,7 @@ class Coa extends \yii\db\ActiveRecord
     {
         return [
             [['cd_account', 'nm_account', 'coa_type', 'normal_balance'], 'required'],
-            [['id_coa_parent'], 'safe'],
+            [['id_parent'], 'safe'],
             [['cd_account'], 'string', 'max' => 16],
             [['cd_account'], 'checkCoaCode'],
             [['nm_account'], 'string', 'max' => 64],
@@ -71,7 +71,7 @@ class Coa extends \yii\db\ActiveRecord
     {
         return [
             'id_coa' => 'Id Coa',
-            'id_coa_parent' => 'Id Coa Parent',
+            'id_parent' => 'Id Parent',
             'cd_account' => 'Cd Account',
             'nm_account' => 'Nm Account',
             'coa_type' => 'Coa Type',
@@ -102,9 +102,9 @@ class Coa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCoaParent()
+    public function getIdParent()
     {
-        return $this->hasOne(Coa::className(), ['id_coa' => 'id_coa_parent']);
+        return $this->hasOne(Coa::className(), ['id_coa' => 'id_parent']);
     }
 
     /**
@@ -112,7 +112,7 @@ class Coa extends \yii\db\ActiveRecord
      */
     public function getCoas()
     {
-        return $this->hasMany(Coa::className(), ['id_coa_parent' => 'id_coa']);
+        return $this->hasMany(Coa::className(), ['id_parent' => 'id_coa']);
     }
 
     /**

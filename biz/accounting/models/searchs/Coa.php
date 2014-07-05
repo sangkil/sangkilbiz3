@@ -15,7 +15,7 @@ class Coa extends CoaModel
     public function rules()
     {
         return [
-            [['id_coa', 'id_coa_parent', 'coa_type', 'create_by', 'update_by'], 'integer'],
+            [['id_coa', 'id_parent', 'coa_type', 'create_by', 'update_by'], 'integer'],
             [['cd_account', 'nm_account', 'normal_balance', 'create_at', 'update_at'], 'safe'],
         ];
     }
@@ -40,7 +40,7 @@ class Coa extends CoaModel
 
         $query->andFilterWhere([
             'id_coa' => $this->id_coa,
-            'id_coa_parent' => $this->id_coa_parent,
+            'id_parent' => $this->id_parent,
             'coa_type' => $this->coa_type,
             'create_by' => $this->create_by,
             'update_by' => $this->update_by,

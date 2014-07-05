@@ -55,7 +55,7 @@ class Helper
 
     private static function getCoaChild(&$result, $parent, $prefix, $tab)
     {
-        foreach (Coa::find()->where(['id_coa_parent' => $parent])->orderBy(['cd_account' => SORT_ASC])->all() as $row) {
+        foreach (Coa::find()->where(['id_parent' => $parent])->orderBy(['cd_account' => SORT_ASC])->all() as $row) {
             $result[$row['id_coa']] = $prefix . "[{$row['cd_account']}] {$row['nm_account']}";
             static::getCoaChild($result, $row['id_coa'], $prefix . $tab, $tab);
         }
@@ -65,7 +65,7 @@ class Helper
     {
         $result = [];
         $tab = str_pad('', $tab);
-        foreach (Coa::find()->where(['id_coa_parent' => null])->orderBy(['cd_account' => SORT_ASC])->all() as $row) {
+        foreach (Coa::find()->where(['id_parent' => null])->orderBy(['cd_account' => SORT_ASC])->all() as $row) {
             if ($addSelf) {
                 $result[$row['nm_account']][$row['id_coa']] = "[{$row['cd_account']}] {$row['nm_account']}";
             } else {
@@ -204,7 +204,7 @@ class Helper
         $result = [];
 
         if (isset($masters['coa'])) {
-            $query = Coa::find()->where(['not', ['id_coa_parent' => null]]); //id_coa_parent is not null
+            $query = Coa::find()->where(['not', ['id_parent' => null]]); //id_parent is not null
             $coas = [];
             foreach ($query->asArray()->all() as $row) {
                 $coas[] = [
