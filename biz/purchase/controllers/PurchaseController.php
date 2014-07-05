@@ -12,7 +12,6 @@ use \Exception;
 use yii\base\UserException;
 use biz\app\Hooks;
 use biz\app\base\Event;
-use biz\master\components\Helper;
 use biz\app\components\Helper as AppHelper;
 
 /**
@@ -28,7 +27,7 @@ class PurchaseController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                //    'receive' => ['post'],
+                    'receive' => ['post'],
                 ],
             ],
         ];
