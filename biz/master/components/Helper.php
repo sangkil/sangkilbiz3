@@ -20,25 +20,21 @@ use yii\db\Query;
  *
  * @author MDMunir
  */
-class Helper
-{
+class Helper {
 
-    public static function getCurrentStock($id_whse, $id_product)
-    {
+    public static function getCurrentStock($id_whse, $id_product) {
         $stock = ProductStock::findOne(['id_warehouse' => $id_whse, 'id_product' => $id_product]);
         return $stock ? $stock->qty_stock : 0;
     }
 
-    public static function getCurrentStockAll($id_product)
-    {
+    public static function getCurrentStockAll($id_product) {
         return ProductStock::find()->where(['id_product' => $id_product])->sum('qty_stock');
     }
 
-    public static function updateStock($params, $logs = [])
-    {
+    public static function updateStock($params, $logs = []) {
         $stock = ProductStock::findOne([
-                'id_warehouse' => $params['id_warehouse'],
-                'id_product' => $params['id_product'],
+                    'id_warehouse' => $params['id_warehouse'],
+                    'id_product' => $params['id_product'],
         ]);
         if (!$stock) {
             $stock = new ProductStock();
@@ -62,8 +58,7 @@ class Helper
         return true;
     }
 
-    public static function updateCogs($params, $logs = [])
-    {
+    public static function updateCogs($params, $logs = []) {
         $cogs = Cogs::findOne(['id_product' => $params['id_product']]);
         if (!$cogs) {
             $cogs = new Cogs();
@@ -83,8 +78,7 @@ class Helper
         return true;
     }
 
-    private static function executePriceFormula($_formula_, $price)
-    {
+    private static function executePriceFormula($_formula_, $price) {
         if (empty($_formula_)) {
             return $price;
         }
@@ -92,13 +86,12 @@ class Helper
         return empty($_formula_) ? $price : eval("return $_formula_;");
     }
 
-    public static function updatePrice($params, $logs = [])
-    {
+    public static function updatePrice($params, $logs = []) {
         $categories = PriceCategory::find()->all();
         foreach ($categories as $category) {
             $price = Price::findOne([
-                    'id_product' => $params['id_product'],
-                    'id_price_category' => $category->id_price_category
+                        'id_product' => $params['id_product'],
+                        'id_price_category' => $category->id_price_category
             ]);
 
             if (!$price) {
@@ -123,8 +116,7 @@ class Helper
         return true;
     }
 
-    public static function getProductUomList($id_product)
-    {
+    public static function getProductUomList($id_product) {
         $uoms = ProductUom::find()->with('idUom')->where(['id_product' => $id_product])->all();
         return ArrayHelper::map($uoms, 'id_uom', 'idUom.nm_uom');
     }
@@ -132,8 +124,7 @@ class Helper
     /**
      * @return integer
      */
-    public static function getSmallestProductUom($id_product)
-    {
+    public static function getSmallestProductUom($id_product) {
         $uom = ProductUom::findOne(['id_product' => $id_product, 'isi' => 1]);
         return $uom ? $uom->id_uom : false;
     }
@@ -141,20 +132,17 @@ class Helper
     /**
      * @return integer
      */
-    public static function getQtyProductUom($id_product, $id_uom)
-    {
+    public static function getQtyProductUom($id_product, $id_uom) {
         $pu = ProductUom::findOne(['id_product' => $id_product, 'id_uom' => $id_uom]);
         return $pu ? $pu->isi : false;
     }
 
-    public static function getConfigValue($group, $name, $default = null)
-    {
+    public static function getConfigValue($group, $name, $default = null) {
         $model = GlobalConfig::findOne(['group' => $group, 'name' => $name]);
         return $model ? $model->value : $default;
     }
 
-    public static function getWarehouseList($branch = false)
-    {
+    public static function getWarehouseList($branch = false) {
         $query = Warehouse::find();
         if ($branch !== false) {
             $query->where(['id_branch' => $branch]);
@@ -162,8 +150,7 @@ class Helper
         return ArrayHelper::map($query->asArray()->all(), 'id_warehouse', 'nm_whse');
     }
 
-    public static function getBranchList($id_user = null)
-    {
+    public static function getBranchList($id_user = null) {
         if ($id_user === null) {
             return ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch');
         } else {
@@ -171,9 +158,24 @@ class Helper
             return ArrayHelper::map($query->all(), 'id_branch', 'idBranch.nm_branch');
         }
     }
+
+    public static function getCategoryList($idCat = null) {
+        $query = \biz\master\models\searchs\Category::find();
+        if ($idCat !== null) {
+            $query->where(['id_category' => $idCat]);
+        }
+        return ArrayHelper::map($query->asArray()->all(), 'id_category', 'nm_category');
+    }
     
-    public static function getMasters($masters)
-    {
+    public static function getProductGroupList($idGroup = null) {
+        $query = \biz\master\models\searchs\ProductGroup::find();
+        if ($idGroup !== null) {
+            $query->where(['id_group' => $idGroup]);
+        }
+        return ArrayHelper::map($query->asArray()->all(), 'id_group', 'nm_group');
+    }
+
+    public static function getMasters($masters) {
         if (!is_array($masters)) {
             $masters = preg_split('/\s*,\s*/', trim($masters), -1, PREG_SPLIT_NO_EMPTY);
         }
@@ -184,11 +186,11 @@ class Helper
         if (isset($masters['product'])) {
             $products = [];
             $query_master = (new Query())
-                ->select(['id' => 'p.id_product', 'cd' => 'p.cd_product', 'nm' => 'p.nm_product', 'u.id_uom', 'u.nm_uom', 'pu.isi'])
-                ->from(['p' => '{{%product}}'])
-                ->innerJoin(['pu' => '{{%product_uom}}'], 'pu.id_product=p.id_product')
-                ->innerJoin(['u' => '{{%uom}}'], 'u.id_uom=pu.id_uom')
-                ->orderBy(['p.id_product' => SORT_ASC, 'pu.isi' => SORT_ASC]);
+                    ->select(['id' => 'p.id_product', 'cd' => 'p.cd_product', 'nm' => 'p.nm_product', 'u.id_uom', 'u.nm_uom', 'pu.isi'])
+                    ->from(['p' => '{{%product}}'])
+                    ->innerJoin(['pu' => '{{%product_uom}}'], 'pu.id_product=p.id_product')
+                    ->innerJoin(['u' => '{{%uom}}'], 'u.id_uom=pu.id_uom')
+                    ->orderBy(['p.id_product' => SORT_ASC, 'pu.isi' => SORT_ASC]);
             foreach ($query_master->all() as $row) {
                 $id = $row['id'];
                 if (!isset($products[$id])) {
@@ -213,11 +215,11 @@ class Helper
         if (isset($masters['barcode'])) {
             $barcodes = [];
             $query_barcode = (new Query())
-                ->select(['barcode' => 'lower(barcode)', 'id' => 'id_product'])
-                ->from('{{%product_child}}')
-                ->union((new Query())
-                ->select(['lower(cd_product)', 'id_product'])
-                ->from('{{%product}}'));
+                    ->select(['barcode' => 'lower(barcode)', 'id' => 'id_product'])
+                    ->from('{{%product_child}}')
+                    ->union((new Query())
+                    ->select(['lower(cd_product)', 'id_product'])
+                    ->from('{{%product}}'));
             foreach ($query_barcode->all() as $row) {
                 $barcodes[$row['barcode']] = $row['id'];
             }
@@ -228,20 +230,20 @@ class Helper
         if (isset($masters['price_category'])) {
             $price_category = [];
             $query_price_category = (new Query())
-                ->select(['id_price_category', 'nm_price_category'])
-                ->from('{{%price_category}}');
+                    ->select(['id_price_category', 'nm_price_category'])
+                    ->from('{{%price_category}}');
             foreach ($query_price_category->all() as $row) {
                 $price_category[$row['id_price_category']] = $row['nm_price_category'];
             }
             $result['price_category'] = $price_category;
         }
-        
+
         // prices
         if (isset($masters['price'])) {
             $prices = [];
             $query_prices = (new Query())
-                ->select(['id_product', 'id_price_category', 'price'])
-                ->from('{{%price}}');
+                    ->select(['id_product', 'id_price_category', 'price'])
+                    ->from('{{%price}}');
             foreach ($query_prices->all() as $row) {
                 $prices[$row['id_product']][$row['id_price_category']] = $row['price'];
             }
@@ -251,25 +253,25 @@ class Helper
         // customer
         if (isset($masters['customer'])) {
             $result['customers'] = (new Query())
-                ->select(['id' => 'id_customer', 'label' => 'nm_customer'])
-                ->from('{{%customer}}')
-                ->all();
+                    ->select(['id' => 'id_customer', 'label' => 'nm_customer'])
+                    ->from('{{%customer}}')
+                    ->all();
         }
 
         // supplier
         if (isset($masters['supplier'])) {
             $result['suppliers'] = (new Query())
-                ->select(['id' => 'id_supplier', 'label' => 'nm_supplier'])
-                ->from('{{%supplier}}')
-                ->all();
+                    ->select(['id' => 'id_supplier', 'label' => 'nm_supplier'])
+                    ->from('{{%supplier}}')
+                    ->all();
         }
 
         // product_supplier
         if (isset($masters['product_supplier'])) {
             $prod_supp = [];
             $query_prod_supp = (new Query())
-                ->select(['id_supplier', 'id_product'])
-                ->from('{{%product_supplier}}');
+                    ->select(['id_supplier', 'id_product'])
+                    ->from('{{%product_supplier}}');
             foreach ($query_prod_supp->all() as $row) {
                 $prod_supp[$row['id_supplier']][] = $row['id_product'];
             }
@@ -280,8 +282,8 @@ class Helper
         if (isset($masters['product_stock'])) {
             $prod_stock = [];
             $query_prod_stock = (new Query())
-                ->select(['id_warehouse', 'id_product', 'qty_stock'])
-                ->from('{{%product_stock}}');
+                    ->select(['id_warehouse', 'id_product', 'qty_stock'])
+                    ->from('{{%product_stock}}');
             foreach ($query_prod_stock->all() as $row) {
                 $prod_stock[$row['id_warehouse']][$row['id_product']] = $row['qty_stock'];
             }
@@ -290,4 +292,5 @@ class Helper
 
         return $result;
     }
+
 }
