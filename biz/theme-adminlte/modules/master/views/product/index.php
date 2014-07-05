@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-lg-12">
         <?php //Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
-        <div class="box box-danger">
+        <div class="box box-primary">
             <div class="box-body no-padding">
                 <?=
                 GridView::widget([
