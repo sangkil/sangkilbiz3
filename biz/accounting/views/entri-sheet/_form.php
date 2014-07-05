@@ -4,17 +4,18 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\accounting\models\EntriSheetDtl;
 use mdm\relation\EditableList;
+use biz\accounting\components\Helper as AccHelper;
 
-/* @var $model biz\accounting\models\GlHeader */
+/* @var $model biz\accounting\models\EntriSheet */
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $details biz\accounting\models\GlDetails[] */
+/* @var $details biz\accounting\models\EntriSheetDtl[] */
 ?>
 
 <div class="gl-header-form  col-lg-8">
     <?php $form = ActiveForm::begin(); ?>
     <?php
-    $models = $details;
+    $models = $model->entriSheetDtls;
     array_unshift($models, $model);
     echo $form->errorSummary($models);
     ?>
@@ -43,7 +44,7 @@ use mdm\relation\EditableList;
             <?=
             EditableList::widget([
                 'id' => 'tbl-entrydetail',
-                'allModels' => $details,
+                'allModels' => $model->entriSheetDtls,
                 'modelClass' => EntriSheetDtl::className(),
                 'itemView' => '_detail',
                 'options' => ['tag' => 'tbody'],
@@ -79,7 +80,7 @@ function(\$row) {
 }
 JS;
 biz\app\assets\BizDataAsset::register($this, [
-    'master' => $masters,
+    'master' => AccHelper::getMasters('coa'),
     'config' => [
         'entryAfterAddRow' => new \yii\web\JsExpression($jsFunc)
     ]

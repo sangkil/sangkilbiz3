@@ -15,7 +15,7 @@ use biz\accounting\components\Helper as AccHelper;
 <div class="gl-header-form">
     <?php $form = ActiveForm::begin(); ?>
     <?php
-    $models = $details;
+    $models = $model->glDetails;
     array_unshift($models, $model);
     echo $form->errorSummary($models);
     ?>

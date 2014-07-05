@@ -64,28 +64,32 @@ class EntriSheetController extends Controller
     public function actionCreate()
     {
         $model = new EntriSheet;
-        $details = [];
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->save(false);
-                list($saved, $details) = $model->saveRelation('entriSheetDtls');
-                if ($saved == true) {
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('entriSheetDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $error = false;
+                if (count($model->entriSheetDtls) == 0) {
+                    $model->addError('', 'Detail cannot be blank');
+                    $error = true;
+                }
+                //
+                if ($error) {
+                    $transaction->rollBack();
+                } else {
                     $transaction->commit();
                     return $this->redirect(['view', 'id' => $model->id_esheet]);
-                } else {
-                    $transaction->rollBack();
                 }
-            } catch (\Exception $exc) {
+            } else {
                 $transaction->rollBack();
-                throw $exc;
             }
-            $model->setIsNewRecord(true);
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
+        $model->setIsNewRecord(true);
         return $this->render('create', [
                 'model' => $model,
-                'details' => $details,
-                'masters' => \biz\accounting\components\Helper::getMasters(['coa'])
         ]);
     }
 
@@ -98,27 +102,31 @@ class EntriSheetController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $details = $model->entriSheetDtls;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->save(false);
-                list($saved, $details) = $model->saveRelation('entriSheetDtls');
-                if ($saved == true) {
+        try {
+            $transaction = Yii::$app->db->beginTransaction();
+            $result = $model->saveRelation('entriSheetDtls', Yii::$app->request->post());
+            if ($result === 1) {
+                $error = false;
+                if (count($model->entriSheetDtls) == 0) {
+                    $model->addError('', 'Detail cannot be blank');
+                    $error = true;
+                }
+                //
+                if ($error) {
+                    $transaction->rollBack();
+                } else {
                     $transaction->commit();
                     return $this->redirect(['view', 'id' => $model->id_esheet]);
-                } else {
-                    $transaction->rollBack();
                 }
-            } catch (\Exception $exc) {
+            } else {
                 $transaction->rollBack();
-                throw $exc;
             }
+        } catch (\Exception $exc) {
+            $transaction->rollBack();
+            $model->addError('', $exc->getMessage());
         }
         return $this->render('update', [
                 'model' => $model,
-                'details' => $details,
-                'masters' => \biz\accounting\components\Helper::getMasters(['coa'])
         ]);
     }
 

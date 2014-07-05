@@ -8,7 +8,6 @@ use biz\accounting\models\searchs\GlHeader as GlHeaderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\accounting\models\Coa;
 
 /**
  * EntriGlController implements the CRUD actions for GlHeader model.
