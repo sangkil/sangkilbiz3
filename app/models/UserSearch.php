@@ -27,24 +27,21 @@ use app\models\User;
 /**
  * UserSearh represents the model behind the search form about `app\models\User`.
  */
-class UserSearch extends \app\models\User
-{
-    public function rules()
-    {
+class UserSearch extends \app\models\User {
+
+    public function rules() {
         return [
             [['id'], 'integer'],
-            [['username', 'password_hash', 'email', 'auth_key','role','status','created_at','updated_at','password'], 'safe'],
+            [['username', 'password_hash', 'email', 'auth_key', 'role', 'status', 'created_at', 'updated_at', 'password'], 'safe'],
         ];
     }
 
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function search($params)
-    {
+    public function search($params) {
         $query = User::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -61,6 +58,9 @@ class UserSearch extends \app\models\User
 
         $query->andFilterWhere(['like', 'username', $this->username]);
 
+        $query->addOrderBy(['id' => SORT_ASC]);
+
         return $dataProvider;
     }
+
 }

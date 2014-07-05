@@ -11,14 +11,15 @@ use mdm\relation\EditableList;
 /* @var $details biz\accounting\models\GlDetails[] */
 ?>
 
-<div class="gl-header-form">
+<div class="gl-header-form  col-lg-8">
     <?php $form = ActiveForm::begin(); ?>
     <?php
     $models = $details;
     array_unshift($models, $model);
     echo $form->errorSummary($models);
     ?>
-    <div class="panel panel-primary col-lg-8 no-padding">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Entry-Sheet</div>
         <div class="panel-body">
             <div class="col-lg-5">
                 <?= $form->field($model, 'cd_esheet')->textInput(['maxlength' => 4]) ?>

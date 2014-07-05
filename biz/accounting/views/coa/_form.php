@@ -16,7 +16,7 @@ use biz\accounting\components\Helper;
         <div class="panel-heading">Chart of Account</div>
         <div class="panel-body">
             <?=
-            $form->field($model, 'id_coa_parent')->dropDownList(Helper::getGroupedCoaList(true), [
+            $form->field($model, 'id_parent')->dropDownList(Helper::getGroupedCoaList(true), [
                 'encodeSpaces' => true,
             ]);
             ?>
