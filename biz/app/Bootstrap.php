@@ -6,6 +6,7 @@ use Yii;
 use yii\db\BaseActiveRecord;
 use yii\db\Expression;
 use yii\validators\Validator;
+use yii\db\Connection;
 
 /**
  * Description of Bootstrapt
@@ -22,9 +23,9 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected function initialize($app, $config)
     {
         $this->diConfig($config);
-        $app->db->on(\yii\db\Connection::EVENT_BEGIN_TRANSACTION, ['mdm\logger\RecordLogger','begin']);
-        $app->db->on(\yii\db\Connection::EVENT_COMMIT_TRANSACTION, ['mdm\logger\RecordLogger','commit']);
-        $app->db->on(\yii\db\Connection::EVENT_ROLLBACK_TRANSACTION, ['mdm\logger\RecordLogger','rollback']);
+        $app->db->on(Connection::EVENT_BEGIN_TRANSACTION, ['mdm\logger\RecordLogger','begin']);
+        $app->db->on(Connection::EVENT_COMMIT_TRANSACTION, ['mdm\logger\RecordLogger','commit']);
+        $app->db->on(Connection::EVENT_ROLLBACK_TRANSACTION, ['mdm\logger\RecordLogger','rollback']);
     }
 
     /**
@@ -56,9 +57,6 @@ class Bootstrap extends \biz\app\base\Bootstrap
                 ],
                 'enumPrefix' => 'STATUS_'
             ],
-            'mdm\logger\StorageInterface'=>[
-                'class' => 'mdm\logger\MongoStorage',
-            ]
         ];
         $currentDefinitions = Yii::$container->definitions;
         foreach ($config as $class => $definition) {
