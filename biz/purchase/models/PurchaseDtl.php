@@ -43,7 +43,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
             }],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'sales_price'], 'required'],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom'], 'integer'],
-            [['purch_qty', 'purch_price', 'sales_price'], 'string'],
+            [['purch_qty', 'purch_price', 'sales_price'], 'double'],
             [['salesPrices'], 'safe']
         ];
     }

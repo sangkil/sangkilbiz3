@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'title' => Yii::t('yii', 'Receive'),
                                 'data-confirm' => Yii::t('yii', 'Are you sure you want to Receive this item?'),
                                 'data-method' => 'post',
-                                'data-pjax' => '0',
+                    //            'data-pjax' => '0',
                         ]);
                     }
                 },

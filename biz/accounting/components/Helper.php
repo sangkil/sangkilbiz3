@@ -9,6 +9,7 @@ use biz\accounting\models\GlDetail;
 use biz\accounting\models\Invoice;
 use biz\accounting\models\InvoiceDtl;
 use biz\accounting\models\AccPeriode;
+use yii\base\UserException;
 
 /**
  * Description of Helper

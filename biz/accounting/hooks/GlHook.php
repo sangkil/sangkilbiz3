@@ -3,7 +3,7 @@
 namespace biz\accounting\hooks;
 
 use biz\app\Hooks;
-use biz\master\components\Helper;
+use biz\accounting\components\Helper as AccHelper;
 use biz\accounting\models\GlHeader;
 use biz\accounting\models\GlDetail;
 use yii\base\UserException;
@@ -42,7 +42,7 @@ class GlHook extends \yii\base\Behavior
 
         $gl->id_branch = $hdr['id_branch'];
 
-        $active_periode = Helper::getCurrentIdAccPeriode();
+        $active_periode = AccHelper::getCurrentIdAccPeriode();
         $gl->id_periode = $active_periode;
         $gl->status = 0;
         if (!$gl->save()) {
@@ -83,7 +83,7 @@ class GlHook extends \yii\base\Behavior
             'HUTANG' => $model->purchase_value * (1 - $model->item_discount * 0.01),
         ];
 
-        $glDtls = Helper::entriSheetToGlMaps('PEMBELIAN_KREDIT', $dtls);
+        $glDtls = AccHelper::entriSheetToGlMaps('PEMBELIAN_KREDIT', $dtls);
         $this->createGL($glHdr, $glDtls);
     }
 }
