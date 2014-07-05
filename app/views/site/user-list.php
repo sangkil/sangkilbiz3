@@ -8,10 +8,10 @@ use yii\grid\GridView;
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var biz\master\models\ProductSearch $searchModel
  */
-$this->title = 'Products';
+$this->title = 'User List';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
+<div class="user-list">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,10 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'username',
             'email',
-            'role',
-            'status',
-            'created_at',
-            'updated_at'
+            //'role',
+            //'status',
+            //'created_at',
+            //'updated_at'
         ],
     ]);
     ?>
