@@ -19,6 +19,6 @@ class Bootstrap extends \biz\app\base\Bootstrap
 
     protected function initialize($app, $config)
     {
-        Helper::registerAccessHandler(components\AccessHandler::className());
+        Helper::registerAccessHandler(models\Purchase::className(),components\AccessHandler::className());
     }
 }

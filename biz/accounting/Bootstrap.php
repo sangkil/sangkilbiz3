@@ -22,7 +22,7 @@ class Bootstrap extends \biz\app\base\Bootstrap
 
     protected function initialize($app, $config)
     {
-        Helper::registerAccessHandler(AccessHandler::className());
+//        Helper::registerAccessHandler(AccessHandler::className());
         $app->attachBehaviors([
             GlHook::className() => GlHook::className(),
             InvoiceHook::className() => InvoiceHook::className()

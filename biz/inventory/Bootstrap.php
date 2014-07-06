@@ -20,6 +20,7 @@ class Bootstrap extends \biz\app\base\Bootstrap
 
     protected function initialize($app, $config)
     {
-        Helper::registerAccessHandler(AccessHandler::className());
+        Helper::registerAccessHandler(models\Transfer::className(),AccessHandler::className());
+        Helper::registerAccessHandler(models\TransferNotice::className(),AccessHandler::className());
     }
 }
