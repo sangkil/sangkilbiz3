@@ -5,7 +5,7 @@ use biz\master\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\TransferDtl */
-/* @var $index string */
+/* @var $key string */
 ?>
 
 <td style="width: 50px">
@@ -15,7 +15,7 @@ use biz\master\components\Helper;
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
         <?php endif; ?>
-        <span class="serial"><?= $index + 1; ?></span>
+        <span class="serial"><?= $key + 1; ?></span>
     </div>
     <?= Html::activeHiddenInput($model, "[$key]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
 </td>

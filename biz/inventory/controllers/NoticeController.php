@@ -88,7 +88,6 @@ class NoticeController extends Controller
 
         return $this->render('update', [
                 'model' => $model,
-                'details' => $model->transferNoticeDtls
         ]);
     }
 

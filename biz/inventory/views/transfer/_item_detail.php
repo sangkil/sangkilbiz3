@@ -5,7 +5,7 @@ use biz\master\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\TransferDtl */
-/* @var $index string */
+/* @var $key string */
 /* @var $key string */
 ?>
 <td style="width: 50px">

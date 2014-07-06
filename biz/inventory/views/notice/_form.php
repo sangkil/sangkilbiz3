@@ -7,11 +7,11 @@ use yii\data\ArrayDataProvider;
 use yii\widgets\DetailView;
 use biz\inventory\models\TransferNotice;
 
-/**
- * @var yii\web\View $this
- * @var biz\inventory\models\TransferNotice $model
- * @var yii\widgets\ActiveForm $form
- */
+
+/* @var $this yii\web\View */
+/* @var $model biz\inventory\models\TransferNotice */
+/* @var $form yii\widgets\ActiveForm */
+ 
 ?>
 
 <?php
@@ -32,7 +32,7 @@ $renderField = function ($model, $key) use($form) {
         'tableOptions' => ['class' => 'table table-striped'],
         'layout' => '{items}{pager}',
         'dataProvider' => new ArrayDataProvider([
-            'allModels' => $details,
+            'allModels' => $model->transferNoticeDtls,
             'sort' => false,
             'pagination' => false,
             ]),

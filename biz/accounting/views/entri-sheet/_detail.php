@@ -3,9 +3,9 @@
 use yii\helpers\Html
 
 /* @var $model biz\accounting\models\EntriSheetDtl */
-/* @var $index string */
+/* @var $key string */
 ?>
-<td ><span class="serial"><?= $index+1 ?></span></td>
+<td ><span class="serial"><?= $key+1 ?></span></td>
 <td><?=
     Html::activeTextInput($model, "[$key]nm_esheet_dtl", [
         'style' => 'width:190px;',

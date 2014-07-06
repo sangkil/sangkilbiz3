@@ -21,14 +21,6 @@ class AccessHandler extends \yii\base\Object
     public $callback;
 
     /**
-     * @return array names of class
-     */
-    public function modelClasses()
-    {
-        return [];
-    }
-
-    /**
      * 
      * @param \yii\web\User $user
      * @param string $action

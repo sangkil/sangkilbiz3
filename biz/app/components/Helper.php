@@ -21,23 +21,25 @@ class Helper
      * 
      * @param string|AccessHandler $handler
      */
-    public static function registerAccessHandler($handler)
+    public static function registerAccessHandler($class, $handler)
     {
         if (!($handler instanceof AccessHandler)) {
             $handler = \Yii::createObject($handler);
         }
-        foreach ($handler->modelClasses() as $class) {
-            static::$_accessHendler[trim($class, '\\')] = $handler;
-        }
+        static::$_accessHendler[trim($class, '\\')][get_class($handler)] = $handler;
     }
 
     public static function checkAccess($action, $model)
     {
+        $allow = true;
         if (isset(static::$_accessHendler[get_class($model)])) {
-            $handler = static::$_accessHendler[get_class($model)];
-            return $handler->check(\Yii::$app->getUser(), $action, $model);
-        } else {
-            return true;
+            foreach (static::$_accessHendler[get_class($model)] as $handler) {
+                $allow = $handler->check(\Yii::$app->getUser(), $action, $model);
+                if(!$allow){
+                    break;
+                }
+            }
         }
+        return $allow;
     }
 }
