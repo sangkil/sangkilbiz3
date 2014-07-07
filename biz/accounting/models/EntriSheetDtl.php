@@ -33,7 +33,6 @@ class EntriSheetDtl extends \yii\db\ActiveRecord
             [['id_esheet', 'nm_esheet_dtl', 'id_coa'], 'required'],
             [['id_esheet', 'id_coa'], 'integer'],
             [['nm_esheet_dtl'], 'string'],
-            [['id_esheet', 'id_coa'], 'unique', 'targetAttribute' => ['id_esheet', 'id_coa'], 'message' => 'The combination of Id Esheet and Id Coa has already been taken.']
         ];
     }
 

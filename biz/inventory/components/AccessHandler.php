@@ -33,11 +33,4 @@ class AccessHandler extends \biz\app\base\AccessHandler {
         }
     }
 
-    public function modelClasses() {
-        return[
-            Transfer::className(),
-            TransferNotice::className()
-        ];
-    }
-
 }

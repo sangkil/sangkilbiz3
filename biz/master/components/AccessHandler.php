@@ -14,10 +14,4 @@ class AccessHandler extends \biz\app\base\AccessHandler
     {
         return true;
     }
-
-    public function modelClasses()
-    {
-        return[
-        ];
-    }
 }
