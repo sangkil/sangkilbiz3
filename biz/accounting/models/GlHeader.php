@@ -120,7 +120,7 @@ class GlHeader extends \yii\db\ActiveRecord
             ],
             [
                 'class' => 'mdm\converter\DateConverter',
-                'physicalFormat' => 'Y-m-d H:i:s',
+                'physicalFormat' => 'Y-m-d',
                 'attributes' => [
                     'glDate' => 'gl_date'
                 ]
