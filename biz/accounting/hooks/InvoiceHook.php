@@ -28,7 +28,7 @@ class InvoiceHook extends \yii\base\Behavior
         $invoice->id_vendor = $params['id_vendor'];
         $invoice->invoice_date = $params['date'];
         $invoice->invoice_value = $params['value'];
-        $invoice->invoice_type = $params['type'];
+        $invoice->invoice_type = $params['invoice_type'];
         $invoice->due_date = date('Y-m-d', strtotime('+1 month'));
         $invoice->status = 0;
         if (!$invoice->save()) {
