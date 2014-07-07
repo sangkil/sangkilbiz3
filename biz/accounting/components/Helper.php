@@ -154,9 +154,14 @@ class Helper
 
         $gl->id_branch = $hdr['id_branch'];
 
-        $active_periode = AccPeriode::getCurrentPeriode();
+        /*
+         * Edited By Mujib Masyhudi
+         * on 2014-07-07
+         */
+        $active_periode = self::getCurrentIdAccPeriode(); 
         $gl->id_periode = $active_periode['id_periode'];
         $gl->status = 0;
+        
         if (!$gl->save()) {
             throw new UserException(implode("\n", $gl->getFirstErrors()));
         }
