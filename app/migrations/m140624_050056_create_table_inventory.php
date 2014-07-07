@@ -33,7 +33,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'FOREIGN KEY (id_transfer) REFERENCES {{%transfer}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
         ]);
 
-        $this->createTable('{{%notice}}', [
+        $this->createTable('{{%transfer_notice}}', [
             'id_transfer' => Schema::TYPE_INTEGER . ' NOT NULL',
             'notice_date' => Schema::TYPE_DATE . ' NOT NULL',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
