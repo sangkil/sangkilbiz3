@@ -4,7 +4,7 @@ namespace biz\master\controllers;
 
 use Yii;
 use biz\master\models\ProductStock;
-use biz\master\models\ProductStockSearch;
+use biz\master\models\searchs\ProductStock as ProductStockSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

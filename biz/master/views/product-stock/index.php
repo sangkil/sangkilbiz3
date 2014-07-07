@@ -18,10 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-	<div class="pull-right">
-        <?= Html::a('', ['create'], ['class' => 'btn btn-default glyphicon glyphicon-plus', 'title' => 'Create New', 'style' => 'width:100%;']) ?>
-    </div>
-
 	<?= GridView::widget([
 		'dataProvider' => $dataProvider,
 		'tableOptions' => ['class' => 'table table-striped'],
@@ -31,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			['class' => 'yii\grid\SerialColumn'],
 
 			'idWarehouse.nm_whse',
-			'opening_date',
 			'idProduct.nm_product',
 			'qty_stock',
 			'idUom.nm_uom',
