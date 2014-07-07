@@ -18,9 +18,17 @@ class Bootstrap extends \biz\app\base\Bootstrap
         $app->setModule('inventory', Module::className());
     }
 
+    /**
+     * 
+     * @param \yii\web\Application $app
+     * @param array $config
+     */
     protected function initialize($app, $config)
     {
-        Helper::registerAccessHandler(models\Transfer::className(),AccessHandler::className());
-        Helper::registerAccessHandler(models\TransferNotice::className(),AccessHandler::className());
+        $app->attachBehaviors([
+            hooks\TransferNoticeHook::className() => hooks\TransferNoticeHook::className(),
+        ]);
+        Helper::registerAccessHandler(models\Transfer::className(), AccessHandler::className());
+        Helper::registerAccessHandler(models\TransferNotice::className(), AccessHandler::className());
     }
 }
