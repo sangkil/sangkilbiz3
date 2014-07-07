@@ -102,7 +102,7 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
         $this->createTable('{{%invoice_dtl}}', [
             'id_invoice' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_reff' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'description' => Schema::TYPE_STRING . '(64) NOT NULL',
+            'description' => Schema::TYPE_STRING . '(64) NULL',
             'trans_value' => Schema::TYPE_FLOAT . ' NOT NULL',
             // constrain
             'PRIMARY KEY (id_invoice, id_reff)',
