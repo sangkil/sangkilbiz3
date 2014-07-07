@@ -150,7 +150,7 @@ yii.purchase = (function($) {
             });
             
             // inisialisasi uom
-            $.each($grid.mdmEditableList('getAllRows'), function() {
+            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
                 var $row = $(this);
                 var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
                 if (product) {
