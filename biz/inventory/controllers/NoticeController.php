@@ -71,7 +71,7 @@ class NoticeController extends Controller
         if (!AppHelper::checkAccess('update', $model)) {
             throw new \yii\web\ForbiddenHttpException();
         }
-        $model->getTransferNoticeDtls()->indexBy('id_product');
+        $model->getTransferNoticeDtls();
         try {
             $transaction = Yii::$app->db->beginTransaction();
             $result = $model->saveRelation('transferNoticeDtls', Yii::$app->request->post());

@@ -68,7 +68,7 @@ $renderField = function ($model, $key) use($form) {
                     'idProduct.nm_product',
                     'transferDtl.transfer_qty_send:text:Qty Send',
                     'transferDtl.transfer_qty_receive:text:Qty Receive',
-                    'qty_selisih',
+                    'qty_notice',
                     [
                         'label' => 'Qty Approve',
                         'format' => 'raw',

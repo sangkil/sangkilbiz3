@@ -37,6 +37,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'id_transfer' => Schema::TYPE_INTEGER . ' NOT NULL',
             'notice_date' => Schema::TYPE_DATE . ' NOT NULL',
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'description' => Schema::TYPE_STRING,
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -50,6 +51,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
         $this->createTable('{{%notice_dtl}}', [
             'id_transfer' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
             'qty_notice' => Schema::TYPE_FLOAT . ' NOT NULL',
             'qty_approve' => Schema::TYPE_FLOAT,
             // constrain

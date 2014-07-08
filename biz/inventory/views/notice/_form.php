@@ -6,12 +6,11 @@ use yii\grid\GridView;
 use yii\data\ArrayDataProvider;
 use yii\widgets\DetailView;
 use biz\inventory\models\TransferNotice;
-
+use biz\app\components\Helper as AppHelper;
 
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\TransferNotice */
 /* @var $form yii\widgets\ActiveForm */
- 
 ?>
 
 <?php
@@ -28,6 +27,11 @@ $renderField = function ($model, $key) use($form) {
 ?>
 <div class="purchase-hdr-view col-lg-9">
     <?php
+    $models = $model->transferNoticeDtls;
+    $models[] = $model;
+    echo $form->errorSummary($models);
+    ?>
+    <?php
     echo GridView::widget([
         'tableOptions' => ['class' => 'table table-striped'],
         'layout' => '{items}{pager}',
@@ -41,7 +45,7 @@ $renderField = function ($model, $key) use($form) {
             'idProduct.nm_product',
             'transferDtl.transfer_qty_send:text:Qty Send',
             'transferDtl.transfer_qty_receive:text:Qty Receive',
-            'qty_selisih',
+            'qty_notice',
             [
                 'label' => 'Qty Approve',
                 'format' => 'raw',
@@ -71,7 +75,8 @@ $renderField = function ($model, $key) use($form) {
         ?>
     </div>
     <?php
-    if ($model->status == TransferNotice::STATUS_CREATE || $model->status == TransferNotice::STATUS_UPDATE) {
+    echo Html::activeHiddenInput($model, 'status', ['value' => TransferNotice::STATUS_UPDATE]);
+    if (AppHelper::checkAccess('update', $model)) {
         echo Html::submitButton('Update', ['class' => 'btn btn-success']);
     }
     ?>

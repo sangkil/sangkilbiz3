@@ -171,7 +171,7 @@ class StockHook extends \yii\base\Behavior
         }
 
         // dest
-        if (($qty = $detail->qty_approve - $detail->qty_selisih) != 0) {
+        if (($qty = $detail->qty_approve - $detail->qty_notice) != 0) {
             $this->updateStock(array_merge($params, [
                 'id_warehouse' => $model->idTransfer->id_warehouse_dest,
                 'qty' => $qty

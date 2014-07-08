@@ -72,7 +72,8 @@ class TransferNotice extends \yii\db\ActiveRecord
      */
     public function getTransferNoticeDtls()
     {
-        return $this->hasMany(TransferNoticeDtl::className(), ['id_transfer' => 'id_transfer']);
+        return $this->hasMany(TransferNoticeDtl::className(), ['id_transfer' => 'id_transfer'])
+                ->indexBy('id_product');
     }
 
     /**
@@ -92,8 +93,8 @@ class TransferNotice extends \yii\db\ActiveRecord
             'BizTimestampBehavior',
             'BizBlameableBehavior',
             [
-                'class'=>'mdm\converter\DateConverter',
-                'attributes'=>[
+                'class' => 'mdm\converter\DateConverter',
+                'attributes' => [
                     'noticeDate' => 'notice_date',
                 ]
             ],

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'idProduct.nm_product',
             'transferDtl.transfer_qty_send:text:Qty Send',
             'transferDtl.transfer_qty_receive:text:Qty Receive',
-            'qty_selisih',
+            'qty_notice',
             'qty_approve',
             'idUom.nm_uom',
         ]

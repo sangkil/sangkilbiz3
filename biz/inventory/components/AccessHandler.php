@@ -31,6 +31,7 @@ class AccessHandler extends \biz\app\base\AccessHandler {
             default:
                 break;
         }
+        return true;
     }
 
 }
