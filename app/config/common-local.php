@@ -8,7 +8,11 @@ return[
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
-            //'enableSchemaCache' => true,
+        //'enableSchemaCache' => true,
         ],
+        'mongodb' => [
+            'class' => 'yii\mongodb\Connection',
+            'dsn' => 'mongodb://localhost:27017/sangkilbiz3',
+        ]
     ],
 ];
