@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\models\Purchase;
+use biz\purchase\models\Purchase;
 use yii\widgets\LinkPager;
 use yii\grid\DataColumn;
 
@@ -15,10 +15,10 @@ $this->title = 'Purchase Hdrs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchase-hdr-index">    
+    <?php yii\widgets\Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
     <div class="col-lg-6" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel,'masters'=>$masters]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
     </div>
-    <?php //yii\widgets\Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
     <div class="col-lg-12">
         <div class="box box-info">
             <?php
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'pagination' => $dataProvider->pagination,
             'options' => ['class' => 'pagination pagination-sm no-margin']
         ]);
-        //yii\widgets\Pjax::end();
+        yii\widgets\Pjax::end();
         ?>
     </div>
 </div>
