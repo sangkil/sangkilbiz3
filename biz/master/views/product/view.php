@@ -2,13 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
-use yii\bootstrap\Modal;
-use biz\master\models\ProductUom;
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use biz\master\models\Uom;
 use yii\widgets\Pjax;
 use yii\bootstrap\Tabs;
 

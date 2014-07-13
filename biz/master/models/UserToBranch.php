@@ -18,6 +18,7 @@ use Yii;
  */
 class UserToBranch extends \yii\db\ActiveRecord
 {
+    public $nm_branch;
     /**
      * @inheritdoc
      */
