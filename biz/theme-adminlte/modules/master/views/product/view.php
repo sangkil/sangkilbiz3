@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
-use yii\bootstrap\Tabs;
+use biz\adminlte\MyTabs;
 
 /* @var $this yii\web\View */
 /* @var $model biz\master\models\Product */
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<div class="col-lg-6">
+<div class="col-lg-6">    
     <style>
         .tab-content {
             border: 1px #e0e0e0 solid;
@@ -69,25 +69,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'data-pjax' => '#pjax'
     ])
     ?>
-    <?= Html::hiddenInput('action') ?>
-    <?=
-    Tabs::widget([
-        'items' => [
-            [
-                'label' => 'Uoms',
-                'content' => $this->render('_form_uom', ['model' => $model]),
-                'active' => $active == 'uom'
+    <div class="nav-tabs-custom">
+        <?= Html::hiddenInput('action') ?>
+        <?=
+        MyTabs::widget([
+            'contentOption'=>['class'=>'tab-content no-border no-padding'],
+            'items' => [
+                [
+                    'label' => 'Uoms',
+                    'content' => $this->render('_form_uom', ['model' => $model]),
+                    'active' => $active == 'uom'
+                ],
+                [
+                    'label' => 'Barcode Alias',
+                    'content' => $this->render('_form_barcode', ['model' => $model]),
+                    'active' => $active == 'barcode',
+                ]
             ],
-            [
-                'label' => 'Barcode',
-                'content' => $this->render('_form_barcode', ['model' => $model]),
-                'active' => $active == 'barcode'
-            ],
-        ]
-    ]);
-    ?>
+        ]);
+        ?>
+    </div>
 </div>
-
 <?= Html::endForm() ?>
 <?php
 Pjax::end();

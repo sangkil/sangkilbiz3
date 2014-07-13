@@ -7,7 +7,7 @@ use biz\master\models\Category;
 use biz\master\models\ProductGroup;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
-use yii\bootstrap\Tabs;
+use biz\adminlte\MyTabs;
 
 /**
  * @var yii\web\View $this
@@ -55,42 +55,45 @@ use yii\bootstrap\Tabs;
     }
 </style>
 <div class="col-lg-6">
-    <?=
-    Tabs::widget([
-        'items' => [
-            [
-                'label' => 'Uoms',
-                'content' => GridView::widget([
-                    'dataProvider' => new ActiveDataProvider([
-                        'query' => $model->getProductUoms()
-                            ]),
-                    'tableOptions' => ['class' => 'table table-striped'],
-                    'layout' => '{items}',
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'idUom.nm_uom',
-                        'idUom.cd_uom',
-                        'isi'
-                    ],
-                ]),
-            ],
-            [
-                'label' => 'Barcode',
-                'content' => GridView::widget([
-                    'dataProvider' => new ActiveDataProvider([
-                        'query' => $model->getBarcodes()
-                            ]),
-                    'tableOptions' => ['class' => 'table table-striped'],
-                    'layout' => '{items}',
-                    'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        'barcode',
-                    ],
-                ]),
-            ],
-        ]
-    ]);
-    ?>
+    <div class="nav-tabs-custom">
+        <?=
+        MyTabs::widget([
+            'contentOption' => ['class' => 'tab-content no-border no-padding'],
+            'items' => [
+                [
+                    'label' => 'Uoms',
+                    'content' => GridView::widget([
+                        'dataProvider' => new ActiveDataProvider([
+                            'query' => $model->getProductUoms()
+                                ]),
+                        'tableOptions' => ['class' => 'table table-striped'],
+                        'layout' => '{items}',
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            'idUom.nm_uom',
+                            'idUom.cd_uom',
+                            'isi'
+                        ],
+                    ]),
+                ],
+                [
+                    'label' => 'Barcode',
+                    'content' => GridView::widget([
+                        'dataProvider' => new ActiveDataProvider([
+                            'query' => $model->getBarcodes()
+                                ]),
+                        'tableOptions' => ['class' => 'table table-striped'],
+                        'layout' => '{items}',
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            'barcode',
+                        ],
+                    ]),
+                ],
+            ]
+        ]);
+        ?>
+    </div>
 </div>
 <?php
 ActiveForm::end();

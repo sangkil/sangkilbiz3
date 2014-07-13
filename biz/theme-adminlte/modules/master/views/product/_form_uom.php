@@ -23,10 +23,13 @@ GridView::widget([
     'layout' => '{items}',
     'showFooter' => true,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
         [
-            'attribute' => 'idUom.cd_uom',
-            'footer' => Html::dropDownList('id_uom', '', $uoms),
+            'class' => 'yii\grid\SerialColumn',
+            'footer' => Html::label('New','#new-uom')
+        ],
+        [
+            'attribute' => 'idUom.nm_uom',
+            'footer' => Html::dropDownList('id_uom', '', $uoms, ['style'=>'width:200px;','id'=>'new-uom']),
         ],
         'idUom.cd_uom',
         [
@@ -37,8 +40,8 @@ GridView::widget([
             'class' => 'yii\grid\ActionColumn',
             'template' => '{delete}',
             'urlCreator' => function ($action, $uom)use($model) {
-            return Url::toRoute(['delete-uom', 'id_product' => $model->id_product, 'id_uom' => $uom->id_uom]);
-        }
+                return Url::toRoute(['delete-uom', 'id_product' => $model->id_product, 'id_uom' => $uom->id_uom]);
+            }
         ]
     ],
 ]);
