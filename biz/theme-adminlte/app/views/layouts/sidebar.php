@@ -9,7 +9,7 @@ use biz\adminlte\SideMenu;
             <img src="<?= $baseurl ?>/img/avatar04.png" class="img-circle" alt="User Image" />
         </div>
         <div class="pull-left info">
-            <p>Hello, <?= Yii::$app->user->identity->username ?></p>
+            <p>Hello, <?php echo (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Guest'; ?></p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
     </div>

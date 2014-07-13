@@ -87,14 +87,14 @@
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="glyphicon glyphicon-user"></i>
-                    <span><?= Yii::$app->user->identity->username ?><i class="caret"></i></span>
+                    <span><?php echo (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Guest'; ?><i class="caret"></i></span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header bg-light-blue">
                         <img src="<?= $baseurl ?>/img/avatar04.png" class="img-circle" alt="User Image" />
                         <p>
-                            <?= Yii::$app->user->identity->username ?> - Web Developer
+                            <?php echo (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->username : 'Guest'; ?> - Web Developer
                             <small>Member since Nov. 2012</small>
                         </p>
                     </li>
