@@ -24,8 +24,10 @@ class UserToBranch extends UserToBranchModel {
         return Model::scenarios();
     }
 
+    public $nm_branch;
+    public $nm_user;
     public function search($params) {
-        $query = UserToBranchModel::find()->innerJoin('branch','branch.id_branch=user_to_branch.id_branch')->all();
+        $query = UserToBranchModel::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -38,9 +40,7 @@ class UserToBranch extends UserToBranchModel {
             'id_branch' => $this->id_branch,
             'id_user' => $this->id_user,
         ]);
-        
-       
-        $query->andWhere('branch.nm_branch LIKE :nm_branch', [':nm_branch'=>$this->nm_branch]);
+               
         return $dataProvider;
     }
 

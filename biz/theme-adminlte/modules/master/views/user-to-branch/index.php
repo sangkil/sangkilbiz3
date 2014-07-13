@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
         </div>
         <div class="col-lg-12">
-            <div class="box box-danger">
+            <div class="box box-primary">
                 <div class="box-body no-padding">
                     <?=
                     GridView::widget([
@@ -27,11 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
-                                'label'=>'Branch Name',
-                                'attribute'=>'idBranch.nm_branch'
-                                ],
-                            'idUser.username',
-                            'idUser.email',
+                                'label' => 'Branch',
+                                'attribute' => 'idBranch.nm_branch'],
+                            [
+                                'label' => 'User Name',
+                                'attribute' => 'idUser.username'],
+                            [
+                                'label' => 'eMail Address',
+                                'attribute' => 'idUser.email'],
                             'create_at',
                             'create_by',
                             //'update_at',

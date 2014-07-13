@@ -1,57 +1,46 @@
 <?php
 
+use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\LinkPager;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var biz\models\ProductStockSearch $searchModel
+ * @var biz\master\models\ProductStockSearch $searchModel
  */
 $this->title = 'Product Stocks';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-stock-index">
+<div class="product-stock-index">    
     <div class="col-lg-4" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>         
     </div>
     <div class="col-lg-12">
-        <?php //Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
-        <div class="box box-danger">
+        <div class="box box-info">        
             <div class="box-body no-padding">
                 <?=
                 GridView::widget([
-                    'tableOptions' => ['class' => 'table table-striped'],
-                    'layout' => '{items}',
                     'dataProvider' => $dataProvider,
+                    'tableOptions' => ['class' => 'table table-striped'],
+                    'layout' => '{items}{pager}',
                     //'filterModel' => $searchModel,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         'idWarehouse.nm_whse',
                         'idProduct.nm_product',
                         'qty_stock',
-                        'idUom.cd_uom',
-                    //'create_at',
-                    // 'create_by',
-                    // 'update_at',
-                    // 'update_by',
+                        'idUom.nm_uom',
+                        // 'qty_stock',
+                        // 'status_closing',
+                        // 'create_at',
+                        // 'create_by',
+                        'update_at',
+                        'update_by',
                     //['class' => 'biz\app\components\ActionColumn'],
                     ],
                 ]);
                 ?>
-            </div>           
+            </div>
         </div>
-        <?php
-        // display pagination
-        echo LinkPager::widget([
-            'pagination' => $dataProvider->pagination,
-            'options' => ['class' => 'pagination pagination-sm no-margin']
-        ]);
-        ?>
-        <?php //Pjax::end(); ?>
-    </div>   
+    </div>
 </div>
-<?php
-$js = "\$('#kecilin').click();";
-$this->registerJs($js);
-
