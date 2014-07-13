@@ -88,6 +88,8 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product;
+        $model->status = Product::STATUS_ACTIVE;
+        
         $dPost = Yii::$app->request->post();
         if ($model->load($dPost) && $model->save()) {
 //            $pUom = new ProductUom;

@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use biz\adminlte\MyAsset;
+use yii\helpers\Inflector;
+use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
 
 /**
  * @var \yii\web\View $this
@@ -35,10 +38,26 @@ $baseurl = $lte_asset->baseUrl;
                         <?= '&nbsp;' . Html::encode($this->title) ?>                        
                         <small><?php echo \Yii::$app->controller->id . '-' . \Yii::$app->controller->action->id; ?></small>
                     </h1>
-                    <ol class="breadcrumb">
+<!--                    <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Dashboard</li>
-                    </ol>
+                    </ol>-->
+                    <?php
+                    $breadcrumbs = isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [];
+                    foreach (Yii::$app->controller->modules as $module) {
+                        if ($module != Yii::$app) {
+                            array_unshift($breadcrumbs, ['label' => Inflector::camel2words($module->id), 'url' => ['/' . $module->uniqueId]]);
+                        }
+                    }                    
+                    ?>
+                    <?=
+                    Breadcrumbs::widget([
+                        'tag'=>'ol',
+                        'encodeLabels'=>false,
+                        'homeLink'=>['label'=>'<i class="fa fa-dashboard"></i> Home/Dashboard','url'=>['/site/index']],
+                        'links' => $breadcrumbs,
+                    ])
+                    ?>
                 </section>
                 <section class="content">                    
                     <?= $content ?>
@@ -48,8 +67,8 @@ $baseurl = $lte_asset->baseUrl;
 
         <!--        <footer class="footer">
                     <div class="container">
-                        <p class="pull-left">&copy; My Company <?= ''//date('Y')      ?></p>
-                        <p class="pull-right"><?= ''//Yii::powered()      ?></p>
+                        <p class="pull-left">&copy; My Company <?= ''//date('Y')              ?></p>
+                        <p class="pull-right"><?= ''//Yii::powered()              ?></p>
                     </div>
                 </footer>-->
     </div>
