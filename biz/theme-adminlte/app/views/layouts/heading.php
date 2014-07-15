@@ -1,3 +1,9 @@
+<?php
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+
+?>
 <a href="index.php" class="logo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
     SangkilBiz-3
@@ -116,7 +122,7 @@
                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                         </div>
                         <div class="pull-right">
-                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                            <?= Html::a('Sign out', ['/site/logout'], ['class'=>'btn btn-default btn-flat','data-method'=>'post']) ?>
                         </div>
                     </li>
                 </ul>

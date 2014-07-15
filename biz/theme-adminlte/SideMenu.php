@@ -52,7 +52,7 @@ class SideMenu extends \yii\base\Widget
     /**
      * @var boolean whether to activate parent menu items when one of the corresponding child menu items is active.
      */
-    public $activateParents = false;
+    public $activateParents = true;
 
     /**
      * @var string the route used to determine if a menu item is active or not.
@@ -127,9 +127,6 @@ class SideMenu extends \yii\base\Widget
             $linkContent .= Html::tag('i', '', ['class' => $icon]);
         }
 
-        if ($this->activateItems && $active) {
-            Html::addCssClass($options, 'active');
-        }
         if ($items !== null && is_array($items)) {
             Html::addCssClass($options, 'treeview');
             if ($this->activateItems) {
@@ -141,6 +138,7 @@ class SideMenu extends \yii\base\Widget
         } else {
             $linkContent .= $label;
         }
+        
         if ($badge !== null) {
             $badge = (array) $badge;
             $bagdeCss = 'badge pull-right';
@@ -151,6 +149,10 @@ class SideMenu extends \yii\base\Widget
         }
         if (!empty($items)) {
             $linkContent .= Html::tag('i', '', ['class' => 'fa fa-angle-left pull-right']);
+        }
+        
+        if ($this->activateItems && $active) {
+            Html::addCssClass($options, 'active');
         }
         return Html::tag('li', Html::a($linkContent, $url, $linkOptions) . $items, $options);
     }
