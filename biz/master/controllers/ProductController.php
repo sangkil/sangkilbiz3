@@ -202,4 +202,13 @@ class ProductController extends Controller
         $data = $dCmd->queryAll();
         return json_encode($data);
     }
+    
+    /**
+     * Creates a new Product model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateBarcode() {
+        return $this->render('create-barcode');
+    }
 }
