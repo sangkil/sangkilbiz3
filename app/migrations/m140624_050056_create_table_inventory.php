@@ -5,7 +5,7 @@ use yii\db\Schema;
 class m140624_050056_create_table_inventory extends \yii\db\Migration
 {
 
-    public function up()
+    public function safeUp()
     {
         $this->createTable('{{%transfer}}', [
             'id_transfer' => Schema::TYPE_PK,
@@ -56,7 +56,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'qty_approve' => Schema::TYPE_FLOAT,
             // constrain
             'PRIMARY KEY (id_transfer , id_product )',
-            'FOREIGN KEY (id_transfer) REFERENCES {{%notice}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
+            'FOREIGN KEY (id_transfer) REFERENCES {{%transfer_notice}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
         ]);
 
 
@@ -115,7 +115,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
         ]);
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('{{%notice_dtl}}');
         $this->dropTable('{{%notice}}');

@@ -5,7 +5,7 @@ use yii\db\Schema;
 class m140624_050135_create_table_accounting extends \yii\db\Migration
 {
 
-    public function up()
+    public function safeUp()
     {
         $this->createTable('{{%coa}}', [
             'id_coa' => Schema::TYPE_PK,
@@ -19,6 +19,8 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+            // constrain
+            'FOREIGN KEY (id_parent) REFERENCES {{%coa}} (id_coa) ON DELETE CASCADE ON UPDATE CASCADE',
         ]);
 
         $this->createTable('{{%acc_periode}}', [
@@ -133,7 +135,7 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
         ]);
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('{{%payment_dtl}}');
         $this->dropTable('{{%payment}}');
