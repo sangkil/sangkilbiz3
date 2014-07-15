@@ -5,22 +5,22 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Orgn $model
+ * @var biz\master\models\Category $model
  */
-$this->title = 'Orgn #'.$model->id_orgn;
-$this->params['breadcrumbs'][] = ['label' => 'Orgns', 'url' => ['index']];
+$this->title = 'Category #'.$model->id_category;
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="orgn-view col-lg-8">
-    <div class="box box-primary">
-        <div class="box-body no-padding">
+<div class="category-view col-lg-8">
+    <div class="box box-info">
+        <div class="box-body no-padding">                
             <?php
             echo DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id_orgn',
-                    'cd_orgn',
-                    'nm_orgn',
+                    'id_category',
+                    'cd_category',
+                    'nm_category',
                     'create_at',
                     'create_by',
                     'update_at',
@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
         <div class="box-footer">
-            <?= Html::a('Update', ['update', 'id' => $model->id_orgn], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Update', ['update', 'id' => $model->id_category], ['class' => 'btn btn-primary']) ?>
             <?php
-            echo Html::a('Delete', ['delete', 'id' => $model->id_orgn], [
+            echo Html::a('Delete', ['delete', 'id' => $model->id_category], [
                 'class' => 'btn btn-danger',
                 'data-confirm' => Yii::t('app', 'Are you sure to delete this item?'),
                 'data-method' => 'post',
@@ -40,3 +40,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
     </div>
+</div>
