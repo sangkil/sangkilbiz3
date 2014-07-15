@@ -28,7 +28,6 @@
 		"yiisoft/yii2": "*",
 		"yiisoft/yii2-bootstrap": "*",
 		"yiisoft/yii2-jui": "*",
-		"yiisoft/yii2-mongodb": "*",
 		"mdmsoft/yii2-admin": "*",
 		"mdmsoft/yii2-autonumber": "*",
 		"mdmsoft/yii2-logger": "*",
