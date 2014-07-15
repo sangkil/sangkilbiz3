@@ -58,7 +58,7 @@ class Coa extends \yii\db\ActiveRecord
 
     public function checkCoaCode($attribute)
     {
-        $coa = $this->idCoaParent;
+        $coa = $this->idParent;
         if ($coa && strpos($this->$attribute, rtrim($coa->cd_account, '0')) !== 0) {
             $this->addError($attribute, 'Code Account prefix invalid');
         }
@@ -127,9 +127,17 @@ class Coa extends \yii\db\ActiveRecord
                 'class' => 'mdm\converter\EnumConverter',
                 'enumPrefix' => 'TYPE_',
                 'attributes' => [
-                    'nmCoaType' => 'coa_type'
+                    'nmCoaType' => 'coa_type',
                 ]
-            ]
+            ],
+            [
+                'class' => 'mdm\converter\DateConverter',
+                'logicalFormat'=>'d-m-Y',
+                'physicalFormat'=>'Y-m-d H:i:s',
+                'attributes' => [
+                    'createDate' => 'create_at',
+                ]
+            ],
         ];
     }
 }

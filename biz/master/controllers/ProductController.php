@@ -88,6 +88,8 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product;
+        $model->status = Product::STATUS_ACTIVE;
+        
         $dPost = Yii::$app->request->post();
         if ($model->load($dPost) && $model->save()) {
 //            $pUom = new ProductUom;
@@ -199,5 +201,14 @@ class ProductController extends Controller
         $dCmd->bindValue(':dCode', '%' . $dGet['term'] . '%');
         $data = $dCmd->queryAll();
         return json_encode($data);
+    }
+    
+    /**
+     * Creates a new Product model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateBarcode() {
+        return $this->render('create-barcode');
     }
 }

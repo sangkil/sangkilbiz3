@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use biz\models\Orgn;
+use biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -16,7 +15,7 @@ use biz\models\Orgn;
     <?php $form = ActiveForm::begin(); ?>
     <div class="box box-danger">
         <div class="box-body">
-            <?= $form->field($model, 'id_orgn')->dropDownList(ArrayHelper::map(Orgn::find()->all(), 'id_orgn', 'nm_orgn'), ['style' => 'width:200px;']); ?>
+            <?= $form->field($model, 'id_orgn')->dropDownList(Helper::getOrgnList(), ['style' => 'width:200px;']); ?>
 
             <?= $form->field($model, 'cd_branch')->textInput(['maxlength' => 4, 'style' => 'width:120px;']) ?>
 

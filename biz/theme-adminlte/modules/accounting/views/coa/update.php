@@ -12,10 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Coas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_coa, 'url' => ['view', 'id' => $model->id_coa]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="coa-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="coa-update col-lg-6">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

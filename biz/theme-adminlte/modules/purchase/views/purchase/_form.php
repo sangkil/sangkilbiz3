@@ -3,14 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
-use yii\jui\AutoComplete;
-use biz\tools\Helper;
-use biz\purchase\assets\PurchaseAsset;
-use biz\tools\BizDataAsset;
+use biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Purchase $model
+ * @var biz\purchase\models\Purchase $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -26,30 +23,22 @@ use biz\tools\BizDataAsset;
     $models[] = $model;
     echo $form->errorSummary($models)
     ?>
-    <div class="col-lg-4">
-        <div class="box box-danger">
+    <div class="col-lg-3">
+        <div class="box box-primary">
             <div class="box-body">
                 <?= $form->field($model, 'purchase_num')->textInput(['maxlength' => 16, 'readonly' => true]); ?>
-                <?php
-                $el_id = Html::getInputId($model, 'id_supplier');
-                $field = $form->field($model, "id_supplier", ['template' => "{label}\n{input}{text}\n{hint}\n{error}"]);
-                $field->labelOptions['for'] = $el_id;
-                $field->hiddenInput(['id' => 'id_supplier']);
-                $field->parts['{text}'] = AutoComplete::widget([
-                        'model' => $model,
-                        'attribute' => 'idSupplier[nm_supplier]',
-                        'options' => ['class' => 'form-control', 'id' => $el_id],
+                <?=
+                    $form->field($model, 'nmSupplier')
+                    ->widget('yii\jui\AutoComplete', [
+                        'options' => ['class' => 'form-control'],
                         'clientOptions' => [
-                            'source' => new JsExpression("yii.purchase.sourceSupplier"),
-                            'select' => new JsExpression("yii.purchase.onSupplierSelect"),
-                            'open' => new JsExpression("yii.purchase.onSupplierOpen"),
+                            'source' => new JsExpression("biz.master.suppliers"),
                         ]
                 ]);
-                echo $field;
                 ?>
                 <?= $form->field($model, 'id_warehouse')->dropDownList(Helper::getWarehouseList()); ?>
-                <?php
-                echo $form->field($model, 'purchaseDate')
+                <?=
+                    $form->field($model, 'purchaseDate')
                     ->widget('yii\jui\DatePicker', [
                         'options' => ['class' => 'form-control', 'style' => 'width:50%'],
                         'clientOptions' => [
@@ -64,16 +53,12 @@ use biz\tools\BizDataAsset;
                 ?>
             </div>
         </div>
-    </div>  
-    <div class="col-lg-8">
-        <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?>
-    </div>     
+    </div>    
+    <?=
+    $this->render('_detail', [
+        'model' => $model,
+        'details' => $details
+    ])
+    ?> 
     <?php ActiveForm::end(); ?>
 </div>
-<?php
-PurchaseAsset::register($this);
-BizDataAsset::register($this, [
-    'master'=>$masters
-]);
-$js_ready = '$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;';
-$this->registerJs($js_ready);

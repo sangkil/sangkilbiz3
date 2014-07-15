@@ -13,23 +13,26 @@ use yii\helpers\Url;
 GridView::widget([
     'dataProvider' => new ActiveDataProvider([
         'query' => $model->getBarcodes(),
-        'sort'=>false,
-        ]),
+        'sort' => false,
+            ]),
     'tableOptions' => ['class' => 'table table-striped'],
     'layout' => '{items}',
     'showFooter' => true,
     'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+        [
+            'class' => 'yii\grid\SerialColumn',
+            'footer' => Html::label('New','#barcode-alias')
+        ],
         [
             'attribute' => 'barcode',
-            'footer' => Html::textInput('barcode'),
+            'footer' => Html::textInput('barcode','',['style'=>'width:300px;','id'=>'barcode-alias']),
         ],
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{delete}',
             'urlCreator' => function ($action, $child)use($model) {
-            return Url::toRoute(['delete-barcode', 'id_product' => $model->id_product, 'barcode' => $child->barcode]);
-        }
+                return Url::toRoute(['delete-barcode', 'id_product' => $model->id_product, 'barcode' => $child->barcode]);
+            }
         ]
     ],
 ]);

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
-use biz\models\EntriSheet;
+use biz\accounting\models\EntriSheet;
 
 /**
  * @var yii\web\View $this
@@ -21,14 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
         padding: 20px;
     }
 </style>
-<div class="entri-sheet-view col-lg-4" style="padding-left: 0px;">
-    <div class="box box-danger">
+<div class="entri-sheet-view col-lg-6" style="padding-left: 0px;">
+    <div class="box box-primary">
         <div class="box-body no-padding">
             <?=
             DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    //'id_esheet',
+                    'id_esheet',
                     'cd_esheet',
                     'nm_esheet',
                     'create_at',
@@ -52,15 +52,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
     </div>
+
 </div>
 <!-- Tab panes -->
-<div class="col-lg-8">
-    <div class="box box-info">
-        <div class="box-header">
-            <i class="fa fa-cogs"></i>
-            <h3 class="box-title">Detail Account</h3>
+<div class="col-lg-6">
+    <div class="nav-tabs-custom">
+        <div class="nav nav-tabs">
+            <li class="active btn-finish"><a href="#acc" data-toggle="tab">Detail Account</a></li>
         </div>
-        <div class="box-body no-padding">
+        <div class="tab tab-content no-padding no-border no-shadow">
             <?php
 //            echo '<a class=" pull-right" data-toggle="modal" data-target="#myModal"><span class="btn btn-default glyphicon glyphicon-plus"></span></a>';
             $dESheetD = new ActiveDataProvider([

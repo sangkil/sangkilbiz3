@@ -2,11 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\models\Purchase;
+use biz\purchase\models\Purchase;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use biz\purchase\assets\PurchaseAsset;
-use biz\tools\BizDataAsset;
 
 /**
  * @var yii\web\View $this
@@ -73,6 +72,6 @@ use biz\tools\BizDataAsset;
 </div>
 <?php
 PurchaseAsset::register($this);
-BizDataAsset::register($this, [
-    'master' => $masters
-]);
+//BizDataAsset::register($this, [
+//    'master' => $masters
+//]);

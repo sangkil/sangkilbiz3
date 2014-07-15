@@ -2,32 +2,34 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\Purchase;
+use biz\purchase\models\Purchase;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Purchase $model
+ * @var biz\purchase\models\Purchase $model
  */
-$this->title = 'Purchase Order #'.$model->purchase_num;
+$this->title = $model->purchase_num;
 $this->params['breadcrumbs'][] = ['label' => 'Purchase', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="col-lg-3">
-    <div class="box box-danger">
-        <?php
-        echo DetailView::widget([
-            'options' => ['class' => 'table table-striped detail-view', 'style' => 'padding:0px;'],
-            'model' => $model,
-            'attributes' => [
-                'purchase_num',
-                'idSupplier.nm_supplier',
-                'purchaseDate',
-                'nmStatus',
-            ],
-        ]);
-        ?>
-        <div class="box-footer">
+<div class="col-lg-3" style="padding-left: 0px;">
+    <div class="box box-primary">
+        <div class="box-body no-padding">
+            <?php
+            echo DetailView::widget([
+                'options' => ['class' => 'table table-striped detail-view', 'style' => 'padding:0px;'],
+                'model' => $model,
+                'attributes' => [
+                    'purchase_num',
+                    'nmSupplier',
+                    'purchaseDate',
+                    'nmStatus',
+                ],
+            ]);
+            ?>  
+        </div>        
+        <div class="box-footer" style="text-align: right;">
             <?php
             if ($model->status == Purchase::STATUS_DRAFT) {
                 echo Html::a('Update', ['update', 'id' => $model->id_purchase], ['class' => 'btn btn-primary']) . ' ';
@@ -48,26 +50,25 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="purchase-hdr-view col-lg-9">
     <div class="box box-info">
-    <?php
-    echo yii\grid\GridView::widget([
-        'tableOptions' => ['class' => 'table table-striped'],
-        'layout' => '{items}',
-        'dataProvider' => new \yii\data\ActiveDataProvider([
-            'query' => $model->getPurchaseDtls(),
-            'sort' => false,
-            'pagination' => false,
-            ]),
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'idWarehouse.nm_whse',
-            'idProduct.nm_product',
-            'purch_qty',
-            'idUom.cd_uom',
-            'purch_price',
-            'sales_price',
-        ]
-    ]);
-    ?>
+        <?php
+        echo yii\grid\GridView::widget([
+            'tableOptions' => ['class' => 'table table-striped'],
+            'layout' => '{items}',
+            'dataProvider' => new \yii\data\ActiveDataProvider([
+                'query' => $model->getPurchaseDtls(),
+                'sort' => false,
+                'pagination' => false,
+                    ]),
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'idProduct.nm_product',
+                'purch_qty',
+                'purch_price',
+                'sales_price',
+                'idUom.nm_uom',
+            ]
+        ]);
+        ?>
     </div>
 </div>
 

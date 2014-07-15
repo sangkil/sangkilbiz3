@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -27,7 +28,7 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <div class="box-body">
-        <?php $itemWhse = \biz\tools\Helper::getOrgnList() ?>
+        <?php $itemWhse = Helper::getOrgnList() ?>
         <?= $form->field($model, 'id_orgn')->dropDownList($itemWhse, ['prompt' => '--All Orgn--']) ?>
 
         <?= $form->field($model, 'cd_branch') ?>

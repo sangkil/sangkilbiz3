@@ -9,6 +9,7 @@ use biz\master\models\Price;
 use biz\master\models\PriceCategory;
 use biz\master\models\GlobalConfig;
 use biz\master\models\Warehouse;
+use biz\master\models\Orgn;
 use biz\master\models\Branch;
 use biz\master\models\ProductUom;
 use biz\master\models\UserToBranch;
@@ -150,6 +151,12 @@ class Helper {
         return ArrayHelper::map($query->asArray()->all(), 'id_warehouse', 'nm_whse');
     }
 
+    public static function getOrgnList($id_orgn = null) {
+        if ($id_orgn === null) {
+            return ArrayHelper::map(Orgn::find()->all(), 'id_orgn', 'nm_orgn');
+        }
+    }
+
     public static function getBranchList($id_user = null) {
         if ($id_user === null) {
             return ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch');
@@ -166,7 +173,7 @@ class Helper {
         }
         return ArrayHelper::map($query->asArray()->all(), 'id_category', 'nm_category');
     }
-    
+
     public static function getProductGroupList($idGroup = null) {
         $query = \biz\master\models\searchs\ProductGroup::find();
         if ($idGroup !== null) {
