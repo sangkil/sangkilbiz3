@@ -7,7 +7,7 @@ $config = [
             'theme' => 'biz\adminlte\Theme'
         ],
         'authManager' => [
-            'class' => 'yii\rbac\PhpManager'
+            'class' => 'yii\rbac\DbManager'
         ]
     ]
 ];
