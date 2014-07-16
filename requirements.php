@@ -55,6 +55,14 @@ $requirements = array(
         'by' => 'All DB-related classes',
         'memo' => 'Required for PostgreSQL database.',
     ),
+    // Mongodb :
+    array(
+        'name' => 'MongoDB extension',
+        'mandatory' => false,
+        'condition' => extension_loaded('mongo'),
+        'by' => '<a href="https://github.com/mdmsoft/yii2-logger">mdmsoft/yii2-logger</a>',
+        'memo' => 'Required for transaction logging.',
+    ),
     // Cache :
     array(
         'name' => 'Memcache extension',
