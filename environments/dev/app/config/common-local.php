@@ -13,6 +13,9 @@ return[
         'mongodb' => [
             'class' => 'yii\mongodb\Connection',
             'dsn' => 'mongodb://localhost:27017/sangkilbiz3',
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager'
         ]
     ],
 ];
