@@ -19,6 +19,9 @@ Thumbs.db
 composer.phar
 composer.lock
 
+# yii console
+yii
+
 # Mac DS_Store Files
 .DS_Store
 
