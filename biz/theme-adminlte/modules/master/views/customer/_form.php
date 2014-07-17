@@ -11,15 +11,12 @@ use biz\master\models\Customer;
  */
 ?>
 
-<div class="customer-form col-lg-6" style="padding-left: 0px;">
+<div class="customer-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            New Cutomer
-        </div>
-        <div class="panel-body">
-            <?= $form->field($model, 'cd_customer')->textInput(['maxlength' => 13, 'style'=>'width:120px;']) ?>
+    <div class="box box-primary">
+        <div class="box-body">
+            <?= $form->field($model, 'cd_customer')->textInput(['maxlength' => 13, 'style' => 'width:120px;']) ?>
 
             <?= $form->field($model, 'nm_customer')->textInput(['maxlength' => 64]) ?>
 
@@ -30,12 +27,10 @@ use biz\master\models\Customer;
             <?= ''//$form->field($model, 'status')->dropDownList(StatusBehavior::statusList(Customer::className()), ['style' => 'width:200px;']); ?>
 
         </div>
+        <div class="box-footer">
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
     </div>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
