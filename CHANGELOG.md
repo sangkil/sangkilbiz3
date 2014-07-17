@@ -9,3 +9,4 @@ Sangkilbiz3 Change Log
 - Add: Add action site/page and site/signup (mdmunir).
 - Add: Add default config for rbac and admin module (mdmunir).
 - Add: Add fitur to setting environment at init (mdmunir).
+- Chg: Db migration fix (mdmunir).
