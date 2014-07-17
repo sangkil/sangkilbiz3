@@ -5,37 +5,34 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var biz\models\Customer $model
+ * @var biz\master\models\PriceCategory $model
  */
-$this->title = 'Customer #'.$model->id_customer;
-$this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
+$this->title = 'Price Category #'.$model->id_price_category;
+$this->params['breadcrumbs'][] = ['label' => 'Price Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="customer-view col-lg-8">
+<div class="price-category-view col-lg-8">
     <div class="box box-primary">
-        <div class="box-body no-padding">
+        <div class="box-body no-padding">        
             <?=
             DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id_customer',
-                    'cd_customer',
-                    'nm_customer',
-                    'contact_name',
-                    'contact_number',
-                    'status',
-                    'create_at',
+                    'id_price_category',
+                    'nm_price_category',
+                    'formula',
                     'create_by',
                     'update_at',
                     'update_by',
+                    'create_at',
                 ],
             ])
             ?>
         </div>
         <div class="box-footer">
-            <?= Html::a('Update', ['update', 'id' => $model->id_customer], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Update', ['update', 'id' => $model->id_price_category], ['class' => 'btn btn-primary']) ?>
             <?=
-            Html::a('Delete', ['delete', 'id' => $model->id_customer], [
+            Html::a('Delete', ['delete', 'id' => $model->id_price_category], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Are you sure you want to delete this item?',
