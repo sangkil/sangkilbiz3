@@ -25,7 +25,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ], $tableOptions);
+            ], $tableOptions);
 
         $this->createTable('{{%transfer_dtl}}', [
             'id_transfer' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -36,7 +36,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_transfer , id_product )',
             'FOREIGN KEY (id_transfer) REFERENCES {{%transfer}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
-        ], $tableOptions);
+            ], $tableOptions);
 
         $this->createTable('{{%transfer_notice}}', [
             'id_transfer' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -51,7 +51,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_transfer )',
             'FOREIGN KEY (id_transfer) REFERENCES {{%transfer}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
-        ], $tableOptions);
+            ], $tableOptions);
 
         $this->createTable('{{%notice_dtl}}', [
             'id_transfer' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -62,7 +62,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_transfer , id_product )',
             'FOREIGN KEY (id_transfer) REFERENCES {{%transfer_notice}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
-        ], $tableOptions);
+            ], $tableOptions);
 
 
         $this->createTable('{{%stock_opname}}', [
@@ -72,15 +72,13 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'opname_date' => Schema::TYPE_DATE . ' NOT NULL',
             'description' => Schema::TYPE_STRING,
             'status' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'operator1' => Schema::TYPE_STRING . '(32)',
-            'operator2' => Schema::TYPE_STRING . '(32)',
-            'operator3' => Schema::TYPE_STRING . '(32)',
+            'operator' => Schema::TYPE_STRING,
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ], $tableOptions);
+            ], $tableOptions);
 
         $this->createTable('{{%stock_opname_dtl}}', [
             'id_opname' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -90,7 +88,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_opname , id_product, id_uom)',
             'FOREIGN KEY (id_opname) REFERENCES {{%stock_opname}} (id_opname) ON DELETE CASCADE ON UPDATE CASCADE',
-        ], $tableOptions);
+            ], $tableOptions);
 
 
         $this->createTable('{{%stock_adjustment}}', [
@@ -106,7 +104,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ], $tableOptions);
+            ], $tableOptions);
 
         $this->createTable('{{%stock_adjustment_dtl}}', [
             'id_adjustment' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -117,7 +115,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_adjustment , id_product, id_uom)',
             'FOREIGN KEY (id_adjustment) REFERENCES {{%stock_adjustment}} (id_adjustment) ON DELETE CASCADE ON UPDATE CASCADE',
-        ], $tableOptions);
+            ], $tableOptions);
     }
 
     public function safeDown()
