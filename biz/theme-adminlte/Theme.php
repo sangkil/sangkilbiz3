@@ -16,7 +16,8 @@ class Theme extends \yii\base\Theme
         '@biz/inventory/views' => '@biz/adminlte/modules/inventory/views',
         '@biz/accounting/views' => '@biz/adminlte/modules/accounting/views',
         '@biz/master/views' => '@biz/adminlte/modules/master/views',
-        '@biz/purchase/views' => '@biz/adminlte/modules/purchase/views'
+        '@biz/purchase/views' => '@biz/adminlte/modules/purchase/views',
+        '@mdm/admin/views/layouts/main.php' => '@biz/adminlte/app/views/layouts/main.php'
     ];
 
 }
