@@ -2,19 +2,18 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use biz\models\Transfer;
+use biz\inventory\models\Transfer;
 
 /**
  * @var yii\web\View $this
  * @var biz\purchase\models\Purchase $model
  */
-$this->title = 'Inventory Transfer #'.$model->transfer_num;
+$this->title = $model->transfer_num;
 $this->params['breadcrumbs'][] = ['label' => 'Transfer', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <div class="col-lg-3" style="padding-left: 0px;">
-    <div class="box box-danger">
+    <div class="box box-primary">
         <div class="box-body no-padding">
             <?php
             echo DetailView::widget([
@@ -30,8 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
         </div>
-
-        <div class="box-footer" style="text-align: right;">
+        <div class="box-footer">
             <?php
             if ($model->status == Transfer::STATUS_DRAFT) {
                 echo Html::a('Update', ['update', 'id' => $model->id_transfer], ['class' => 'btn btn-primary']) . ' ';
@@ -62,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<div class="purchase-hdr-view col-lg-9">    
+<div class="purchase-hdr-view col-lg-9">
     <div class="box box-info">
         <div class="box-body no-padding">
             <?php
@@ -87,5 +85,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
         </div>
-    </div>    
+    </div>
 </div>
