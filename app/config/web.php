@@ -21,9 +21,9 @@ return [
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
-            'allowActions' => [
-                '*'
-            ]
+//            'allowActions' => [
+//                '*'
+//            ]
         ]
     ],
     'components' => [
