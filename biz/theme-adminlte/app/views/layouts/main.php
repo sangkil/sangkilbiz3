@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use biz\adminlte\MyAsset;
 use yii\helpers\Inflector;
 use yii\widgets\Breadcrumbs;
-use yii\helpers\Url;
 
 /**
  * @var \yii\web\View $this
