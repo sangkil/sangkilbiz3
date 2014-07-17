@@ -135,8 +135,7 @@ class Transfer extends \yii\db\ActiveRecord
             'BizBlameableBehavior',
             [
                 'class' => 'mdm\autonumber\Behavior',
-                'digit' => 4,
-                'group' => 'transfer',
+                'digit' => 6,
                 'attribute' => 'transfer_num',
                 'value' => 'IN' . date('y.?')
             ],
