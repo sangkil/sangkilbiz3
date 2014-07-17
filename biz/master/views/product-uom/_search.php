@@ -3,11 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/**
- * @var yii\web\View $this
- * @var biz\master\models\ProductUomSearch $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $this yii\web\View */
+/* @var $model biz\master\models\searchs\ProductUom */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="product-uom-search">

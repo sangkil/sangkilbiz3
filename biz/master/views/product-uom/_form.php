@@ -7,12 +7,13 @@ use yii\web\JsExpression;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use biz\master\models\Uom;
+use biz\app\assets\BizAsset;
+use biz\app\assets\BizDataAsset;
+use biz\master\components\Helper as MasterHelper;
 
-/**
- * @var yii\web\View $this
- * @var biz\master\models\ProductUom $model
- * @var yii\widgets\ActiveForm $form
- */
+/* @var $this yii\web\View */
+/* @var $model biz\master\models\ProductUom */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class=" product-uom-form col-lg-6" style="padding-left: 0px;">
@@ -21,22 +22,15 @@ use biz\master\models\Uom;
     <div class="panel panel-primary">
         <div class="panel-heading">Product Uoms</div>
         <div class="panel-body">
-            <?php
-            $id_input = Html::getInputId($model, 'id_product');
-            $field = $form->field($model, 'id_product', ['template' => "{label}\n{input}\n{text}\n{hint}\n{error}"]);
-            $field->labelOptions['for'] = $id_input;
-            $field->input('hidden', ['id' => 'id_product']);
-            $field->parts['{text}'] = AutoComplete::widget([
-                    'model' => $model,
-                    'attribute' => 'idProduct[nm_product]',
-                    'options' => ['class' => 'form-control', 'id' => $id_input],
-                    'clientOptions' => [
-                        'source' => Url::toRoute(['product/auto-product']),
-                        'select' => new JsExpression('function(event,ui){$(\'#id_product\').val(ui.item.did)}'),
-                        'open' => new JsExpression('function(event,ui){$(\'#id_product\').val(\'\')}'),
-                    ],
-            ]);
-            echo $field;
+            <?=
+            $form->field($model, 'nmProduct')->widget('yii\jui\AutoComplete', [
+                'id' => 'product',
+                'options' => ['class' => 'form-control'],
+                'clientOptions' => [
+                    'source' => new JsExpression('yii.global.sourceProduct'),
+                    'delay' => 100,
+                ]
+            ])
             ?>
 
             <?= $form->field($model, 'id_uom')->dropDownList(ArrayHelper::map(Uom::find()->all(), 'id_uom', 'nm_uom'), ['style' => 'width:200px;']); ?>
@@ -54,3 +48,13 @@ use biz\master\models\Uom;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php
+BizAsset::register($this);
+BizDataAsset::register($this, [
+    'master' => MasterHelper::getMasters('product, barcode'),
+]);
+$js_ready = <<<JS
+JS;
+$this->registerJs($js_ready);
+
+?>
