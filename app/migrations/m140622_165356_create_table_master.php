@@ -7,6 +7,11 @@ class m140622_165356_create_table_master extends \yii\db\Migration
 
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%orgn}}', [
             'id_orgn' => Schema::TYPE_PK,
             'cd_orgn' => Schema::TYPE_STRING . '(4) NOT NULL',
@@ -16,7 +21,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%branch}}', [
             'id_branch' => Schema::TYPE_PK,
@@ -30,7 +35,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
             'FOREIGN KEY (id_orgn) REFERENCES {{%orgn}} (id_orgn) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%warehouse}}', [
             'id_warehouse' => Schema::TYPE_PK,
@@ -44,7 +49,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
             'FOREIGN KEY (id_branch) REFERENCES {{%branch}} (id_branch) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%product_group}}', [
             'id_group' => Schema::TYPE_PK,
@@ -55,7 +60,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%category}}', [
             'id_category' => Schema::TYPE_PK,
@@ -66,7 +71,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
 
         $this->createTable('{{%product}}', [
@@ -84,7 +89,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             // constrain
             'FOREIGN KEY (id_group) REFERENCES {{%product_group}} (id_group) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_category) REFERENCES {{%category}} (id_category) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%product_child}}', [
             'barcode' => Schema::TYPE_STRING . '(13) PRIMARY KEY',
@@ -96,7 +101,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%uom}}', [
             'id_uom' => Schema::TYPE_PK,
@@ -108,7 +113,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%product_uom}}', [
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -123,7 +128,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'PRIMARY KEY (id_product, id_uom)',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%product_stock}}', [
             'id_warehouse' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -140,7 +145,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'FOREIGN KEY (id_warehouse) REFERENCES {{%warehouse}} (id_warehouse) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%supplier}}', [
             'id_supplier' => Schema::TYPE_PK,
@@ -151,7 +156,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%product_supplier}}', [
             'id_product' => Schema::TYPE_INTEGER,
@@ -165,7 +170,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'PRIMARY KEY (id_product , id_supplier )',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_supplier) REFERENCES {{%supplier}} (id_supplier) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%customer}}', [
             'id_customer' => Schema::TYPE_PK,
@@ -179,7 +184,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%customer_detail}}', [
             'id_customer' => Schema::TYPE_INTEGER,
@@ -199,7 +204,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_customer)',
             'FOREIGN KEY (id_customer) REFERENCES {{%customer}} (id_customer) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%price_category}}', [
             'id_price_category' => Schema::TYPE_PK,
@@ -210,7 +215,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%price}}', [
             'id_product' => Schema::TYPE_INTEGER,
@@ -226,7 +231,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'PRIMARY KEY (id_product , id_price_category )',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_price_category) REFERENCES {{%price_category}} (id_price_category) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%cogs}}', [
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -241,7 +246,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'PRIMARY KEY (id_product)',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%user_to_branch}}', [
             'id_branch' => Schema::TYPE_INTEGER,
@@ -254,7 +259,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             // constrain
             'PRIMARY KEY (id_branch , id_user )',
             'FOREIGN KEY (id_branch) REFERENCES {{%branch}} (id_branch) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%global_config}}', [
             'group' => Schema::TYPE_STRING.'(16) NOT NULL',
@@ -268,7 +273,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
             'PRIMARY KEY ([[group]] , [[name]])',
-        ]);
+        ], $tableOptions);
     }
 
     public function safeDown()

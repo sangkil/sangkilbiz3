@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * Description of MigrateController
@@ -20,9 +21,9 @@ class MigrateController extends \yii\console\controllers\MigrateController
 
     protected function createMigration($class)
     {
-        $maps = $this->getMigrationMap();
-        if (isset($maps[$class])) {
-            $file = $maps[$class]['path'];
+        $paths = $this->getMigrationMap();
+        if (isset($paths[$class])) {
+            $file = $paths[$class];
             require_once($file);
 
             return new $class(['db' => $this->db]);
@@ -36,11 +37,12 @@ class MigrateController extends \yii\console\controllers\MigrateController
         if ($this->_migrations === null) {
             $this->_migrations = [];
             $directories = array_merge($this->migrationLookup, [$this->migrationPath]);
-            if (isset(Yii::$app->params['yii.migrations'])) {
-                $directories = array_merge((array) Yii::$app->params['yii.migrations'], $directories);
+            $extraPath = ArrayHelper::getValue(Yii::$app->params, 'yii.migrations');
+            if (!empty($extraPath)) {
+                $directories = array_merge((array) $extraPath, $directories);
             }
             $dirs = [];
-            foreach ($directories as $dir) {
+            foreach (array_unique($directories) as $dir) {
                 $dir = Yii::getAlias($dir);
                 if (isset($dirs[$dir])) {
                     continue;
@@ -53,10 +55,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
                     }
                     $path = $dir . DIRECTORY_SEPARATOR . $file;
                     if (preg_match('/^(m(\d{6}_\d{6})_.*?)\.php$/', $file, $matches) && is_file($path)) {
-                        $this->_migrations[$matches[1]] = [
-                            'path' => $path,
-                            'time' => $matches[2]
-                        ];
+                        $this->_migrations[$matches[1]] = $path;
                     }
                 }
                 closedir($handle);
@@ -75,8 +74,8 @@ class MigrateController extends \yii\console\controllers\MigrateController
         }
 
         $migrations = [];
-        foreach ($this->getMigrationMap() as $version => $info) {
-            if (!isset($applied[$info['time']])) {
+        foreach ($this->getMigrationMap() as $version => $path) {
+            if (!isset($applied[substr($version, 1, 13)])) {
                 $migrations[] = $version;
             }
         }

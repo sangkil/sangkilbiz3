@@ -7,6 +7,11 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
 
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%purchase}}', [
             'id_purchase' => Schema::TYPE_PK,
             'purchase_num' => Schema::TYPE_STRING . '(16) NOT NULL',
@@ -22,7 +27,7 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%purchase_dtl}}', [
             'id_purchase_dtl' => Schema::TYPE_PK,
@@ -35,7 +40,7 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
             'sales_price' => Schema::TYPE_FLOAT . ' NOT NULL',
             // constrain
             'FOREIGN KEY (id_purchase) REFERENCES {{%purchase}} (id_purchase) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%purchase_sales_price}}', [
             'id_purchase_dtl' => Schema::TYPE_PK,
@@ -43,7 +48,7 @@ class m140624_050030_create_table_purchase extends \yii\db\Migration
             'price' => Schema::TYPE_FLOAT,
             // constrain
             'FOREIGN KEY (id_purchase_dtl) REFERENCES {{%purchase_dtl}} (id_purchase_dtl) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
     }
 
     public function safeDown()
