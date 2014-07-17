@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id_puom
  * @property integer $id_product
+ * @property string $nmProduct
  * @property integer $id_uom
  * @property integer $isi
  * @property string $create_at
@@ -21,6 +22,7 @@ use Yii;
  */
 class ProductUom extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -35,8 +37,10 @@ class ProductUom extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['nmProduct'], 'in', 'range'=>  Product::find()->select('nm_product')->column()],
             [['id_product', 'id_uom', 'isi'], 'required'],
-            [['id_product', 'id_uom', 'isi'], 'integer']
+            [['id_product', 'id_uom', 'isi'], 'integer'],
+            [['id_uom'],'unique','targetAttribute' => ['id_product', 'id_uom']],
         ];
     }
 
@@ -71,6 +75,24 @@ class ProductUom extends \yii\db\ActiveRecord
     public function getIdProduct()
     {
         return $this->hasOne(Product::className(), ['id_product' => 'id_product']);
+    }
+
+    public function setNmProduct($value)
+    {
+        if (($product = Product::findOne(['nm_product' => $value])) !== null) {
+            $this->id_product = $product->id_product;
+        } else {
+            $this->id_product = null;
+        }
+    }
+
+    public function getNmProduct()
+    {
+        if (($product = $this->idProduct) !== null) {
+            return $product->nm_product;
+        } else {
+            return null;
+        }
     }
 
     /**
