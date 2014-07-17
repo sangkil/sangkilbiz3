@@ -10,6 +10,16 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
+    'controllerMap' => [
+        'migrate'=>[
+            'class'=>'app\commands\MigrateController',
+            'migrationLookup'=>[
+                '@mdm/admin/migrations',
+                '@mdm/autonumber/migrations',
+                '@yii/rbac/migrations',
+            ]
+        ]
+    ],
     'components' => [
         'log' => [
             'targets' => [

@@ -7,6 +7,11 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
 
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%cashdrawer}}', [
             'id_cashdrawer' => Schema::TYPE_PK,
             'client_machine' => Schema::TYPE_STRING . '(32) NOT NULL',
@@ -22,7 +27,7 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
-        ]);
+        ], $tableOptions);
 
 
         $this->createTable('{{%sales}}', [
@@ -43,7 +48,7 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
             'FOREIGN KEY (id_cashdrawer) REFERENCES {{%cashdrawer}} (id_cashdrawer) ON DELETE SET NULL ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
 
         $this->createTable('{{%sales_dtl}}', [
             'id_sales_dtl' => Schema::TYPE_PK,
@@ -58,7 +63,7 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
             'tax' => Schema::TYPE_FLOAT,
             // constrain
             'FOREIGN KEY (id_sales) REFERENCES {{%sales}} (id_sales) ON DELETE CASCADE ON UPDATE CASCADE',
-        ]);
+        ], $tableOptions);
     }
 
     public function safeDown()

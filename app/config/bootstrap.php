@@ -8,9 +8,3 @@ Yii::setAlias('biz/inventory', dirname(dirname(__DIR__)) . '/biz/inventory');
 Yii::setAlias('biz/sales', dirname(dirname(__DIR__)) . '/biz/sales');
 Yii::setAlias('biz/accounting', dirname(dirname(__DIR__)) . '/biz/accounting');
 Yii::setAlias('biz/adminlte', dirname(dirname(__DIR__)) . '/biz/theme-adminlte');
-
-// set DI
-Yii::$container->setSingleton('mdm\logger\BaseStorage', [
-    'class' => 'mdm\logger\MongoStorage',
-]);
-
