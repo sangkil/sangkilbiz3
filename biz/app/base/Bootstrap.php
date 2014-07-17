@@ -19,10 +19,10 @@ class Bootstrap implements \yii\base\BootstrapInterface
     public function bootstrap($app)
     {
         if ($app instanceof \yii\web\Application) {
-            $config = ArrayHelper::getValue($app->params, 'biz_config', []);
+            $config = ArrayHelper::getValue($app->params, 'sangkil.biz', []);
 
             $this->initialize($app, $config);
-            if (ArrayHelper::getValue($config, 'auto_define_module', true)) {
+            if (ArrayHelper::getValue($config, 'auto_module', true)) {
                 $this->autoDefineModule($app);
             }
         }
