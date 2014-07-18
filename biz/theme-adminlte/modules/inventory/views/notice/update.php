@@ -12,9 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => $model->idTransfer->transfer_num, '
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="transfer-notice-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?=
     $this->render('_form', [
         'model' => $model,

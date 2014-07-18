@@ -8,7 +8,7 @@ use biz\inventory\models\Transfer;
  * @var yii\web\View $this
  * @var biz\purchase\models\Purchase $model
  */
-$this->title = $model->transfer_num;
+$this->title = 'Transfer Release #'.$model->transfer_num;
 $this->params['breadcrumbs'][] = ['label' => 'Transfer', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]),
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    'idProduct.cd_product',
                     'idProduct.nm_product',
                     'transfer_qty_send',
                     'transfer_qty_receive',

@@ -13,8 +13,8 @@ use mdm\relation\EditableList;
  * @var TransferDtl[] $model
  */
 ?>
-<div class="col-lg-9" style="padding-left: 0px;">
-    <div class="panel panel-info">
+<div class="box box-info">  
+    <div class="box-body no-padding">
         <table class="table table-striped">
             <tfoot>
                 <tr>
