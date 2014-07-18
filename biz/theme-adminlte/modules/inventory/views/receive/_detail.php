@@ -5,119 +5,55 @@ use biz\models\TransferDtl;
 use biz\master\components\Helper;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
+use biz\inventory\assets\ReceiveAsset;
+use biz\app\assets\BizDataAsset;
+use mdm\relation\EditableList;
 
 /**
  * @var TransferDtl[] $model
  */
 ?>
-<div class="col-lg-9">
-    <div class="box box-info">        
-        <table id="detail-grid" class="table table-striped">
-            <?php
-
-            /**
-             * 
-             * @param TransferDtl $model
-             * @param integer $index
-             * @return string
-             */
-            function renderRow($model, $index) {
-                ob_start();
-                ob_implicit_flush(false);
-                ?>
+<div class="col-lg-9" style="padding-left: 0px;">
+    <div class="panel panel-info">
+        <table class="table table-striped">
+            <tfoot>
                 <tr>
-                    <td style="width: 50px">
-                        <div class="serial">
-                            <?php if ($index === '_index_' || $model->transfer_qty_send == 0): ?>
-                                <a data-action="delete" title="Delete" href="#" class="pull-right">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </a>
-                            <?php endif; ?>
-                            <span><?= $index + 1; ?></span>
-                        </div>
-                        <?= Html::activeHiddenInput($model, "[$index]id_product", ['data-field' => 'id_product', 'id' => false]) ?>
-                    </td>
-                    <td class="items" style="width: 45%">
-                        <ul class="nav nav-list">
-                            <li><span class="cd_product"><?= Html::getAttributeValue($model, 'idProduct[cd_product]') ?></span> 
-                                - <span class="nm_product"><?= Html::getAttributeValue($model, 'idProduct[nm_product]') ?></span></li>
-                            <li>
-                                Jumlah <?=
-                                Html::activeTextInput($model, "[$index]transfer_qty_send", [
-                                    'data-field' => 'transfer_qty_send',
-                                    'size' => 5, 'id' => false,
-                                    'readonly' => true])
-                                ?> &nbsp;
-                                <?php if ($index === '_index_' || $model->transfer_qty_send == 0): ?>
-                                    <?= Html::activeDropDownList($model, "[$index]id_uom", Helper::getProductUomList($model->id_product), ['data-field' => 'id_uom', 'id' => false]) ?>
-                                <?php else: ?>
-                                    <?= Html::activeHiddenInput($model, "[$index]id_uom"); ?>
-                                    <span ><?= Html::getAttributeValue($model, 'idUom[nm_uom]') ?></span>
-                                <?php endif; ?>
-                            </li>
-                            <li>
-                            </li>
-                        </ul>
-                    </td>
-                    <td class="selling" style="width: 40%">
-                        <ul class="nav nav-list">
-                            <li>Receive</li>
-                            <li>
-                                Jumlah <?=
-                                Html::activeTextInput($model, "[$index]transfer_qty_receive", [
-                                    'data-field' => 'transfer_qty_receive',
-                                    'size' => 5, 'id' => false,
-                                    'value' => is_null($model->transfer_qty_receive) ? $model->transfer_qty_send : $model->transfer_qty_receive,
-                                    'required' => true])
-                                ?>
-                            </li>
-                            <li>
-                                Selisih <?php
-                                $selisih = $model->transfer_qty_receive - $model->transfer_qty_send;
-                                echo Html::textInput('', $selisih, [
-                                    'data-field' => 'transfer_selisih',
-                                    'size' => 5, 'id' => false,
-                                    'readonly' => true, 'disabled' => true])
-                                ?>
-                            </li>
-                        </ul>
-                    </td>
-                    <td class="total-price">
-                        <ul class="nav nav-list">
-                            <li>&nbsp;</li>
-                            <li>
-                                <input type="hidden" data-field="total_price">
-                            </li>
-                        </ul>
+                    <td colspan="4">
+                        Product :
+                        <?php
+                        echo AutoComplete::widget([
+                            'name' => 'product',
+                            'id' => 'product',
+                            'clientOptions' => [
+                                'source' => new JsExpression('yii.global.sourceProduct'),
+                                'select' => new JsExpression('yii.receive.onProductSelect'),
+                                'delay' => 100,
+                            ]
+                        ]);
+                        ?>
                     </td>
                 </tr>
-                <?php
-                return trim(preg_replace('/>\s+</', '><', ob_get_clean()));
-            }
-            ?>
-            <?php
-            $rows = [];
-            foreach ($details as $index => $model) {
-                $rows[] = renderRow($model, $index);
-            }
-            echo Html::tag('tbody', implode("\n", $rows), ['data-template' => renderRow(new TransferDtl, '_index_')])
+            </tfoot>
+            <?=
+            EditableList::widget([
+                'id' => 'detail-grid',
+                'allModels' => $details,
+                'modelClass' => TransferDtl::className(),
+                'itemView' => '_item_detail',
+                'options' => ['tag' => 'tbody'],
+                'itemOptions' => ['tag' => 'tr'],
+            ])
             ?>
         </table>
-        <div class="box-footer">
-                <?= Html::label('Product Tambahan :', 'product') ?>
-                <?php
-                echo AutoComplete::widget([
-                    'name' => 'product',
-                    'id' => 'product',
-                    'clientOptions' => [
-                        'source' => new JsExpression('yii.receive.sourceProduct'),
-                        'select' => new JsExpression('yii.receive.onProductSelect'),
-                        'delay' => 100,
-                    ],
-                    'options' => ['class' => 'form-control']
-                ]);
-                ?>  
-        </div>
     </div>
-
 </div>
+
+<?php
+ReceiveAsset::register($this);
+BizDataAsset::register($this, [
+    'master' => MasterHelper::getMasters('product, barcode, product_stock')
+]);
+$js_ready = <<< JS
+\$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;
+JS;
+$this->registerJs($js_ready);

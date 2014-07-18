@@ -10,48 +10,38 @@ use yii\widgets\ActiveForm;
  */
 ?>
 
-<div class="purchase-hdr-search box box-warning">
-    <?php
-    $form = ActiveForm::begin([
-                'action' => ['index'],
-                'method' => 'get',
-    ]);
-    ?>
-    <div class="box-header" style="padding-bottom: 0px;">
-        <i class="fa fa-filter"></i>
-        <h3 class="box-title">Filter Receive</h3>
-        <div class="box-tools pull-right">
-            <?= Html::a('', '#', ['class' => 'btn btn-info btn-sm fa fa-search', 'title' => 'Min/Maximize', 'id' => 'kecilin', 'data-widget' => 'collapse']) ?>
-            <?= Html::a('', '#', ['class' => 'btn btn-danger btn-sm fa fa-times', 'title' => 'Min/Maximize', 'id' => 'tutup', 'data-widget' => 'remove']) ?>
-        </div>
-    </div>
-    <div class="box-body">
-        <?= $form->field($model, 'transfer_num') ?>
+<div class="purchase-hdr-search">
 
-        <?= $form->field($model, 'id_warehouse_dest') ?>
-        
-        <?php $itemStatus = [ $model::STATUS_ISSUE => 'Issued', $model::STATUS_DRAFT_RECEIVE => 'Draft Receive', $model::STATUS_RECEIVE => 'Receive']; ?>
-        <?= $form->field($model, 'status')->dropDownList($itemStatus, ['prompt' => '--All Status--']) ?>
+	<?php $form = ActiveForm::begin([
+		'action' => ['index'],
+		'method' => 'get',
+	]); ?>
 
-        <?= $form->field($model, 'transfer_date') ?>
+		<?= $form->field($model, 'id_purchase') ?>
 
-        <?php // echo $form->field($model, 'id_status') ?>
+		<?= $form->field($model, 'purchase_num') ?>
 
-        <?php // echo $form->field($model, 'update_at') ?>
+		<?= $form->field($model, 'id_supplier') ?>
 
-        <?php // echo $form->field($model, 'update_by') ?>
+		<?= $form->field($model, 'id_warehouse') ?>
 
-        <?php // echo $form->field($model, 'create_by') ?>
+		<?= $form->field($model, 'purchaseDate') ?>
 
-        <?php // echo $form->field($model, 'create_at')  ?>
+		<?php // echo $form->field($model, 'id_status') ?>
 
+		<?php // echo $form->field($model, 'update_at') ?>
 
-    </div>
-    <div class="form-group box-footer">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
+		<?php // echo $form->field($model, 'update_by') ?>
 
-    <?php ActiveForm::end(); ?>
+		<?php // echo $form->field($model, 'create_by') ?>
+
+		<?php // echo $form->field($model, 'create_at') ?>
+
+		<div class="form-group">
+			<?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+			<?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+		</div>
+
+	<?php ActiveForm::end(); ?>
 
 </div>

@@ -13,19 +13,19 @@ $baseurl = $lte_asset->baseUrl;
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
+<?php $this->beginBody() ?>
+<body  class="bg-black">
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?= Html::encode($this->title) ?></title>
+        <title><h2><?= Html::encode($this->title) ?></h2></title>
         <?php $this->head() ?>
     </head>
-    <body class="bg-black">
-        <div class="form-box" id="login-box">
-            <div class="header"><h1><?= Html::encode($this->title) ?></h1></div>
-            <?= $content ?>            
-        </div>
+    <div class="form-box" id="login-box">
+        <div class="header"><?= Html::encode($this->title) ?></div>
+        <?= $content ?>
     </div>
-    </body>
-    <?php $this->endBody() ?>
+</body>
+<?php $this->endBody() ?>
 </html>
 <?php $this->endPage() ?>

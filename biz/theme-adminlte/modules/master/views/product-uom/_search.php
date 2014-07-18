@@ -5,33 +5,31 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var biz\inventory\models\searchs\TransferNotice $model
+ * @var biz\master\models\ProductUomSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="transfer-notice-search">
+<div class="product-uom-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id_transfer') ?>
+    <?= $form->field($model, 'id_product') ?>
 
-    <?= $form->field($model, 'notice_date') ?>
+    <?= $form->field($model, 'id_uom') ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?= $form->field($model, 'isi') ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?= $form->field($model, 'create_at') ?>
 
-    <?= $form->field($model, 'update_by') ?>
-
-    <?php // echo $form->field($model, 'create_by') ?>
-
-    <?php // echo $form->field($model, 'create_at') ?>
+    <?= $form->field($model, 'create_by') ?>
 
     <?php // echo $form->field($model, 'update_at') ?>
+
+    <?php // echo $form->field($model, 'update_by') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

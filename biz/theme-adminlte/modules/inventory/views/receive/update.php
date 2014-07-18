@@ -13,11 +13,12 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="purchase-hdr-update">
 
+    <h1><?= Html::encode($this->title) ?></h1>
+
     <?php
     echo $this->render('_form', [
         'model' => $model,
         'details' => $details,
-        'masters' => $masters,
     ]);
     ?>
 

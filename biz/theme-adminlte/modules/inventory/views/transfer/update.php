@@ -1,4 +1,7 @@
 <?php
+
+use yii\helpers\Html;
+
 /**
  * @var yii\web\View $this
  * @var biz\purchase\models\Purchase $model
@@ -12,8 +15,6 @@ $this->params['breadcrumbs'][] = 'Update';
     <?php
     echo $this->render('_form', [
         'model' => $model,
-        'details' => $details,
-        'masters' => $masters,
     ]);
     ?>
 

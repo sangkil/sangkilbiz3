@@ -2,17 +2,15 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\models\Transfer;
 use yii\widgets\Pjax;
-use yii\grid\DataColumn;
-use yii\widgets\LinkPager;
+use biz\app\components\Helper;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var biz\purchase\models\PurchaseSearch $searchModel
  */
-$this->title = 'Inventory Receive';
+$this->title = 'Receive';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchase-hdr-index">
@@ -103,6 +101,3 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
-<?php
-$js = "\$('#kecilin').click();";
-$this->registerJs($js);
