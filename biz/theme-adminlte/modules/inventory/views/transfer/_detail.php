@@ -4,7 +4,7 @@ use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use yii\helpers\Html;
 use biz\models\TransferDtl;
-use biz\tools\Helper;
+use biz\master\components\Helper;
 ?>
 <div class="box box-info">
     <div class="box-header" style="padding: 20px;">

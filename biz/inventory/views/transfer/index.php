@@ -37,18 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'transferDate',
             'nmStatus',
             [
-                'class' => 'biz\app\components\ActionColumn',
+                'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete} {issue}',
                 'buttons' => [
                     'issue' => function ($url, $model) {
-                    if (Helper::checkAccess('issue', $model)) {
-                        return Html::a('<span class="glyphicon glyphicon-open"></span>', $url, [
-                                'title' => Yii::t('yii', 'Issue'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to issue this item?'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                        ]);
-                    }
+                    return Html::a('<span class="glyphicon glyphicon-open"></span>', $url, [
+                            'title' => Yii::t('yii', 'Issue'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to issue this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                    ]);
                 }
                 ]
             ],

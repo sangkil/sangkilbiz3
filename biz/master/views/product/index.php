@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nm_product',
             'idCategory.nm_category',
             'idGroup.nm_group',
-            ['class' => 'biz\app\components\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]);
     ?>

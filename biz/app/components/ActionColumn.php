@@ -2,7 +2,6 @@
 
 namespace biz\app\components;
 
-use yii\helpers\Html;
 use Yii;
 
 /**
@@ -13,39 +12,20 @@ use Yii;
 class ActionColumn extends \yii\grid\ActionColumn
 {
 
-    protected function initDefaultButtons()
+    /**
+     * @inheritdoc
+     */
+    protected function renderDataCellContent($model, $key, $index)
     {
-        if (!isset($this->buttons['view'])) {
-            $this->buttons['view'] = function ($url, $model) {
-                if (Helper::checkAccess('view', $model)) {
-                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
-                            'title' => Yii::t('yii', 'View'),
-                            'data-pjax' => '0',
-                    ]);
-                }
-            };
-        }
-        if (!isset($this->buttons['update'])) {
-            $this->buttons['update'] = function ($url, $model) {
-                if (Helper::checkAccess('update', $model)) {
-                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                            'title' => Yii::t('yii', 'Update'),
-                            'data-pjax' => '0',
-                    ]);
-                }
-            };
-        }
-        if (!isset($this->buttons['delete'])) {
-            $this->buttons['delete'] = function ($url, $model) {
-                if (Helper::checkAccess('delete', $model)) {
-                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                            'title' => Yii::t('yii', 'Delete'),
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                    ]);
-                }
-            };
-        }
+        return preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
+            $name = $matches[1];
+            if (isset($this->buttons[$name]) && Helper::checkAccess($name, $model)) {
+                $url = $this->createUrl($name, $model, $key, $index);
+
+                return call_user_func($this->buttons[$name], $url, $model);
+            } else {
+                return '';
+            }
+        }, $this->template);
     }
 }

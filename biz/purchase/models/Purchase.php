@@ -134,7 +134,6 @@ class Purchase extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\autonumber\Behavior',
                 'digit' => 4,
-                'group' => 'purchase',
                 'attribute' => 'purchase_num',
                 'value' => 'PU' . date('y.?')
             ],

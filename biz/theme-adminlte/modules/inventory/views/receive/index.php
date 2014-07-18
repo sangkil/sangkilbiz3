@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'raw'
                         ],
                         [
-                            'class' => 'biz\app\components\ActionColumn',
+                            'class' => 'yii\grid\ActionColumn',
                             'template' => '{view} {update} {receive}',
                             'buttons' => [
                                 'update' => function ($url, $model) {

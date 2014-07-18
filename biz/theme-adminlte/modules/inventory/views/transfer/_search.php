@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     <div class="box-body">
         <?= $form->field($model, 'transfer_num') ?>
 
-        <?php $itemWhse = biz\tools\Helper::getWarehouseList() ?>
+        <?php $itemWhse = biz\master\components\Helper::getWarehouseList() ?>
         <?= $form->field($model, 'id_warehouse_dest')->dropDownList($itemWhse, ['prompt' => '--All Destination--']) ?>
 
 

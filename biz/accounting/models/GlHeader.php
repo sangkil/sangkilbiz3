@@ -114,7 +114,6 @@ class GlHeader extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\autonumber\Behavior',
                 'digit' => 4,
-                'group' => 'gl',
                 'attribute' => 'gl_num',
                 'value' => 'GL' . date('ymd.?')
             ],

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'idBranch.nm_branch',
              'description',
 
-            ['class' => 'biz\app\components\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
