@@ -1,7 +1,8 @@
 <?php
 
-use biz\inventory\models\TransferDtl;
-use biz\master\components\Helper as MasterHelper;
+use yii\helpers\Html;
+use biz\models\TransferDtl;
+use biz\master\components\Helper;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use biz\inventory\assets\ReceiveAsset;

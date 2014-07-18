@@ -15,6 +15,9 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
+# @app/rbac
+/app/rbac
+
 # composer itself is not needed
 composer.phar
 composer.lock

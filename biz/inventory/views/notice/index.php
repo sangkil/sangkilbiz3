@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'noticeDate',
             'nmStatus',
             [
-                'class' => 'biz\app\components\ActionColumn',
+                'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update}',
             ],
         ],

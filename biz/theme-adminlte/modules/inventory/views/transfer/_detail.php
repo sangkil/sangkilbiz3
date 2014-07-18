@@ -2,14 +2,9 @@
 
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
-use biz\inventory\models\TransferDtl;
-use mdm\relation\EditableList;
-use biz\inventory\assets\TransferAsset;
-use biz\app\assets\BizDataAsset;
-use biz\master\components\Helper as MasterHelper;
-
-/* @var $this yii\web\View */
-/* @var $model biz\inventory\models\Transfer */
+use yii\helpers\Html;
+use biz\models\TransferDtl;
+use biz\master\components\Helper;
 ?>
 <div class="box box-info">
     <div class="box-header" style="padding: 10px;">

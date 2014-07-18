@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'sales_date',
             'nmStatus',
             [
-                'class' => 'biz\app\components\ActionColumn',
+                'class' => 'yii\grid\ActionColumn',
             ],
         ],
     ]);

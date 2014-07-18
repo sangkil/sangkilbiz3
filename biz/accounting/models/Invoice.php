@@ -136,7 +136,6 @@ class Invoice extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\autonumber\Behavior',
                 'digit' => 4,
-                'group' => 'inv',
                 'attribute' => 'invoice_num',
                 'value' => date('ymd.?')
             ],

@@ -1,6 +1,6 @@
 <?php
 
-use biz\tools\Helper;
+use biz\master\components\Helper;
 use yii\widgets\ActiveForm;
 use biz\models\GlDetail;
 use yii\helpers\Html;

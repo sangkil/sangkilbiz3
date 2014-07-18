@@ -18,8 +18,8 @@ class AccessHandler extends \biz\app\base\AccessHandler {
             case Transfer::className():
                 switch ($action) {
                     case 'issue':
-                        if ($model->status < Transfer::STATUS_ISSUE) {
-                            return true;
+                        if ($model->status >= Transfer::STATUS_ISSUE) {
+                            return false;
                         }
                         break;
                     default:

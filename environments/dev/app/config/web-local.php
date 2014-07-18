@@ -4,7 +4,10 @@ $config = [
     ],
     'components' => [
         'view'=>[
-//            'theme' => 'biz\adminlte\Theme'
+            'theme' => 'biz\adminlte\Theme'
+        ],
+        'assetManager' => [
+            'forceCopy' => true,
         ]
     ]
 ];

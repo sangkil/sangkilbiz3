@@ -35,28 +35,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'purchaseDate',
             'nmStatus',
             [
-                'class' => 'biz\app\components\ActionColumn',
+                'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete} {receive} {posting}',
                 'buttons' => [
                     'receive' => function ($url, $model) {
-                    if (Helper::checkAccess('receive', $model)) {
-                        return Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
-                                'title' => Yii::t('yii', 'Receive'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to Receive this item?'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                        ]);
-                    }
+                    return Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
+                            'title' => Yii::t('yii', 'Receive'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to Receive this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                    ]);
                 },
                     'posting' => function ($url, $model) {
-                    if (Helper::checkAccess('posting', $model)) {
-                        return Html::a('<span class="glyphicon glyphicon-open"></span>', $url, [
-                                'title' => Yii::t('yii', 'Posting'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to Posting this item?'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                        ]);
-                    }
+                    return Html::a('<span class="glyphicon glyphicon-open"></span>', $url, [
+                            'title' => Yii::t('yii', 'Posting'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to Posting this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                    ]);
                 },
                 ]
             ],

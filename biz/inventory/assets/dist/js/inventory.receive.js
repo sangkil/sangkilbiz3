@@ -88,6 +88,11 @@ yii.receive = (function($) {
                 $(this).addClass('selected');
             });
 
+            yii.global.isChangeOrEnter($grid,':input[data-field]',function(){
+                var $row = $(this).closest('tr');
+                local.normalizeItem($row);
+            });
+            
             $grid.on('keydown', ':input[data-field]', function(e) {
                 if (e.keyCode == 13) {
                     var $inputs = $grid.find(':input:visible[data-field]:not([readonly])');
@@ -100,11 +105,6 @@ yii.receive = (function($) {
                         }
                     }
                 }
-            });
-
-            $grid.on('change', ':input[data-field]', function() {
-                var $row = $(this).closest('tr');
-                local.normalizeItem($row);
             });
 
             var clicked = false;

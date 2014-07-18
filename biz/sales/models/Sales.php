@@ -120,7 +120,6 @@ class Sales extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\autonumber\Behavior',
                 'digit' => 4,
-                'group' => 'sales',
                 'attribute' => 'sales_num',
                 'value' => 'SA.' . date('ymd.') . '?'
             ],

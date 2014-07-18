@@ -33,18 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'transferDate',
             'nmStatus',
             [
-                'class' => 'biz\app\components\ActionColumn',
+                'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {receive}',
                 'buttons' => [
                     'receive' => function ($url, $model) {
-                    if (Helper::checkAccess('receive', $model)) {
-                        return Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
-                                'title' => Yii::t('yii', 'Receive'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to receive this item?'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                        ]);
-                    }
+                    return Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
+                            'title' => Yii::t('yii', 'Receive'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to receive this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                    ]);
                 }
                 ]
             ],

@@ -87,7 +87,6 @@ class Payment extends \yii\db\ActiveRecord
             [
                 'class' => 'mdm\autonumber\Behavior',
                 'digit' => 4,
-                'group' => 'payment',
                 'attribute' => 'payment_num',
                 'value' => 'PY-'.date('ymd').'.?'
             ],

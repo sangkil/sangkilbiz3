@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\components\Helper;
+use biz\inventory\assets\TransferAsset;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\Transfer */

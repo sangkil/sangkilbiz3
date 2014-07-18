@@ -12,10 +12,8 @@ use yii\widgets\ActiveForm;
 
 <div class="purchase-hdr-search">
 
-	<?php $form = ActiveForm::begin([
-		'action' => ['index'],
-		'method' => 'get',
-	]); ?>
+        <?php $itemWhse = biz\master\components\Helper::getWarehouseList() ?>
+        <?= $form->field($model, 'id_warehouse_dest')->dropDownList($itemWhse, ['prompt' => '--All Destination--']) ?>
 
 		<?= $form->field($model, 'id_purchase') ?>
 

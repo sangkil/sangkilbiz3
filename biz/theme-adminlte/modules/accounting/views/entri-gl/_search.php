@@ -32,7 +32,7 @@ $form = ActiveForm::begin([
 
         <?= $form->field($model, 'description') ?>
 
-        <?php $itemBrnch = \biz\tools\Helper::getBranchList() ?>
+        <?php $itemBrnch = \biz\master\components\Helper::getBranchList() ?>
         <?= $form->field($model, 'id_branch')->dropDownList($itemBrnch, ['prompt' => '--All Status--']) ?>
 
         <?php

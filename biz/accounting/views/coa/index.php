@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'coa_type',
             'nmCoaType',
             'normal_balance',
-            ['class' => 'biz\app\components\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]);
     ?>
