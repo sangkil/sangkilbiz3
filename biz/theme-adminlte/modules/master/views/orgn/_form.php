@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="orgn-form" style="padding-left: 0px;">
     <?php $form = ActiveForm::begin(); ?>
-    <div class="box box-warning">
+    <div class="box box-primary">
         <div class="box-body">
             <?= $form->field($model, 'cd_orgn')->textInput(['maxlength' => 4, 'style' => 'width:120px;']) ?>
 

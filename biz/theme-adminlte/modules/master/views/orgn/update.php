@@ -12,10 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Orgns', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_orgn, 'url' => ['view', 'id' => $model->id_orgn]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="orgn-update">
-
-	<h1><?= Html::encode($this->title) ?></h1>
-
+<div class="orgn-update col-lg-8">
 	<?php echo $this->render('_form', [
 		'model' => $model,
 	]); ?>
