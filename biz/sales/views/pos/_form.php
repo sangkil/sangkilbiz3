@@ -2,15 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use biz\sales\components\PosAsset;
+use biz\sales\assets\PosAsset;
 use yii\helpers\Url;
-use biz\tools\BizDataAsset;
+use biz\app\assets\BizDataAsset;
 
-/**
- * @var yii\web\View $this
- * @var biz\sales\models\Sales $model
- * @var yii\widgets\ActiveForm $form
- */
+
+/* @var $this yii\web\View */
+/* @var $model biz\sales\models\Sales */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="sales-hdr-form">

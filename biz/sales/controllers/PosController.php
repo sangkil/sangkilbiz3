@@ -33,12 +33,12 @@ class PosController extends Controller
                     'select-drawer' => ['post']
                 ],
             ],
-            [
-                'class' => AppCache::className(),
-                'actions' => [
-//                    'create'
-                ]
-            ]
+//            [
+//                'class' => AppCache::className(),
+//                'actions' => [
+////                    'create'
+//                ]
+//            ]
         ];
     }
 
