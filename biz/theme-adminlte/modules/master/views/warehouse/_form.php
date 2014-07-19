@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use biz\models\Branch;
+use biz\master\models\searchs\Branch;
 
 /**
  * @var yii\web\View $this
