@@ -32,6 +32,7 @@
 		"mdmsoft/yii2-autonumber": "*",
 		"mdmsoft/yii2-logger": "*",
 		"mdmsoft/yii2-format-converter": "*",
+		"mdmsoft/yii2-client-tools": "*",
 		"mdmsoft/yii2-ar-relation": "*"
 	},
 	"require-dev": {
