@@ -10,7 +10,7 @@ $this->title = 'Create Branch';
 $this->params['breadcrumbs'][] = ['label' => 'Branches', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="branch-create col-lg-6">
+<div class="branch-create col-lg-8">
     <?php
     echo $this->render('_form', [
         'model' => $model,
