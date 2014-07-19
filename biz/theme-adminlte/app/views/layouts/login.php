@@ -18,7 +18,7 @@ $baseurl = $lte_asset->baseUrl;
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><h2><?= Html::encode($this->title) ?></h2></title>
+        <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
     <div class="form-box" id="login-box">
