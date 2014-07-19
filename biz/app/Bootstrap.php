@@ -13,6 +13,7 @@ use yii\db\Expression;
  */
 class Bootstrap extends \biz\app\base\Bootstrap
 {
+    protected $name = 'app';
 
     /**
      * 
@@ -63,5 +64,10 @@ class Bootstrap extends \biz\app\base\Bootstrap
             }
             Yii::$container->set($class, $definition);
         }
+    }
+
+    protected function autoDefineModule($app)
+    {
+        // nothing to do
     }
 }

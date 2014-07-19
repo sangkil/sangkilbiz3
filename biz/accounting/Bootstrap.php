@@ -14,18 +14,15 @@ use biz\accounting\components\AccessHandler;
  */
 class Bootstrap extends \biz\app\base\Bootstrap
 {
-
-    protected function autoDefineModule($app)
-    {
-        $app->setModule('accounting', Module::className());
-    }
+    protected $name = 'accounting';
 
     protected function initialize($app, $config)
     {
-//        Helper::registerAccessHandler(AccessHandler::className());
-        $app->attachBehaviors([
-            GlHook::className() => GlHook::className(),
-            InvoiceHook::className() => InvoiceHook::className()
-        ]);
+        if ($app instanceof \yii\web\Application) {
+            $app->attachBehaviors([
+                GlHook::className() => GlHook::className(),
+                InvoiceHook::className() => InvoiceHook::className()
+            ]);
+        }
     }
 }

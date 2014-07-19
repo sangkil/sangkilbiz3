@@ -2,7 +2,7 @@
 
 namespace biz\inventory;
 
-use biz\app\components\Helper;
+use biz\app\components\Helper as AppHelper;
 use biz\inventory\components\AccessHandler;
 
 /**
@@ -12,11 +12,7 @@ use biz\inventory\components\AccessHandler;
  */
 class Bootstrap extends \biz\app\base\Bootstrap
 {
-
-    protected function autoDefineModule($app)
-    {
-        $app->setModule('inventory', Module::className());
-    }
+    protected $name = 'inventory';
 
     /**
      * 
@@ -25,10 +21,12 @@ class Bootstrap extends \biz\app\base\Bootstrap
      */
     protected function initialize($app, $config)
     {
-        $app->attachBehaviors([
-            hooks\TransferNoticeHook::className() => hooks\TransferNoticeHook::className(),
-        ]);
-        Helper::registerAccessHandler(models\Transfer::className(), AccessHandler::className());
-        Helper::registerAccessHandler(models\TransferNotice::className(), AccessHandler::className());
+        if ($app instanceof \yii\web\Application) {
+            $app->attachBehaviors([
+                hooks\TransferNoticeHook::className() => hooks\TransferNoticeHook::className(),
+            ]);
+            AppHelper::registerAccessHandler(models\Transfer::className(), AccessHandler::className());
+            AppHelper::registerAccessHandler(models\TransferNotice::className(), AccessHandler::className());
+        }
     }
 }

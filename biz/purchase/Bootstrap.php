@@ -11,14 +11,17 @@ use biz\app\components\Helper;
  */
 class Bootstrap extends \biz\app\base\Bootstrap
 {
+    protected $name = 'purchase';
 
-    protected function autoDefineModule($app)
-    {
-        $app->setModule('purchase', Module::className());
-    }
-
+    /**
+     * 
+     * @param \yii\base\Application $app
+     * @param array $config
+     */
     protected function initialize($app, $config)
     {
-        Helper::registerAccessHandler(models\Purchase::className(),components\AccessHandler::className());
+        if ($app instanceof \yii\web\Application) {
+            Helper::registerAccessHandler(models\Purchase::className(), components\AccessHandler::className());
+        }
     }
 }

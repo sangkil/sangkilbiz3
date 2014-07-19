@@ -16,20 +16,24 @@ use yii\helpers\ArrayHelper;
  */
 class Bootstrap extends \biz\app\base\Bootstrap
 {
+    protected $name = 'master';
 
     /**
      * 
      * @param \yii\base\Application $app
+     * @param array $config
      */
     protected function initialize($app, $config)
     {
-        $app->attachBehaviors([
-            CogsHook::className() => CogsHook::className(),
-            PriceHook::className() => PriceHook::className(),
-            StockHook::className() => StockHook::className()
-        ]);
-        if (ArrayHelper::getValue($config, 'attach_user_behavior', true)) {
-            $this->attachUserProperty($app->getUser());
+        if ($app instanceof \yii\web\Application) {
+            $app->attachBehaviors([
+                CogsHook::className() => CogsHook::className(),
+                PriceHook::className() => PriceHook::className(),
+                StockHook::className() => StockHook::className()
+            ]);
+            if (ArrayHelper::getValue($config, 'attach_user_behavior', true)) {
+                $this->attachUserProperty($app->getUser());
+            }
         }
     }
 
@@ -40,14 +44,5 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected function attachUserProperty($user)
     {
         $user->attachBehavior(UserProperties::className(), UserProperties::className());
-    }
-
-    /**
-     * 
-     * @param \yii\web\Application $app
-     */
-    protected function autoDefineModule($app)
-    {
-        $app->setModule('master', Module::className());
     }
 }

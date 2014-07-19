@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
  */
 class Bootstrap implements \yii\base\BootstrapInterface
 {
+    protected $name;
 
     /**
      * 
@@ -18,11 +19,11 @@ class Bootstrap implements \yii\base\BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if ($app instanceof \yii\web\Application) {
-            $config = ArrayHelper::getValue($app->params, 'sangkil.biz', []);
-
+        if ($this->name !== null) {
+            $configName = 'sangkil.biz.' . $this->name;
+            $config = ArrayHelper::getValue($app->params, $configName, []);
             $this->initialize($app, $config);
-            if (ArrayHelper::getValue($config, 'auto_module', true)) {
+            if ($app instanceof \yii\web\Application && ArrayHelper::getValue($config, 'auto_module', true)) {
                 $this->autoDefineModule($app);
             }
         }
@@ -39,6 +40,9 @@ class Bootstrap implements \yii\base\BootstrapInterface
      */
     protected function autoDefineModule($app)
     {
-        
+        if ($this->name !== null) {
+            $ref = new \ReflectionClass($this);
+            $app->setModule($this->name, $ref->getNamespaceName() . '\Module');
+        }
     }
 }
