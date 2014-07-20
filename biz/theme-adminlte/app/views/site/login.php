@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $model app\models\LoginForm */
 
+$this->context->layout = 'login';
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
