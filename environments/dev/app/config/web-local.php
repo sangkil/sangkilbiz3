@@ -4,10 +4,16 @@ $config = [
     ],
     'components' => [
         'view'=>[
-            'theme' => 'biz\adminlte\Theme'
+//            'theme' => 'biz\adminlte\Theme'
+        ],
+        'authManager' => [
+            'class' => 'mdm\admin\components\DbManager'
         ],
         'assetManager' => [
             'forceCopy' => true,
+        ],
+        'request' => [
+            'cookieValidationKey' => md5(__FILE__),
         ]
     ]
 ];

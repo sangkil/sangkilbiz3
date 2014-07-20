@@ -7,7 +7,10 @@ $config = [
             'theme' => 'biz\adminlte\Theme'
         ],
         'authManager' => [
-            'class' => 'yii\rbac\DbManager'
+            'class' => 'mdm\admin\components\DbManager'
+        ],
+        'request' => [
+            'cookieValidationKey' => md5(__FILE__),
         ]
     ]
 ];
