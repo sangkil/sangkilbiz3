@@ -41,7 +41,7 @@ use biz\adminlte\MyTabs;
 
             <?= $form->field($model, 'id_group')->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'id_group', 'nm_group'), ['style' => 'width:200px;']); ?>
 
-        </div>   
+        </div>
         <div class="box-footer">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>

@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     $models[] = $model;
     echo $form->errorSummary($models)
     ?>
-    <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?> 
+    <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?>
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">

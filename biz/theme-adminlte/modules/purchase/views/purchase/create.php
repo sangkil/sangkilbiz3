@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @var yii\web\View $this
  * @var biz\models\Purchase $model

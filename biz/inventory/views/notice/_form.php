@@ -21,7 +21,7 @@ $form = ActiveForm::begin([
     ])
 ?>
 <?php
-$renderField = function ($model, $key) use($form) {
+$renderField = function ($model, $key) use ($form) {
     return $form->field($model, "[$key]qty_approve")->textInput(['style' => 'width:80px;']);
 }
 ?>

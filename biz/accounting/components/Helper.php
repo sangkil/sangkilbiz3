@@ -20,9 +20,9 @@ class Helper
 {
 
     /**
-     * 
-     * @param string $name Entri Sheet name
-     * @param array $values 
+     *
+     * @param  string        $name   Entri Sheet name
+     * @param  array         $values
      * @return array
      * @throws UserException
      */
@@ -50,6 +50,7 @@ class Helper
         } else {
             throw new UserException("Entrysheet $name not found");
         }
+
         return $gl_dtls;
     }
 
@@ -73,6 +74,7 @@ class Helper
             }
             static::getCoaChild($result[$row['nm_account']], $row['id_coa'], $addSelf ? $tab : '', $tab);
         }
+
         return $result;
     }
 
@@ -97,6 +99,7 @@ class Helper
             500000 => 'D',
             600000 => 'D'
         ];
+
         return $maps[(int) $coa_type];
     }
 
@@ -158,10 +161,10 @@ class Helper
          * Edited By Mujib Masyhudi
          * on 2014-07-07
          */
-        $active_periode = self::getCurrentIdAccPeriode(); 
+        $active_periode = self::getCurrentIdAccPeriode();
         $gl->id_periode = $active_periode['id_periode'];
         $gl->status = 0;
-        
+
         if (!$gl->save()) {
             throw new UserException(implode("\n", $gl->getFirstErrors()));
         }
@@ -220,6 +223,7 @@ class Helper
             }
             $result['coas'] = $coas;
         }
+
         return $result;
     }
 }

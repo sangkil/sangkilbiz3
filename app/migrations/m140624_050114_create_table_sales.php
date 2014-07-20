@@ -29,7 +29,6 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
-
         $this->createTable('{{%sales}}', [
             'id_sales' => Schema::TYPE_PK,
             'sales_num' => Schema::TYPE_STRING . '(16) NOT NULL',

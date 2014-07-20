@@ -15,28 +15,28 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="product-supplier-index">
     <div class="col-lg-12" style="text-align: right; padding-bottom: 10px;">
         <?= Html::a('', ['create'], ['class' => 'btn btn-warning btn-sm fa fa-plus', 'title' => 'New Supplier']) ?>
-    </div>  
+    </div>
     <div class=" col-lg-12">
         <div class="box box-info">
             <div class="box-body no-padding">
                 <?php echo GridView::widget([
-		'dataProvider' => $dataProvider,
-		'tableOptions' => ['class' => 'table table-striped'],
+        'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-striped'],
         'layout' => '{items}{pager}',
         //'filterModel' => $searchModel,
-		'columns' => [
-			['class' => 'yii\grid\SerialColumn'],
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-			'id_product',
-			'id_supplier',
-			'create_at',
-			'create_by',
-			'update_at',
-			// 'update_by',
+            'id_product',
+            'id_supplier',
+            'create_at',
+            'create_by',
+            'update_at',
+            // 'update_by',
 
-			['class' => 'biz\app\components\ActionColumn'],
-		],
-	]); ?>
+            ['class' => 'biz\app\components\ActionColumn'],
+        ],
+    ]); ?>
             </div>
         </div>
     </div>

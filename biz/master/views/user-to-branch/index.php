@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'idBranch.nm_branch',
             'idUser.username',
-            'idUser.email',            
+            'idUser.email',
             'create_at',
             'create_by',
             //'update_at',

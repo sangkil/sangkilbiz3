@@ -12,8 +12,6 @@ use \Exception;
 use yii\base\UserException;
 use biz\app\Hooks;
 use biz\base\Event;
-use biz\master\models\PriceCategory;
-use yii\helpers\ArrayHelper;
 use biz\master\components\Helper;
 use biz\app\components\Helper as AppHelper;
 
@@ -53,7 +51,7 @@ class StandartController extends Controller
 
     /**
      * Displays a single Sales model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -84,6 +82,7 @@ class StandartController extends Controller
             $result = $model->saveRelation('salesDtls', Yii::$app->request->post());
             if ($result === 1) {
                 $transaction->commit();
+
                 return $this->redirect(['view', 'id' => $model->id_sales]);
             } else {
                 $transaction->rollBack();
@@ -93,6 +92,7 @@ class StandartController extends Controller
             $model->addError('', $exc->getMessage());
         }
         $model->setIsNewRecord(true);
+
         return $this->render('create', [
                 'model' => $model,
                 'details' => $model->salesDtls,
@@ -123,13 +123,14 @@ class StandartController extends Controller
             $transaction->rollBack();
             throw new UserException($exc->getMessage());
         }
+
         return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
      * Updates an existing Sales model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -148,6 +149,7 @@ class StandartController extends Controller
             $result = $model->saveRelation('salesDtls', Yii::$app->request->post());
             if ($result === 1) {
                 $transaction->commit();
+
                 return $this->redirect(['view', 'id' => $model->id_sales]);
             } else {
                 $transaction->rollBack();
@@ -167,7 +169,7 @@ class StandartController extends Controller
     /**
      * Deletes an existing Sales model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -177,14 +179,15 @@ class StandartController extends Controller
             throw new \yii\web\ForbiddenHttpException();
         }
         $model->delete();
+
         return $this->redirect(['index']);
     }
 
     /**
      * Finds the Sales model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Sales the loaded model
+     * @param  integer               $id
+     * @return Sales                 the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

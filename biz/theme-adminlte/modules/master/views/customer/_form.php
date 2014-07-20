@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\models\Customer;
-use biz\behaviors\StatusBehavior;
 
 /**
  * @var yii\web\View $this
@@ -37,8 +36,6 @@ use biz\behaviors\StatusBehavior;
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
-
-
 
     <?php ActiveForm::end(); ?>
 

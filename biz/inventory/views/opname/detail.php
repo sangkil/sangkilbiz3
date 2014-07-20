@@ -27,5 +27,5 @@ $this->params['breadcrumbs'][] = 'Detail';
 //            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    
+
 </div>

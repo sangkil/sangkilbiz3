@@ -48,7 +48,7 @@ class ProductController extends Controller
 
     /**
      * Displays a single Product model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -74,6 +74,7 @@ class ProductController extends Controller
                 $active = 'barcode';
             }
         }
+
         return $this->render('view', [
                 'model' => $model,
                 'active' => $active
@@ -89,7 +90,7 @@ class ProductController extends Controller
     {
         $model = new Product;
         $model->status = Product::STATUS_ACTIVE;
-        
+
         $dPost = Yii::$app->request->post();
         if ($model->load($dPost) && $model->save()) {
 //            $pUom = new ProductUom;
@@ -108,7 +109,7 @@ class ProductController extends Controller
     /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -137,7 +138,7 @@ class ProductController extends Controller
     /**
      * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -145,6 +146,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
         try {
             $model->delete();
+
             return $this->redirect(['index']);
         } catch (\Exception $ex) {
             throw new \yii\base\UserException($model->nm_product . ' telah terpakai..');
@@ -159,6 +161,7 @@ class ProductController extends Controller
         ]);
         $puom->delete();
         Yii::$app->session->setFlash('_flash_action', 'uom');
+
         return $this->redirect(['view', 'id' => $id_product]);
     }
 
@@ -170,14 +173,15 @@ class ProductController extends Controller
         ]);
         $child->delete();
         Yii::$app->session->setFlash('_flash_action', 'barcode');
+
         return $this->redirect(['view', 'id' => $id_product]);
     }
 
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Product the loaded model
+     * @param  integer               $id
+     * @return Product               the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -200,15 +204,17 @@ class ProductController extends Controller
         $dGet = filter_input_array(INPUT_GET);
         $dCmd->bindValue(':dCode', '%' . $dGet['term'] . '%');
         $data = $dCmd->queryAll();
+
         return json_encode($data);
     }
-    
+
     /**
      * Creates a new Product model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreateBarcode() {
+    public function actionCreateBarcode()
+    {
         return $this->render('create-barcode');
     }
 }

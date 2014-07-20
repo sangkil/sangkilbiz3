@@ -56,12 +56,12 @@ use biz\master\components\Helper;
                 ?>
             </div>
         </div>
-    </div>    
+    </div>
     <?=
     $this->render('_detail', [
         'model' => $model,
         'details' => $details
     ])
-    ?> 
+    ?>
     <?php ActiveForm::end(); ?>
 </div>

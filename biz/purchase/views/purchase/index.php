@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use biz\app\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -62,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php yii\widgets\Pjax::end(); ?>
 </div>
 <?php
-$js = "\$(document).on('pjax:error', function(e,xhr) {
+$js = "\$(document).on('pjax:error', function (e,xhr) {
   alert(xhr.responseText);
 })";
 $this->registerJs($js);

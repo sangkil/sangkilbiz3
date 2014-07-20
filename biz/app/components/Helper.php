@@ -14,12 +14,12 @@ class Helper
 {
     /**
      *
-     * @var AccessHandler[] 
+     * @var AccessHandler[]
      */
     private static $_accessHendler = [];
 
     /**
-     * 
+     *
      * @param string|AccessHandler $handler
      */
     public static function registerAccessHandler($class, $handler)
@@ -35,11 +35,12 @@ class Helper
         $class = get_class($model);
         if (isset(static::$_accessHendler[$class])) {
             foreach (static::$_accessHendler[$class] as $handler) {
-                if(!$handler->check(Yii::$app->getUser(), $action, $model)){
+                if (!$handler->check(Yii::$app->getUser(), $action, $model)) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 }

@@ -8,7 +8,6 @@ use biz\accounting\models\searchs\GlEntriSheet;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\accounting\models\EntriSheet;
 use biz\accounting\models\EntriSheetDtl;
 use biz\accounting\models\GlDetail;
 use yii\base\Model;
@@ -48,7 +47,7 @@ class GlEntriSheetController extends Controller
 
     /**
      * Displays a single GlHeader model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -92,6 +91,7 @@ class GlEntriSheetController extends Controller
                         $transaction->rollBack();
                     } else {
                         $transaction->commit();
+
                         return $this->redirect(['view', 'id' => $model->id_gl]);
                     }
                 } else {
@@ -102,6 +102,7 @@ class GlEntriSheetController extends Controller
                 $model->addError('', $exc->getMessage());
             }
         }
+
         return $this->render('create', [
                 'model' => $model,
                 'es' => $es,
@@ -111,7 +112,7 @@ class GlEntriSheetController extends Controller
     /**
      * Updates an existing GlHeader model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -130,7 +131,7 @@ class GlEntriSheetController extends Controller
     /**
      * Deletes an existing GlHeader model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -143,8 +144,8 @@ class GlEntriSheetController extends Controller
     /**
      * Finds the GlHeader model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return GlHeader the loaded model
+     * @param  integer               $id
+     * @return GlHeader              the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

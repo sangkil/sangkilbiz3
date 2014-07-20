@@ -6,7 +6,6 @@ use biz\sales\assets\PosAsset;
 use yii\helpers\Url;
 use biz\app\assets\BizDataAsset;
 
-
 /* @var $this yii\web\View */
 /* @var $model biz\sales\models\Sales */
 /* @var $form yii\widgets\ActiveForm */
@@ -16,7 +15,7 @@ use biz\app\assets\BizDataAsset;
     <?php $form = ActiveForm::begin(['options' => ['id' => 'pos-form']]); ?>
     <div class="col-lg-4">
         <div class="box box-danger">
-            <div class="box-header" style="font-weight: bold;">                
+            <div class="box-header" style="font-weight: bold;">
                 <h3 class="box-title">Active Session</h3>
                 <div class="pull-right box-tools">
                     <span data-toggle="tooltip" data-widget="collapse" data-original-title="Collapse">
@@ -72,7 +71,7 @@ use biz\app\assets\BizDataAsset;
                     ?>
                 </div>
             </div>
-            <div class="panel-footer"> 
+            <div class="panel-footer">
                 <h3>
                     CashBack :<span id="cashback" style="text-align: right;">Rp 0.00</span>
                 </h3>
@@ -81,8 +80,8 @@ use biz\app\assets\BizDataAsset;
     </div>
 
     <div class="col-lg-8">
-        <?= $this->render('_detail'); ?>        
-        <div>                
+        <?= $this->render('_detail'); ?>
+        <div>
             <?php Html::a('Save', '', ['class' => 'btn btn-primary', 'id' => 'btn-save']); ?>&nbsp;
             <?php Html::a('New Session', '', ['class' => 'btn btn-success', 'id' => 'new-session']); ?>
         </div>

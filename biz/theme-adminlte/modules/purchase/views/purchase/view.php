@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'nmStatus',
                 ],
             ]);
-            ?>  
-        </div>        
+            ?>
+        </div>
         <div class="box-footer" style="text-align: right;">
             <?php
             if ($model->status == Purchase::STATUS_DRAFT) {
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             ?>
         </div>
-    </div>    
+    </div>
 </div>
 <div class="purchase-hdr-view col-lg-9">
     <div class="box box-info">
@@ -71,4 +71,3 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
-

@@ -115,6 +115,7 @@ class SalesDtl extends \yii\db\ActiveRecord
     public function getCogsValue()
     {
         $cogs = Cogs::find()->select('cogs')->where(['id_product' => $this->id_product])->scalar();
+
         return $cogs === false ? 0 : $cogs;
     }
 

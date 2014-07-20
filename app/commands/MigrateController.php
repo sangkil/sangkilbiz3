@@ -14,13 +14,13 @@ class MigrateController extends \yii\console\controllers\MigrateController
 {
     /**
      *
-     * @var array 
+     * @var array
      */
     public $migrationLookup = [];
 
     /**
      *
-     * @var array 
+     * @var array
      */
     private $_migrationPaths;
 
@@ -51,6 +51,7 @@ class MigrateController extends \yii\console\controllers\MigrateController
 
             ksort($this->_migrationPaths);
         }
+
         return $this->_migrationPaths;
     }
 

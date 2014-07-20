@@ -15,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-
 <div class="col-lg-3" style="padding-left: 0px;">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -50,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             ?>
         </div>
-    </div>    
+    </div>
 </div>
 <div class="purchase-hdr-view col-lg-9">
     <?php
@@ -73,4 +72,3 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 </div>
-

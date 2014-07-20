@@ -27,6 +27,7 @@ class UserProperties extends \biz\app\base\PropertiBehavior
             $properties['branch'] = \Yii::$app->getSession()->get('_branch_active');
             $properties['branch'] = 1;
         }
+
         return $properties;
     }
 }

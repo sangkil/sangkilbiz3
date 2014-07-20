@@ -1,8 +1,6 @@
 <?php
 
-use yii\helpers\Html;
 use biz\models\TransferDtl;
-use biz\master\components\Helper;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use biz\inventory\assets\ReceiveAsset;
@@ -13,7 +11,7 @@ use mdm\relation\EditableList;
  * @var TransferDtl[] $model
  */
 ?>
-<div class="box box-info">  
+<div class="box box-info">
     <div class="box-body no-padding">
         <table class="table table-striped">
             <tfoot>

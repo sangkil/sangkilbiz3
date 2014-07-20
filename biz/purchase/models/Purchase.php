@@ -21,14 +21,14 @@ use biz\master\models\Branch;
  * @property integer $create_by
  * @property string $update_at
  * @property integer $update_by
- * 
+ *
  * @property string $nmStatus
  * @property string $nmSupplier
  * @property string $nmBranch
  * @property string $purchaseDate
  *
  * @property PurchaseDtl[] $purchaseDtls
- * 
+ *
  * @method array saveRelation(string $relation, array $data, array $options) Description
  */
 class Purchase extends \yii\db\ActiveRecord
@@ -86,7 +86,7 @@ class Purchase extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -94,7 +94,7 @@ class Purchase extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Supplier::className(), ['id_supplier' => 'id_supplier']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -102,27 +102,27 @@ class Purchase extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
     }
-    
+
     public function getNmSupplier()
     {
         $supp = Supplier::findOne(['id_supplier'=>  $this->id_supplier]);
-        if($supp){
+        if ($supp) {
             return $supp->nm_supplier;
-        }  else {
+        } else {
             return null;
         }
     }
-    
+
     public function setNmSupplier($value)
     {
         $supp = Supplier::findOne(['nm_supplier'=>$value]);
-        if($supp){
+        if ($supp) {
             $this->id_supplier = $supp->id_supplier;
-        }  else {
+        } else {
             $this->id_supplier = null;
         }
     }
-    
+
     /**
      * @inheritdoc
      */

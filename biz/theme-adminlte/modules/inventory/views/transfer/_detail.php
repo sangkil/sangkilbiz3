@@ -2,9 +2,7 @@
 
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
-use yii\helpers\Html;
 use biz\models\TransferDtl;
-use biz\master\components\Helper;
 ?>
 <div class="box box-info">
     <div class="box-header" style="padding: 10px;">
@@ -23,7 +21,7 @@ use biz\master\components\Helper;
         ?>
     </div>
     <div class="box-body no-padding">
-        <table class="table table-striped">            
+        <table class="table table-striped">
             <?=
             EditableList::widget([
                 'id' => 'detail-grid',

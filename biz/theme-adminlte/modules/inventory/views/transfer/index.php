@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="purchase-hdr-index">
     <div class="col-lg-12" style="text-align: right; padding-bottom: 10px;">
         <?= Html::a('', ['create'], ['class' => 'btn btn-warning btn-sm fa fa-plus', 'title' => 'New Supplier']) ?>
-    </div> 
+    </div>
     <div class=" col-lg-12">
         <?php Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
         <div class="box box-info">
@@ -60,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             $warnaStatus = 'label-primary';
                                             break;
                                     }
+
                                     return "<span class='label $warnaStatus'>{$model->nmStatus}</span>";
                             },
                             'format' => 'raw'

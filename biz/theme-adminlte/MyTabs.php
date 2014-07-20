@@ -12,8 +12,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap\Tabs;
 
-class MyTabs extends Tabs {
-
+class MyTabs extends Tabs
+{
     /**
      *
      * @var type array list of ul option
@@ -22,10 +22,11 @@ class MyTabs extends Tabs {
 
     /**
      * Renders tab items as specified on [[items]].
-     * @return string the rendering result.
+     * @return string                  the rendering result.
      * @throws InvalidConfigException.
      */
-    protected function renderItems() {
+    protected function renderItems()
+    {
         $headers = [];
         $panes = [];
 

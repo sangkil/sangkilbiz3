@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\components\Helper;
-use biz\inventory\assets\TransferAsset;
 use yii\web\View;
 
 /* @var $this yii\web\View */
@@ -46,7 +45,7 @@ use yii\web\View;
         </div>
     </div>
     <div class="col-lg-8">
-        <?= $this->render('_detail', ['model' => $model]) ?> 
-    </div>    
+        <?= $this->render('_detail', ['model' => $model]) ?>
+    </div>
     <?php ActiveForm::end(); ?>
 </div>

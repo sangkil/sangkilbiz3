@@ -22,7 +22,7 @@ use Yii;
 class Payment extends \yii\db\ActiveRecord
 {
     public $totalPaid;
-    
+
     /**
      * @inheritdoc
      */

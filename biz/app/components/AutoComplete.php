@@ -14,14 +14,14 @@ class AutoComplete extends \yii\widgets\InputWidget
         \yii\jui\AutoComplete::widget();
         parent::run();
     }
-    
+
     public function renderWidget()
     {
-        if($this->hasModel()){
+        if ($this->hasModel()) {
             $result = Html::activeHiddenInput($this->model, $this->attribute);
-        }  else {
+        } else {
             $result = Html::hiddenInput($this->name, $this->value);
         }
-        
+
     }
 }

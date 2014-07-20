@@ -27,10 +27,10 @@ use yii\helpers\Html;
                             ],
                 ]);
                 ?>
-                <?= $form->field($model, 'id_branch')->dropDownList(Helper::getBranchList()); ?> 
+                <?= $form->field($model, 'id_branch')->dropDownList(Helper::getBranchList()); ?>
             </div>
             <div class="col-lg-7">
-                <?= $form->field($model, 'id_periode')->textInput(['style' => 'width:30%']) ?> 
+                <?= $form->field($model, 'id_periode')->textInput(['style' => 'width:30%']) ?>
                 <?= $form->field($model, 'description')->textarea() ?>
             </div>
         </div>
@@ -46,12 +46,13 @@ use yii\helpers\Html;
                 <?php
 
                 /**
-                 * 
+                 *
                  * @param biz\models\GlDetail $model
                  * @param integer $index
                  * @return string
                  */
-                function renderRow($model, $index) {
+                function renderRow($model, $index)
+                {
                     ob_start();
                     ob_implicit_flush(false);
                     ?>
@@ -68,6 +69,7 @@ use yii\helpers\Html;
                         <td class="action"><a class="fa fa-minus-square-o" href="#"></a></td>
                     </tr>
                     <?php
+
                     return trim(preg_replace('/>\s+</', '><', ob_get_clean()));
                 }
                 ?>

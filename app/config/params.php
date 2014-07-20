@@ -2,7 +2,7 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    // Use for RecordLogger 
+    // Use for RecordLogger
     'mdm.logger' => [
         'storage' => [
             'class' => 'mdm\logger\storages\MongoStorage',
@@ -19,7 +19,7 @@ return [
     'sangkil.biz.inventory' => [
     ],
     'sangkil.biz.sales' => [
-        'attach_client_behavior' => true, // 
+        'attach_client_behavior' => true, //
     ],
     'sangkil.biz.accounting' => [
     ],

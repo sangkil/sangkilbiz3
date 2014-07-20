@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use biz\app\components\Helper;
 
 /**
  * @var yii\web\View $this
@@ -20,7 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="pull-right">
         <?= Html::a('', ['create'], ['class' => 'btn btn-default glyphicon glyphicon-plus', 'title' => 'Create New', 'style' => 'width:100%;']) ?>
     </div>
-
 
     <?php Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
     <?php

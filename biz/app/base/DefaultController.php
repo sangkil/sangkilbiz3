@@ -23,13 +23,14 @@ class DefaultController extends \yii\web\Controller
         }
         $result = [];
         foreach ($module->controllerMap as $id => $value) {
-            if($id==='default'){
+            if ($id==='default') {
                 continue;
             }
             $class = is_string($value) ? $value : $value['class'];
             $result[$id] = $this->getInfo($class);
         }
         $this->getControllers($module->controllerNamespace.'\\', '', $result);
+
         return $this->render($this->viewFile, [
                 'controllers' => $result,
                 'prefixRoute' => $prefixR,
@@ -66,7 +67,7 @@ class DefaultController extends \yii\web\Controller
         if (preg_match('/^\s*@\w+/m', $comment, $matches, PREG_OFFSET_CAPTURE)) {
             $comment = trim(substr($comment, 0, $matches[0][1]));
         }
-                
+
         return $comment;
     }
 }

@@ -2,10 +2,8 @@
 
 namespace biz\accounting;
 
-use biz\app\components\Helper;
 use biz\accounting\hooks\GlHook;
 use biz\accounting\hooks\InvoiceHook;
-use biz\accounting\components\AccessHandler;
 
 /**
  * Description of Bootstrap

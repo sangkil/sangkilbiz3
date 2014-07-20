@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\User;
 
 /**
  * User model
@@ -21,27 +20,30 @@ use app\models\User;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
- * 
+ *
  */
 
 /**
  * UserSearh represents the model behind the search form about `app\models\User`.
  */
-class UserSearch extends \app\models\User {
-
-    public function rules() {
+class UserSearch extends \app\models\User
+{
+    public function rules()
+    {
         return [
             [['id'], 'integer'],
             [['username', 'password_hash', 'email', 'auth_key', 'role', 'status', 'created_at', 'updated_at', 'password'], 'safe'],
         ];
     }
 
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function search($params) {
+    public function search($params)
+    {
         $query = User::find();
 
         $dataProvider = new ActiveDataProvider([

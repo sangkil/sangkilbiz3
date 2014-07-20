@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /**
  * @var yii\web\View $this
  * @var biz\models\Branch $model
@@ -14,7 +12,7 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="branch-update col-lg-8">
 	<?php echo $this->render('_form', [
-		'model' => $model,
-	]); ?>
+        'model' => $model,
+    ]); ?>
 
 </div>

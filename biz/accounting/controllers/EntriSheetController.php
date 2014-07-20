@@ -9,7 +9,6 @@ use biz\accounting\models\EntriSheetDtl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use biz\accounting\models\Coa;
 
 /**
  * EntriSheetController implements the CRUD actions for EntriSheet model.
@@ -46,7 +45,7 @@ class EntriSheetController extends Controller
 
     /**
      * Displays a single EntriSheet model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -78,6 +77,7 @@ class EntriSheetController extends Controller
                     $transaction->rollBack();
                 } else {
                     $transaction->commit();
+
                     return $this->redirect(['view', 'id' => $model->id_esheet]);
                 }
             } else {
@@ -88,6 +88,7 @@ class EntriSheetController extends Controller
             $model->addError('', $exc->getMessage());
         }
         $model->setIsNewRecord(true);
+
         return $this->render('create', [
                 'model' => $model,
         ]);
@@ -96,7 +97,7 @@ class EntriSheetController extends Controller
     /**
      * Updates an existing EntriSheet model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -116,6 +117,7 @@ class EntriSheetController extends Controller
                     $transaction->rollBack();
                 } else {
                     $transaction->commit();
+
                     return $this->redirect(['view', 'id' => $model->id_esheet]);
                 }
             } else {
@@ -125,6 +127,7 @@ class EntriSheetController extends Controller
             $transaction->rollBack();
             $model->addError('', $exc->getMessage());
         }
+
         return $this->render('update', [
                 'model' => $model,
         ]);
@@ -133,7 +136,7 @@ class EntriSheetController extends Controller
     /**
      * Deletes an existing EntriSheet model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -148,14 +151,15 @@ class EntriSheetController extends Controller
             $transaction->rollBack();
             throw $exc;
         }
+
         return $this->redirect(['index']);
     }
 
     /**
      * Finds the EntriSheet model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return EntriSheet the loaded model
+     * @param  integer               $id
+     * @return EntriSheet            the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

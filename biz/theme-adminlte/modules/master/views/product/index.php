@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\LinkPager;
 
@@ -14,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
     <div class="col-lg-4" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="col-lg-12">
         <?php //Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
@@ -44,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
                 ?>
             </div>
-        </div>        
+        </div>
         <?php
         // display pagination
         echo LinkPager::widget([

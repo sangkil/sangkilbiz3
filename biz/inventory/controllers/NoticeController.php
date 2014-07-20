@@ -49,7 +49,7 @@ class NoticeController extends Controller
 
     /**
      * Displays a single TransferNotice model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -62,7 +62,7 @@ class NoticeController extends Controller
     /**
      * Updates an existing TransferNotice model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -77,6 +77,7 @@ class NoticeController extends Controller
             $result = $model->saveRelation('transferNoticeDtls', Yii::$app->request->post());
             if ($result === 1) {
                 $transaction->commit();
+
                 return $this->redirect(['view', 'id' => $model->id_transfer]);
             } else {
                 $transaction->rollBack();
@@ -114,13 +115,14 @@ class NoticeController extends Controller
             $transaction->rollBack();
             throw new UserException($exc->getMessage());
         }
+
         return $this->redirect(['index']);
     }
 
     /**
      * Deletes an existing TransferNotice model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -131,14 +133,15 @@ class NoticeController extends Controller
             throw new \yii\web\ForbiddenHttpException();
         }
         $model->delete();
+
         return $this->redirect(['index']);
     }
 
     /**
      * Finds the TransferNotice model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return TransferNotice the loaded model
+     * @param  integer               $id
+     * @return TransferNotice        the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

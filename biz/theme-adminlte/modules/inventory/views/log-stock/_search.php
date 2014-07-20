@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
                 'method' => 'get',
     ]);
     ?>
-    
+
     <div class="box-body">
         <?php $itemBranch = biz\master\components\Helper::getWarehouseList(); ?>
         <?= $form->field($model, 'id_warehouse')->dropDownList($itemBranch, ['prompt' => '--All Warehouse--']) ?>

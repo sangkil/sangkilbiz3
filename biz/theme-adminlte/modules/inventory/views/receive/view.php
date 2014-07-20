@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             ?>
         </div>
-    </div>    
+    </div>
 </div>
 <div class="purchase-hdr-view col-lg-8">
     <div class="box box-info">
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'idProduct.nm_product',
                     'transfer_qty_send',
                     'transfer_qty_receive',
-                    ['header' => 'Selisih', 'value' => function($model) {
+                    ['header' => 'Selisih', 'value' => function ($model) {
                     return $model->transfer_qty_receive - $model->transfer_qty_send;
                 }],
                     'idUom.nm_uom',
@@ -72,9 +72,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
         </div>
-    </div>    
+    </div>
 </div>
-
-
-
-

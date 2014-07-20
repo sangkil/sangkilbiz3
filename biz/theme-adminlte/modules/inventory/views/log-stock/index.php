@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transfer-notice-index">
     <div class="col-lg-4" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="col-lg-12">
         <?php Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>

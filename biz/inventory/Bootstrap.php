@@ -15,9 +15,9 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected $name = 'inventory';
 
     /**
-     * 
+     *
      * @param \yii\web\Application $app
-     * @param array $config
+     * @param array                $config
      */
     protected function initialize($app, $config)
     {

@@ -54,7 +54,7 @@ use yii\grid\GridView;
                 </tr>
             </tbody>
         </table>
-    </div>           
+    </div>
     <?php
     echo GridView::widget([
         'id' => 'inv_grid',
@@ -121,10 +121,11 @@ use yii\grid\GridView;
 <?php
 $js = <<<JS
 yii.numeric.format(\$('#payment-form'),'input.payment_value');
-    
-function hitungTotal(){
+
+function hitungTotal()
+{
     var total=0;
-    \$('#payment-form input.payment_value').each(function(){
+    \$('#payment-form input.payment_value').each(function () {
         total += numeral().unformat(this.value);
     });
     \$('#total-paid').val(numeral(total).format('0,0'));

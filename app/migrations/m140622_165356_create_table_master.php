@@ -73,7 +73,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
-
         $this->createTable('{{%product}}', [
             'id_product' => Schema::TYPE_PK,
             'id_group' => Schema::TYPE_INTEGER . ' NOT NULL',

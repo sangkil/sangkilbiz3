@@ -5,11 +5,10 @@ use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
 use biz\master\components\Helper as MasterHelper;
 
-
 /* @var $this yii\web\View */
 /* @var $model biz\sales\models\Sales */
 /* @var $form yii\widgets\ActiveForm */
- 
+
 ?>
 <div class="sales-form">
     <?php
@@ -24,7 +23,7 @@ use biz\master\components\Helper as MasterHelper;
     ?>
     <?=
     $this->render('_detail', ['model' => $model])
-    ?> 
+    ?>
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">

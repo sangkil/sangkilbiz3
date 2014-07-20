@@ -17,7 +17,7 @@ use biz\master\models\Branch;
         <?php $form = ActiveForm::begin(); ?>
 
         <?= ''//$form->field($model, 'id_branch')->textInput() ?>
-        <?= $form->field($model, 'id_branch')->dropDownList(ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch')) ?>                 
+        <?= $form->field($model, 'id_branch')->dropDownList(ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch')) ?>
 
         <?= $form->field($model, 'id_user')->textInput() ?>
     </div>

@@ -28,7 +28,7 @@ use biz\master\components\Helper as MasterHelper;
             ]);
             ?>
         </div>
-        <table class="table table-striped">            
+        <table class="table table-striped">
             <?=
             EditableList::widget([
                 'id' => 'detail-grid',

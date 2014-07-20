@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 
 <div class="orgn-form col-lg-6" style="padding-left: 0px;">
 
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -24,7 +23,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'nm_orgn')->textInput(['maxlength' => 64]) ?>
         </div>
     </div>
-    
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

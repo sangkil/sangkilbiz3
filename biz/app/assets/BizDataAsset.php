@@ -15,8 +15,8 @@ class BizDataAsset
 {
 
     /**
-     * 
-     * @param View $view
+     *
+     * @param View  $view
      * @param array $data
      */
     public static function register($view, $data = [], $position = View::POS_BEGIN)

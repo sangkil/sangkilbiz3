@@ -38,7 +38,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_warehouse'],'default','value'=>function($model){
+            [['id_warehouse'],'default','value'=>function ($model) {
                 return $model->idPurchase->id_warehouse;
             }],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'sales_price'], 'required'],
@@ -72,10 +72,10 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Purchase::className(), ['id_purchase' => 'id_purchase']);
     }
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     private $_salesPrices;
 
@@ -88,6 +88,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
             $prices = PurchaseSalesPrice::findAll(['id_purchase_dtl' => $this->id_purchase_dtl]);
             $this->_salesPrices = \yii\helpers\ArrayHelper::map($prices, 'id_price_category', 'price');
         }
+
         return $this->_salesPrices;
     }
 
@@ -105,8 +106,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Uom::className(), ['id_uom'=>'id_uom']);
     }
-    
-    
+
     public function afterSave($insert, $changedAttributes)
     {
         if ($this->_salesPrices !== null) {
@@ -120,7 +120,7 @@ class PurchaseDtl extends \yii\db\ActiveRecord
                     'id_price_category' => $id,
                     'price' => $price,
                 ]);
-                if(!$salesPrice->save()){
+                if (!$salesPrice->save()) {
                     throw new \Exception(implode("\n", $salesPrice->firstErrors));
                 }
             }

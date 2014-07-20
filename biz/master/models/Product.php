@@ -125,12 +125,12 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ProductGroup::className(), ['id_group' => 'id_group']);
     }
-    
+
     public function getCogsValue()
     {
-        if($this->cogs){
+        if ($this->cogs) {
             return $this->cogs->cogs;
-        }        
+        }
     }
 
     /**

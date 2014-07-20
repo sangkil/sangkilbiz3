@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<div class="col-lg-6">    
+<div class="col-lg-6">
     <style>
         .tab-content {
             border: 1px #e0e0e0 solid;

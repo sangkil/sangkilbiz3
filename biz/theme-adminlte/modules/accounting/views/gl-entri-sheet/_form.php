@@ -15,15 +15,15 @@ use biz\master\components\Helper;
     echo $form->errorSummary($model);
     ?>
     <div class="box box-danger no-padding">
-        <div class="box-body"> 
+        <div class="box-body">
             <div class="col-lg-5">
                 <div class="form-group field-glheader-gldate required">
                     <?php
                     echo Html::label('Select Category', 'sheet');
                     echo Html::dropDownList('', $es, $sheets, ['id' => 'sheets', 'prompt' => '-', 'class' => 'form-control']);
                     ?>
-                </div>   
-                <?= $form->field($model, 'gl_num')->textInput(['style' => 'width:60%']) ?> 
+                </div>
+                <?= $form->field($model, 'gl_num')->textInput(['style' => 'width:60%']) ?>
                 <?=
                 $form->field($model, 'glDate')->widget(DatePicker::className(), [
                     'options' => ['class' => 'form-control', 'style' => 'width:60%'],
@@ -34,8 +34,8 @@ use biz\master\components\Helper;
                 ?>
             </div>
             <div class="col-lg-7">
-                <?= $form->field($model, 'id_periode')->textInput(['style' => 'width:30%']) ?> 
-                <?= $form->field($model, 'id_branch')->dropDownList(Helper::getBranchList()) ?> 
+                <?= $form->field($model, 'id_periode')->textInput(['style' => 'width:30%']) ?>
+                <?= $form->field($model, 'id_branch')->dropDownList(Helper::getBranchList()) ?>
                 <?= $form->field($model, 'description')->textarea() ?>
                 <?= ''//$form->field($model, 'gl_memo')->textInput(['maxlength' => 128]) ?>
             </div>
@@ -56,13 +56,13 @@ use biz\master\components\Helper;
                         'details' => $details
                     ]);
                 }
-                ?>    
+                ?>
             </tbody>
         </table>
         <div class="box-footer">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
-    </div>   
+    </div>
 
     <?php ActiveForm::end(); ?>
 
@@ -70,7 +70,7 @@ use biz\master\components\Helper;
 <?php
 $url = \yii\helpers\Url::toRoute(['create']);
 $js = <<<JS
-    \$('#sheets').change(function(){
+    \$('#sheets').change(function () {
         window.location.href = '{$url}&es='+\$(this).val();
    });
 JS;

@@ -64,7 +64,6 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'FOREIGN KEY (id_transfer) REFERENCES {{%transfer_notice}} (id_transfer) ON DELETE CASCADE ON UPDATE CASCADE',
             ], $tableOptions);
 
-
         $this->createTable('{{%stock_opname}}', [
             'id_opname' => Schema::TYPE_PK,
             'opname_num' => Schema::TYPE_STRING . '(16) NOT NULL',
@@ -89,7 +88,6 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'PRIMARY KEY (id_opname , id_product, id_uom)',
             'FOREIGN KEY (id_opname) REFERENCES {{%stock_opname}} (id_opname) ON DELETE CASCADE ON UPDATE CASCADE',
             ], $tableOptions);
-
 
         $this->createTable('{{%stock_adjustment}}', [
             'id_adjustment' => Schema::TYPE_PK,

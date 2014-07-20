@@ -40,8 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tbody>
             </table>
 
-
-        </div>           
+        </div>
         <?php
         echo GridView::widget([
             'id' => 'inv_grid',
@@ -102,4 +101,3 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end();
     ?>
 </div>
-

@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use biz\inventory\models\TransferNotice;
@@ -48,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     $warnaStatus = 'label-primary';
                                     break;
                             }
+
                             return "<span class='label $warnaStatus'>{$model->nmStatus}</span>";
                         },
                         'format' => 'raw'
@@ -60,6 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
         </div>
-    </div>    
+    </div>
     <?php Pjax::end(); ?>
 </div>

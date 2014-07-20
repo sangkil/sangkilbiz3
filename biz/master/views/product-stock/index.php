@@ -19,26 +19,26 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 	<?= GridView::widget([
-		'dataProvider' => $dataProvider,
-		'tableOptions' => ['class' => 'table table-striped'],
+        'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-striped'],
         'layout' => '{items}{pager}',
         //'filterModel' => $searchModel,
-		'columns' => [
-			['class' => 'yii\grid\SerialColumn'],
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-			'idWarehouse.nm_whse',
-			'idProduct.nm_product',
-			'qty_stock',
-			'idUom.nm_uom',
-			// 'qty_stock',
-			// 'status_closing',
-			// 'create_at',
-			// 'create_by',
-			// 'update_at',
-			// 'update_by',
+            'idWarehouse.nm_whse',
+            'idProduct.nm_product',
+            'qty_stock',
+            'idUom.nm_uom',
+            // 'qty_stock',
+            // 'status_closing',
+            // 'create_at',
+            // 'create_by',
+            // 'update_at',
+            // 'update_by',
 
-			['class' => 'yii\grid\ActionColumn'],
-		],
-	]); ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 
 </div>

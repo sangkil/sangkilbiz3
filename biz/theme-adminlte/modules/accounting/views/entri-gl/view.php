@@ -55,12 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
 
                 /**
-                 * 
+                 *
                  * @param biz\models\GlDetail $model
                  * @param integer $index
                  * @return string
                  */
-                function renderRow($model, $index) {
+                function renderRow($model, $index)
+                {
                     ob_start();
                     ob_implicit_flush(false);
                     ?>
@@ -73,14 +74,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         </td>
                         <td style="text-align: right;">
                             <?= ''//\yii\helpers\ArrayHelper::getValue($model, 'debit'); ?>
-                            <?= (\yii\helpers\ArrayHelper::getValue($model, 'debit')!=='')?  number_format((double)\yii\helpers\ArrayHelper::getValue($model, 'debit')):''; ?>
+                            <?= (\yii\helpers\ArrayHelper::getValue($model, 'debit')!=='')?  number_format((double) \yii\helpers\ArrayHelper::getValue($model, 'debit')):''; ?>
                         </td>
                         <td style="text-align: right;">
-                            <?= ''//\yii\helpers\ArrayHelper::getValue($model, 'kredit'); ?>    
-                            <?= (\yii\helpers\ArrayHelper::getValue($model, 'kredit')!=='')?  number_format((double)\yii\helpers\ArrayHelper::getValue($model, 'kredit')):''; ?>
+                            <?= ''//\yii\helpers\ArrayHelper::getValue($model, 'kredit'); ?>
+                            <?= (\yii\helpers\ArrayHelper::getValue($model, 'kredit')!=='')?  number_format((double) \yii\helpers\ArrayHelper::getValue($model, 'kredit')):''; ?>
                         </td>
                     </tr>
                     <?php
+
                     return trim(preg_replace('/>\s+</', '><', ob_get_clean()));
                 }
                 ?>

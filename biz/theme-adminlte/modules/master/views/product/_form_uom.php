@@ -39,7 +39,7 @@ GridView::widget([
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{delete}',
-            'urlCreator' => function ($action, $uom)use($model) {
+            'urlCreator' => function ($action, $uom) use ($model) {
                 return Url::toRoute(['delete-uom', 'id_product' => $model->id_product, 'id_uom' => $uom->id_uom]);
             }
         ]
@@ -50,12 +50,12 @@ GridView::widget([
 <?php
 
 $js = <<<JS
-yii.global.isChangeOrEnter(\$(document),'#input-form [name="id_uom"]',function(){
+yii.global.isChangeOrEnter(\$(document),'#input-form [name="id_uom"]',function () {
     \$('#input-form [name="isi_uom"]').focus().select();
 });
-yii.global.isChangeOrEnter(\$(document),'#input-form [name="isi_uom"]',function(){
+yii.global.isChangeOrEnter(\$(document),'#input-form [name="isi_uom"]',function () {
     \$('#input-form [name="action"]').val('uom');
-    if(\$('#id-uom').val() != ''){
+    if (\$('#id-uom').val() != '') {
         \$('#input-form').submit();
     }
 });

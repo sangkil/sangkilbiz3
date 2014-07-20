@@ -29,6 +29,7 @@ class PriceHook extends \yii\base\Behavior
             return $price;
         }
         $_formula_ = preg_replace('/price/i', '$price', $_formula_);
+
         return empty($_formula_) ? $price : eval("return $_formula_;");
     }
 
@@ -54,7 +55,7 @@ class PriceHook extends \yii\base\Behavior
             if ($price->canSetProperty('logParams')) {
                 $logParams = [];
                 foreach (['app','id_ref'] as $key) {
-                    if(isset($params[$key]) || array_key_exists($key, $params)){
+                    if (isset($params[$key]) || array_key_exists($key, $params)) {
                         $logParams[$key] = $params[$key];
                     }
                 }
@@ -70,7 +71,7 @@ class PriceHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function purchaseReceiveBody($event)

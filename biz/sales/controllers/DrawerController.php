@@ -46,7 +46,7 @@ class DrawerController extends Controller
 
     /**
      * Displays a single Cashdrawer model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -59,8 +59,8 @@ class DrawerController extends Controller
     /**
      * Finds the Cashdrawer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Cashdrawer the loaded model
+     * @param  integer               $id
+     * @return Cashdrawer            the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

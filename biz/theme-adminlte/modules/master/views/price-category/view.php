@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="price-category-view col-lg-8">
     <div class="box box-primary">
-        <div class="box-body no-padding">        
+        <div class="box-body no-padding">
             <?=
             DetailView::widget([
                 'model' => $model,

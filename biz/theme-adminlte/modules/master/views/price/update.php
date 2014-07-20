@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /**
  * @var yii\web\View $this
  * @var biz\master\models\Price $model

@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
@@ -8,5 +7,3 @@ use yii\widgets\ActiveForm;
  * @var biz\models\searchs\Invoice $model
  * @var yii\widgets\ActiveForm $form
  */
-?>
-

@@ -13,9 +13,9 @@ use yii\widgets\ActiveForm;
 <div class="sales-hdr-search">
 
 	<?php $form = ActiveForm::begin([
-		'action' => ['index'],
-		'method' => 'get',
-	]); ?>
+        'action' => ['index'],
+        'method' => 'get',
+    ]); ?>
 
 		<?= $form->field($model, 'id_sales') ?>
 

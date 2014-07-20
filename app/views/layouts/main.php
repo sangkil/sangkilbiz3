@@ -52,10 +52,10 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
-        <?php 
+        <?php
         $breadcrumbs = isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [];
         foreach (Yii::$app->controller->modules as $module) {
-            if($module != Yii::$app){
+            if ($module != Yii::$app) {
                 array_unshift($breadcrumbs, ['label' => Inflector::camel2words($module->id), 'url' => ['/'.$module->uniqueId]]);
             }
         }

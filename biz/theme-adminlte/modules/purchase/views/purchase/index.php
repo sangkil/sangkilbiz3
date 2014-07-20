@@ -14,10 +14,10 @@ use yii\grid\DataColumn;
 $this->title = 'Purchase Hdrs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="purchase-hdr-index">    
+<div class="purchase-hdr-index">
     <?php yii\widgets\Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
     <div class="col-lg-6" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="col-lg-12">
         <div class="box box-info">
@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $warnaStatus = 'label-success';
                             break;
                     }
+
                     return "<span class='label $warnaStatus'>{$model->nmStatus}</span>";
                 },
                         'format' => 'raw'
@@ -82,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
             ?>
-        </div>  
+        </div>
         <?php
         // display pagination
         echo LinkPager::widget([

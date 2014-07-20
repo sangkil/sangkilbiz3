@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\components\Helper;
 
-
 /* @var $this yii\web\View */
 /* @var $model biz\inventory\models\Transfer */
 /* @var $form yii\widgets\ActiveForm */
@@ -21,7 +20,7 @@ use biz\master\components\Helper;
     array_unshift($models, $model);
     echo $form->errorSummary($models)
     ?>
-    <?= $this->render('_detail', ['model' => $model]) ?> 
+    <?= $this->render('_detail', ['model' => $model]) ?>
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">

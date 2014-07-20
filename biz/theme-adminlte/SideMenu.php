@@ -98,6 +98,7 @@ class SideMenu extends \yii\base\Widget
             }
             $result[] = $this->renderItem($item);
         }
+
         return $result;
     }
 
@@ -138,7 +139,7 @@ class SideMenu extends \yii\base\Widget
         } else {
             $linkContent .= $label;
         }
-        
+
         if ($badge !== null) {
             $badge = (array) $badge;
             $bagdeCss = 'badge pull-right';
@@ -150,18 +151,19 @@ class SideMenu extends \yii\base\Widget
         if (!empty($items)) {
             $linkContent .= Html::tag('i', '', ['class' => 'fa fa-angle-left pull-right']);
         }
-        
+
         if ($this->activateItems && $active) {
             Html::addCssClass($options, 'active');
         }
+
         return Html::tag('li', Html::a($linkContent, $url, $linkOptions) . $items, $options);
     }
 
     /**
      * Check to see if a child item is active optionally activating the parent.
-     * @param array $items @see items
-     * @param boolean $active should the parent be active too
-     * @return array @see items
+     * @param  array   $items  @see items
+     * @param  boolean $active should the parent be active too
+     * @return array   @see items
      */
     protected function isChildActive($items, &$active)
     {
@@ -173,6 +175,7 @@ class SideMenu extends \yii\base\Widget
                 }
             }
         }
+
         return $items;
     }
 
@@ -183,7 +186,7 @@ class SideMenu extends \yii\base\Widget
      * as the route for the item and the rest of the elements are the associated parameters.
      * Only when its route and parameters match [[route]] and [[params]], respectively, will a menu item
      * be considered active.
-     * @param array $item the menu item to be checked
+     * @param  array   $item the menu item to be checked
      * @return boolean whether the menu item is active
      */
     protected function isItemActive($item)

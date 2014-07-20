@@ -45,7 +45,7 @@ class InvoiceHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\base\Event $event
      */
     public function purchaseReceiveEnd($event)

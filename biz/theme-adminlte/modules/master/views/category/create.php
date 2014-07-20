@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /**
  * @var yii\web\View $this
  * @var biz\master\models\Category $model
@@ -14,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="category-create col-lg-8">
 
 	<?php echo $this->render('_form', [
-		'model' => $model,
-	]); ?>
+        'model' => $model,
+    ]); ?>
 
 </div>

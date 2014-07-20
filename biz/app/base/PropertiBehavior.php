@@ -9,10 +9,10 @@ class PropertiBehavior extends \yii\base\Behavior
 {
     /**
      *
-     * @var array 
+     * @var array
      */
     private $_properties;
-    
+
     protected function getUserProperties()
     {
         throw new \yii\base\NotSupportedException();
@@ -38,6 +38,7 @@ class PropertiBehavior extends \yii\base\Behavior
     public function canGetProperty($name, $checkVars = true)
     {
         $this->initProperties();
+
         return array_key_exists($name, $this->_properties) || parent::canGetProperty($name, $checkVars);
     }
 }

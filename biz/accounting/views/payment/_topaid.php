@@ -16,7 +16,7 @@ use yii\helpers\Html;
 
         <?= $form->field($model, 'payment_type')->textInput() ?>
     </div>
-    <div class="col-lg-6">        
+    <div class="col-lg-6">
         <?= $form->field($model, 'payment_date')->textInput() ?>
     </div>
 

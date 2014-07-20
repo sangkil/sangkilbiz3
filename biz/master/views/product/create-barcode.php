@@ -17,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <script type="text/javascript">
 
-    function generateBarcode() {
+    function generateBarcode()
+    {
         var value = $("#barcodeValue").val();
         var btype = $("input[name=btype]:checked").val();
         var renderer = $("input[name=renderer]:checked").val();
@@ -63,13 +64,14 @@ $this->params['breadcrumbs'][] = $this->title;
             $("#hasil").append($div);
         }
 
-        $(".barcodeTarget").each(function() {
+        $(".barcodeTarget").each(function () {
             var dfirst = $(this).children().first();
             dfirst.attr('style','float: left; font-size: 0px; background-color: #FFFFFF; height: 35px; width: 10px;')
         });
     }
 
-    function clearCanvas() {
+    function clearCanvas()
+    {
         var canvas = $('#canvasTarget').get(0);
         var ctx = canvas.getContext('2d');
         ctx.lineWidth = 1;

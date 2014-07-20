@@ -21,24 +21,24 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="pull-right">
         <?= Html::a('', ['create'], ['class' => 'btn btn-link glyphicon glyphicon-plus', 'title' => 'Create New', 'style' => 'width:100%;']) ?>
     </div>
-    
+
 	<?php echo GridView::widget([
-		'dataProvider' => $dataProvider,
-		'tableOptions' => ['class' => 'table table-striped'],
+        'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-striped'],
         'layout' => '{items}{pager}',
         //'filterModel' => $searchModel,
-		'columns' => [
-			['class' => 'yii\grid\SerialColumn'],
-			//'id_orgn',
-			'cd_orgn',
-			'nm_orgn',
-			'create_at',
-			'create_by',
-			// 'update_at',
-			// 'update_by',
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            //'id_orgn',
+            'cd_orgn',
+            'nm_orgn',
+            'create_at',
+            'create_by',
+            // 'update_at',
+            // 'update_by',
 
-			['class' => 'yii\grid\ActionColumn'],
-		],
-	]); ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 
 </div>

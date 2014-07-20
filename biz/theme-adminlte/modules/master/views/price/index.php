@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="price-index">
     <div class="col-lg-12" style="text-align: right; padding-bottom: 10px;">
         <?= Html::a('', ['create'], ['class' => 'btn btn-warning btn-sm fa fa-plus', 'title' => 'New Supplier']) ?>
-    </div>  
+    </div>
     <div class=" col-lg-12">
         <div class="box box-info">
             <div class="box-body no-padding">
@@ -45,7 +45,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
-
 
 </div>

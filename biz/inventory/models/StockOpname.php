@@ -87,7 +87,7 @@ class StockOpname extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Warehouse::className(), ['id_warehouse' => 'id_warehouse']);
     }
-    
+
     public function behaviors()
     {
         return [
@@ -106,7 +106,7 @@ class StockOpname extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\relation\RelationBehavior',            
+            'mdm\relation\RelationBehavior',
         ];
     }
 }

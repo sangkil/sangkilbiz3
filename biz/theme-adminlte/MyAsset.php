@@ -14,8 +14,8 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class MyAsset extends AssetBundle {
-
+class MyAsset extends AssetBundle
+{
     public $sourcePath = '@biz/adminlte/assets';
     public $css = [
         'css/bootstrap.min.css',

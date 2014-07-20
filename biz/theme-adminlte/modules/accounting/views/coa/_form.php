@@ -33,8 +33,8 @@ use biz\accounting\components\Helper;
 //                    'options' => ['class' => 'form-control', 'id' => $el_id],
 //                    'clientOptions' => [
 //                        'source' => yii\helpers\Url::toRoute(['coa-list']),
-//                        'select' => new JsExpression('function(event,ui){$(\'#id_parent\').val(ui.item.id)}'),
-//                        'open' => new JsExpression('function(event,ui){$(\'#id_parent\').val(\'\')}'),
+//                        'select' => new JsExpression('function (event,ui) {$(\'#id_parent\').val(ui.item.id)}'),
+//                        'open' => new JsExpression('function (event,ui) {$(\'#id_parent\').val(\'\')}'),
 //                    ]
 //            ]);
 //            $field;
@@ -47,7 +47,5 @@ use biz\accounting\components\Helper;
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 </div>
-
-
 
 <?php ActiveForm::end(); ?>

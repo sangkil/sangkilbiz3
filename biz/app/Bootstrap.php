@@ -16,7 +16,7 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected $name = 'app';
 
     /**
-     * 
+     *
      * @param \yii\base\Application $app
      */
     protected function initialize($app, $config)
@@ -25,7 +25,7 @@ class Bootstrap extends \biz\app\base\Bootstrap
     }
 
     /**
-     * 
+     *
      * @param array $params
      */
     protected function diConfig($params)

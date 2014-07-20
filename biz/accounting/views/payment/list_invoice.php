@@ -20,13 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
     <div class="box box-info">
-        <div class="box-body"> 
+        <div class="box-body">
             <div class="form-group" style="text-align: right;">
                 <?php
                 echo Html::label('Selected Amount', '') . '<br>';
                 echo Html::label('Rp0.00', '', ['id' => 'RSelected', 'style' => 'font-size: x-large']);
                 echo Html::hiddenInput('selectedId', '', ['id' => 'selectedId']);
-                ?> 
+                ?>
             </div>
         </div>
         <?php
@@ -81,23 +81,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-footer">
             <?= Html::a('Execute', ['create','type'=>$type], ['class' => 'btn btn-success','id'=>'btn-execute']) ?>
         </div>
-    </div>    
+    </div>
     <?php ActiveForm::end(); ?>
     <?php \yii\widgets\Pjax::end(); ?>
 </div>
 <?php
 $createUrl = \yii\helpers\Url::to(['create','type'=>$type]);
 $js = <<<JS
-\$(document).off('click.biz','input.ck-list, input.select-on-check-all').on('click.biz','input.ck-list, input.select-on-check-all',function(){
+\$(document).off('click.biz','input.ck-list, input.select-on-check-all').on('click.biz','input.ck-list, input.select-on-check-all',function () {
     var total = 0.0;
     var \$ck = \$(this);
-    \$('#inv_grid input.ck-list:checked').each(function(){
+    \$('#inv_grid input.ck-list:checked').each(function () {
         var \$tr = \$(this).closest('#inv_grid tr[data-key]');
         var remain = \$tr.children('td.sisa-bayar').text().split(',').join('');
         total += Number(remain);
     });
     \$('#RSelected').html('Rp'+numeral(total).format('0,0'));
-    if(\$ck.is('input.ck-list')){
+    if (\$ck.is('input.ck-list')) {
         var all = \$('input.ck-list').length == \$('input.ck-list:checked').length;
         \$('input.select-on-check-all').prop('checked',all);
     }

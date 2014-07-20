@@ -44,7 +44,7 @@ class EntriGlController extends Controller
 
     /**
      * Displays a single GlHeader model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -84,6 +84,7 @@ class EntriGlController extends Controller
                     $transaction->rollBack();
                 } else {
                     $transaction->commit();
+
                     return $this->redirect(['view', 'id' => $model->id_gl]);
                 }
             } else {
@@ -94,6 +95,7 @@ class EntriGlController extends Controller
             $model->addError('', $exc->getMessage());
         }
         $model->setIsNewRecord(true);
+
         return $this->render('create', [
                 'model' => $model,
         ]);
@@ -102,8 +104,8 @@ class EntriGlController extends Controller
     /**
      * Finds the GlHeader model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return GlHeader the loaded model
+     * @param  integer               $id
+     * @return GlHeader              the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

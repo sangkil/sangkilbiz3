@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box box-primary">
         <div class="box-body no-padding">
             <?php
-            function cLabel($status,$nm_status) {
+            function cLabel($status,$nm_status)
+            {
                     $warnaStatus = 'label-warning';
                     switch ($status) {
                         case TransferNotice::STATUS_CREATE:
@@ -32,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             $warnaStatus = 'label-primary';
                             break;
                     }
+
                     return "<span class='label $warnaStatus'>{$nm_status}</span>";
                 }
 

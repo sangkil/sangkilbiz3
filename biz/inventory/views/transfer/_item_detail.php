@@ -14,7 +14,7 @@ use biz\master\components\Helper;
 </td>
 <td class="items" style="width: 45%">
     <ul class="nav nav-list">
-        <li><span class="cd_product"><?= Html::getAttributeValue($model, 'idProduct[cd_product]') ?></span> 
+        <li><span class="cd_product"><?= Html::getAttributeValue($model, 'idProduct[cd_product]') ?></span>
             - <span class="nm_product"><?= Html::getAttributeValue($model, 'idProduct[nm_product]') ?></span></li>
         <li>
             Jumlah <?=

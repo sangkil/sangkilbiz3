@@ -2,7 +2,6 @@
 
 namespace biz\app\base;
 
-
 /**
  *
  * @author misbahul d munir <misbahuldmunir@gmail.com>
@@ -11,15 +10,15 @@ class AccessHandler extends \yii\base\Object
 {
     /**
      *
-     * @var \Closure 
+     * @var \Closure
      */
     public $callback;
 
     /**
-     * 
-     * @param \yii\web\User $user
-     * @param string $action
-     * @param mixed|\yii\db\ActiveRecord $model
+     *
+     * @param  \yii\web\User              $user
+     * @param  string                     $action
+     * @param  mixed|\yii\db\ActiveRecord $model
      * @return boolean
      */
     public function check($user, $action, $model)

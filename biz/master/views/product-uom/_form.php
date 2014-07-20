@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use biz\master\models\Uom;
 use biz\app\assets\BizAsset;
@@ -38,8 +37,6 @@ use biz\master\components\Helper as MasterHelper;
             <?= $form->field($model, 'isi')->textInput() ?>
         </div>
     </div>
-
-
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

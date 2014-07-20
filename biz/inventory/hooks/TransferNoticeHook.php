@@ -24,7 +24,7 @@ class TransferNoticeHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param Event $event
      */
     public function receiveReceiveEnd($event)

@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use biz\inventory\models\TransferNotice;
-use biz\master\components\Helper;
 
 /**
  * @var yii\web\View $this

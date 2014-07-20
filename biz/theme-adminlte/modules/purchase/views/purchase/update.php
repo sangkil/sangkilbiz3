@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /**
  * @var yii\web\View $this
  * @var biz\models\Purchase $model
@@ -15,8 +13,8 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="purchase-hdr-update">
 
 	<?php echo $this->render('_form', [
-		'model' => $model,
-		'details'=>$details
-	]); ?>
+        'model' => $model,
+        'details'=>$details
+    ]); ?>
 
 </div>

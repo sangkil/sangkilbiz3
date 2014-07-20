@@ -21,7 +21,7 @@ $form = ActiveForm::begin([
         ])
 ?>
 <?php
-$renderField = function ($model, $key) use($form) {
+$renderField = function ($model, $key) use ($form) {
     return $form->field($model, "[$key]qty_approve")->textInput(['style' => 'width:80px;']);
 }
 ?>
@@ -37,7 +37,8 @@ $renderField = function ($model, $key) use($form) {
             <div class="box-body no-padding">
                 <?php
 
-                function cLabel($status, $nm_status) {
+                function cLabel($status, $nm_status)
+                {
                     $warnaStatus = 'label-warning';
                     switch ($status) {
                         case TransferNotice::STATUS_CREATE:
@@ -50,6 +51,7 @@ $renderField = function ($model, $key) use($form) {
                             $warnaStatus = 'label-primary';
                             break;
                     }
+
                     return "<span class='label $warnaStatus'>{$nm_status}</span>";
                 }
 
@@ -68,7 +70,7 @@ $renderField = function ($model, $key) use($form) {
                         ],
                     ],
                 ]);
-                ?>                
+                ?>
             </div>
             <div class="box-footer">
                 <?php
@@ -106,7 +108,7 @@ $renderField = function ($model, $key) use($form) {
                         'idUom.nm_uom',
                     ]
                 ]);
-                ?>            
+                ?>
             </div>
         </div>
     </div>

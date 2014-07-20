@@ -15,7 +15,7 @@ $this->title = Yii::$app->controller->module->uniqueId;
         <div class="generator box box-solid">
             <div class="box-header">
                 <i class="fa fa-check"></i>
-                <h3 class="box-title"><?= Html::encode(Inflector::camel2words($id, true)) ?></h3>                
+                <h3 class="box-title"><?= Html::encode(Inflector::camel2words($id, true)) ?></h3>
             </div>
             <div class="box-body">
                 <?= $description ?>

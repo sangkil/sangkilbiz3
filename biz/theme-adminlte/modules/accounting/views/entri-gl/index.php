@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\LinkPager;
 
@@ -15,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="gl-header-index">
     <div class="col-lg-4" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="col-lg-12">
         <div class="box box-info">

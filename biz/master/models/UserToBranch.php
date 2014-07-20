@@ -60,7 +60,7 @@ class UserToBranch extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
     }
-    
+
      /**
      * @return \yii\db\ActiveQuery
      */

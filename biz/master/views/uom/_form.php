@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'cd_uom')->textInput(['maxlength' => 4]) ?>
 
-    <?= $form->field($model, 'nm_uom')->textInput(['maxlength' => 32]) ?>    
-    
+    <?= $form->field($model, 'nm_uom')->textInput(['maxlength' => 32]) ?>
+
     <?= $form->field($model, 'isi')->textInput(['maxlength' => 3]) ?>
 
     <div class="form-group">

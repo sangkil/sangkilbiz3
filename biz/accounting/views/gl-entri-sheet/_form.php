@@ -17,7 +17,7 @@ use biz\accounting\models\GlDetail;
     $sheets = \yii\helpers\ArrayHelper::map($sheets, 'id_esheet', 'nm_esheet');
     echo Html::dropDownList('', $es, $sheets, ['id' => 'sheets', 'prompt' => '-']); ?>
     <?php $form = ActiveForm::begin(); ?>
-    <?php 
+    <?php
     $models = $model->glDetails;
     array_unshift($models, $model);
     echo $form->errorSummary($models);
@@ -69,7 +69,7 @@ $url = \yii\helpers\Url::toRoute(['create']);
 $js = <<<JS
 yii.numeric.format(\$('#gl-detail'),'input.amount');
 
-\$('#sheets').change(function(){
+\$('#sheets').change(function () {
     window.location.href = '{$url}&es='+\$(this).val();
 });
 JS;

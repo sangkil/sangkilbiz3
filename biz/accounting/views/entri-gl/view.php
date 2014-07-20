@@ -4,10 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 
-
 /* @var $this yii\web\View */
 /* @var $model biz\accounting\models\GlHeader */
-
 
 $this->title = $model->gl_num;
 $this->params['breadcrumbs'][] = ['label' => 'Gl Headers', 'url' => ['index']];

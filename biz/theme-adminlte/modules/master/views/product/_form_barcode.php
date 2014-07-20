@@ -30,7 +30,7 @@ GridView::widget([
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{delete}',
-            'urlCreator' => function ($action, $child)use($model) {
+            'urlCreator' => function ($action, $child) use ($model) {
                 return Url::toRoute(['delete-barcode', 'id_product' => $model->id_product, 'barcode' => $child->barcode]);
             }
         ]
@@ -40,7 +40,7 @@ GridView::widget([
 <?php
 
 $js = <<<JS
-yii.global.isChangeOrEnter(\$(document),'#input-form [name="barcode"]',function(){
+yii.global.isChangeOrEnter(\$(document),'#input-form [name="barcode"]',function () {
     \$('#input-form [name="action"]').val('barcode');
     \$('#input-form').submit();
 });

@@ -3,7 +3,6 @@
 namespace biz\sales\components;
 
 use biz\sales\models\Sales;
-use biz\sales\models\Cashdrawer;
 
 /**
  * Description of AccessHandler

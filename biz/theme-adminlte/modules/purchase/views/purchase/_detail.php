@@ -30,7 +30,7 @@ use biz\master\components\Helper as MasterHelper;
             ]);
             ?>
             <div class="pull-right">
-                Item Discount:                
+                Item Discount:
                 <?= Html::activeTextInput($model, 'item_discount', ['style' => 'width:60px;','id'=>'item-discount']); ?>
             </div>
         </div>

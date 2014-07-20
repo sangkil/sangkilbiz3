@@ -90,9 +90,10 @@ class Invoice extends \yii\db\ActiveRecord
                 $this->_paid+= $dtl->payment_value;
             }
         }
+
         return $this->_paid;
     }
-    
+
     public function getSisaBayar()
     {
         return $this->invoice_value - $this->paid;
@@ -113,7 +114,7 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return $this->hasOne(InvoiceDtl::className(), ['id_invoice' => 'id_invoice']);
     }
-    
+
     public static function getTypes()
     {
         $class = new \ReflectionClass(self::className());
@@ -123,6 +124,7 @@ class Invoice extends \yii\db\ActiveRecord
                 $result[substr($key, 5)] = $value;
             }
         }
+
         return $result;
     }
     /**

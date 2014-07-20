@@ -15,7 +15,7 @@ use Yii;
  * @property integer $create_by
  * @property string $create_at
  * @property string $update_at
- * 
+ *
  * @property string $nmStatus
  * @property string $noticeDate
  *

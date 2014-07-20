@@ -13,11 +13,11 @@ class MasterAsset extends \yii\web\AssetBundle
         'js/master.product.js',
         'js/jquery-barcode.min.js',
     ];
-    
+
     public $css = [
         'css/biz.detail.css'
     ];
-    
+
     public $depends = [
         'biz\app\assets\BizAsset'
     ];

@@ -116,7 +116,6 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
             'FOREIGN KEY (id_invoice) REFERENCES {{%invoice}} (id_invoice) ON DELETE CASCADE ON UPDATE CASCADE',
         ], $tableOptions);
 
-
         $this->createTable('{{%payment}}', [
             'id_payment' => Schema::TYPE_PK,
             'payment_num' => Schema::TYPE_STRING . '(16) NOT NULL',

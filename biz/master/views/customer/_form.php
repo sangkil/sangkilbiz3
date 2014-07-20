@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\master\models\Customer;
-use biz\behaviors\StatusBehavior;
 
 /**
  * @var yii\web\View $this

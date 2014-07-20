@@ -90,8 +90,7 @@ use mdm\admin\components\MenuHelper;
     ];
 
     /*
-    $menuCallback = function($menu)
-    {
+    $menuCallback = function ($menu) {
         if (!empty($menu['route'])) {
             $url = [];
             $r = explode('&', $menu['route']);
@@ -104,7 +103,7 @@ use mdm\admin\components\MenuHelper;
         } else {
             $url = '#';
         }
-        
+
         $item = [
             'label' => $menu['name'],
             'url' => $url,
@@ -112,14 +111,15 @@ use mdm\admin\components\MenuHelper;
         if ($menu['children'] != []) {
             $item['items'] = $menu['children'];
         }
-        if(!empty($menu['data'])){
+        if (!empty($menu['data'])) {
             $item['icon'] = $menu['data'];
         }
+
         return $item;
     };
-    
+
     $items = MenuHelper::getAssignedMenu(Yii::$app->user->id, null, $menuCallback);
-     * 
+     *
      */
     ?>
     <?php
@@ -131,4 +131,3 @@ use mdm\admin\components\MenuHelper;
 
 </section>
 <!-- /.sidebar -->
-

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'gl_num',
                     'description',
                     'create_by',
-                    // 'type_reff', 
+                    // 'type_reff',
                     // 'id_reff',
                     // 'id_gl'
                     // 'create_at',

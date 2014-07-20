@@ -3,16 +3,16 @@
 namespace biz\inventory\components;
 
 use biz\inventory\models\Transfer;
-use biz\inventory\models\TransferNotice;
 
 /**
  * Description of AccessHandler
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class AccessHandler extends \biz\app\base\AccessHandler {
-
-    protected function checkAction($user, $action, $model) {
+class AccessHandler extends \biz\app\base\AccessHandler
+{
+    protected function checkAction($user, $action, $model)
+    {
         $class = get_class($model);
         switch ($class) {
             case Transfer::className():
@@ -31,6 +31,7 @@ class AccessHandler extends \biz\app\base\AccessHandler {
             default:
                 break;
         }
+
         return true;
     }
 

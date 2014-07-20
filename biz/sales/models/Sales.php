@@ -21,7 +21,7 @@ use biz\master\models\Customer;
  * @property integer $create_by
  * @property string $update_at
  * @property integer $update_by
- * 
+ *
  * @property string $nmStatus
  * @property string $salesDate
  *

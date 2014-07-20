@@ -6,14 +6,14 @@
  * be terminated before the library is unloaded. This is usually done
  * in the servlet's destroy() method or in the destroy() method of
  * an associated ServletContextListener.
- * 
+ *
  * To allow startup and shutdown of such libraries, the PHP/Java
  * Bridge provides two convenience procedures, which allow one to run
  * a synchronized init() and to register a close() hook with the
  * servlet or the VM. Please see the API documentation of
  * java_context()->init() and java_context()->onShutdown() for
  * details.
- * 
+ *
  * To use this sample, copy "report.php", "test.rptdesign" (and
  * "Java.inc", if needed) to some directory, start the Java back- end
  * (tomcat, or any other J2EE server) and type:
@@ -28,7 +28,6 @@ $myReport = "test.rptdesign";
 // the output format
 $myFormat = "html";
 
-
 // load resources from the current working dir
 $here = getcwd();
 
@@ -36,16 +35,17 @@ $ctx = java_context()->getServletContext();
 $birtReportEngine =        java("org.eclipse.birt.php.birtengine.BirtEngine")->getBirtEngine($ctx);
 java_context()->onShutdown(java("org.eclipse.birt.php.birtengine.BirtEngine")->getShutdownHook());
 
-function getOutputFormat($format) {
+function getOutputFormat($format)
+{
   $fmt = null;
 
-  switch($format) {
-  case "pdf": 
+  switch ($format) {
+  case "pdf":
     $fmt = new java("org.eclipse.birt.report.engine.api.PDFRenderOption");
     $fmt->setOutputFormat("pdf");
     header("Content-type: application/pdf");
     break;
-  case "html": 
+  case "html":
     $fmt = new java("org.eclipse.birt.report.engine.api.HTMLRenderOption");
     $fmt->setOutputFormat("html");
     $ih = new java( "org.eclipse.birt.report.engine.api.HTMLServerImageHandler");
@@ -67,7 +67,6 @@ function getOutputFormat($format) {
 
   return $fmt;
 }
-    
 
 try {
 
@@ -75,7 +74,7 @@ try {
   $task = $birtReportEngine->createRunAndRenderTask($engine);
   $fmt = getOutputFormat($myFormat);
   $fmt->setOutputStream($out=new java("java.io.ByteArrayOutputStream"));
-  
+
   $task->setRenderOption($fmt);
   $task->run();
   $task->close();

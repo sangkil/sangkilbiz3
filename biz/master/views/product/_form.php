@@ -6,8 +6,6 @@ use yii\widgets\ActiveForm;
 use biz\master\models\Category;
 use biz\master\models\ProductGroup;
 use yii\bootstrap\Modal;
-use biz\master\models\Uom;
-use biz\master\models\ProductUom;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\bootstrap\Tabs;
@@ -48,7 +46,7 @@ use yii\bootstrap\Tabs;
 
             <?= $form->field($model, 'id_group')->dropDownList(ArrayHelper::map(ProductGroup::find()->all(), 'id_group', 'nm_group'), ['style' => 'width:200px;']); ?>
 
-        </div>   
+        </div>
         <div class="panel-footer">
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

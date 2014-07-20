@@ -43,8 +43,8 @@ class ConfigController extends Controller
 
     /**
      * Displays a single GlobalConfig model.
-     * @param string $group
-     * @param string $name
+     * @param  string $group
+     * @param  string $name
      * @return mixed
      */
     public function actionView($group, $name)
@@ -75,8 +75,8 @@ class ConfigController extends Controller
     /**
      * Updates an existing GlobalConfig model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $group
-     * @param string $name
+     * @param  string $group
+     * @param  string $name
      * @return mixed
      */
     public function actionUpdate($group, $name)
@@ -95,8 +95,8 @@ class ConfigController extends Controller
     /**
      * Deletes an existing GlobalConfig model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $group
-     * @param string $name
+     * @param  string $group
+     * @param  string $name
      * @return mixed
      */
     public function actionDelete($group, $name)
@@ -109,9 +109,9 @@ class ConfigController extends Controller
     /**
      * Finds the GlobalConfig model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $group
-     * @param string $name
-     * @return GlobalConfig the loaded model
+     * @param  string                $group
+     * @param  string                $name
+     * @return GlobalConfig          the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($group, $name)

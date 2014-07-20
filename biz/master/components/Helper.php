@@ -27,6 +27,7 @@ class Helper
     public static function getCurrentStock($id_whse, $id_product)
     {
         $stock = ProductStock::findOne(['id_warehouse' => $id_whse, 'id_product' => $id_product]);
+
         return $stock ? $stock->qty_stock : 0;
     }
 
@@ -81,6 +82,7 @@ class Helper
         if (!$cogs->save()) {
             throw new UserException(implode(",\n", $cogs->firstErrors));
         }
+
         return true;
     }
 
@@ -90,6 +92,7 @@ class Helper
             return $price;
         }
         $_formula_ = preg_replace('/price/i', '$price', $_formula_);
+
         return empty($_formula_) ? $price : eval("return $_formula_;");
     }
 
@@ -127,6 +130,7 @@ class Helper
     public static function getProductUomList($id_product)
     {
         $uoms = ProductUom::find()->with('idUom')->where(['id_product' => $id_product])->all();
+
         return ArrayHelper::map($uoms, 'id_uom', 'idUom.nm_uom');
     }
 
@@ -136,6 +140,7 @@ class Helper
     public static function getSmallestProductUom($id_product)
     {
         $uom = ProductUom::findOne(['id_product' => $id_product, 'isi' => 1]);
+
         return $uom ? $uom->id_uom : false;
     }
 
@@ -145,12 +150,14 @@ class Helper
     public static function getQtyProductUom($id_product, $id_uom)
     {
         $pu = ProductUom::findOne(['id_product' => $id_product, 'id_uom' => $id_uom]);
+
         return $pu ? $pu->isi : false;
     }
 
     public static function getConfigValue($group, $name, $default = null)
     {
         $model = GlobalConfig::findOne(['group' => $group, 'name' => $name]);
+
         return $model ? $model->value : $default;
     }
 
@@ -160,6 +167,7 @@ class Helper
         if ($branch !== false) {
             $query->where(['id_branch' => $branch]);
         }
+
         return ArrayHelper::map($query->asArray()->all(), 'id_warehouse', 'nm_whse');
     }
 
@@ -176,6 +184,7 @@ class Helper
             return ArrayHelper::map(Branch::find()->all(), 'id_branch', 'nm_branch');
         } else {
             $query = UserToBranch::find()->with('idBranch')->where(['user_id' => $id_user]);
+
             return ArrayHelper::map($query->all(), 'id_branch', 'idBranch.nm_branch');
         }
     }
@@ -186,6 +195,7 @@ class Helper
         if ($idCat !== null) {
             $query->where(['id_category' => $idCat]);
         }
+
         return ArrayHelper::map($query->asArray()->all(), 'id_category', 'nm_category');
     }
 
@@ -195,6 +205,7 @@ class Helper
         if ($idGroup !== null) {
             $query->where(['id_group' => $idGroup]);
         }
+
         return ArrayHelper::map($query->asArray()->all(), 'id_group', 'nm_group');
     }
 

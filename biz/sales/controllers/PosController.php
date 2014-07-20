@@ -9,7 +9,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use mdm\clienttools\AppCache;
-use yii\db\Query;
 use yii\web\Response;
 use biz\sales\models\Cashdrawer;
 use biz\sales\models\Cogs;
@@ -62,6 +61,7 @@ class PosController extends Controller
     public function actionMasters()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+
         return $this->getDataMaster();
     }
 
@@ -79,6 +79,7 @@ class PosController extends Controller
             if ($model->load($app->request->post()) && $model->save()) {
                 $app->clientIdBranch = $model->id_branch;
                 $app->clientCashierNo = $model->cashier_no;
+
                 return [
                     'type' => 'S',
                     'drawer' => [
@@ -117,6 +118,7 @@ class PosController extends Controller
             if ($model->create_at > date('Y-m-d 00:00:00')) {
                 $app->clientIdBranch = $model->id_branch;
                 $app->clientCashierNo = $model->cashier_no;
+
                 return [
                     'type' => 'S',
                     'drawer' => [
@@ -154,6 +156,7 @@ class PosController extends Controller
             }
         }
         $model->status = Cashdrawer::STATUS_OPEN;
+
         return $this->render('close', ['model' => $model]);
     }
 
@@ -189,6 +192,7 @@ class PosController extends Controller
         } catch (\Exception $exc) {
             $transaction->rollback();
         }
+
         return [
             'type' => 'E'
         ];
@@ -197,6 +201,7 @@ class PosController extends Controller
     public function actionTotalCash($id)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+
         return[
             'type' => 'S',
             'total' => 100000
@@ -211,8 +216,8 @@ class PosController extends Controller
     /**
      * Finds the Sales model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Sales the loaded model
+     * @param  integer               $id
+     * @return Sales                 the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

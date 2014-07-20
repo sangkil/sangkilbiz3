@@ -21,5 +21,3 @@ echo GridView::widget([
         'isi'
     ],
 ]);
-
-

@@ -27,10 +27,10 @@ class StockHook extends \yii\base\Behavior
     }
 
     /**
-     * 
-     * @param array $params
-     * Required field id_warehouse, id_product, id_uom, qty
-     * Optional field app, id_ref
+     *
+     * @param  array         $params
+     *                               Required field id_warehouse, id_product, id_uom, qty
+     *                               Optional field app, id_ref
      * @return boolean
      * @throws UserException
      */
@@ -65,11 +65,12 @@ class StockHook extends \yii\base\Behavior
         if (!$stock->save()) {
             throw new UserException(implode(",\n", $stock->firstErrors));
         }
+
         return true;
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function purchaseReceiveBody($event)
@@ -87,7 +88,7 @@ class StockHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function transferIssueBody($event)
@@ -108,7 +109,7 @@ class StockHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function salesStdrReleaseBody($event)
@@ -126,7 +127,7 @@ class StockHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function receiveReceiveBody($event)
@@ -146,7 +147,7 @@ class StockHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function transferNoticeApproveBody($event)

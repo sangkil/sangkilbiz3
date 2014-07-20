@@ -19,9 +19,9 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected $name = 'master';
 
     /**
-     * 
+     *
      * @param \yii\base\Application $app
-     * @param array $config
+     * @param array                 $config
      */
     protected function initialize($app, $config)
     {
@@ -38,7 +38,7 @@ class Bootstrap extends \biz\app\base\Bootstrap
     }
 
     /**
-     * 
+     *
      * @param \yii\web\User $user
      */
     protected function attachUserProperty($user)

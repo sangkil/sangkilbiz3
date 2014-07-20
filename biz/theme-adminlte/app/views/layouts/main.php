@@ -34,7 +34,7 @@ $baseurl = $lte_asset->baseUrl;
             <aside class="right-side">
                 <section class="content-header">
                     <h1>
-                        <?= '&nbsp;' . Html::encode($this->title) ?>                        
+                        <?= '&nbsp;' . Html::encode($this->title) ?>
                         <small><?php echo \Yii::$app->controller->id . '-' . \Yii::$app->controller->action->id; ?></small>
                     </h1>
 <!--                    <ol class="breadcrumb">
@@ -47,7 +47,7 @@ $baseurl = $lte_asset->baseUrl;
                         if ($module != Yii::$app) {
                             array_unshift($breadcrumbs, ['label' => Inflector::camel2words($module->id), 'url' => ['/' . $module->uniqueId]]);
                         }
-                    }                    
+                    }
                     ?>
                     <?=
                     Breadcrumbs::widget([
@@ -58,7 +58,7 @@ $baseurl = $lte_asset->baseUrl;
                     ])
                     ?>
                 </section>
-                <section class="content">                    
+                <section class="content">
                     <?= $content ?>
                 </section>
             </aside>

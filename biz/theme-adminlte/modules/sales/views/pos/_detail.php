@@ -20,7 +20,7 @@ use yii\jui\AutoComplete;
             ]);
             ?>
         </div>
-        <div class="box-body" style="text-align: right; padding-top: 0px; padding-bottom: 0px;">        
+        <div class="box-body" style="text-align: right; padding-top: 0px; padding-bottom: 0px;">
             <input type="hidden" id="h-total-price"><h2>Rp<span id="total-price"></span></h2>
         </div>
     </div>

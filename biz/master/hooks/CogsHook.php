@@ -47,11 +47,12 @@ class CogsHook extends \yii\base\Behavior
         if (!$cogs->save()) {
             throw new UserException(implode(",\n", $cogs->firstErrors));
         }
+
         return true;
     }
 
     /**
-     * 
+     *
      * @param \biz\app\base\Event $event
      */
     public function purchaseReceiveBody($event)

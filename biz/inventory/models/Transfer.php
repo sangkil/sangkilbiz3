@@ -20,11 +20,11 @@ use biz\master\models\Warehouse;
  * @property integer $create_by
  * @property string $update_at
  * @property integer $update_by
- * 
+ *
  * @property string $nmStatus
  * @property string $transferDate
  * @property string $receiveDate
- * 
+ *
  * @property Warehouse $idWarehouseSource
  * @property Warehouse $idWarehouseDest
  * @property TransferDtl[] $transferDtls
@@ -40,7 +40,7 @@ class Transfer extends \yii\db\ActiveRecord
     const STATUS_CONFIRM_REJECT = 5;
     const STATUS_CONFIRM_APPROVE = 6;
     const STATUS_RECEIVE = 7;
-    
+
     const SCENARIO_RECEIVE = 'receive';
 
     /**
@@ -147,7 +147,7 @@ class Transfer extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\relation\RelationBehavior',            
+            'mdm\relation\RelationBehavior',
         ];
     }
 }

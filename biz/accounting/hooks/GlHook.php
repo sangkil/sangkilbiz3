@@ -5,8 +5,6 @@ namespace biz\accounting\hooks;
 use biz\app\Hooks;
 use biz\accounting\components\Helper as AccHelper;
 use biz\accounting\models\GlHeader;
-use biz\accounting\models\GlDetail;
-use yii\base\UserException;
 
 /**
  * Description of Gl
@@ -24,7 +22,7 @@ class GlHook extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \biz\base\Event $event
      */
     public function purchaseReceiveEnd($event)

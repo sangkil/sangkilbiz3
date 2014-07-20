@@ -43,7 +43,7 @@ class WarehouseController extends Controller
 
     /**
      * Displays a single Warehouse model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -74,7 +74,7 @@ class WarehouseController extends Controller
     /**
      * Updates an existing Warehouse model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -93,7 +93,7 @@ class WarehouseController extends Controller
     /**
      * Deletes an existing Warehouse model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -106,8 +106,8 @@ class WarehouseController extends Controller
     /**
      * Finds the Warehouse model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Warehouse the loaded model
+     * @param  integer               $id
+     * @return Warehouse             the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

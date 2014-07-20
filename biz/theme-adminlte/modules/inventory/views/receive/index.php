@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchase-hdr-index">
     <div class="col-lg-4" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?> 
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="col-lg-12">
         <?php //Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $warnaStatus = 'label-success';
                                 break;
                         }
+
                         return "<span class='label $warnaStatus'>{$model->nmStatus}</span>";
                     },
                             'format' => 'raw'
@@ -71,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'buttons' => [
                                 'update' => function ($url, $model) {
                             $allowUpdate = [Transfer::STATUS_ISSUE, Transfer::STATUS_DRAFT_RECEIVE];
+
                             return in_array($model->status, $allowUpdate) ? Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                         'title' => Yii::t('yii', 'Update'),
                                         'data-pjax' => '0',
@@ -78,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                                 'receive' => function ($url, $model) {
                             $url = ['receive', 'id' => $model->id_transfer];
+
                             return $model->status == Transfer::STATUS_DRAFT_RECEIVE ? Html::a('<span class="glyphicon glyphicon-save"></span>', $url, [
                                         'title' => Yii::t('yii', 'Receive'),
                                         'data-confirm' => Yii::t('yii', 'Are you sure you want to receive this item?'),
@@ -145,6 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $warnaStatus = 'label-primary';
                                         break;
                                 }
+
                                 return "<span class='label $warnaStatus'>{$model->nmStatus}</span>";
                             },
                             'format' => 'raw'

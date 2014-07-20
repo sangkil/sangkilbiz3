@@ -72,6 +72,7 @@ class SiteController extends Controller
                 'comment' => $comment
             ];
         }
+
         return $this->render('index', ['modules' => $modules]);
     }
 
@@ -113,8 +114,9 @@ class SiteController extends Controller
                 'model' => $model,
         ]);
     }
-    
-    public function actionUserList(){
+
+    public function actionUserList()
+    {
         $searchModel = new \app\models\UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 

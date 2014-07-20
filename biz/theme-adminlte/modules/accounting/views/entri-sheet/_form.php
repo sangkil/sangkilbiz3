@@ -35,7 +35,7 @@ echo $form->errorSummary($models);
                 <th>Account</th>
                 <th>
                     <a href="#" data-action="append"><span class="glyphicon glyphicon-plus"></span></a>
-                </th>                        
+                </th>
             </tr>
         </thead>
         <?=
@@ -62,14 +62,15 @@ yii\jui\AutoCompleteAsset::register($this);
 yii\jui\ThemeAsset::register($this);
 biz\app\assets\BizAsset::register($this);
 $jsFunc = <<<JS
-function(\$row) {
+function (\$row) {
     \$row.find('.nm_account').autocomplete({
         source: biz.master.coas,
-        select: function(event, ui) {
+        select: function (event, ui) {
             var \$row = $(event.target).closest('tr');
             \$row.find('.id_account').val(ui.item.id);
             \$row.find('.cd_account').text(ui.item.cd_coa);
             \$row.find('.nm_account').val(ui.item.value);
+
             return false;
         }
     });
@@ -82,8 +83,9 @@ biz\app\assets\BizDataAsset::register($this, [
     ]
 ]);
 $js = <<<JS
-\$('#tbl-entryheader a[data-action="append"]').click(function() {
+\$('#tbl-entryheader a[data-action="append"]').click(function () {
     $('#tbl-entrydetail').mdmEditableList('addRow');
+
     return false;
 });
 JS;

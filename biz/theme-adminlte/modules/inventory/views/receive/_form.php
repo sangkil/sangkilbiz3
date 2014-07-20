@@ -42,9 +42,9 @@ use yii\widgets\ActiveForm;
                 ?>
             </div>
         </div>
-    </div>   
-    <div class="col-lg-8">         
+    </div>
+    <div class="col-lg-8">
         <?= $this->render('_detail', ['model' => $model, 'details' => $details]) ?>
-    </div> 
+    </div>
     <?php ActiveForm::end(); ?>
 </div>

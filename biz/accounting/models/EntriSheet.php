@@ -3,7 +3,6 @@
 namespace biz\accounting\models;
 
 use Yii;
-use biz\master\models\Branch;
 
 /**
  * This is the model class for table "entri_sheet".

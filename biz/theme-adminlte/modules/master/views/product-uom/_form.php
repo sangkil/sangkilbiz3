@@ -31,8 +31,8 @@ use biz\master\models\Uom;
                         'options' => ['class' => 'form-control', 'id' => $id_input],
                         'clientOptions' => [
                             'source' => Url::toRoute(['product/auto-product']),
-                            'select' => new JsExpression('function(event,ui){$(\'#id_product\').val(ui.item.did)}'),
-                            'open' => new JsExpression('function(event,ui){$(\'#id_product\').val(\'\')}'),
+                            'select' => new JsExpression('function (event,ui) {$(\'#id_product\').val(ui.item.did)}'),
+                            'open' => new JsExpression('function (event,ui) {$(\'#id_product\').val(\'\')}'),
                         ],
             ]);
             echo $field;

@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'id_product')->textInput() ?>
             <?= $form->field($model, 'id_supplier')->textInput() ?>
         </div>
-        <div class="box-footer">   
+        <div class="box-footer">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>

@@ -52,7 +52,7 @@ class ReceiveController extends Controller
 
     /**
      * Displays a single Transfer model.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -63,7 +63,7 @@ class ReceiveController extends Controller
     /**
      * Updates an existing Purchase model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param  integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -80,6 +80,7 @@ class ReceiveController extends Controller
             $result = $model->saveRelation('transferDtls', Yii::$app->request->post());
             if ($result === 1) {
                 $transaction->commit();
+
                 return $this->redirect(['view', 'id' => $model->id_transfer]);
             } else {
                 $transaction->rollBack();
@@ -88,14 +89,13 @@ class ReceiveController extends Controller
             $transaction->rollBack();
             $model->addError('', $exc->getMessage());
         }
-        
+
         return $this->render('update', [
                 'model' => $model,
                 'details' => $model->transferDtls,
                 'masters' => $this->getDataMaster()
         ]);
     }
-
 
     public function actionReceive($id)
     {
@@ -127,8 +127,8 @@ class ReceiveController extends Controller
     /**
      * Finds the Transfer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Transfer the loaded model
+     * @param  integer               $id
+     * @return Transfer              the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

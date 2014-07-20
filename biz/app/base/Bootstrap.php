@@ -14,7 +14,7 @@ class Bootstrap implements \yii\base\BootstrapInterface
     protected $name;
 
     /**
-     * 
+     *
      * @param \yii\web\Application $app
      */
     public function bootstrap($app)
@@ -31,11 +31,11 @@ class Bootstrap implements \yii\base\BootstrapInterface
 
     protected function initialize($app, $config)
     {
-        
+
     }
 
     /**
-     * 
+     *
      * @param \yii\web\Application $app
      */
     protected function autoDefineModule($app)

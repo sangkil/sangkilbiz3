@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $model biz\models\GlHeader */
 /* @var $this yii\web\View */
 /* @var $details biz\models\GlDetails[] */

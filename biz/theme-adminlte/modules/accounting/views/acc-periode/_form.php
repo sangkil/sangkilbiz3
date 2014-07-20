@@ -30,9 +30,9 @@ use yii\jui\DatePicker;
                     'dateFormat' => 'yy-mm-dd',
                 ],])
             ?>
-            
+
            <?= $form->field($model, 'status')->dropDownList(['0'=>'Open','1'=>'Close']) ?>
-            
+
         </div>
         <div class="box-footer">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
