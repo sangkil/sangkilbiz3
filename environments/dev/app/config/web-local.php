@@ -1,9 +1,10 @@
 <?php
+
 $config = [
     'modules' => [
     ],
     'components' => [
-        'view'=>[
+        'view' => [
 //            'theme' => 'biz\adminlte\Theme'
         ],
         'authManager' => [
@@ -13,7 +14,7 @@ $config = [
             'forceCopy' => true,
         ],
         'request' => [
-            'cookieValidationKey' => md5(__FILE__),
+            'cookieValidationKey' => '',
         ]
     ]
 ];

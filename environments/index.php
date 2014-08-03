@@ -19,22 +19,28 @@
 return [
     'Development' => [
         'path' => 'dev',
-        'writable' => [
+        'setWritable' => [
             'app/runtime',
             'app/web/assets',
         ],
-        'executable' => [
+        'setExecutable' => [
             'yii',
         ],
+        'setCookieValidationKey' => [
+            'app/config/web-local.php'
+        ]
     ],
     'Production' => [
         'path' => 'prod',
-        'writable' => [
+        'setWritable' => [
             'app/runtime',
             'app/web/assets',
         ],
-        'executable' => [
+        'setExecutable' => [
             'yii',
         ],
+        'setCookieValidationKey' => [
+            'app/config/web-local.php'
+        ]
     ],
 ];
