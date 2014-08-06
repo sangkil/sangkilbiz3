@@ -2,7 +2,7 @@
 
 namespace biz\purchase;
 
-use biz\app\components\Helper;
+use biz\app\components\Helper as AppHelper;
 
 /**
  * Description of Bootstrap
@@ -21,7 +21,7 @@ class Bootstrap extends \biz\app\base\Bootstrap
     protected function initialize($app, $config)
     {
         if ($app instanceof \yii\web\Application) {
-            Helper::registerAccessHandler(models\Purchase::className(), components\AccessHandler::className());
+            AppHelper::registerAccessHandler(models\Purchase::className(), components\AccessHandler::className());
         }
     }
 }
