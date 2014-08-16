@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\accounting\models\EntriSheetDtl;
-use mdm\relation\EditableList;
+use mdm\widgets\TabularInput;
 use biz\accounting\components\Helper as AccHelper;
 
 /* @var $model biz\accounting\models\EntriSheet */
@@ -42,7 +42,7 @@ use biz\accounting\components\Helper as AccHelper;
                 </tr>
             </thead>
             <?=
-            EditableList::widget([
+            TabularInput::widget([
                 'id' => 'tbl-entrydetail',
                 'allModels' => $model->entriSheetDtls,
                 'modelClass' => EntriSheetDtl::className(),
@@ -88,7 +88,7 @@ biz\app\assets\BizDataAsset::register($this, [
 ]);
 $js = <<<JS
 \$('#tbl-entryheader a[data-action="append"]').click(function () {
-    $('#tbl-entrydetail').mdmEditableList('addRow');
+    $('#tbl-entrydetail').mdmTabularInput('addRow');
 
     return false;
 });

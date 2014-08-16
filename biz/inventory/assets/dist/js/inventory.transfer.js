@@ -3,7 +3,7 @@ yii.transfer = (function($) {
     var local = {
         addItem: function(item) {
             var has = false;
-            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
+            $.each($('#detail-grid').mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 if ($row.find('input[data-field="id_product"]').val() == item.id) {
                     has = true;
@@ -16,7 +16,7 @@ yii.transfer = (function($) {
                 }
             });
             if (!has) {
-                var $row = $('#detail-grid').mdmEditableList('addRow');
+                var $row = $('#detail-grid').mdmTabularInput('addRow');
 
                 $row.find('span.cd_product').text(item.cd);
                 $row.find('span.nm_product').text(item.text);
@@ -28,7 +28,7 @@ yii.transfer = (function($) {
                     $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
                 });
 
-                $('#detail-grid').mdmEditableList('selectRow', $row);
+                $('#detail-grid').mdmTabularInput('selectRow', $row);
                 $row.find('input[data-field="transfer_qty_send"]').focus();
             }
             local.normalizeItem();
@@ -38,7 +38,7 @@ yii.transfer = (function($) {
         },
         normalizeItem: function() {
             var total = 0.0;
-            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
+            $.each($('#detail-grid').mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var q = $row.find('input[data-field="purch_qty"]').val();
                 q = q == '' ? 1 : q;

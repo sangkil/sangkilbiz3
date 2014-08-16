@@ -5,7 +5,7 @@ use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use biz\inventory\assets\ReceiveAsset;
 use biz\app\assets\BizDataAsset;
-use mdm\relation\EditableList;
+use mdm\widgets\TabularInput;
 
 /**
  * @var TransferDtl[] $model
@@ -33,7 +33,7 @@ use mdm\relation\EditableList;
                 </tr>
             </tfoot>
             <?=
-            EditableList::widget([
+            TabularInput::widget([
                 'id' => 'detail-grid',
                 'allModels' => $details,
                 'modelClass' => TransferDtl::className(),

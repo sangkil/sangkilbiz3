@@ -9,7 +9,7 @@ yii.purchase = (function($) {
         },
         addItem: function(item) {
             var has = false;
-            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
+            $.each($('#detail-grid').mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 if ($row.find('input[data-field="id_product"]').val() == item.id) {
                     has = true;
@@ -18,7 +18,7 @@ yii.purchase = (function($) {
                 }
             });
             if (!has) {
-                var $row = $('#detail-grid').mdmEditableList('addRow');
+                var $row = $('#detail-grid').mdmTabularInput('addRow');
 
                 $row.find('span.cd_product').text(item.cd);
                 $row.find('span.nm_product').text(item.text);
@@ -31,14 +31,14 @@ yii.purchase = (function($) {
                     $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
                 });
 
-                $('#detail-grid').mdmEditableList('selectRow', $row);
+                $('#detail-grid').mdmTabularInput('selectRow', $row);
                 $row.find('input[data-field="purch_qty"]').focus();
             }
             local.normalizeItem();
         },
         normalizeItem: function() {
             var total = 0.0;
-            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
+            $.each($('#detail-grid').mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var q = $row.find('input[data-field="purch_qty"]').val();
                 q = (q == '' ? 1 : q);
@@ -150,7 +150,7 @@ yii.purchase = (function($) {
             });
             
             // inisialisasi uom
-            $.each($('#detail-grid').mdmEditableList('getAllRows'), function() {
+            $.each($('#detail-grid').mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
                 if (product) {

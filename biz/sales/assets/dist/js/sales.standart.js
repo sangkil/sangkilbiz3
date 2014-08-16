@@ -4,7 +4,7 @@ yii.standart = (function($) {
     var local = {
         addItem: function(item) {
             var has = false;
-            $.each($grid.mdmEditableList('getAllRows'), function() {
+            $.each($grid.mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 if ($row.find('input[data-field="id_product"]').val() == item.id) {
                     has = true;
@@ -13,7 +13,7 @@ yii.standart = (function($) {
                 }
             });
             if (!has) {
-                var $row = $grid.mdmEditableList('addRow');
+                var $row = $grid.mdmTabularInput('addRow');
 
                 $row.find('span.cd_product').text(item.cd);
                 $row.find('span.nm_product').text(item.text);
@@ -28,7 +28,7 @@ yii.standart = (function($) {
                 });
 
                 $row.find('input[data-field="sales_qty"]').focus();
-                $grid.mdmEditableList('selectRow', $row);
+                $grid.mdmTabularInput('selectRow', $row);
             }
             local.normalizeItem();
         },
@@ -38,7 +38,7 @@ yii.standart = (function($) {
         normalizeItem: function() {
             var total = 0.0;
             var pc = $('#price_ct').val();
-            $.each($grid.mdmEditableList('getAllRows'), function() {
+            $.each($grid.mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var pid = $row.find('input[data-field="id_product"]').val();
                 var qty = $row.find('input[data-field="sales_qty"]').val();
@@ -142,7 +142,7 @@ yii.standart = (function($) {
             });
             
             // inisialisasi uom
-            $.each($grid.mdmEditableList('getAllRows'), function() {
+            $.each($grid.mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var product = biz.master.products[$row.find('[data-field="id_product"]').val()];
                 if (product) {

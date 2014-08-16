@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
-use mdm\relation\EditableList;
+use mdm\widgets\TabularInput;
 use biz\accounting\models\GlDetail;
 
 /* @var $this yii\web\View */
@@ -46,7 +46,7 @@ use biz\accounting\models\GlDetail;
             </tr>
         </thead>
         <?=
-        EditableList::widget([
+        TabularInput::widget([
             'id'=>'gl-detail',
             'allModels' => $model->glDetails,
             'modelClass' => GlDetail::className(),

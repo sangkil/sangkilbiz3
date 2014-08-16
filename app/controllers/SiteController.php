@@ -53,6 +53,9 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'page' => [
+                'class' => 'yii\web\ViewAction',
+            ]
         ];
     }
 
@@ -124,10 +127,5 @@ class SiteController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
         ]);
-    }
-
-    public function actionPage($view = 'index')
-    {
-        return $this->render('pages/' . $view);
     }
 }

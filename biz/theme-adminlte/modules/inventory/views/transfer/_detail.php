@@ -23,7 +23,7 @@ use biz\models\TransferDtl;
     <div class="box-body no-padding">
         <table class="table table-striped">
             <?=
-            EditableList::widget([
+            TabularInput::widget([
                 'id' => 'detail-grid',
                 'allModels' => $model->transferDtls,
                 'modelClass' => TransferDtl::className(),

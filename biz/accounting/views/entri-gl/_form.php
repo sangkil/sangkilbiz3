@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\accounting\models\GlDetail;
-use mdm\relation\EditableList;
+use mdm\widgets\TabularInput;
 use biz\accounting\components\Helper as AccHelper;
 
 /* @var $model biz\accounting\models\GlHeader */
@@ -52,7 +52,7 @@ use biz\accounting\components\Helper as AccHelper;
                 </tr>
             </thead>
             <?=
-            EditableList::widget([
+            TabularInput::widget([
                 'id' => 'tbl-gldetail',
                 'allModels' => $model->glDetails,
                 'itemView' => '_detail',
@@ -99,7 +99,7 @@ biz\app\assets\BizDataAsset::register($this, [
 ]);
 $js = <<<JS
 \$('#tbl-glheader a[data-action="append"]').click(function () {
-    $('#tbl-gldetail').mdmEditableList('addRow');
+    $('#tbl-gldetail').mdmTabularInput('addRow');
 
     return false;
 });

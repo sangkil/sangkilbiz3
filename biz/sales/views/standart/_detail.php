@@ -3,7 +3,7 @@
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use biz\sales\models\SalesDtl;
-use mdm\relation\EditableList;
+use mdm\widgets\TabularInput;
 use biz\sales\assets\StandartAsset;
 use biz\app\assets\BizDataAsset;
 use biz\master\components\Helper as MasterHelper;
@@ -41,7 +41,7 @@ use yii\helpers\ArrayHelper;
         </div>
         <table class="table table-striped">
             <?=
-            EditableList::widget([
+            TabularInput::widget([
                 'id' => 'detail-grid',
                 'allModels' => $model->salesDtls,
                 'modelClass' => SalesDtl::className(),

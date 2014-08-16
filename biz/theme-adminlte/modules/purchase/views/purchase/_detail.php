@@ -4,7 +4,7 @@ use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use yii\helpers\Html;
 use biz\purchase\models\PurchaseDtl;
-use mdm\relation\EditableList;
+use mdm\widgets\TabularInput;
 use biz\purchase\assets\PurchaseAsset;
 use biz\app\assets\BizDataAsset;
 use biz\master\components\Helper as MasterHelper;
@@ -41,7 +41,7 @@ use biz\master\components\Helper as MasterHelper;
         </div>
         <table class="table table-striped">
             <?=
-            EditableList::widget([
+            TabularInput::widget([
                 'id'=>'detail-grid',
                 'allModels' => $details,
                 'modelClass' => PurchaseDtl::className(),
