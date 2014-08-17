@@ -72,7 +72,7 @@ class EntriSheet extends \yii\db\ActiveRecord
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
-            'mdm\relation\RelationBehavior'
+            'mdm\behaviors\ar\RelationBehavior'
         ];
     }
 }

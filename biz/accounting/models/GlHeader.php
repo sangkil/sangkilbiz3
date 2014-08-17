@@ -124,7 +124,7 @@ class GlHeader extends \yii\db\ActiveRecord
                     'glDate' => 'gl_date'
                 ]
             ],
-            'mdm\relation\RelationBehavior'
+            'mdm\behaviors\ar\RelationBehavior'
         ];
     }
 }

@@ -34,8 +34,7 @@
 		"mdmsoft/yii2-logger": "*",
 		"mdmsoft/yii2-format-converter": "*",
 		"mdmsoft/yii2-client-tools": "*",
-		"mdmsoft/yii2-ar-relation": "*",
-		"mdmsoft/yii2-ar-extended": "*",
+		"mdmsoft/yii2-ar-behaviors": "*",
 		"mdmsoft/yii2-widgets": "*"
 	},
 	"require-dev": {

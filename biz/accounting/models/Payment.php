@@ -96,7 +96,7 @@ class Payment extends \yii\db\ActiveRecord
                     'paymentDate' => 'payment_date',
                 ]
             ],
-            'mdm\relation\RelationBehavior'
+            'mdm\behaviors\ar\RelationBehavior'
         ];
     }
 }

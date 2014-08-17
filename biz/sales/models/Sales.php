@@ -130,7 +130,7 @@ class Sales extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\relation\RelationBehavior'
+            'mdm\behaviors\ar\RelationBehavior'
         ];
     }
 }
