@@ -2,8 +2,6 @@
 
 namespace biz\app;
 
-use Yii;
-
 /**
  * Description of Bootstrapt
  *

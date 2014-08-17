@@ -9,7 +9,7 @@ use yii\base\InvalidConfigException;
 
 /**
  * Description of ExtendedBehavior
- * 
+ *
  * @property \yii\db\BaseActiveRecord $owner
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
@@ -18,19 +18,19 @@ class ExtendedBehavior extends \yii\base\Behavior
 {
     /**
      *
-     * @var \yii\db\BaseActiveRecord 
+     * @var \yii\db\BaseActiveRecord
      */
     private $_relation;
 
     /**
      *
-     * @var string 
+     * @var string
      */
     public $relationClass;
 
     /**
      *
-     * @var array 
+     * @var array
      */
     public $relationKey;
 
@@ -114,7 +114,7 @@ class ExtendedBehavior extends \yii\base\Behavior
     }
 
     /**
-     * 
+     *
      * @param \yii\base\Event $event
      */
     public function afterSave($event)
@@ -124,7 +124,7 @@ class ExtendedBehavior extends \yii\base\Behavior
         }
         $this->_relation->save();
     }
-    
+
     public function afterDelete($event)
     {
         $this->_relation->delete();
