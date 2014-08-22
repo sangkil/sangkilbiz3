@@ -30,12 +30,14 @@
 		"yiisoft/yii2-jui": "*",
 		"yiisoft/yii2-mongodb": "*",
 		"mdmsoft/yii2-admin": "*",
+		"mdmsoft/yii2-captcha": "*",
 		"mdmsoft/yii2-autonumber": "*",
 		"mdmsoft/yii2-logger": "*",
 		"mdmsoft/yii2-format-converter": "*",
 		"mdmsoft/yii2-client-tools": "*",
 		"mdmsoft/yii2-ar-behaviors": "*",
-		"mdmsoft/yii2-widgets": "*"
+		"mdmsoft/yii2-widgets": "*",
+		"mdmsoft/yii2-export-tools": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-codeception": "*",
