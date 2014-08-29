@@ -11,3 +11,4 @@ Sangkilbiz3 Change Log
 - Add: Add fitur to setting environment at init (mdmunir).
 - Chg: Db migration fix (mdmunir).
 - Chg: Set `yii\web\Request::cookieValidationKey` via init (mdmunir).
+- Chg: `Model::saveRelation()` only save a relation (mdmunir).

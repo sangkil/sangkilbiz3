@@ -38,13 +38,13 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_warehouse'],'default','value'=>function ($model) {
-                return $model->idPurchase->id_warehouse;
+            [['id_warehouse'], 'default', 'value' => function ($model) {
+                return $model->idPurchase ? $model->idPurchase->id_warehouse : null;
             }],
-            [['id_purchase', 'id_product', 'id_warehouse', 'id_uom', 'purch_qty', 'sales_price'], 'required'],
+            [['id_purchase', 'id_product', 'id_uom', 'id_warehouse', 'purch_qty', 'sales_price'], 'required'],
             [['id_purchase', 'id_product', 'id_warehouse', 'id_uom'], 'integer'],
             [['purch_qty', 'purch_price', 'sales_price'], 'double'],
-            [['salesPrices'], 'safe']
+            [['salesPrices'], 'safe'],
         ];
     }
 
@@ -72,7 +72,6 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Purchase::className(), ['id_purchase' => 'id_purchase']);
     }
-
     /**
      *
      * @var array
@@ -99,12 +98,12 @@ class PurchaseDtl extends \yii\db\ActiveRecord
 
     public function getIdProduct()
     {
-        return $this->hasOne(Product::className(), ['id_product'=>'id_product']);
+        return $this->hasOne(Product::className(), ['id_product' => 'id_product']);
     }
 
     public function getIdUom()
     {
-        return $this->hasOne(Uom::className(), ['id_uom'=>'id_uom']);
+        return $this->hasOne(Uom::className(), ['id_uom' => 'id_uom']);
     }
 
     public function afterSave($insert, $changedAttributes)

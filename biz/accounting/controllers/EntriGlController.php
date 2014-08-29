@@ -61,40 +61,44 @@ class EntriGlController extends Controller
      */
     public function actionCreate()
     {
-        $model = new GlHeader;
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('glDetails', Yii::$app->request->post());
-            if ($result === 1) {
-                $error = false;
-                if (count($model->glDetails) == 0) {
-                    $model->addError('', 'Detail cannot be blank');
-                    $error = true;
-                }
-                $balance = 0.0;
-                foreach ($model->glDetails as $detail) {
-                    $balance += $detail->amount;
-                }
-                if ($balance != 0) {
-                    $model->addError('', 'Details should be balance');
-                    $error = true;
-                }
-                //
-                if ($error) {
-                    $transaction->rollBack();
-                } else {
-                    $transaction->commit();
+        $model = new GlHeader();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('glDetails', $post) && $success;
+                if ($success) {
+                    $error = false;
+                    if (count($model->glDetails) == 0) {
+                        $model->addError('', 'Detail cannot be blank');
+                        $error = true;
+                    }
+                    $balance = 0.0;
+                    foreach ($model->glDetails as $detail) {
+                        $balance += $detail->amount;
+                    }
+                    if ($balance != 0) {
+                        $model->addError('', 'Details should be balance');
+                        $error = true;
+                    }
+                    //
+                    if ($error) {
+                        $transaction->rollBack();
+                    } else {
+                        $transaction->commit();
 
-                    return $this->redirect(['view', 'id' => $model->id_gl]);
+                        return $this->redirect(['view', 'id' => $model->id_gl]);
+                    }
+                } else {
+                    $transaction->rollBack();
                 }
-            } else {
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
+            $model->setIsNewRecord(true);
         }
-        $model->setIsNewRecord(true);
 
         return $this->render('create', [
                 'model' => $model,

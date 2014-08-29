@@ -77,21 +77,25 @@ class StandartController extends Controller
             'status' => Sales::STATUS_DRAFT,
             'sales_date' => date('Y-m-d')
         ]);
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('salesDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('salesDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id_sales]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_sales]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
+            $model->setIsNewRecord(true);
         }
-        $model->setIsNewRecord(true);
 
         return $this->render('create', [
                 'model' => $model,
@@ -144,19 +148,23 @@ class StandartController extends Controller
             2 => 'Bank',
         ];
 
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('salesDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('salesDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id_sales]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_sales]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
         }
 
         return $this->render('create', [

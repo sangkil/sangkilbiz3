@@ -74,22 +74,25 @@ class PurchaseController extends Controller
             'purchase_date' => date('Y-m-d')
         ]);
 
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('purchaseDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('purchaseDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id_purchase]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_purchase]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
+            $model->setIsNewRecord(true);
         }
-
-        $model->setIsNewRecord(true);
 
         return $this->render('create', [
                 'model' => $model,
@@ -109,19 +112,23 @@ class PurchaseController extends Controller
         if (!AppHelper::checkAccess('update', $model)) {
             throw new \yii\web\ForbiddenHttpException('Forbidden');
         }
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('purchaseDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('purchaseDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id_purchase]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_purchase]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
         }
 
         return $this->render('update', [

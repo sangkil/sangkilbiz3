@@ -72,34 +72,38 @@ class GlEntriSheetController extends Controller
                 /* @var $eDtl EntriSheetDtl */
                 $details[$eDtl->nm_esheet_dtl] = new GlDetail(['id_coa' => $eDtl->id_coa]);
             }
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $model->populateRelation('glDetails', $details);
-                $result = $model->saveRelation('glDetails', Yii::$app->request->post());
-                if ($result === 1) {
-                    $error = false;
-                    $balance = 0.0;
-                    foreach ($model->glDetails as $detail) {
-                        $balance += $detail->amount;
-                    }
-                    if ($balance != 0) {
-                        $model->addError('', 'Details should be balance');
-                        $error = true;
-                    }
-                    //
-                    if ($error) {
-                        $transaction->rollBack();
-                    } else {
-                        $transaction->commit();
+            $post = Yii::$app->request->post();
+            if ($model->load($post)) {
+                try {
+                    $transaction = Yii::$app->db->beginTransaction();
+                    $success = $model->save();
+                    $model->populateRelation('glDetails', $details);
+                    $success = $model->saveRelation('glDetails', $post) && $success;
+                    if ($success) {
+                        $error = false;
+                        $balance = 0.0;
+                        foreach ($model->glDetails as $detail) {
+                            $balance += $detail->amount;
+                        }
+                        if ($balance != 0) {
+                            $model->addError('', 'Details should be balance');
+                            $error = true;
+                        }
+                        //
+                        if ($error) {
+                            $transaction->rollBack();
+                        } else {
+                            $transaction->commit();
 
-                        return $this->redirect(['view', 'id' => $model->id_gl]);
+                            return $this->redirect(['view', 'id' => $model->id_gl]);
+                        }
+                    } else {
+                        $transaction->rollBack();
                     }
-                } else {
+                } catch (\Exception $exc) {
                     $transaction->rollBack();
+                    $model->addError('', $exc->getMessage());
                 }
-            } catch (\Exception $exc) {
-                $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
             }
         }
 
@@ -107,25 +111,6 @@ class GlEntriSheetController extends Controller
                 'model' => $model,
                 'es' => $es,
         ]);
-    }
-
-    /**
-     * Updates an existing GlHeader model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param  integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_gl]);
-        } else {
-            return $this->render('update', [
-                    'model' => $model,
-            ]);
-        }
     }
 
     /**

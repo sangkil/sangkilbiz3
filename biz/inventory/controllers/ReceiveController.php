@@ -74,20 +74,24 @@ class ReceiveController extends Controller
         if (!AppHelper::checkAccess('update', $model)) {
             throw new \yii\web\ForbiddenHttpException();
         }
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $model->status = Transfer::STATUS_DRAFT_RECEIVE;
-            $result = $model->saveRelation('transferDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $model->status = Transfer::STATUS_DRAFT_RECEIVE;
+                $success = $model->save();
+                $success = $model->saveRelation('transferDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id_transfer]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_transfer]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
         }
 
         return $this->render('update', [

@@ -62,32 +62,36 @@ class EntriSheetController extends Controller
      */
     public function actionCreate()
     {
-        $model = new EntriSheet;
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('entriSheetDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $error = false;
-                if (count($model->entriSheetDtls) == 0) {
-                    $model->addError('', 'Detail cannot be blank');
-                    $error = true;
-                }
-                //
-                if ($error) {
-                    $transaction->rollBack();
-                } else {
-                    $transaction->commit();
+        $model = new EntriSheet();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('entriSheetDtls', $post) && $success;
+                if ($success) {
+                    $error = false;
+                    if (count($model->entriSheetDtls) == 0) {
+                        $model->addError('', 'Detail cannot be blank');
+                        $error = true;
+                    }
+                    //
+                    if ($error) {
+                        $transaction->rollBack();
+                    } else {
+                        $transaction->commit();
 
-                    return $this->redirect(['view', 'id' => $model->id_esheet]);
+                        return $this->redirect(['view', 'id' => $model->id_esheet]);
+                    }
+                } else {
+                    $transaction->rollBack();
                 }
-            } else {
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
+            $model->setIsNewRecord(true);
         }
-        $model->setIsNewRecord(true);
 
         return $this->render('create', [
                 'model' => $model,
@@ -103,29 +107,33 @@ class EntriSheetController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('entriSheetDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $error = false;
-                if (count($model->entriSheetDtls) == 0) {
-                    $model->addError('', 'Detail cannot be blank');
-                    $error = true;
-                }
-                //
-                if ($error) {
-                    $transaction->rollBack();
-                } else {
-                    $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('entriSheetDtls', $post) && $success;
+                if ($success) {
+                    $error = false;
+                    if (count($model->entriSheetDtls) == 0) {
+                        $model->addError('', 'Detail cannot be blank');
+                        $error = true;
+                    }
+                    //
+                    if ($error) {
+                        $transaction->rollBack();
+                    } else {
+                        $transaction->commit();
 
-                    return $this->redirect(['view', 'id' => $model->id_esheet]);
+                        return $this->redirect(['view', 'id' => $model->id_esheet]);
+                    }
+                } else {
+                    $transaction->rollBack();
                 }
-            } else {
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
         }
 
         return $this->render('update', [

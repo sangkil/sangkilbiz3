@@ -28,6 +28,7 @@ use biz\master\models\Branch;
  * @property string $purchaseDate
  *
  * @property PurchaseDtl[] $purchaseDtls
+ * @property Supplier $idSupplier
  *
  * @method array saveRelation(string $relation, array $data, array $options) Description
  */
@@ -35,6 +36,8 @@ class Purchase extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RECEIVE = 2;
+
+    private $_nm_supplier;
 
     /**
      * @inheritdoc
@@ -50,10 +53,10 @@ class Purchase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nmSupplier'],'exist','targetClass'=>  Supplier::className(),'targetAttribute'=>'nm_supplier'],
-            [['nmSupplier', 'id_branch', 'id_warehouse', 'purchaseDate', 'purchase_value', 'status'], 'required'],
+            [['nmSupplier'], 'in', 'range' => Supplier::find()->select(['nm_supplier'])->column()],
+            [['id_supplier', 'nmSupplier', 'id_branch', 'id_warehouse', 'purchaseDate', 'purchase_value', 'status'], 'required'],
             [['id_branch', 'status'], 'integer'],
-            [['id_supplier', 'purchase_date'], 'safe'],
+            [['purchase_date'], 'safe'],
             [['item_discount'], 'number']
         ];
     }
@@ -105,17 +108,17 @@ class Purchase extends \yii\db\ActiveRecord
 
     public function getNmSupplier()
     {
-        $supp = Supplier::findOne(['id_supplier'=>  $this->id_supplier]);
-        if ($supp) {
-            return $supp->nm_supplier;
-        } else {
-            return null;
+        if ($this->_nm_supplier === null) {
+            $this->_nm_supplier = $this->idSupplier? $this->idSupplier->nm_supplier:null;
         }
+
+        return $this->_nm_supplier;
     }
 
     public function setNmSupplier($value)
     {
-        $supp = Supplier::findOne(['nm_supplier'=>$value]);
+        $this->_nm_supplier = $value;
+        $supp = Supplier::findOne(['nm_supplier' => $value]);
         if ($supp) {
             $this->id_supplier = $supp->id_supplier;
         } else {

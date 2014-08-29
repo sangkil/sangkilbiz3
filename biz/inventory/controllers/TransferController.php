@@ -69,25 +69,27 @@ class TransferController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Transfer;
+        $model = new Transfer();
         $model->status = Transfer::STATUS_DRAFT;
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('transferDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('transferDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
-
-                return $this->redirect(['view', 'id' => $model->id_transfer]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_transfer]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
+            $model->setIsNewRecord(true);
         }
-
-        $model->setIsNewRecord(true);
 
         return $this->render('create', [
                 'model' => $model,
@@ -108,19 +110,23 @@ class TransferController extends Controller
         }
         Yii::$app->trigger(Hooks::E_ITUPD_1, new Event([$model]));
 
-        try {
-            $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('transferDtls', Yii::$app->request->post());
-            if ($result === 1) {
-                $transaction->commit();
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            try {
+                $transaction = Yii::$app->db->beginTransaction();
+                $success = $model->save();
+                $success = $model->saveRelation('transferDtls', $post) && $success;
+                if ($success) {
+                    $transaction->commit();
 
-                return $this->redirect(['view', 'id' => $model->id_transfer]);
-            } else {
+                    return $this->redirect(['view', 'id' => $model->id_transfer]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $exc) {
                 $transaction->rollBack();
+                $model->addError('', $exc->getMessage());
             }
-        } catch (\Exception $exc) {
-            $transaction->rollBack();
-            $model->addError('', $exc->getMessage());
         }
 
         return $this->render('update', [

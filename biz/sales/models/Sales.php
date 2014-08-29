@@ -35,6 +35,8 @@ class Sales extends \yii\db\ActiveRecord
     const STATUS_RELEASE = 2;
     const STATUS_CLOSE = 10;
 
+    private $_nm_customer;
+
     /**
      * @inheritdoc
      */
@@ -49,8 +51,8 @@ class Sales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nmCustomer'], 'exist', 'targetClass' => Customer::className(), 'targetAttribute' => 'nm_customer'],
-            [['id_branch', 'id_customer', 'id_warehouse', 'salesDate', 'status'], 'required'],
+            [['nmCustomer'], 'in', 'range' => Customer::find()->select(['nm_customer'])->column()],
+            [['id_branch', 'id_customer', 'nmCustomer', 'id_warehouse', 'salesDate', 'status'], 'required'],
             [['id_branch', 'id_cashdrawer', 'status', 'id_warehouse'], 'integer'],
             [['discount'], 'number'],
             [['sales_date'], 'safe']
@@ -96,16 +98,21 @@ class Sales extends \yii\db\ActiveRecord
 
     public function getNmCustomer()
     {
-        if ($this->idCustomer) {
-            return $this->idCustomer->nm_customer;
+        if ($this->_nm_customer === null) {
+            $this->_nm_customer = $this->idCustomer ? $this->idCustomer->nm_customer : null;
         }
+
+        return $this->_nm_customer;
     }
 
     public function setNmCustomer($value)
     {
+        $this->_nm_customer = $value;
         $cust = Customer::findOne(['nm_customer' => $value]);
         if ($cust) {
             $this->id_customer = $cust->id_customer;
+        } else {
+            $this->id_customer = null;
         }
     }
 
