@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
                 <div class="form-group">
                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::a('Signup', ['signup'], ['class' => 'btn btn-success'])?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
