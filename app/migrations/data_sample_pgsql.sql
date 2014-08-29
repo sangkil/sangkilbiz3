@@ -126,7 +126,7 @@ INSERT INTO coa VALUES (23, 6, '610001', 'Beban Gaji/ Upah', 600000, 'D', '2014-
 -- Name: coa_id_coa_seq; Type: SEQUENCE SET; Schema: public; Owner: mdmunir
 --
 
-SELECT pg_catalog.setval('coa_id_coa_seq', 1, false);
+SELECT pg_catalog.setval('coa_id_coa_seq', 23, false);
 
 
 --
