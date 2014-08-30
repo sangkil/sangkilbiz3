@@ -32,7 +32,7 @@ use mdm\admin\components\MenuHelper;
         ['label' => 'Dashboard', 'url' => ['/site/index'], 'icon' => 'fa fa-dashboard'],
         ['label' => 'Admin Manager', 'icon' => 'fa fa-wrench',
             'items' => [
-                ['label' => 'Users', 'icon' => 'fa fa-angle-double-right'],
+                ['label' => 'Users', 'url' => ['/site/user-list'], 'icon' => 'fa fa-angle-double-right'],
                 ['label' => 'Access Control', 'icon' => 'fa fa-angle-double-right'],
             ]],
         ['label' => 'Master', 'icon' => 'fa fa-gears',
