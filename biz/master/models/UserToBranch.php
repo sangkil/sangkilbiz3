@@ -3,6 +3,7 @@
 namespace biz\master\models;
 
 use Yii;
+use \app\models\User;
 
 /**
  * This is the model class for table "user_to_branch".
@@ -34,7 +35,8 @@ class UserToBranch extends \yii\db\ActiveRecord
     {
         return [
             [['id_branch', 'id_user'], 'required'],
-            [['id_branch', 'id_user'], 'integer']
+            [['id_branch', 'id_user'], 'integer'],
+            [['id_user'], 'exist', 'targetAttribute'=>'id', 'targetClass'=>  User::className()]
         ];
     }
 
