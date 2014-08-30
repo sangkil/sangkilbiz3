@@ -35,8 +35,7 @@
 		"mdmsoft/yii2-format-converter": "*",
 		"mdmsoft/yii2-client-tools": "*",
 		"mdmsoft/yii2-ar-behaviors": "*",
-		"mdmsoft/yii2-widgets": "*",
-		"mdmsoft/yii2-export-tools": "*"
+		"mdmsoft/yii2-widgets": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-codeception": "*",
