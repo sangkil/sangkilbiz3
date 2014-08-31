@@ -23,7 +23,7 @@ $baseurl = $lte_asset->baseUrl;
         <?php $this->head() ?>
     </head>
     <?php $this->beginBody() ?>
-    <body class="skin-blue fixed">
+    <body class="skin-blue">
         <header class="header">
             <?php echo $this->render('heading', ['baseurl' => $baseurl]); ?>
         </header>
