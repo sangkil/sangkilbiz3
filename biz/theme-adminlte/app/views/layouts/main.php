@@ -23,7 +23,7 @@ $baseurl = $lte_asset->baseUrl;
         <?php $this->head() ?>
     </head>
     <?php $this->beginBody() ?>
-    <body class="skin-black fixed">
+    <body class="skin-blue fixed">
         <header class="header">
             <?php echo $this->render('heading', ['baseurl' => $baseurl]); ?>
         </header>
@@ -31,7 +31,7 @@ $baseurl = $lte_asset->baseUrl;
             <aside class="left-side sidebar-offcanvas">
                 <?php echo $this->render('sidebar', ['baseurl' => $baseurl]); ?>
             </aside>
-            <aside class="right-side" style="overflow-x: visible;">
+            <aside class="right-side">
                 <section class="content-header">
                     <h1>
                         <?= '&nbsp;' . Html::encode($this->title) ?>
