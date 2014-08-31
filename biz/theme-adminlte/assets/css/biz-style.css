@@ -39,6 +39,13 @@ and open the template in the editor.
     background-color: #fff;
 }
 
+/* Content */
+.content {
+  padding: 20px 15px;
+  background: #f9f9f9;
+  overflow:visible;
+}
+
 @media print
 {    
     body * {
