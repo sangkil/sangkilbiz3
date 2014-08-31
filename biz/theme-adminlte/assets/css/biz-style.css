@@ -9,15 +9,6 @@ add comment..
     Author     : mujib masyhudi
 */
 
-html, 
-body {
-    /* overflow-x: hidden!important; */
-    font-family: 'Source Sans Pro', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100%;
-    background: #f9f9f9;
-}
-
 .modal-header {
     background-color: #428BCA;
     border-color: #428BCA;
