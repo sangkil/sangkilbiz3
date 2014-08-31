@@ -17,34 +17,34 @@ use \app\models\User;
  *
  * @property Branch $idBranch
  */
-class UserToBranch extends \yii\db\ActiveRecord
-{
+class UserToBranch extends \yii\db\ActiveRecord {
+
     public $nm_branch;
+    private $_username;
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%user_to_branch}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id_branch', 'id_user'], 'required'],
+            [['nmUser'], 'in', 'range' => User::find()->select(['username'])->column()],
+            [['id_branch', 'id_user', 'nmUser'], 'required'],
             [['id_branch', 'id_user'], 'integer'],
-            [['id_user'], 'exist', 'targetAttribute'=>'id', 'targetClass'=>  User::className()]
+            [['id_user'], 'exist', 'targetAttribute' => 'id', 'targetClass' => User::className()]
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id_branch' => 'Id Branch',
             'id_user' => 'Id User',
@@ -58,27 +58,43 @@ class UserToBranch extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdBranch()
-    {
+    public function getIdBranch() {
         return $this->hasOne(Branch::className(), ['id_branch' => 'id_branch']);
     }
 
-     /**
+    /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUser()
-    {
+    public function getIdUser() {
         return $this->hasOne(\app\models\User::className(), ['id' => 'id_user']);
+    }
+
+    public function setNmUser($value) {
+        $this->_username = $value;
+        $user = User::findOne(['username' => $value]);
+        if ($user) {
+            $this->id_user = $user->id;
+        } else {
+            $this->id_user = null;
+        }
+    }
+
+    public function getNmUser() {
+        if ($this->_username === null) {
+            $this->_username = $this->id_user ? $this->idUser->username : null;
+        }
+
+        return $this->_username;
     }
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
         ];
     }
+
 }
