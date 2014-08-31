@@ -8,6 +8,14 @@ and open the template in the editor.
     Author     : mujib masyhudi
 */
 
+body {
+  overflow-x: auto!important;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  background: #f9f9f9;
+}
+
 .modal-header {
     background-color: #428BCA;
     border-color: #428BCA;
@@ -37,13 +45,6 @@ and open the template in the editor.
 
 .tab-content .tab-pane{
     background-color: #fff;
-}
-
-/* Content */
-.content {
-  padding: 20px 15px;
-  background: #f9f9f9;
-  overflow:visible;
 }
 
 @media print
