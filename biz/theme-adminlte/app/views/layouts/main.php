@@ -37,10 +37,6 @@ $baseurl = $lte_asset->baseUrl;
                         <?= '&nbsp;' . Html::encode($this->title) ?>
                         <small><?php echo \Yii::$app->controller->id . '-' . \Yii::$app->controller->action->id; ?></small>
                     </h1>
-<!--                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
-                    </ol>-->
                     <?php
                     $breadcrumbs = isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [];
                     foreach (Yii::$app->controller->modules as $module) {
