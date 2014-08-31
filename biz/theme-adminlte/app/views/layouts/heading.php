@@ -9,7 +9,7 @@ use yii\helpers\Html;
     SangkilBiz-3
 </a>
 <!-- Header Navbar: style can be found in header.less -->
-<nav class="navbar navbar-static-top" role="navigation">
+<nav class="navbar" role="navigation">
     <!-- Sidebar toggle button-->
     <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
