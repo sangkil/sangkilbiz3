@@ -28,9 +28,6 @@ $baseurl = $lte_asset->baseUrl;
             <?php echo $this->render('heading', ['baseurl' => $baseurl]); ?>
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
-            <aside class="left-side sidebar-offcanvas">
-                <?php echo $this->render('sidebar', ['baseurl' => $baseurl]); ?>
-            </aside>
             <aside class="right-side">
                 <section class="content-header">
                     <h1>
@@ -57,6 +54,9 @@ $baseurl = $lte_asset->baseUrl;
                 <section class="content">
                     <?= $content ?>
                 </section>
+            </aside>            
+            <aside class="left-side sidebar-offcanvas">
+                <?php echo $this->render('sidebar', ['baseurl' => $baseurl]); ?>
             </aside>
         </div>
 
