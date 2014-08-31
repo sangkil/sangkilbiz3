@@ -5,6 +5,7 @@ use biz\adminlte\MyAsset;
 use yii\helpers\Inflector;
 use yii\widgets\Breadcrumbs;
 
+
 /**
  * @var \yii\web\View $this
  * @var string $content
@@ -71,3 +72,8 @@ $baseurl = $lte_asset->baseUrl;
 </body>
 </html>
 <?php $this->endPage() ?>
+<?php
+$djs = <<<JS
+   $('body').removeattr('style');
+JS;
+$this->registerJs($djs);
