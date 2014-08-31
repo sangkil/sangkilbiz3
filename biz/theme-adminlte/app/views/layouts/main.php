@@ -55,7 +55,9 @@ $baseurl = $lte_asset->baseUrl;
                     ?>
                 </section>
                 <section class="content">
-                    <?= $content ?>
+                    <div class="row">
+                        <?= $content ?>
+                    </div>                    
                 </section>
             </aside>
         </div>
