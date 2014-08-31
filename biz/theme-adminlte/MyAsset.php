@@ -28,7 +28,7 @@ class MyAsset extends AssetBundle
         'js/bootstrap.min.js',
         'js/AdminLTE/app.js',
         //'js/plugins/fullcalendar/fullcalendar.min.js'
-        //'js/AdminLTE/demo.js'
+        'js/AdminLTE/demo.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
