@@ -76,20 +76,25 @@ class PurchaseController extends Controller
 
         $post = Yii::$app->request->post();
         if ($model->load($post)) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $success = $model->save();
-                $success = $model->saveRelation('purchaseDtls', $post) && $success;
-                if ($success) {
-                    $transaction->commit();
+            if (!empty($post['PurchaseDtl'])) {
+                try {
+                    $transaction = Yii::$app->db->beginTransaction();
+                    $success = $model->save();
+                    $success = $model->saveRelation('purchaseDtls', $post) && $success;
+                    if ($success) {
+                        $transaction->commit();
 
-                    return $this->redirect(['view', 'id' => $model->id_purchase]);
-                } else {
+                        return $this->redirect(['view', 'id' => $model->id_purchase]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (\Exception $exc) {
                     $transaction->rollBack();
+                    $model->addError('', $exc->getMessage());
                 }
-            } catch (\Exception $exc) {
-                $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
+            } else {
+                $model->validate();
+                $model->addError('', 'Details cannot be blank');
             }
             $model->setIsNewRecord(true);
         }

@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 'purchase_num',
-                'nmSupplier',
+                'idSupplier.nm_supplier',
                 'purchaseDate',
                 'nmStatus',
             ],

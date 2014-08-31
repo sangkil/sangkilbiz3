@@ -3,7 +3,7 @@
 namespace biz\master\hooks;
 
 use biz\app\Hooks;
-use biz\master\components\Helper;
+use biz\master\components\Helper as MasterHelper;
 use biz\master\models\Cogs;
 use yii\base\UserException;
 
@@ -26,18 +26,21 @@ class CogsHook extends \yii\base\Behavior
     {
         $cogs = Cogs::findOne(['id_product' => $params['id_product']]);
         if (!$cogs) {
-            $smallest_uom = Helper::getSmallestProductUom($params['id_product']);
-            $cogs = new Cogs();
-            $cogs->setAttributes([
+            $smallest_uom = MasterHelper::getSmallestProductUom($params['id_product']);
+            $cogs = new Cogs([
                 'id_product' => $params['id_product'],
                 'id_uom' => $smallest_uom,
                 'cogs' => 0.0
             ]);
         }
-        $current_stock = Helper::getCurrentStockAll($params['id_product']);
-        $qty_per_uom = Helper::getQtyProductUom($params['id_product'], $params['id_uom']);
+        $current_stock = MasterHelper::getCurrentStockAll($params['id_product']);
+        $qty_per_uom = MasterHelper::getQtyProductUom($params['id_product'], $params['id_uom']);
         $added_stock = $params['added_stock'] * $qty_per_uom;
-        $cogs->cogs = 1.0 * ($cogs->cogs * $current_stock + $params['price'] * $params['added_stock']) / ($current_stock + $added_stock);
+        if($current_stock + $added_stock != 0){
+            $cogs->cogs = 1.0 * ($cogs->cogs * $current_stock + $params['price'] * $params['added_stock']) / ($current_stock + $added_stock);
+        }  else {
+            $cogs->cogs = 0;
+        }
         if ($cogs->canSetProperty('logParams')) {
             $cogs->logParams = [
                 'app' => $params['app'],
