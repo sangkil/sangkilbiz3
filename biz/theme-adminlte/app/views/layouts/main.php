@@ -31,7 +31,7 @@ $baseurl = $lte_asset->baseUrl;
             <aside class="left-side sidebar-offcanvas">
                 <?php echo $this->render('sidebar', ['baseurl' => $baseurl]); ?>
             </aside>
-            <aside class="right-side">
+            <aside class="right-side" style="overflow-x: visible;">
                 <section class="content-header">
                     <h1>
                         <?= '&nbsp;' . Html::encode($this->title) ?>
