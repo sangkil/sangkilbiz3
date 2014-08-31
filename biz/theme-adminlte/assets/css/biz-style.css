@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 body {
-  overflow-x: auto!important;
+  overflow-x: no-display;
   font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
