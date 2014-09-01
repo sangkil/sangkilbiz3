@@ -15,3 +15,4 @@ Sangkilbiz3 Change Log
 - Bug: Fix bug Division by zero (mdmunir).
 - Chg: Publish BizAsset when BizDataAsset called (mdmunir).
 - Err: Mass fix error sales (mdmunir).
+- Chg: Not used dependency `mdmsoft/yii2-captcha` (mdmunir).
