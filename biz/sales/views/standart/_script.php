@@ -5,7 +5,6 @@ yii.standart = (function($) {
     var $grid;
 
     var local = {
-        price_ct: <?= json_encode($price) ?>,
         addItem: function(item) {
             var has = false;
             $.each($grid.mdmTabularInput('getAllRows'), function() {
@@ -24,8 +23,8 @@ yii.standart = (function($) {
                 $row.find('input[data-field="id_product"]').val(item.id);
 
                 $row.find('input[data-field="sales_qty"]').val('1');
-//$row.find('input[data-field="sales_price"]').val(item.price);
-                $row.find('span.sales_price').text(item.price);
+                $row.find('input[data-field="sales_price"]').val(item.price);
+                $row.find('span.sales_price').text(local.format(item.price));
                 var $select = $row.find('select[data-field="id_uom"]').html('');
                 $.each(item.uoms, function() {
                     $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
@@ -41,16 +40,13 @@ yii.standart = (function($) {
         },
         normalizeItem: function() {
             var total = 0.0;
-            var pc = local.price_ct;
             $.each($grid.mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var pid = $row.find('input[data-field="id_product"]').val();
                 var qty = $row.find('input[data-field="sales_qty"]').val();
                 var diskon = $row.find('input[data-field="discount"]').val() * 1;
                 var isi = $row.find('[data-field="id_uom"] > :selected').data('isi');
-                var price = biz.master.prices[pid][pc];
-                $row.find('input[data-field="sales_price"]').val(price);
-                $row.find('span.sales_price').text(price);
+                var price = $row.find('input[data-field="sales_price"]').val();
 
                 qty = qty == '' ? 1 : qty;
                 isi = isi == undefined ? 1 : isi;
@@ -78,7 +74,6 @@ yii.standart = (function($) {
             local.addItem(ui.item);
         },
         onReady: function() {
-
             $grid = $('#detail-grid');
 
             $grid
@@ -152,7 +147,7 @@ yii.standart = (function($) {
                 }
             });
 
-            $("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;
+            $("#product").data("ui-autocomplete")._renderItem = yii.global.renderItemPos;
             yii.numeric.input($('#detail-grid'), 'input[data-field]');
 
             local.normalizeItem();

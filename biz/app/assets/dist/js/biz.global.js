@@ -10,7 +10,10 @@ yii.global = (function($) {
         renderItemPos: function(ul, item) {
             var $a = $('<a>')
                 .append($('<b>').text(item.text)).append('<br>')
-                .append($('<i>').text(item.cd + ' - @ Rp' + item.price).css({color: '#999999'}));
+                .append($('<i>').text(item.cd).css({color: '#999999'}));
+            if(item.price){
+                $a.append($('<i>').text(' - @ Rp' + $.number(item.price, 0)).css({color: '#799979'}));
+            }
             return $("<li>").append($a).appendTo(ul);
         },
         isChangeOrEnter: function($obj, sel, func) {
@@ -71,12 +74,18 @@ yii.global = (function($) {
                 return;
             }
 
+            var price = biz.config.price_ct && biz.master.prices !== undefined;
+            
             $.each(biz.master.products, function() {
                 var product = this;
                 if (product.text.toLowerCase().indexOf(term) >= 0 || product.cd.toLowerCase().indexOf(term) >= 0) {
                     var id = product.id + '';
                     if ((!checkStock || biz.master.product_stock[whse][id] > 0) && (!checkSupp || biz.master.product_supplier[supp].indexOf(id) >= 0)) {
-                        result.push(product);
+                        if(price && biz.master.prices[id]){
+                            result.push($.extend(product,{price:biz.master.prices[id][biz.config.price_ct]}));
+                        }else{
+                            result.push(product);
+                        }
                         limit--;
                         if (limit <= 0) {
                             return false;

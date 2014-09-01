@@ -53,8 +53,12 @@ use yii\helpers\Html;
 <?php
 $js = $this->render('_script',['price'=>$price]);
 $this->registerJs($js, \yii\web\View::POS_END);
+
 BizDataAsset::register($this, [
-    'master' => MasterHelper::getMasters('product, barcode, price, price_category, customer'),
+    'master' => MasterHelper::getMasters('product, barcode, price, customer'),
+    'config' => [
+        'price_ct' => $price
+    ]
 ]);
 $js_ready = <<<JS
 yii.standart.onReady();
