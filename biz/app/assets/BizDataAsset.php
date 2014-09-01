@@ -31,5 +31,6 @@ class BizDataAsset
         ];
         $js = "\n biz = " . Json::encode(ArrayHelper::merge($default, $data)) . ";\n";
         $view->registerJs($js, $position);
+        BizAsset::register($view);
     }
 }
