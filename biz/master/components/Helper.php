@@ -276,10 +276,15 @@ class Helper
         if (isset($masters['price'])) {
             $prices = [];
             $query_prices = (new Query())
-                ->select(['id_product', 'id_price_category', 'price'])
-                ->from('{{%price}}');
+                ->select(['p.id_product', 'id_price_category', 'price'])
+                ->from(['p' => '{{%product}}'])
+                ->leftJoin(['pc' => '{{%price}}'], '[[p.id_product]]=[[pc.id_product]]');
             foreach ($query_prices->all() as $row) {
-                $prices[$row['id_product']][$row['id_price_category']] = $row['price'];
+                if($row['id_price_category']){
+                    $prices[$row['id_product']][$row['id_price_category']] = $row['price'];
+                }  else {
+                    $prices[$row['id_product']] = [];
+                }
             }
             $result['prices'] = $prices;
         }
