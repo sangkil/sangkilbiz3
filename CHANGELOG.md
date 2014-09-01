@@ -13,3 +13,5 @@ Sangkilbiz3 Change Log
 - Chg: Set `yii\web\Request::cookieValidationKey` via init (mdmunir).
 - Chg: `Model::saveRelation()` only save a relation (mdmunir).
 - Bug: Fix bug Division by zero (mdmunir).
+- Chg: Publish BizAsset when BizDataAsset called (mdmunir).
+- Err: Mass fix error sales (mdmunir).
