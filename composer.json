@@ -29,7 +29,6 @@
 		"yiisoft/yii2-bootstrap": "*",
 		"yiisoft/yii2-jui": "*",
 		"mdmsoft/yii2-admin": "*",
-		"mdmsoft/yii2-captcha": "*",
 		"mdmsoft/yii2-autonumber": "*",
 		"mdmsoft/yii2-logger": "*",
 		"mdmsoft/yii2-format-converter": "*",
