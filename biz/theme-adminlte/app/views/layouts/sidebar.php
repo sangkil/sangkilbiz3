@@ -16,16 +16,6 @@ use mdm\admin\components\MenuHelper;
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
     </div>
-    <!-- search form -->
-    <!--    <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                <span class="input-group-btn">
-                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </form>-->
-    <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <?php
     $items = [
@@ -88,41 +78,6 @@ use mdm\admin\components\MenuHelper;
                 ['label' => 'test3', 'icon' => 'fa fa-angle-double-right'],
             ]],
     ];
-
-    /*
-    $menuCallback = function ($menu) {
-        if (!empty($menu['route'])) {
-            $url = [];
-            $r = explode('&', $menu['route']);
-            $url[0] = $r[0];
-            unset($r[0]);
-            foreach ($r as $part) {
-                $part = explode('=', $part);
-                $url[$part[0]] = isset($part[1]) ? $part[1] : '';
-            }
-        } else {
-            $url = '#';
-        }
-
-        $item = [
-            'label' => $menu['name'],
-            'url' => $url,
-        ];
-        if ($menu['children'] != []) {
-            $item['items'] = $menu['children'];
-        }
-        if (!empty($menu['data'])) {
-            $item['icon'] = $menu['data'];
-        }
-
-        return $item;
-    };
-
-    $items = MenuHelper::getAssignedMenu(Yii::$app->user->id, null, $menuCallback);
-     *
-     */
-    ?>
-    <?php
     echo SideMenu::widget(
         [
             'items' => $items,

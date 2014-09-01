@@ -5,6 +5,7 @@ use biz\adminlte\MyAsset;
 use yii\helpers\Inflector;
 use yii\widgets\Breadcrumbs;
 
+
 /**
  * @var \yii\web\View $this
  * @var string $content
@@ -23,24 +24,17 @@ $baseurl = $lte_asset->baseUrl;
         <?php $this->head() ?>
     </head>
     <?php $this->beginBody() ?>
-    <body class="skin-blue">
+    <body class="skin-blue fixed">
         <header class="header">
             <?php echo $this->render('heading', ['baseurl' => $baseurl]); ?>
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
-            <aside class="left-side sidebar-offcanvas">
-                <?php echo $this->render('sidebar', ['baseurl' => $baseurl]); ?>
-            </aside>
             <aside class="right-side">
                 <section class="content-header">
                     <h1>
                         <?= '&nbsp;' . Html::encode($this->title) ?>
                         <small><?php echo \Yii::$app->controller->id . '-' . \Yii::$app->controller->action->id; ?></small>
                     </h1>
-<!--                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
-                    </ol>-->
                     <?php
                     $breadcrumbs = isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [];
                     foreach (Yii::$app->controller->modules as $module) {
@@ -61,6 +55,9 @@ $baseurl = $lte_asset->baseUrl;
                 <section class="content">
                     <?= $content ?>
                 </section>
+            </aside>            
+            <aside class="left-side sidebar-offcanvas">
+                <?php echo $this->render('sidebar', ['baseurl' => $baseurl]); ?>
             </aside>
         </div>
 
@@ -75,3 +72,8 @@ $baseurl = $lte_asset->baseUrl;
 </body>
 </html>
 <?php $this->endPage() ?>
+<?php
+$djs = <<<JS
+   $('body').removeattr('style');
+JS;
+$this->registerJs($djs);
