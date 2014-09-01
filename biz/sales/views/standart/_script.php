@@ -1,7 +1,11 @@
+<?php if (false): ?>
+    <script>
+<?php endif; ?>
 yii.standart = (function($) {
     var $grid;
 
     var local = {
+        price_ct: <?= json_encode($price) ?>,
         addItem: function(item) {
             var has = false;
             $.each($grid.mdmTabularInput('getAllRows'), function() {
@@ -20,7 +24,7 @@ yii.standart = (function($) {
                 $row.find('input[data-field="id_product"]').val(item.id);
 
                 $row.find('input[data-field="sales_qty"]').val('1');
-                //$row.find('input[data-field="sales_price"]').val(item.price);
+//$row.find('input[data-field="sales_price"]').val(item.price);
                 $row.find('span.sales_price').text(item.price);
                 var $select = $row.find('select[data-field="id_uom"]').html('');
                 $.each(item.uoms, function() {
@@ -37,7 +41,7 @@ yii.standart = (function($) {
         },
         normalizeItem: function() {
             var total = 0.0;
-            var pc = $('#price_ct').val();
+            var pc = local.price_ct;
             $.each($grid.mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 var pid = $row.find('input[data-field="id_product"]').val();
@@ -57,6 +61,7 @@ yii.standart = (function($) {
                 total += t;
             });
             $('#total-price').text(local.format(total));
+            $('#total-price-inp').val(total);
         },
         onProductChange: function() {
             var item = yii.global.searchProductByCode(this.value);
@@ -73,10 +78,6 @@ yii.standart = (function($) {
             local.addItem(ui.item);
         },
         onReady: function() {
-            $('#price_ct').html('');
-            $.each(biz.master.price_category, function(key, val) {
-                $('<option>').text(val).val(key).appendTo($('#price_ct'));
-            });
 
             $grid = $('#detail-grid');
 
@@ -127,10 +128,6 @@ yii.standart = (function($) {
             $('#product').change(local.onProductChange);
             $('#product').focus();
 
-            $('#price_ct').change(function() {
-                local.normalizeItem();
-            });
-
             $(window).keydown(function(event) {
                 if (event.keyCode == 13) {
                     if ($(event.target).is('#product')) {
@@ -141,7 +138,7 @@ yii.standart = (function($) {
                     return false;
                 }
             });
-            
+
             // inisialisasi uom
             $.each($grid.mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);

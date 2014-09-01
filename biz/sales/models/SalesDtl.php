@@ -45,8 +45,12 @@ class SalesDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cogs'], 'default', 'value' => [$this, 'getCogsValue']],
-            [['id_warehouse'], 'default', 'value' => [$this, 'getSalesWarehouse']],
+            [['cogs'], 'default', 'value' => function($model) {
+                return $model->idCogs ? $model->idCogs->cogs : 0;
+            }],
+            [['id_warehouse'], 'default', 'value' => function($model) {
+                return $model->idSales ? $model->idSales->id_warehouse : null;
+            }],
             [['id_sales', 'id_product', 'id_uom', 'id_warehouse', 'sales_price', 'sales_qty', 'cogs'], 'required'],
             [['id_sales', 'id_product', 'id_uom', 'id_warehouse'], 'integer'],
             [['sales_price', 'sales_qty', 'discount', 'cogs', 'tax'], 'number'],
@@ -110,17 +114,5 @@ class SalesDtl extends \yii\db\ActiveRecord
     public function getIdWarehouse()
     {
         return $this->hasOne(Warehouse::className(), ['id_warehouse' => 'id_warehouse']);
-    }
-
-    public function getCogsValue()
-    {
-        $cogs = Cogs::find()->select('cogs')->where(['id_product' => $this->id_product])->scalar();
-
-        return $cogs === false ? 0 : $cogs;
-    }
-
-    public function getSalesWarehouse()
-    {
-        return $this->idSales->id_warehouse;
     }
 }

@@ -52,9 +52,9 @@ class Sales extends \yii\db\ActiveRecord
     {
         return [
             [['nmCustomer'], 'in', 'range' => Customer::find()->select(['nm_customer'])->column()],
-            [['id_branch', 'id_customer', 'nmCustomer', 'id_warehouse', 'salesDate', 'status'], 'required'],
+            [['id_branch', 'id_customer', 'nmCustomer', 'id_warehouse', 'salesDate', 'status','sales_value'], 'required'],
             [['id_branch', 'id_cashdrawer', 'status', 'id_warehouse'], 'integer'],
-            [['discount'], 'number'],
+            [['discount','sales_value'], 'number'],
             [['sales_date'], 'safe']
         ];
     }
@@ -94,6 +94,14 @@ class Sales extends \yii\db\ActiveRecord
     public function getIdCustomer()
     {
         return $this->hasOne(Customer::className(), ['id_customer' => 'id_customer']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdBranch()
+    {
+        return $this->hasOne(\biz\master\models\Branch::className(), ['id_branch' => 'id_branch']);
     }
 
     public function getNmCustomer()

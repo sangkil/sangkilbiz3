@@ -8,7 +8,6 @@ use biz\master\components\Helper as MasterHelper;
 /* @var $this yii\web\View */
 /* @var $model biz\sales\models\Sales */
 /* @var $form yii\widgets\ActiveForm */
-
 ?>
 <div class="sales-form">
     <?php
@@ -21,9 +20,7 @@ use biz\master\components\Helper as MasterHelper;
     $models[] = $model;
     echo $form->errorSummary($models)
     ?>
-    <?=
-    $this->render('_detail', ['model' => $model])
-    ?>
+    <?= $this->render('_detail', ['model' => $model, 'price' => $price]) ?>
     <div class="col-lg-3" style="padding-right: 0px;">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -32,7 +29,8 @@ use biz\master\components\Helper as MasterHelper;
             <div class="panel-body">
                 <?= $form->field($model, 'sales_num')->textInput(['readonly' => true]); ?>
                 <?= $form->field($model, 'id_warehouse')->dropDownList(MasterHelper::getWarehouseList()); ?>
-                <?= $form->field($model, 'salesDate')
+                <?=
+                    $form->field($model, 'salesDate')
                     ->widget('yii\jui\DatePicker', [
                         'options' => ['class' => 'form-control', 'style' => 'width:50%'],
                         'clientOptions' => [
@@ -41,7 +39,8 @@ use biz\master\components\Helper as MasterHelper;
                 ]);
                 ?>
                 <hr >
-                <?= $form->field($model, 'nmCustomer')
+                <?=
+                    $form->field($model, 'nmCustomer')
                     ->widget('yii\jui\AutoComplete', [
                         'options' => ['class' => 'form-control'],
                         'clientOptions' => [
@@ -49,7 +48,7 @@ use biz\master\components\Helper as MasterHelper;
                         ],
                 ]);
                 ?>
-                <?= $form->field($model, 'discount')->textInput() ?>
+<?= $form->field($model, 'discount')->textInput() ?>
             </div>
         </div>
         <div class="form-group">
@@ -58,5 +57,5 @@ use biz\master\components\Helper as MasterHelper;
             ?>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 </div>

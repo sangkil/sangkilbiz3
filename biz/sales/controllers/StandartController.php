@@ -12,7 +12,6 @@ use \Exception;
 use yii\base\UserException;
 use biz\app\Hooks;
 use biz\base\Event;
-use biz\master\components\Helper;
 use biz\app\components\Helper as AppHelper;
 
 /**
@@ -66,7 +65,7 @@ class StandartController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($price)
     {
         $payment_methods = [
             1 => 'Cash',
@@ -79,26 +78,32 @@ class StandartController extends Controller
         ]);
         $post = Yii::$app->request->post();
         if ($model->load($post)) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $success = $model->save();
-                $success = $model->saveRelation('salesDtls', $post) && $success;
-                if ($success) {
-                    $transaction->commit();
+            if (!empty($post['SalesDtl'])) {
+                try {
+                    $transaction = Yii::$app->db->beginTransaction();
 
-                    return $this->redirect(['view', 'id' => $model->id_sales]);
-                } else {
+                    $success = $model->save();
+                    $success = $model->saveRelation('salesDtls', $post) && $success;
+                    if ($success) {
+                        $transaction->commit();
+
+                        return $this->redirect(['view', 'id' => $model->id_sales]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (\Exception $exc) {
                     $transaction->rollBack();
+                    $model->addError('', $exc->getMessage());
                 }
-            } catch (\Exception $exc) {
-                $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
+                $model->setIsNewRecord(true);
+            } else {
+                $model->addError('', 'Detail can not be blank');
             }
-            $model->setIsNewRecord(true);
         }
 
         return $this->render('create', [
                 'model' => $model,
+                'price' => $price,
                 'details' => $model->salesDtls,
                 'payment_methods' => $payment_methods,
         ]);
