@@ -40,3 +40,7 @@ Then, you can login into the application with same email address and password at
 
 This appcilation require other extension that need special treatment. Please read documentation of the extension. They are
 [mdmsoft/yii2-admin](https://github.com/mdmsoft/yii2-admin) and [mdmsoft/yii2-autonumber](https://github.com/mdmsoft/yii2-autonumber)
+
+SPECIAL
+-------
+How to participate. Follow [this instruction](docs/guide-id/HowToParticipate.md)
