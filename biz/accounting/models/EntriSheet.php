@@ -16,7 +16,7 @@ use Yii;
  * @property integer $update_by
  *
  * @property EntriSheetDtl[] $entriSheetDtls
- * @method array saveRelation(string $relation) Description
+ * @method array saveRelated(string $relation) Description
  */
 class EntriSheet extends \yii\db\ActiveRecord
 {
@@ -72,7 +72,7 @@ class EntriSheet extends \yii\db\ActiveRecord
         return [
             'BizTimestampBehavior',
             'BizBlameableBehavior',
-            'mdm\behaviors\ar\RelationBehavior'
+            'mdm\behaviors\ar\RelatedBehavior'
         ];
     }
 }

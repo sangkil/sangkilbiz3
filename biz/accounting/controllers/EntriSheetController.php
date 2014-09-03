@@ -68,7 +68,7 @@ class EntriSheetController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('entriSheetDtls', $post) && $success;
+                $success = $model->saveRelated('entriSheetDtls', $post, $success);
                 if ($success) {
                     $error = false;
                     if (count($model->entriSheetDtls) == 0) {
@@ -112,7 +112,7 @@ class EntriSheetController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('entriSheetDtls', $post) && $success;
+                $success = $model->saveRelated('entriSheetDtls', $post, $success);
                 if ($success) {
                     $error = false;
                     if (count($model->entriSheetDtls) == 0) {

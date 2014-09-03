@@ -106,7 +106,7 @@ class StockOpname extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\behaviors\ar\RelationBehavior',
+            'mdm\behaviors\ar\RelatedBehavior',
         ];
     }
 }

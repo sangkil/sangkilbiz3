@@ -80,7 +80,7 @@ class PurchaseController extends Controller
                 try {
                     $transaction = Yii::$app->db->beginTransaction();
                     $success = $model->save();
-                    $success = $model->saveRelation('purchaseDtls', $post) && $success;
+                    $success = $model->saveRelated('purchaseDtls', $post, $success);
                     if ($success) {
                         $transaction->commit();
 
@@ -122,7 +122,7 @@ class PurchaseController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('purchaseDtls', $post) && $success;
+                $success = $model->saveRelated('purchaseDtls', $post, $success);
                 if ($success) {
                     $transaction->commit();
 

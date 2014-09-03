@@ -30,7 +30,7 @@ use biz\master\models\Branch;
  * @property PurchaseDtl[] $purchaseDtls
  * @property Supplier $idSupplier
  *
- * @method array saveRelation(string $relation, array $data, array $options) Description
+ * @method array saveRelated(string $relation, array $data, array $options) Description
  */
 class Purchase extends \yii\db\ActiveRecord
 {
@@ -147,7 +147,7 @@ class Purchase extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\behaviors\ar\RelationBehavior',
+            'mdm\behaviors\ar\RelatedBehavior',
         ];
     }
 }

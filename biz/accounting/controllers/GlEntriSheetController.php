@@ -72,13 +72,13 @@ class GlEntriSheetController extends Controller
                 /* @var $eDtl EntriSheetDtl */
                 $details[$eDtl->nm_esheet_dtl] = new GlDetail(['id_coa' => $eDtl->id_coa]);
             }
+            $model->populateRelation('glDetails', $details);
             $post = Yii::$app->request->post();
             if ($model->load($post)) {
                 try {
                     $transaction = Yii::$app->db->beginTransaction();
                     $success = $model->save();
-                    $model->populateRelation('glDetails', $details);
-                    $success = $model->saveRelation('glDetails', $post) && $success;
+                    $success = $model->saveRelated('glDetails', $post, $success);
                     if ($success) {
                         $error = false;
                         $balance = 0.0;

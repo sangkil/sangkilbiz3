@@ -27,7 +27,7 @@ use biz\master\models\Customer;
  *
  * @property SalesDtl[] $salesDtls
  * @property Customer $idCustomer
- * @method boolean|integer saveRelation(string $relation, array $data, array $options)
+ * @method boolean|integer saveRelated(string $relation, array $data, array $options)
  */
 class Sales extends \yii\db\ActiveRecord
 {
@@ -145,7 +145,7 @@ class Sales extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\behaviors\ar\RelationBehavior'
+            'mdm\behaviors\ar\RelatedBehavior'
         ];
     }
 }

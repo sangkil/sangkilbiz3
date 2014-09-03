@@ -71,11 +71,10 @@ class NoticeController extends Controller
         if (!AppHelper::checkAccess('update', $model)) {
             throw new \yii\web\ForbiddenHttpException();
         }
-        $model->getTransferNoticeDtls();
         try {
             $transaction = Yii::$app->db->beginTransaction();
-            $result = $model->saveRelation('transferNoticeDtls', Yii::$app->request->post());
-            if ($result === 1) {
+            $result = $model->saveRelated('transferNoticeDtls', Yii::$app->request->post());
+            if ($result) {
                 $transaction->commit();
 
                 return $this->redirect(['view', 'id' => $model->id_transfer]);

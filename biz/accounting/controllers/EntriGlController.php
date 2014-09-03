@@ -67,7 +67,7 @@ class EntriGlController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('glDetails', $post) && $success;
+                $success = $model->saveRelated('glDetails', $post, $success);
                 if ($success) {
                     $error = false;
                     if (count($model->glDetails) == 0) {

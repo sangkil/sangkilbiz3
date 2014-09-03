@@ -26,7 +26,7 @@ use biz\master\models\Branch;
  * @property GlDetail[] $glDetails
  * @property AccPeriode $idPeriode
  * @property Branch $idBranch
- * @method boolean|GlDetail[] saveRelation(string $relation) Description
+ * @method boolean|GlDetail[] saveRelated(string $relation) Description
  */
 class GlHeader extends \yii\db\ActiveRecord
 {
@@ -124,7 +124,7 @@ class GlHeader extends \yii\db\ActiveRecord
                     'glDate' => 'gl_date'
                 ]
             ],
-            'mdm\behaviors\ar\RelationBehavior'
+            'mdm\behaviors\ar\RelatedBehavior'
         ];
     }
 }

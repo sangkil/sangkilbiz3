@@ -83,7 +83,7 @@ class StandartController extends Controller
                     $transaction = Yii::$app->db->beginTransaction();
 
                     $success = $model->save();
-                    $success = $model->saveRelation('salesDtls', $post) && $success;
+                    $success = $model->saveRelated('salesDtls', $post, $success);
                     if ($success) {
                         $transaction->commit();
 
@@ -158,7 +158,7 @@ class StandartController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('salesDtls', $post) && $success;
+                $success = $model->saveRelated('salesDtls', $post, $success);
                 if ($success) {
                     $transaction->commit();
 

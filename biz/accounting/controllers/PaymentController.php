@@ -103,7 +103,7 @@ class PaymentController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $model->save(false);
-                $details = $model->saveRelation('paymentDtl');
+                $details = $model->saveRelated('paymentDtl');
                 if ($details === true) {
                     $transaction->commit();
 

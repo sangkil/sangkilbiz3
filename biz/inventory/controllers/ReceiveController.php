@@ -80,7 +80,7 @@ class ReceiveController extends Controller
                 $transaction = Yii::$app->db->beginTransaction();
                 $model->status = Transfer::STATUS_DRAFT_RECEIVE;
                 $success = $model->save();
-                $success = $model->saveRelation('transferDtls', $post) && $success;
+                $success = $model->saveRelated('transferDtls', $post, $success);
                 if ($success) {
                     $transaction->commit();
 

@@ -21,7 +21,7 @@ use Yii;
  *
  * @property TransferNoticeDtl[] $transferNoticeDtls
  * @property Transfer $idTransfer
- * @method boolean|integer saveRelation(string $relation, array $data, array $options)
+ * @method boolean|integer saveRelated(string $relation, array $data, array $options)
  */
 class TransferNotice extends \yii\db\ActiveRecord
 {
@@ -99,7 +99,7 @@ class TransferNotice extends \yii\db\ActiveRecord
                 ]
             ],
             'BizStatusConverter',
-            'mdm\behaviors\ar\RelationBehavior',
+            'mdm\behaviors\ar\RelatedBehavior',
         ];
     }
 }

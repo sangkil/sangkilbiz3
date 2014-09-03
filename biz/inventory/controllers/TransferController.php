@@ -76,7 +76,7 @@ class TransferController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('transferDtls', $post) && $success;
+                $success = $model->saveRelated('transferDtls', $post, $success);
                 if ($success) {
                     $transaction->commit();
 
@@ -115,7 +115,7 @@ class TransferController extends Controller
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelation('transferDtls', $post) && $success;
+                $success = $model->saveRelated('transferDtls', $post, $success);
                 if ($success) {
                     $transaction->commit();
 
