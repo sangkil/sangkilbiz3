@@ -33,7 +33,7 @@ Edit file CHANGELOG untuk memasukkan perubahan anda. Sisipkan baris pada CHANGEL
 Bug #999: a description of the bug fix (Your Name)
 Enh #999: a description of the enhancement (Your Name)
 ```
-#999 adalah nomor issue anda.
+ #999 adalah nomor issue anda.
 
 ## 7. Commit
 tambahkan files/perubahan anda yang ingin dicomit ke staging area dengan
