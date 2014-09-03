@@ -22,7 +22,7 @@
 		"issues": "https://github.com/sangkil/sangkilbiz3/issues?page=1&state=open",
 		"source": "https://github.com/sangkil/sangkilbiz3"
 	},
-	"minimum-stability": "dev",	
+	"minimum-stability": "dev",
 	"require": {
 		"php": ">=5.4.0",
 		"yiisoft/yii2": "*",
@@ -50,16 +50,21 @@
 	},
 	"scripts": {
 		"post-create-project-cmd": [
-			"yii\\composer\\Installer::setPermission"
+			"yii\\composer\\Installer::postCreateProject"
 		]
 	},
 	"config": {
 		"process-timeout": 1800
 	},
 	"extra": {
-		"writable": [
-			"app/runtime",
-			"app/web/assets"
-		]
+		"yii\\composer\\Installer::postCreateProject": {
+			"setPermission": [
+				{
+					"app/runtime": "0777",
+					"app/web/assets": "0777",
+					"yii": "0755"
+				}
+			]
+		}
 	}
 }
