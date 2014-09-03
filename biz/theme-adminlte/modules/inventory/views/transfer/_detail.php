@@ -2,7 +2,10 @@
 
 use yii\web\JsExpression;
 use yii\jui\AutoComplete;
-use biz\models\TransferDtl;
+use biz\inventory\models\TransferDtl;
+use mdm\widgets\TabularInput;
+use biz\app\assets\BizDataAsset;
+use biz\master\components\Helper as MasterHelper;
 ?>
 <div class="box box-info">
     <div class="box-header" style="padding: 10px;">
@@ -40,7 +43,8 @@ use biz\models\TransferDtl;
 </div>
 
 <?php
-TransferAsset::register($this);
+$js = $this->render('_script',[],$this->context);
+$this->registerJs($js, yii\web\View::POS_END);
 BizDataAsset::register($this, [
     'master' => MasterHelper::getMasters('product, barcode, product_stock')
 ]);

@@ -1,3 +1,6 @@
+<?php if(false): ?>
+<script>
+<?php endif; ?>
 yii.receive = (function($) {
     var $grid, $form, template, counter = 0;
 
@@ -5,7 +8,7 @@ yii.receive = (function($) {
         checkStock: true,
         addItem: function(item) {
             var has = false;
-            $('#detail-grid > tbody > tr').each(function() {
+            $.each($('#detail-grid').mdmTabularInput('getAllRows'), function() {
                 var $row = $(this);
                 if ($row.find('input[data-field="id_product"]').val() == item.id) {
                     has = true;
@@ -18,33 +21,25 @@ yii.receive = (function($) {
                 }
             });
             if (!has) {
-                var $row = $(template.replace(/_index_/g, counter++));
+                var $row = $('#detail-grid').mdmTabularInput('addRow');
 
                 $row.find('span.cd_product').text(item.cd);
                 $row.find('span.nm_product').text(item.text);
                 $row.find('input[data-field="id_product"]').val(item.id);
 
                 $row.find('input[data-field="transfer_qty_send"]').val('0');
+                $row.find('input[data-field="transfer_qty_receive"]').val('1');
                 var $select = $row.find('select[data-field="id_uom"]').html('');
                 $.each(item.uoms, function() {
                     $select.append($('<option>').val(this.id).text(this.nm).attr('data-isi', this.isi));
                 });
 
-                $grid.find('tbody > tr').removeClass('selected');
-                $row.addClass('selected');
-                $grid.children('tbody').append($row);
+                $('#detail-grid').mdmTabularInput('selectRow', $row);
                 $row.find('input[data-field="transfer_qty_receive"]').focus();
             }
-            local.rearange();
         },
         format: function(n) {
             return $.number(n, 0);
-        },
-        rearange: function() {
-            var num = 1;
-            $('#detail-grid > tbody > tr').each(function() {
-                $(this).find('div.serial > span').text(num++);
-            });
         },
         normalizeItem: function($row) {
             var s = $row.find('input[data-field="transfer_qty_send"]').val() * 1;
@@ -65,29 +60,11 @@ yii.receive = (function($) {
             this.value = '';
             $(this).autocomplete("close");
         },
-        initRow: function() {
-            $('#detail-grid > tbody > tr').each(function() {
-                var $row = $(this);
-                local.normalizeItem($row);
-            });
-            counter++;
-        },
-        initObj: function() {
-            $grid = $('#detail-grid');
-            $form = $('#purchase-form');
-            template = $('#detail-grid > tbody').data('template');
-        },
-        initEvent: function() {
-            $grid.on('click', '[data-action="delete"]', function() {
-                $(this).closest('tr').remove();
-                return false;
-            });
+    }
 
-            $grid.on('click', 'tr', function() {
-                $grid.find('tbody > tr').removeClass('selected');
-                $(this).addClass('selected');
-            });
-
+    var pub = {
+        onReady: function() {
+            var $grid = $('#detail-grid');
             yii.global.isChangeOrEnter($grid,':input[data-field]',function(){
                 var $row = $(this).closest('tr');
                 local.normalizeItem($row);
@@ -133,14 +110,7 @@ yii.receive = (function($) {
                     return false;
                 }
             });
-        }
-    }
-
-    var pub = {
-        init: function() {
-            local.initObj();
-            local.initRow();
-            local.initEvent();
+            
             yii.numeric.input($grid, 'input[data-field]');
         },
         onProductSelect: function(event, ui) {

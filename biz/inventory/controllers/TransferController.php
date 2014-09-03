@@ -71,6 +71,7 @@ class TransferController extends Controller
     {
         $model = new Transfer();
         $model->status = Transfer::STATUS_DRAFT;
+        $model->transfer_date = date('Y-m-d');
         $post = Yii::$app->request->post();
         if ($model->load($post)) {
             try {

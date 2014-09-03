@@ -1,3 +1,6 @@
+<?php if(false): ?>
+<script>
+<?php endif; ?>
 yii.transfer = (function($) {
 
     var local = {

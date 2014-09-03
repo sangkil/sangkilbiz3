@@ -51,7 +51,7 @@ use yii\helpers\Html;
 </div>
 
 <?php
-$js = $this->render('_script',['price'=>$price]);
+$js = $this->render('_script',['price'=>$price],$this->context);
 $this->registerJs($js, \yii\web\View::POS_END);
 
 BizDataAsset::register($this, [

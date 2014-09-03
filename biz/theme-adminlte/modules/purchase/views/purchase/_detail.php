@@ -55,7 +55,7 @@ use biz\master\components\Helper as MasterHelper;
     </div>
 </div>
 <?php
-$js = $this->render('_script');
+$js = $this->render('_script',[],$this->context);
 $this->registerJs($js, \yii\web\View::POS_END);
 BizDataAsset::register($this, [
     'master'=>  MasterHelper::getMasters('product, barcode, supplier, product_supplier')

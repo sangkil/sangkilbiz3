@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use biz\app\components\Helper;
 use yii\grid\DataColumn;
 use biz\inventory\models\Transfer;
+use yii\widgets\LinkPager;
 
 /**
  * @var yii\web\View $this
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchase-hdr-index">
     <div class="col-lg-4" style="float: right;">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
     </div>
     <div class="col-lg-12">
         <?php //Pjax::begin(['formSelector' => 'form', 'enablePushState' => false]); ?>
