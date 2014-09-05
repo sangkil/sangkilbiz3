@@ -8,13 +8,17 @@ use biz\master\models\searchs\UserToBranch as UserToBranchSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use biz\master\models\Branch;
+use yii\base\DynamicModel;
 
 /**
  * UserToBranchController implements the CRUD actions for UserToBranch model.
  */
-class UserToBranchController extends Controller {
+class UserToBranchController extends Controller
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -29,13 +33,14 @@ class UserToBranchController extends Controller {
      * Lists all UserToBranch models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new UserToBranchSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
         ]);
     }
 
@@ -45,9 +50,10 @@ class UserToBranchController extends Controller {
      * @param  integer $id_user
      * @return mixed
      */
-    public function actionView($id_branch, $id_user) {
+    public function actionView($id_branch, $id_user)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id_branch, $id_user),
+                'model' => $this->findModel($id_branch, $id_user),
         ]);
     }
 
@@ -56,16 +62,17 @@ class UserToBranchController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new UserToBranch;
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {                
+            if ($model->save()) {
                 return $this->redirect(['view', 'id_branch' => $model->id_branch, 'id_user' => $model->id_user]);
             }
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                    'model' => $model,
             ]);
         }
     }
@@ -77,14 +84,15 @@ class UserToBranchController extends Controller {
      * @param  integer $id_user
      * @return mixed
      */
-    public function actionUpdate($id_branch, $id_user) {
+    public function actionUpdate($id_branch, $id_user)
+    {
         $model = $this->findModel($id_branch, $id_user);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id_branch' => $model->id_branch, 'id_user' => $model->id_user]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                    'model' => $model,
             ]);
         }
     }
@@ -96,10 +104,33 @@ class UserToBranchController extends Controller {
      * @param  integer $id_user
      * @return mixed
      */
-    public function actionDelete($id_branch, $id_user) {
+    public function actionDelete($id_branch, $id_user)
+    {
         $this->findModel($id_branch, $id_user)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionChangeBranch()
+    {
+        $model = new DynamicModel([
+            'selected' => Yii::$app->user->branch,
+        ]);
+        $model->addRule('selected', 'safe');
+        
+        $ids = UserToBranch::find()
+            ->select('id_branch')
+            ->where(['id_user' => Yii::$app->user->id])
+            ->column();
+        $branchs = Branch::findAll(['id_branch' => $ids]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            Yii::$app->user->branch = $model->selected;
+        }
+        return $this->render('change-branch', [
+                'model' => $model,
+                'branchs' => $branchs,
+        ]);
     }
 
     /**
@@ -110,12 +141,12 @@ class UserToBranchController extends Controller {
      * @return UserToBranch          the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_branch, $id_user) {
+    protected function findModel($id_branch, $id_user)
+    {
         if (($model = UserToBranch::findOne(['id_branch' => $id_branch, 'id_user' => $id_user])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
 }
