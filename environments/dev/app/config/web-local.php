@@ -15,6 +15,9 @@ $config = [
         ],
         'request' => [
             'cookieValidationKey' => '',
+        ],
+        'session' => [
+            'cookieParams' => ['httponly' => true, 'path' => '/']
         ]
     ]
 ];
