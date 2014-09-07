@@ -13,6 +13,7 @@ use biz\master\models\Orgn;
 use biz\master\models\Branch;
 use biz\master\models\ProductUom;
 use biz\master\models\UserToBranch;
+use biz\accounting\models\Coa;
 use yii\helpers\ArrayHelper;
 use yii\db\Query;
 
@@ -218,7 +219,7 @@ class Helper
         $result = [];
 
         // master product
-        if (isset($masters['product'])) {
+        if (isset($masters['products'])) {
             $products = [];
             $query_master = (new Query())
                 ->select(['id' => 'p.id_product', 'cd' => 'p.cd_product', 'nm' => 'p.nm_product', 'u.id_uom', 'u.nm_uom', 'pu.isi'])
@@ -246,7 +247,7 @@ class Helper
         }
 
         // barcodes
-        if (isset($masters['barcode'])) {
+        if (isset($masters['barcodes'])) {
             $barcodes = [];
             $query_barcode = (new Query())
                 ->select(['barcode' => 'lower(barcode)', 'id' => 'id_product'])
@@ -273,7 +274,7 @@ class Helper
         }
 
         // prices
-        if (isset($masters['price'])) {
+        if (isset($masters['prices'])) {
             $prices = [];
             $query_prices = (new Query())
                 ->select(['p.id_product', 'id_price_category', 'price'])
@@ -290,7 +291,7 @@ class Helper
         }
 
         // customer
-        if (isset($masters['customer'])) {
+        if (isset($masters['customers'])) {
             $result['customers'] = (new Query())
                 ->select(['id' => 'id_customer', 'label' => 'nm_customer'])
                 ->from('{{%customer}}')
@@ -298,7 +299,7 @@ class Helper
         }
 
         // supplier
-        if (isset($masters['supplier'])) {
+        if (isset($masters['suppliers'])) {
             $result['suppliers'] = (new Query())
                 ->select(['id' => 'id_supplier', 'label' => 'nm_supplier'])
                 ->from('{{%supplier}}')
@@ -329,6 +330,22 @@ class Helper
             $result['product_stock'] = $prod_stock;
         }
 
+        // accounting
+        // coa
+        if (isset($masters['coas'])) {
+            $query = Coa::find()->where(['not', ['id_parent' => null]]); //id_parent is not null
+            $coas = [];
+            foreach ($query->asArray()->all() as $row) {
+                $coas[] = [
+                    'id' => $row['id_coa'],
+                    'cd_coa' => $row['cd_account'],
+                    'label' => "{$row['cd_account']}-{$row['nm_account']}",
+                    'value' => $row['nm_account']
+                ];
+            }
+            $result['coas'] = $coas;
+        }
+        
         return $result;
     }
 }

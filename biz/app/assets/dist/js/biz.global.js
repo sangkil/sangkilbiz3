@@ -1,6 +1,10 @@
 yii.global = (function($) {
     var enterPressed = false;
+    var local = {
+        storages: {}
+    }
     var pub = {
+        master: {},
         renderItem: function(ul, item) {
             var $a = $('<a>')
                 .append($('<b>').text(item.text)).append('<br>')
@@ -11,7 +15,7 @@ yii.global = (function($) {
             var $a = $('<a>')
                 .append($('<b>').text(item.text)).append('<br>')
                 .append($('<i>').text(item.cd).css({color: '#999999'}));
-            if(item.price){
+            if (item.price) {
                 $a.append($('<i>').text(' - @ Rp' + $.number(item.price, 0)).css({color: '#799979'}));
             }
             return $("<li>").append($a).appendTo(ul);
@@ -43,7 +47,7 @@ yii.global = (function($) {
             if (pullUrl) {
                 $.getJSON(pullUrl, data, function(result) {
                     $.each(result, function(key, val) {
-                        biz.master[key] = val;
+                        pub.master[key] = val;
                     });
                     if (callback != undefined) {
                         callback(result);
@@ -59,31 +63,31 @@ yii.global = (function($) {
         sourceProduct: function(request, callback) {
             var result = [];
             var limit = biz.config.limit;
-            var checkStock = biz.config.checkStock && biz.master.product_stock !== undefined;
-            var checkSupp = biz.config.checkSupp && biz.master.product_supplier !== undefined;
+            var checkStock = biz.config.checkStock && pub.master.product_stock !== undefined;
+            var checkSupp = biz.config.checkSupp && pub.master.product_supplier !== undefined;
 
             var term = request.term.toLowerCase();
             var whse = biz.config.whse;
-            if (checkStock && (whse == undefined || biz.master.product_stock[whse] == undefined)) {
+            if (checkStock && (whse == undefined || pub.master.product_stock[whse] == undefined)) {
                 callback([]);
                 return;
             }
             var supp = biz.config.supplier;
-            if (checkSupp && (supp == undefined || biz.master.product_supplier[supp] == undefined)) {
+            if (checkSupp && (supp == undefined || pub.master.product_supplier[supp] == undefined)) {
                 callback([]);
                 return;
             }
 
-            var price = biz.config.price_ct && biz.master.prices !== undefined;
-            
-            $.each(biz.master.products, function() {
+            var price = biz.config.price_ct && pub.master.prices !== undefined;
+
+            $.each(pub.master.products, function() {
                 var product = this;
                 if (product.text.toLowerCase().indexOf(term) >= 0 || product.cd.toLowerCase().indexOf(term) >= 0) {
                     var id = product.id + '';
-                    if ((!checkStock || biz.master.product_stock[whse][id] > 0) && (!checkSupp || biz.master.product_supplier[supp].indexOf(id) >= 0)) {
-                        if(price && biz.master.prices[id]){
-                            result.push($.extend(product,{price:biz.master.prices[id][biz.config.price_ct]}));
-                        }else{
+                    if ((!checkStock || pub.master.product_stock[whse][id] > 0) && (!checkSupp || pub.master.product_supplier[supp].indexOf(id) >= 0)) {
+                        if (price && pub.master.prices[id]) {
+                            result.push($.extend(product, {price: pub.master.prices[id][biz.config.price_ct]}));
+                        } else {
                             result.push(product);
                         }
                         limit--;
@@ -96,20 +100,20 @@ yii.global = (function($) {
             callback(result);
         },
         searchProductByCode: function(cd) {
-            var checkStock = biz.config.checkStock && biz.master.product_stock !== undefined;
-            var checkSupp = biz.config.checkSupp && biz.master.product_supplier !== undefined;
+            var checkStock = biz.config.checkStock && pub.master.product_stock !== undefined;
+            var checkSupp = biz.config.checkSupp && pub.master.product_supplier !== undefined;
             var whse = biz.config.whse;
-            if (checkStock && (whse == undefined || biz.master.product_stock[whse] == undefined)) {
+            if (checkStock && (whse == undefined || pub.master.product_stock[whse] == undefined)) {
                 return false;
             }
             var supp = biz.config.supplier;
-            if (checkSupp && (supp == undefined || biz.master.product_supplier[supp] == undefined)) {
+            if (checkSupp && (supp == undefined || pub.master.product_supplier[supp] == undefined)) {
                 return false;
             }
 
-            var id = biz.master.barcodes[cd] + '';
-            var product = biz.master.products[id];
-            if (product && (!checkStock || biz.master.product_stock[whse][id] > 0) && (!checkSupp || biz.master.product_supplier[supp].indexOf(id) >= 0)) {
+            var id = pub.master.barcodes[cd] + '';
+            var product = pub.master.products[id];
+            if (product && (!checkStock || pub.master.product_stock[whse][id] > 0) && (!checkSupp || pub.master.product_supplier[supp].indexOf(id) >= 0)) {
                 return product;
             }
             return false;
@@ -123,6 +127,26 @@ yii.global = (function($) {
             if (n.indexOf(',') >= 0) {
                 return numeral().unformat(n);
             }
+        },
+        init: function() {
+            var params = [];
+            $.each(biz.config.masters, function() {
+                params.push(this);
+                var obj = local.storages[this] = yii.storage.create(this);
+                pub.master[this] = obj.getAll();
+            });
+            
+            if(params.length && biz.config.pullUrl){
+                $.getJSON(biz.config.pullUrl,{masters:params},function(result){
+                    $.each(result,function (key,val){
+                        var obj = local.storages[key];
+                        obj.save(val);
+                        pub.master[key] = obj.getAll();
+                    });
+                });
+            };
+            
+            biz.master = pub.master;
         }
     }
     return pub;

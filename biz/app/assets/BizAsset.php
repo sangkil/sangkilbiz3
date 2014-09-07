@@ -14,7 +14,9 @@ class BizAsset extends \yii\web\AssetBundle
         'js/mdm.numeric.js',
         'js/numeral.min.js',
         'js/jquery.number.js',
-        'js/biz.global.js'
+        'js/biz.storage.js',
+        'js/biz.global.js',
+        'js/md5.js'
     ];
     public $css = [
         'css/biz.detail.css'

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-use biz\app\assets\BizDataAsset;
+use biz\app\components\Helper as AppHelper;
 use biz\master\assets\MasterAsset;
 use biz\master\components\Helper as MasterHelper;
 
@@ -143,8 +143,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 MasterAsset::register($this);
-BizDataAsset::register($this, [
-    'master' => MasterHelper::getMasters('product, barcode')
+AppHelper::bizConfig($this, [
+    'masters' => ['products', 'barcodes']
 ]);
 
 $js = <<<JS

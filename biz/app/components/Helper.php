@@ -4,6 +4,10 @@ namespace biz\app\components;
 
 use Yii;
 use biz\app\base\AccessHandler;
+use yii\web\View;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
+use biz\app\assets\BizAsset;
 
 /**
  * Description of Helper
@@ -42,5 +46,25 @@ class Helper
         }
 
         return true;
+    }
+
+    /**
+     *
+     * @param View  $view
+     * @param array $data
+     */
+    public static function bizConfig($view, $config = [], $position = View::POS_BEGIN)
+    {
+        $default = [
+            'delay' => 1000,
+            'limit' => 20,
+            'checkStock' => false,
+            'debug' => YII_ENV == 'dev',
+            'pullUrl' => \yii\helpers\Url::to(['/master/sources/pull']),
+        ];
+        $js = "\n var biz = biz || {};"
+            . "\n biz.config = " . Json::encode(ArrayHelper::merge($default, $config)) . ";\n";
+        $view->registerJs($js, $position);
+        BizAsset::register($view);
     }
 }

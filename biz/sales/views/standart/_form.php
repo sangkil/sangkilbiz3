@@ -48,7 +48,7 @@ use biz\master\components\Helper as MasterHelper;
                         ],
                 ]);
                 ?>
-<?= $form->field($model, 'discount')->textInput() ?>
+                <?= $form->field($model, 'discount')->textInput() ?>
             </div>
         </div>
         <div class="form-group">
@@ -57,5 +57,5 @@ use biz\master\components\Helper as MasterHelper;
             ?>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 </div>

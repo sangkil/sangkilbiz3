@@ -201,29 +201,4 @@ class Helper
             throw new UserException(implode("\n", $invDtl->getFirstErrors()));
         }
     }
-
-    public static function getMasters($masters)
-    {
-        if (!is_array($masters)) {
-            $masters = preg_split('/\s*,\s*/', trim($masters), -1, PREG_SPLIT_NO_EMPTY);
-        }
-        $masters = array_flip($masters);
-        $result = [];
-
-        if (isset($masters['coa'])) {
-            $query = Coa::find()->where(['not', ['id_parent' => null]]); //id_parent is not null
-            $coas = [];
-            foreach ($query->asArray()->all() as $row) {
-                $coas[] = [
-                    'id' => $row['id_coa'],
-                    'cd_coa' => $row['cd_account'],
-                    'label' => "{$row['cd_account']}-{$row['nm_account']}",
-                    'value' => $row['nm_account']
-                ];
-            }
-            $result['coas'] = $coas;
-        }
-
-        return $result;
-    }
 }

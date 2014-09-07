@@ -9,24 +9,21 @@ use biz\master\models\UserToBranch;
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class UserProperties extends \biz\app\base\PropertiBehavior
+class UserProperties extends \yii\base\Behavior
 {
     const KEY_BRANCH = '_branch_active';
 
-    protected function getUserProperties()
-    {
-        $properties = [];
-        $userId = $this->owner->getId();
-        if ($userId !== null) {
-            $properties = [
-                'branchs' => UserToBranch::find()
-                    ->select('id_branch')
-                    ->where(['id_user' => $userId])
-                    ->column(),
-            ];
-        }
+    private $_branchs;
 
-        return $properties;
+    public function getBranchs()
+    {
+        if ($this->_branchs === null) {
+            $this->_branchs = UserToBranch::find()
+                ->select('id_branch')
+                ->where(['id_user' => $this->owner->getId()])
+                ->column();
+        }
+        return $this->_branchs;
     }
     private $_branch;
 
@@ -39,9 +36,11 @@ class UserProperties extends \biz\app\base\PropertiBehavior
     public function getBranch()
     {
         if ($this->_branch === null) {
-            $branchs = $this->branchs;
+            $branchs = $this->getBranchs();
             $this->_branch = \Yii::$app->getSession()->get(self::KEY_BRANCH, reset($branchs));
-            \Yii::$app->getSession()->set(self::KEY_BRANCH, $this->_branch);
+            if (!empty($this->_branch)) {
+                \Yii::$app->getSession()->set(self::KEY_BRANCH, $this->_branch);
+            }
         }
         return $this->_branch;
     }

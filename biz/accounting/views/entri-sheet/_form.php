@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\accounting\models\EntriSheetDtl;
 use mdm\widgets\TabularInput;
-use biz\accounting\components\Helper as AccHelper;
+use biz\app\components\Helper as AppHelper;
 
 /* @var $model biz\accounting\models\EntriSheet */
 /* @var $this yii\web\View */
@@ -35,37 +35,14 @@ use biz\accounting\components\Helper as AccHelper;
                     <th>No</th>
                     <th>NM Detail Entry</th>
                     <th>Account</th>
-                    <th><a class="fa fa-plus-square" href="#" data-action="append">
+                    <th><a class="fa fa-plus-square" href="#" id="append-row">
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </th>
                 </tr>
             </thead>
-            <?=
-            TabularInput::widget([
-                'id' => 'tbl-entrydetail',
-                'allModels' => $model->entriSheetDtls,
-                'modelClass' => EntriSheetDtl::className(),
-                'itemView' => '_detail',
-                'options' => ['tag' => 'tbody'],
-                'itemOptions' => ['tag' => 'tr'],
-                'clientOptions' => [
-                    'afterAddRow' => new yii\web\JsExpression('biz.config.entryAfterAddRow'),
-                ]
-            ])
-            ?>
-        </table>
-        <div class="panel-footer">
-            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        </div>
-    </div>
-    <?php ActiveForm::end(); ?>
-</div>
-<?php
-yii\jui\AutoCompleteAsset::register($this);
-yii\jui\ThemeAsset::register($this);
-biz\app\assets\BizAsset::register($this);
-$jsFunc = <<<JS
+            <?php
+            $jsFunc = <<<JS
 function (\$row) {
     \$row.find('.nm_account').autocomplete({
         source: biz.master.coas,
@@ -80,18 +57,33 @@ function (\$row) {
     });
 }
 JS;
-biz\app\assets\BizDataAsset::register($this, [
-    'master' => AccHelper::getMasters('coa'),
-    'config' => [
-        'entryAfterAddRow' => new \yii\web\JsExpression($jsFunc)
-    ]
+            ?>
+            <?=
+            TabularInput::widget([
+                'id' => 'tbl-entrydetail',
+                'allModels' => $model->entriSheetDtls,
+                'modelClass' => EntriSheetDtl::className(),
+                'itemView' => '_detail',
+                'options' => ['tag' => 'tbody'],
+                'itemOptions' => ['tag' => 'tr'],
+                'clientOptions' => [
+                    'afterAddRow' => new yii\web\JsExpression($jsFunc),
+                    'btnAddSelector' => '#append-row'
+                ]
+            ])
+            ?>
+        </table>
+        <div class="panel-footer">
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
+</div>
+<?php
+yii\jui\AutoCompleteAsset::register($this);
+yii\jui\ThemeAsset::register($this);
+biz\app\assets\BizAsset::register($this);
+
+AppHelper::bizConfig($this, [
+    'masters' => ['coas']
 ]);
-$js = <<<JS
-\$('#tbl-entryheader a[data-action="append"]').click(function () {
-    $('#tbl-entrydetail').mdmTabularInput('addRow');
-
-    return false;
-});
-JS;
-
-$this->registerJs($js);

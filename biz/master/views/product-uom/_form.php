@@ -2,13 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 use yii\helpers\ArrayHelper;
 use biz\master\models\Uom;
 use biz\app\assets\BizAsset;
-use biz\app\assets\BizDataAsset;
-use biz\master\components\Helper as MasterHelper;
+use biz\app\components\Helper as AppHelper;
 
 /* @var $this yii\web\View */
 /* @var $model biz\master\models\ProductUom */
@@ -47,8 +45,8 @@ use biz\master\components\Helper as MasterHelper;
 </div>
 <?php
 BizAsset::register($this);
-BizDataAsset::register($this, [
-    'master' => MasterHelper::getMasters('product, barcode'),
+AppHelper::bizConfig($this, [
+    'masters' => ['products', 'barcodes'],
 ]);
 $js_ready = <<<JS
 JS;

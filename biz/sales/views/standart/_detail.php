@@ -4,7 +4,7 @@ use yii\web\JsExpression;
 use yii\jui\AutoComplete;
 use biz\sales\models\SalesDtl;
 use mdm\widgets\TabularInput;
-use biz\app\assets\BizDataAsset;
+use biz\app\components\Helper as AppHelper;
 use biz\master\components\Helper as MasterHelper;
 use yii\helpers\Html;
 
@@ -54,11 +54,9 @@ use yii\helpers\Html;
 $js = $this->render('_script',['price'=>$price],$this->context);
 $this->registerJs($js, \yii\web\View::POS_END);
 
-BizDataAsset::register($this, [
-    'master' => MasterHelper::getMasters('product, barcode, price, customer'),
-    'config' => [
-        'price_ct' => $price
-    ]
+AppHelper::bizConfig($this, [
+    'masters' => ['products', 'barcodes', 'prices', 'customers'],
+    'price_ct' => $price,
 ]);
 $js_ready = <<<JS
 yii.standart.onReady();

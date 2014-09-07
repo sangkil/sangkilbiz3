@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use biz\accounting\models\GlDetail;
 use mdm\widgets\TabularInput;
-use biz\accounting\components\Helper as AccHelper;
+use biz\app\components\Helper as AppHelper;
 
 /* @var $model biz\accounting\models\GlHeader */
 /* @var $this yii\web\View */
@@ -45,12 +45,29 @@ use biz\accounting\components\Helper as AccHelper;
                     <th>Account</th>
                     <th>Debit</th>
                     <th>Credit</th>
-                    <th><a class="fa fa-plus-square" href="#" data-action="append">
+                    <th><a class="fa fa-plus-square" href="#" id="append-row">
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </th>
                 </tr>
             </thead>
+            <?php
+            $jsFunc = <<<JS
+function (\$row) {
+    \$row.find('.nm_account').autocomplete({
+        source: biz.master.coas,
+        select: function (event, ui) {
+            var \$row = $(event.target).closest('tr');
+            \$row.find('.id_account').val(ui.item.id);
+            \$row.find('.cd_account').text(ui.item.cd_coa);
+            \$row.find('.nm_account').val(ui.item.value);
+
+            return false;
+        }
+    });
+}
+JS;
+            ?>
             <?=
             TabularInput::widget([
                 'id' => 'tbl-gldetail',
@@ -60,7 +77,8 @@ use biz\accounting\components\Helper as AccHelper;
                 'options' => ['tag' => 'tbody'],
                 'itemOptions' => ['tag' => 'tr'],
                 'clientOptions' => [
-                    'afterAddRow' => new yii\web\JsExpression('biz.config.glAfterAddRow'),
+                    'afterAddRow' => new yii\web\JsExpression($jsFunc),
+                    'btnAddSelector' => '#append-row'
                 ]
             ])
             ?>
@@ -76,34 +94,11 @@ use biz\accounting\components\Helper as AccHelper;
 yii\jui\AutoCompleteAsset::register($this);
 yii\jui\ThemeAsset::register($this);
 biz\app\assets\BizAsset::register($this);
-$jsFunc = <<<JS
-function (\$row) {
-    \$row.find('.nm_account').autocomplete({
-        source: biz.master.coas,
-        select: function (event, ui) {
-            var \$row = $(event.target).closest('tr');
-            \$row.find('.id_account').val(ui.item.id);
-            \$row.find('.cd_account').text(ui.item.cd_coa);
-            \$row.find('.nm_account').val(ui.item.value);
 
-            return false;
-        }
-    });
-}
-JS;
-biz\app\assets\BizDataAsset::register($this, [
-    'master' => AccHelper::getMasters('coa'),
-    'config' => [
-        'glAfterAddRow' => new \yii\web\JsExpression($jsFunc)
-    ]
+AppHelper::bizConfig($this, [
+    'masters' => ['coas'],
 ]);
 $js = <<<JS
-\$('#tbl-glheader a[data-action="append"]').click(function () {
-    $('#tbl-gldetail').mdmTabularInput('addRow');
-
-    return false;
-});
-
 yii.numeric.input(\$('#tbl-glheader'),'input.amount');
 yii.numeric.format(\$('#tbl-glheader'),'input.amount');
 

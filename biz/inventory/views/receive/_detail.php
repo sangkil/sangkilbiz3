@@ -1,11 +1,9 @@
 <?php
 
 use biz\inventory\models\TransferDtl;
-use biz\master\components\Helper as MasterHelper;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
-use biz\inventory\assets\ReceiveAsset;
-use biz\app\assets\BizDataAsset;
+use biz\app\components\Helper as AppHelper;
 use mdm\widgets\TabularInput;
 
 /**
@@ -48,10 +46,10 @@ use mdm\widgets\TabularInput;
 </div>
 
 <?php
-$js = $this->render('_script',[],$this->context);
+$js = $this->render('_script', [], $this->context);
 $this->registerJs($js, yii\web\View::POS_END);
-BizDataAsset::register($this, [
-    'master' => MasterHelper::getMasters('product, barcode, product_stock')
+AppHelper::bizConfig($this, [
+    'masters' => ['products', 'barcodes', 'product_stock']
 ]);
 $js_ready = <<< JS
 \$("#product").data("ui-autocomplete")._renderItem = yii.global.renderItem;
