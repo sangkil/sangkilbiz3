@@ -36,7 +36,11 @@ class Purchase extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RECEIVE = 2;
-
+    
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+    const SCENARIO_RECEIVE = 'receive';    
+    
     private $_nm_supplier;
 
     /**
@@ -126,6 +130,12 @@ class Purchase extends \yii\db\ActiveRecord
         }
     }
 
+    public function extraFields()
+    {
+        return[
+            'details'=>'purchaseDtls'
+        ];
+    }
     /**
      * @inheritdoc
      */
