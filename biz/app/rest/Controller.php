@@ -29,27 +29,26 @@ class Controller extends \yii\rest\Controller
     public function actions()
     {
         $helperClass = $this->helperClass;
-        $modelClass = $helperClass::modelClass();
         
         return[
             'index' => [
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => $modelClass,
+                'class' => 'biz\app\rest\IndexAction',
+                'helperClass' => $helperClass,
             ],
             'view' => [
-                'class' => 'yii\rest\ViewAction',
-                'modelClass' => $modelClass,
+                'class' => 'biz\app\rest\ViewAction',
+                'helperClass' => $helperClass,
             ],
             'create' => [
-                'class' => 'biz\app\base\rest\CreateAction',
+                'class' => 'biz\app\rest\CreateAction',
                 'helperClass' => $helperClass,
             ],
             'update' => [
-                'class' => 'biz\app\base\rest\UpdateAction',
+                'class' => 'biz\app\rest\UpdateAction',
                 'helperClass' => $helperClass,
             ],
             'delete' => [
-                'class' => 'biz\app\base\rest\DeleteAction',
+                'class' => 'biz\app\rest\DeleteAction',
                 'helperClass' => $helperClass,
             ],
         ];

@@ -26,7 +26,7 @@ class ApiHelper
         return str_replace('components', 'models', $class);
     }
 
-    protected static function prefixEventName()
+    public static function prefixEventName()
     {
         $class = get_called_class();
         if (($pos = strrpos($class, '\\')) !== false) {
@@ -64,7 +64,7 @@ class ApiHelper
         return $model;
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
         /* @var $model \yii\db\ActiveRecord */
         $model = static::findModel($id);
