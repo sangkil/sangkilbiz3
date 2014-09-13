@@ -13,6 +13,11 @@ use yii\base\InvalidConfigException;
 class Controller extends \yii\rest\Controller
 {
     /**
+     * @var string|array the configuration for creating the serializer that formats the response data.
+     */
+    public $serializer = 'biz\app\rest\Serializer';
+
+    /**
      *
      * @var ApiHelper 
      */
@@ -29,7 +34,7 @@ class Controller extends \yii\rest\Controller
     public function actions()
     {
         $helperClass = $this->helperClass;
-        
+
         return[
             'index' => [
                 'class' => 'biz\app\rest\IndexAction',

@@ -4,6 +4,7 @@ namespace biz\app\base;
 
 use yii\web\NotFoundHttpException;
 use yii\db\ActiveRecordInterface;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Inflector;
 use yii\base\Model;
 use biz\app\base\Event;
@@ -47,8 +48,10 @@ class ApiHelper
         $model->load($data, '');
         if ($model->save()) {
             Yii::$app->trigger($e_name . '_created', new Event([$model]));
+            return [true, $model];
+        } else {
+            return [false, $model];
         }
-        return $model;
     }
 
     public static function update($id, $data)
@@ -60,8 +63,10 @@ class ApiHelper
         $model->load($data, '');
         if ($model->save()) {
             Yii::$app->trigger($e_name . '_updated', new Event([$model]));
+            return [true, $model];
+        } else {
+            return [false, $model];
         }
-        return $model;
     }
 
     public static function delete($id)
@@ -70,13 +75,28 @@ class ApiHelper
         $model = static::findModel($id);
         $e_name = static::prefixEventName();
         Yii::$app->trigger($e_name . '_delete', new Event([$model]));
-        if ($model->delete()) {
+        if ($model->delete() !== false) {
             Yii::$app->trigger($e_name . '_deleted', new Event([$model]));
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
+    
+    /**
+     * Prepares the data provider that should return the requested collection of the models.
+     * @return ActiveDataProvider
+     */
+    public static function prepareDataProvider()
+    {
+        /* @var $modelClass \yii\db\BaseActiveRecord */
+        $modelClass = static::modelClass();
+
+        return new ActiveDataProvider([
+            'query' => $modelClass::find(),
+        ]);
+    }    
     /**
      * Returns the data model based on the primary key given.
      * If the data model is not found, a 404 HTTP exception will be raised.

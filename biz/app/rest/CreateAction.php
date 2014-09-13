@@ -4,6 +4,7 @@ namespace biz\app\rest;
 
 use Yii;
 use yii\helpers\Url;
+use yii\web\ServerErrorHttpException;
 
 /**
  * Description of CreateAction
@@ -19,12 +20,14 @@ class CreateAction extends Action
     {
         /* @var $model \yii\db\ActiveRecord */
         $helperClass = $this->helperClass;
-        $model = $helperClass::create(Yii::$app->getRequest()->getBodyParams());
-        if(!$model->hasErrors()){
+        list($success, $model) = $helperClass::create(Yii::$app->getRequest()->getBodyParams());
+        if($success){
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
             $id = implode(',', array_values($model->getPrimaryKey(true)));
             $response->getHeaders()->set('Location', Url::toRoute([$this->viewAction, 'id' => $id], true));
+        }elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
         return $model;
     }

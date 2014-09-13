@@ -35,10 +35,6 @@ class IndexAction extends Action
 
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $helperClass = $this->helperClass;
-        $modelClass = $helperClass::modelClass();
-
-        return new ActiveDataProvider([
-            'query' => $modelClass::find(),
-        ]);
+        return $helperClass::prepareDataProvider();
     }    
 }

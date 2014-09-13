@@ -2,9 +2,8 @@
 
 namespace biz\purchase\components;
 
-use biz\purchase\models\Purchase as MPurchase;
 use Yii;
-use biz\app\Hooks;
+use biz\purchase\models\Purchase as MPurchase;
 use biz\app\base\Event;
 
 /**
@@ -29,18 +28,22 @@ class Purchase extends \biz\app\base\ApiHelper
             'purchase_date' => date('Y-m-d')
         ]);
         $e_name = static::prefixEventName();
-        $model->scenario = MPurchase::SCENARIO_CREATE;
+        $success = false;
+        $model->scenario = MPurchase::SCENARIO_DEFAULT;
         $model->load($data, '');
         Yii::$app->trigger($e_name . '_create', new Event([$model]));
         if (!empty($post['details'])) {
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
-                $success = $model->saveRelated('purchaseDtls', $data, $success, ['PurchaseDtl' => 'details']);
+                $success = $model->saveRelated('purchaseDtls', $data, $success, 'details', MPurchase::SCENARIO_DEFAULT);
                 if ($success) {
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
+                    if ($model->hasRelatedErrors('purchaseDtls')) {
+                        $model->addError('details', 'Details validation error');
+                    }
                 }
             } catch (\Exception $exc) {
                 $transaction->rollBack();
@@ -50,16 +53,17 @@ class Purchase extends \biz\app\base\ApiHelper
             $model->validate();
             $model->addError('details', 'Details cannot be blank');
         }
-        return $model;
+        return [$success, $model];
     }
 
     public static function update($id, $data)
     {
         $model = static::findModel($id);
 
-        $model->scenario = MPurchase::SCENARIO_UPDATE;
-        $model->load($data, '');
         $e_name = static::prefixEventName();
+        $success = false;
+        $model->scenario = MPurchase::SCENARIO_DEFAULT;
+        $model->load($data, '');
         Yii::$app->trigger($e_name . '_update', new Event([$model]));
 
         if (!isset($data['details']) || $data['details'] !== []) {
@@ -67,12 +71,15 @@ class Purchase extends \biz\app\base\ApiHelper
                 $transaction = Yii::$app->db->beginTransaction();
                 $success = $model->save();
                 if (!empty($data['details'])) {
-                    $success = $model->saveRelated('purchaseDtls', $data, $success, ['PurchaseDtl' => 'details']);
+                    $success = $model->saveRelated('purchaseDtls', $data, $success, 'details', MPurchase::SCENARIO_DEFAULT);
                 }
                 if ($success) {
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
+                    if ($model->hasRelatedErrors('purchaseDtls')) {
+                        $model->addError('details', 'Details validation error');
+                    }
                 }
             } catch (\Exception $exc) {
                 $transaction->rollBack();
@@ -82,34 +89,18 @@ class Purchase extends \biz\app\base\ApiHelper
             $model->validate();
             $model->addError('details', 'Details cannot be blank');
         }
-        return $model;
-    }
-
-    /**
-     * Deletes an existing Purchase model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param  integer $id
-     * @return mixed
-     */
-    public static function delete($id)
-    {
-        $model = static::findModel($id);
-        $e_name = static::prefixEventName();
-        Yii::$app->trigger($e_name . '_delete', new Event([$model]));
-        return $model->delete();
-    }
-
-    public static function modelClass()
-    {
-        return MPurchase::className();
+        return [$success, $model];
     }
 
     public static function receive($id, $data = [])
     {
         $model = static::findModel($id);
-        $model->scenario = MPurchase::SCENARIO_RECEIVE;
-        $model->load($data, '');
+
         $e_name = static::prefixEventName();
+        $success = false;
+        $model->scenario = MPurchase::SCENARIO_DEFAULT;
+        $model->load($data, '');
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model->status = MPurchase::STATUS_RECEIVE;
@@ -121,13 +112,25 @@ class Purchase extends \biz\app\base\ApiHelper
                 }
                 Yii::$app->trigger($e_name . '_receive_23', new Event([$model]));
                 $transaction->commit();
+                $success = true;
             } else {
                 $transaction->rollBack();
+                $success = false;
             }
         } catch (Exception $exc) {
             $transaction->rollBack();
             throw $exc;
         }
-        return $model;
+        return [$success, $model];
+    }
+
+    public static function modelClass()
+    {
+        return MPurchase::className();
+    }
+
+    public static function prefixEventName()
+    {
+        return 'e_purchase';
     }
 }

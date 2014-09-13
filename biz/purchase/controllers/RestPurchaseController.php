@@ -1,8 +1,10 @@
 <?php
+
 namespace biz\purchase\controllers;
 
 use biz\purchase\components\Purchase as ApiPurchase;
 use Yii;
+
 /**
  * Description of RestPurchaseController
  *
@@ -11,28 +13,20 @@ use Yii;
 class RestPurchaseController extends \biz\app\rest\Controller
 {
     public $helperClass = 'biz\purchase\components\Purchase';
-        
+
     /**
      * @inheritdoc
      */
     protected function verbs()
     {
-        return [
-            'index' => ['GET', 'HEAD'],
-            'view' => ['GET', 'HEAD'],
-            'create' => ['POST'],
-            'update' => ['PUT', 'PATCH'],
-            'delete' => ['DELETE'],
-        ];
+        $verbs = parent::verbs();
+        $verbs['receive'] = ['PUT', 'PATCH'];
+        return $verbs;
     }
-    
-    public function actionCreate()
+
+    public function actionReceive($id)
     {
-        return ApiPurchase::create(Yii::$app->getRequest()->getBodyParams());
-    }
-    
-    public function actionUpdate($id)
-    {
-        return ApiPurchase::update($id, Yii::$app->getRequest()->getBodyParams());
+        $helperClass = $this->helperClass;
+        return $helperClass::receive($id, Yii::$app->getRequest()->getBodyParams());
     }
 }

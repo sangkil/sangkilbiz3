@@ -25,7 +25,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup', 'page'],
+                        'actions' => ['login', 'error', 'signup', 'page', 'test-rest'],
                         'allow' => true,
                     ],
                     [
@@ -127,5 +127,10 @@ class SiteController extends Controller
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
         ]);
+    }
+    
+    public function actionTestRest()
+    {
+        return $this->render('test-rest');
     }
 }
