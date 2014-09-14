@@ -1,49 +1,50 @@
 <?php
 
-namespace biz\purchase\components;
+namespace biz\sales\components;
 
-use Yii;
-use biz\purchase\models\Purchase as MPurchase;
+use biz\sales\models\Sales as MSales;
 use biz\app\base\Event;
 
 /**
- * Description of Purchase
+ * Description of Sales
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class Purchase extends \biz\app\base\ApiHelper
+class Sales extends \biz\app\base\ApiHelper
 {
 
-    /**
-     * 
-     * @param mixed $data
-     * @return \biz\purchase\models\Purchase
-     * @throws \Exception
-     */
+    public static function modelClass()
+    {
+        return MSales::className();
+    }
+
+    public static function prefixEventName()
+    {
+        return 'e_sales';
+    }
+
     public static function create($data, $model = null)
     {
-        $model = $model ? : new MPurchase([
-            'status' => MPurchase::STATUS_DRAFT,
+        $model = $model ? : new MSales([
+            'status' => MSales::STATUS_DRAFT,
             'id_branch' => Yii::$app->user->branch,
-            'purchase_date' => date('Y-m-d')
+            'sales_date' => date('Y-m-d')
         ]);
         $e_name = static::prefixEventName();
         $success = false;
-        $model->scenario = MPurchase::SCENARIO_DEFAULT;
+        $model->scenario = MSales::SCENARIO_DEFAULT;
         $model->load($data, '');
-
-        if (!empty($data['details'])) {
+        Yii::$app->trigger($e_name . '_create', new Event([$model]));
+        if (!empty($post['details'])) {
             try {
                 $transaction = Yii::$app->db->beginTransaction();
-                Yii::$app->trigger($e_name . '_create', new Event([$model]));
                 $success = $model->save();
-                $success = $model->saveRelated('purchaseDtls', $data, $success, 'details', MPurchase::SCENARIO_DEFAULT);
+                $success = $model->saveRelated('salesDtls', $data, $success, 'details', MSales::SCENARIO_DEFAULT);
                 if ($success) {
-                    Yii::$app->trigger($e_name . '_created', new Event([$model]));
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
-                    if ($model->hasRelatedErrors('purchaseDtls')) {
+                    if ($model->hasRelatedErrors('salesDtls')) {
                         $model->addError('details', 'Details validation error');
                     }
                 }
@@ -64,23 +65,22 @@ class Purchase extends \biz\app\base\ApiHelper
 
         $e_name = static::prefixEventName();
         $success = false;
-        $model->scenario = MPurchase::SCENARIO_DEFAULT;
+        $model->scenario = MSales::SCENARIO_DEFAULT;
         $model->load($data, '');
+        Yii::$app->trigger($e_name . '_update', new Event([$model]));
 
         if (!isset($data['details']) || $data['details'] !== []) {
             try {
                 $transaction = Yii::$app->db->beginTransaction();
-                Yii::$app->trigger($e_name . '_update', new Event([$model]));
                 $success = $model->save();
                 if (!empty($data['details'])) {
-                    $success = $model->saveRelated('purchaseDtls', $data, $success, 'details', MPurchase::SCENARIO_DEFAULT);
+                    $success = $model->saveRelated('salesDtls', $data, $success, 'details', MSales::SCENARIO_DEFAULT);
                 }
                 if ($success) {
-                    Yii::$app->trigger($e_name . '_updated', new Event([$model]));
                     $transaction->commit();
                 } else {
                     $transaction->rollBack();
-                    if ($model->hasRelatedErrors('purchaseDtls')) {
+                    if ($model->hasRelatedErrors('salesDtls')) {
                         $model->addError('details', 'Details validation error');
                     }
                 }
@@ -94,50 +94,50 @@ class Purchase extends \biz\app\base\ApiHelper
         }
         return [$success, $model];
     }
-
+    
     /**
      * 
      * @param string $id
      * @param array $data
-     * @param MPurchase $model
+     * @param MSales $model
      * @return mixed
      * @throws \Exception
      */
-    public static function receive($id, $data = [], $model = null)
+    public static function release($id, $data = [], $model = null)
     {
         $model = $model ? : static::findModel($id);
 
         $e_name = static::prefixEventName();
         $success = true;
-        $model->scenario = MPurchase::SCENARIO_DEFAULT;
+        $model->scenario = MSales::SCENARIO_DEFAULT;
         $model->load($data, '');
-        $model->status = MPurchase::STATUS_RECEIVE;
+        $model->status = MSales::STATUS_RELEASE;
         try {
             $transaction = Yii::$app->db->beginTransaction();
-            Yii::$app->trigger($e_name . '_receive', new Event([$model]));
-            $purchaseDtls = $model->purchaseDtls;
+            Yii::$app->trigger($e_name . '_release', new Event([$model]));
+            $salesDtls = $model->salesDtls;
             if (!empty($data['details'])) {
-                Yii::$app->trigger($e_name . '_receive_head', new Event([$model]));
+                Yii::$app->trigger($e_name . '_release_head', new Event([$model]));
                 foreach ($data['details'] as $index => $dataDetail) {
-                    $detail = $purchaseDtls[$index];
-                    $detail->scenario = MPurchase::SCENARIO_RECEIVE;
+                    $detail = $salesDtls[$index];
+                    $detail->scenario = MSales::SCENARIO_RELEASE;
                     $detail->load($dataDetail, '');
                     $success = $success && $detail->save();
-                    Yii::$app->trigger($e_name . '_receive_body', new Event([$model, $detail]));
-                    $purchaseDtls[$index] = $detail;
+                    Yii::$app->trigger($e_name . '_release_body', new Event([$model, $detail]));
+                    $salesDtls[$index] = $detail;
                 }
-                $model->populateRelation('purchaseDtls', $purchaseDtls);
-                Yii::$app->trigger($e_name . '_receive_end', new Event([$model]));
+                $model->populateRelation('salesDtls', $salesDtls);
+                Yii::$app->trigger($e_name . '_release_end', new Event([$model]));
             }
-            $allReceived = true;
-            foreach ($purchaseDtls as $detail) {
-                $allReceived = $allReceived && $detail->purch_qty == $detail->purch_qty_receive;
+            $allReleased = true;
+            foreach ($salesDtls as $detail) {
+                $allReleased = $allReleased && $detail->sales_qty == $detail->sales_qty_release;
             }
-            if($allReceived){
-                $model->status = MPurchase::STATUS_RECEIVED;
+            if($allReleased){
+                $model->status = MSales::STATUS_RELEASED;
             }
             if ($success && $model->save()) {
-                Yii::$app->trigger($e_name . '_received', new Event([$model]));
+                Yii::$app->trigger($e_name . '_released', new Event([$model]));
                 $transaction->commit();
             } else {
                 $transaction->rollBack();
@@ -149,14 +149,5 @@ class Purchase extends \biz\app\base\ApiHelper
         }
         return [$success, $model];
     }
-
-    public static function modelClass()
-    {
-        return MPurchase::className();
-    }
-
-    public static function prefixEventName()
-    {
-        return 'e_purchase';
-    }
+    
 }

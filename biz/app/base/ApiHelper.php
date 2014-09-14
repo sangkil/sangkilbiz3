@@ -4,7 +4,6 @@ namespace biz\app\base;
 
 use yii\web\NotFoundHttpException;
 use yii\db\ActiveRecordInterface;
-use yii\data\ActiveDataProvider;
 use yii\helpers\Inflector;
 use yii\base\Model;
 use biz\app\base\Event;
@@ -36,11 +35,11 @@ class ApiHelper
         return 'e_' . Inflector::camel2id($class);
     }
 
-    public static function create($data)
+    public static function create($data, $model = null)
     {
         $modelClass = static::modelClass();
         /* @var $model \yii\db\ActiveRecord */
-        $model = new $modelClass([
+        $model = $model ? : new $modelClass([
             'scenario' => Model::SCENARIO_DEFAULT,
         ]);
         $e_name = static::prefixEventName();
@@ -54,10 +53,10 @@ class ApiHelper
         }
     }
 
-    public static function update($id, $data)
+    public static function update($id, $data, $model = null)
     {
         /* @var $model \yii\db\ActiveRecord */
-        $model = static::findModel($id);
+        $model = $model ? : static::findModel($id);
         $e_name = static::prefixEventName();
         Yii::$app->trigger($e_name . '_update', new Event([$model]));
         $model->load($data, '');
@@ -69,10 +68,10 @@ class ApiHelper
         }
     }
 
-    public static function delete($id)
+    public static function delete($id, $model = null)
     {
         /* @var $model \yii\db\ActiveRecord */
-        $model = static::findModel($id);
+        $model = $model ? : static::findModel($id);
         $e_name = static::prefixEventName();
         Yii::$app->trigger($e_name . '_delete', new Event([$model]));
         if ($model->delete() !== false) {
@@ -83,20 +82,6 @@ class ApiHelper
         }
     }
 
-    
-    /**
-     * Prepares the data provider that should return the requested collection of the models.
-     * @return ActiveDataProvider
-     */
-    public static function prepareDataProvider()
-    {
-        /* @var $modelClass \yii\db\BaseActiveRecord */
-        $modelClass = static::modelClass();
-
-        return new ActiveDataProvider([
-            'query' => $modelClass::find(),
-        ]);
-    }    
     /**
      * Returns the data model based on the primary key given.
      * If the data model is not found, a 404 HTTP exception will be raised.

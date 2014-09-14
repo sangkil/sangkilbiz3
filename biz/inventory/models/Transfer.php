@@ -3,7 +3,6 @@
 namespace biz\inventory\models;
 
 use Yii;
-
 use biz\master\models\Warehouse;
 
 /**
@@ -40,7 +39,8 @@ class Transfer extends \yii\db\ActiveRecord
     const STATUS_CONFIRM_REJECT = 5;
     const STATUS_CONFIRM_APPROVE = 6;
     const STATUS_RECEIVE = 7;
-
+    
+    const SCENARIO_RELEASE = 'release';
     const SCENARIO_RECEIVE = 'receive';
 
     /**
@@ -57,10 +57,10 @@ class Transfer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_warehouse_source', 'id_warehouse_dest', 'transferDate', 'status'], 'required'],
-            [['receiveDate'], 'required', 'on' => [self::SCENARIO_RECEIVE]],
-            [['id_warehouse_source', 'id_warehouse_dest', 'status'], 'integer'],
-            [['transfer_date', 'receive_date'], 'safe']
+            [['transfer_date', 'status'], 'required'],
+            [['receive_date'], 'required', 'on' => [self::SCENARIO_RECEIVE]],
+            [['id_branch', 'id_branch_dest', 'status'], 'integer'],
+            [['transferDate', 'receiveDate'], 'safe']
         ];
     }
 
@@ -106,7 +106,8 @@ class Transfer extends \yii\db\ActiveRecord
     public function getTransferDtls()
     {
         return $this->hasMany(TransferDtl::className(), ['id_transfer' => 'id_transfer'])
-        ->orderBy([new \yii\db\Expression('transfer_qty_send=0 ASC')]);
+                ->indexBy('id_product')
+                ->orderBy([new \yii\db\Expression('transfer_qty_send=0 ASC')]);
     }
 
     /**
@@ -140,7 +141,7 @@ class Transfer extends \yii\db\ActiveRecord
                 'value' => 'IN' . date('y.?')
             ],
             [
-                'class'=>'mdm\converter\DateConverter',
+                'class' => 'mdm\converter\DateConverter',
                 'attributes' => [
                     'transferDate' => 'transfer_date',
                     'receiveDate' => 'receive_date'

@@ -33,8 +33,11 @@ class Sales extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RELEASE = 2;
+    const STATUS_RELEASED = 3;
     const STATUS_CLOSE = 10;
-
+    
+    const SCENARIO_RELEASE = 'release';
+    
     private $_nm_customer;
 
     /**

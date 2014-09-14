@@ -22,7 +22,6 @@ class Controller extends \yii\rest\Controller
      * @var ApiHelper 
      */
     public $helperClass;
-    public $prepareDataProvider;
 
     public function init()
     {

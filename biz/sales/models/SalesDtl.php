@@ -16,11 +16,12 @@ use biz\master\models\Warehouse;
  * @property integer $id_product
  * @property integer $id_uom
  * @property integer $id_warehouse
- * @property string $sales_price
- * @property string $sales_qty
- * @property string $discount
- * @property string $cogs
- * @property string $tax
+ * @property double $sales_price
+ * @property double $sales_qty
+ * @property double $sales_qty_release
+ * @property double $discount
+ * @property double $cogs
+ * @property double $tax
  *
  * @property Uom $idUom
  * @property Sales $idSales
@@ -30,6 +31,9 @@ use biz\master\models\Warehouse;
  */
 class SalesDtl extends \yii\db\ActiveRecord
 {
+    public $id_warehouse;
+    public $qty_release;
+    public $id_uom_release;
 
     /**
      * @inheritdoc
@@ -48,13 +52,41 @@ class SalesDtl extends \yii\db\ActiveRecord
             [['cogs'], 'default', 'value' => function($model) {
                 return $model->idCogs ? $model->idCogs->cogs : 0;
             }],
-            [['id_warehouse'], 'default', 'value' => function($model) {
-                return $model->idSales ? $model->idSales->id_warehouse : null;
-            }],
-            [['id_sales', 'id_product', 'id_uom', 'id_warehouse', 'sales_price', 'sales_qty', 'cogs'], 'required'],
-            [['id_sales', 'id_product', 'id_uom', 'id_warehouse'], 'integer'],
+            [['id_sales', 'id_product', 'id_uom', 'sales_price', 'sales_qty'], 'required'],
+            [['id_sales', 'id_product', 'id_uom',], 'integer'],
             [['sales_price', 'sales_qty', 'discount', 'cogs', 'tax'], 'number'],
+            [['id_warehouse', 'qty_release', 'id_uom_release'], 'safe', 'on' => Sales::SCENARIO_RELEASE],
+            [['id_warehouse'], 'required', 'on' => Sales::SCENARIO_RELEASE, 'when' => function($model) {
+                return $model->qty_release !== null && $model->qty_release !== '';
+            }],
+            [['qty_receive'], 'double', 'on' => Sales::SCENARIO_RELEASE],
+            [['qty_release'],'convertRelease', 'on'=>  Sales::SCENARIO_RELEASE],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        foreach ($scenarios[Sales::SCENARIO_RELEASE] as $i => $attr) {
+            if (!in_array($attr, ['id_warehouse', 'qty_release', 'id_uom_release']) && $attr[0] != '!') {
+                $scenarios[Sales::SCENARIO_RELEASE][$i] = '!' . $attr;
+            }
+        }
+        return $scenarios;
+    }
+
+    public function convertRelease($attribute)
+    {
+        if ($this->id_uom_release === null || $this->id_uom == $this->id_uom_release) {
+            $this->sales_qty_release += $this->qty_release;
+        } else {
+            $uoms = ProductUom::find()->where(['id_product' => $this->id_product])->indexBy('id_uom')->all();
+            $this->sales_qty_release += $this->qty_release * $uoms[$this->id_uom_release]->isi / $uoms[$this->id_uom]->isi;
+        }
+        if ($this->sales_qty_release > $this->sales_qty) {
+            $this->addError($attribute, 'Total qty release large than purch qty');
+        }
     }
 
     /**

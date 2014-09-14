@@ -36,9 +36,8 @@ class Purchase extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 1;
     const STATUS_RECEIVE = 2;
+    const STATUS_RECEIVED = 3;
     
-    const SCENARIO_CREATE = 'create';
-    const SCENARIO_UPDATE = 'update';
     const SCENARIO_RECEIVE = 'receive';    
     
     private $_nm_supplier;
@@ -91,7 +90,7 @@ class Purchase extends \yii\db\ActiveRecord
      */
     public function getPurchaseDtls()
     {
-        return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase']);
+        return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase'])->indexBy('id_purchase_dtl');
     }
 
     /**

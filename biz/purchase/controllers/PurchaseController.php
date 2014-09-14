@@ -13,6 +13,7 @@ use yii\base\UserException;
 use biz\app\Hooks;
 use biz\app\base\Event;
 use biz\app\components\Helper as AppHelper;
+use biz\purchase\components\Purchase as ApiPurchase;
 
 /**
  * PurchaseController implements the CRUD actions for Purchase model.
@@ -75,30 +76,15 @@ class PurchaseController extends Controller
         ]);
 
         $post = Yii::$app->request->post();
-        if ($model->load($post)) {
-            if (!empty($post['PurchaseDtl'])) {
-                try {
-                    $transaction = Yii::$app->db->beginTransaction();
-                    $success = $model->save();
-                    $success = $model->saveRelated('purchaseDtls', $post, $success);
-                    if ($success) {
-                        $transaction->commit();
 
-                        return $this->redirect(['view', 'id' => $model->id_purchase]);
-                    } else {
-                        $transaction->rollBack();
-                    }
-                } catch (\Exception $exc) {
-                    $transaction->rollBack();
-                    $model->addError('', $exc->getMessage());
-                }
-            } else {
-                $model->validate();
-                $model->addError('', 'Details cannot be blank');
+        if (isset($post['Purchase'])) {
+            $data = $post['Purchase'];
+            $data['details'] = isset($post['PurchaseDtl']) ? $post['PurchaseDtl'] : [];
+            list($success, $model) = ApiPurchase::create($data, $model);
+            if ($success) {
+                return $this->redirect(['view', 'id' => $model->id_purchase]);
             }
-            $model->setIsNewRecord(true);
         }
-
         return $this->render('create', [
                 'model' => $model,
                 'details' => $model->purchaseDtls
@@ -114,25 +100,15 @@ class PurchaseController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (!AppHelper::checkAccess('update', $model)) {
-            throw new \yii\web\ForbiddenHttpException('Forbidden');
-        }
+        
         $post = Yii::$app->request->post();
-        if ($model->load($post)) {
-            try {
-                $transaction = Yii::$app->db->beginTransaction();
-                $success = $model->save();
-                $success = $model->saveRelated('purchaseDtls', $post, $success);
-                if ($success) {
-                    $transaction->commit();
 
-                    return $this->redirect(['view', 'id' => $model->id_purchase]);
-                } else {
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $exc) {
-                $transaction->rollBack();
-                $model->addError('', $exc->getMessage());
+        if (isset($post['Purchase'])) {
+            $data = $post['Purchase'];
+            $data['details'] = isset($post['PurchaseDtl']) ? $post['PurchaseDtl'] : [];
+            list($success, $model) = ApiPurchase::update($id, $data, $model);
+            if ($success) {
+                return $this->redirect(['view', 'id' => $model->id_purchase]);
             }
         }
 
@@ -150,33 +126,14 @@ class PurchaseController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        Yii::$app->trigger(Hooks::E_PPDEL_1, new Event([$model]));
-        $model->delete();
+        ApiPurchase::delete($id);
 
         return $this->redirect(['index']);
     }
 
     public function actionReceive($id)
     {
-        $model = $this->findModel($id);
-        Yii::$app->trigger(Hooks::E_PPREC_1, new Event([$model]));
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $model->status = Purchase::STATUS_RECEIVE;
-            if (!$model->save()) {
-                throw new UserException(implode(",\n", $model->firstErrors));
-            }
-            Yii::$app->trigger(Hooks::E_PPREC_21, new Event([$model]));
-            foreach ($model->purchaseDtls as $detail) {
-                Yii::$app->trigger(Hooks::E_PPREC_22, new Event([$model, $detail]));
-            }
-            Yii::$app->trigger(Hooks::E_PPREC_23, new Event([$model]));
-            $transaction->commit();
-        } catch (Exception $exc) {
-            $transaction->rollBack();
-            throw $exc;
-        }
+        ApiPurchase::receive($id);
 
         return $this->redirect(['index']);
     }

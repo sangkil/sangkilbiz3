@@ -5,6 +5,8 @@ namespace biz\purchase\models;
 use Yii;
 use biz\master\models\Product;
 use biz\master\models\Uom;
+use biz\master\components\Helper as MasterHelper;
+use biz\master\models\ProductUom;
 
 /**
  * This is the model class for table "purchase_dtl".
@@ -14,15 +16,18 @@ use biz\master\models\Uom;
  * @property integer $id_product
  * @property integer $id_warehouse
  * @property integer $id_uom
- * @property string $purch_qty
- * @property string $purch_price
- * @property string $sales_price
+ * @property double $purch_qty
+ * @property double $purch_price
+ * @property double $purch_qty_receive
  *
  * @property Purchase $idPurchase
  * @property double[] $salesPrices Description
  */
 class PurchaseDtl extends \yii\db\ActiveRecord
 {
+    public $id_warehouse;
+    public $qty_receive;
+    public $id_uom_receive;
 
     /**
      * @inheritdoc
@@ -38,14 +43,43 @@ class PurchaseDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_warehouse'], 'default', 'value' => function ($model) {
-                return $model->idPurchase ? $model->idPurchase->id_warehouse : null;
+            [['id_purchase', 'id_product', 'id_uom', 'purch_qty', 'purch_price'], 'required'],
+            [['id_purchase', 'id_product', 'id_uom'], 'integer'],
+            [['purch_qty', 'purch_price'], 'double'],
+            [['id_uom', 'id_uom_receive'], 'exist', 'targetClass' => ProductUom::className(),
+                'targetAttribute' => 'id_uom', 'filter' => ['id_product' => $this->id_product]],
+            [['id_warehouse', 'qty_receive', 'id_uom_receive'], 'safe', 'on' => Purchase::SCENARIO_RECEIVE],
+            [['id_warehouse'], 'required', 'on' => Purchase::SCENARIO_RECEIVE, 'when' => function($model) {
+                return $model->qty_receive !== null && $model->qty_receive !== '';
             }],
-            [['id_purchase', 'id_product', 'id_uom', 'id_warehouse', 'purch_qty', 'sales_price'], 'required'],
-            [['id_purchase', 'id_product', 'id_warehouse', 'id_uom'], 'integer'],
-            [['purch_qty', 'purch_price', 'sales_price'], 'double'],
-            [['salesPrices'], 'safe'],
+            [['qty_receive'], 'double', 'on' => Purchase::SCENARIO_RECEIVE],
+            [['qty_receive'], 'convertReceive', 'on' => Purchase::SCENARIO_RECEIVE],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+
+        foreach ($scenarios[Purchase::SCENARIO_RECEIVE] as $i => $attr) {
+            if (!in_array($attr, ['id_warehouse', 'qty_receive', 'id_uom_receive']) && $attr[0] != '!') {
+                $scenarios[Purchase::SCENARIO_RECEIVE][$i] = '!' . $attr;
+            }
+        }
+        return $scenarios;
+    }
+
+    public function convertReceive($attribute)
+    {
+        if ($this->id_uom_receive === null || $this->id_uom == $this->id_uom_receive) {
+            $this->purch_qty_receive += $this->qty_receive;
+        } else {
+            $uoms = ProductUom::find()->where(['id_product' => $this->id_product])->indexBy('id_uom')->all();
+            $this->purch_qty_receive += $this->qty_receive * $uoms[$this->id_uom_receive]->isi / $uoms[$this->id_uom]->isi;
+        }
+        if ($this->purch_qty_receive > $this->purch_qty) {
+            $this->addError($attribute, 'Total qty receive large than purch qty');
+        }
     }
 
     /**
