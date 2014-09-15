@@ -2,6 +2,7 @@
 
 namespace biz\inventory\components;
 
+use Yii;
 use biz\inventory\models\Transfer as MTransfer;
 use biz\inventory\models\TransferDtl;
 use yii\helpers\ArrayHelper;

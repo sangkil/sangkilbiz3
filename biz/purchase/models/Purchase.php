@@ -56,10 +56,10 @@ class Purchase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nmSupplier'], 'in', 'range' => Supplier::find()->select(['nm_supplier'])->column()],
-            [['id_supplier', 'nmSupplier', 'id_branch', 'id_warehouse', 'purchaseDate', 'purchase_value', 'status'], 'required'],
+            [['status'],'default','value'=>  self::STATUS_DRAFT],
+            [['id_supplier', 'id_branch', 'id_warehouse', 'purchase_date', 'purchase_value', 'status'], 'required'],
             [['id_branch', 'status'], 'integer'],
-            [['purchase_date'], 'safe'],
+            [['purchaseDate'], 'safe'],
             [['item_discount'], 'number']
         ];
     }
@@ -90,7 +90,7 @@ class Purchase extends \yii\db\ActiveRecord
      */
     public function getPurchaseDtls()
     {
-        return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase'])->indexBy('id_purchase_dtl');
+        return $this->hasMany(PurchaseDtl::className(), ['id_purchase' => 'id_purchase']);
     }
 
     /**

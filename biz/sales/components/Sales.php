@@ -2,6 +2,7 @@
 
 namespace biz\sales\components;
 
+use Yii;
 use biz\sales\models\Sales as MSales;
 use biz\app\base\Event;
 
