@@ -30,6 +30,7 @@ class Invoice extends \yii\db\ActiveRecord
 {
     const TYPE_PURCHASE = 100;
     const TYPE_SALES = 200;
+    const STATUS_DRAFT = 1;
 
     /**
      * @inheritdoc
@@ -45,9 +46,10 @@ class Invoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['invoice_type', 'invDate', 'dueDate', 'id_vendor', 'invoice_value', 'status'], 'required'],
+            [['status'], 'default', 'value' => self::STATUS_DRAFT],
+            [['invoice_type', 'inv_date', 'due_date', 'id_vendor', 'invoice_value'], 'required'],
             [['invoice_type', 'id_vendor', 'status'], 'integer'],
-            [['invoice_date', 'due_date'], 'safe'],
+            [['invDate', 'dueDate'], 'safe'],
             [['invoice_value'], 'number']
         ];
     }
@@ -120,13 +122,14 @@ class Invoice extends \yii\db\ActiveRecord
         $class = new \ReflectionClass(self::className());
         $result = [];
         foreach ($class->getConstants() as $key => $value) {
-            if (strpos($key, 'TYPE_')===0) {
+            if (strpos($key, 'TYPE_') === 0) {
                 $result[substr($key, 5)] = $value;
             }
         }
 
         return $result;
     }
+
     /**
      * @inheritdoc
      */

@@ -5,6 +5,7 @@ namespace biz\accounting\components;
 use biz\accounting\models\GlHeader;
 use biz\accounting\models\EntriSheet;
 use yii\base\UserException;
+use yii\base\NotSupportedException;
 
 /**
  * Description of GL
@@ -88,5 +89,15 @@ class GL extends \biz\app\base\ApiHelper
         }
         $data['details'] = $details;
         return static::create($data, $model);
+    }
+    
+    public static function update($id, $data, $model = null)
+    {
+        throw new NotSupportedException();
+    }
+    
+    public static function delete($id, $model = null)
+    {
+        throw new NotSupportedException();
     }
 }

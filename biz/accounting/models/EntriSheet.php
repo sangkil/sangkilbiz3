@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "entri_sheet".
  *
- * @property integer $id_esheet
  * @property string $cd_esheet
  * @property string $nm_esheet
  * @property string $create_at
@@ -16,7 +15,6 @@ use Yii;
  * @property integer $update_by
  *
  * @property EntriSheetDtl[] $entriSheetDtls
- * @method array saveRelated(string $relation) Description
  */
 class EntriSheet extends \yii\db\ActiveRecord
 {
@@ -25,7 +23,7 @@ class EntriSheet extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%entri_sheet}}';
+        return 'entri_sheet';
     }
 
     /**
@@ -35,8 +33,8 @@ class EntriSheet extends \yii\db\ActiveRecord
     {
         return [
             [['cd_esheet', 'nm_esheet'], 'required'],
-            [['cd_esheet'], 'string', 'max' => 4],
-            [['nm_esheet'], 'string', 'max' => 32]
+            [['cd_esheet'], 'string', 'max' => 16],
+            [['nm_esheet'], 'string', 'max' => 64]
         ];
     }
 
@@ -46,7 +44,6 @@ class EntriSheet extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_esheet' => 'Id Esheet',
             'cd_esheet' => 'Cd Esheet',
             'nm_esheet' => 'Nm Esheet',
             'create_at' => 'Create At',
@@ -61,12 +58,9 @@ class EntriSheet extends \yii\db\ActiveRecord
      */
     public function getEntriSheetDtls()
     {
-        return $this->hasMany(EntriSheetDtl::className(), ['id_esheet' => 'id_esheet']);
+        return $this->hasMany(EntriSheetDtl::className(), ['cd_esheet' => 'cd_esheet']);
     }
-
-    /**
-     * @inheritdoc
-     */
+    
     public function behaviors()
     {
         return [

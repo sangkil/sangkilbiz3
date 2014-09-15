@@ -7,11 +7,12 @@ use Yii;
 /**
  * This is the model class for table "entri_sheet_dtl".
  *
- * @property integer $id_esheet
+ * @property string $cd_esheet
+ * @property string $cd_esheet_dtl
  * @property string $nm_esheet_dtl
  * @property integer $id_coa
  *
- * @property EntriSheet $idEsheet
+ * @property EntriSheet $cdEsheet
  * @property Coa $idCoa
  */
 class EntriSheetDtl extends \yii\db\ActiveRecord
@@ -21,7 +22,7 @@ class EntriSheetDtl extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%entri_sheet_dtl}}';
+        return 'entri_sheet_dtl';
     }
 
     /**
@@ -30,9 +31,10 @@ class EntriSheetDtl extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_esheet', 'nm_esheet_dtl', 'id_coa'], 'required'],
-            [['id_esheet', 'id_coa'], 'integer'],
-            [['nm_esheet_dtl'], 'string'],
+            [['cd_esheet', 'cd_esheet_dtl'], 'required'],
+            [['id_coa'], 'integer'],
+            [['cd_esheet', 'cd_esheet_dtl'], 'string', 'max' => 16],
+            [['nm_esheet_dtl'], 'string', 'max' => 64]
         ];
     }
 
@@ -42,7 +44,8 @@ class EntriSheetDtl extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_esheet' => 'Id Esheet',
+            'cd_esheet' => 'Cd Esheet',
+            'cd_esheet_dtl' => 'Cd Esheet Dtl',
             'nm_esheet_dtl' => 'Nm Esheet Dtl',
             'id_coa' => 'Id Coa',
         ];
@@ -51,9 +54,9 @@ class EntriSheetDtl extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdEsheet()
+    public function getCdEsheet()
     {
-        return $this->hasOne(EntriSheet::className(), ['id_esheet' => 'id_esheet']);
+        return $this->hasOne(EntriSheet::className(), ['cd_esheet' => 'cd_esheet']);
     }
 
     /**

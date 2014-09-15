@@ -27,7 +27,6 @@ class Bootstrap extends \biz\app\base\Bootstrap
     {
         if ($app instanceof \yii\web\Application) {
             $app->attachBehaviors([
-                CogsHook::className() => CogsHook::className(),
                 PriceHook::className() => PriceHook::className(),
                 StockHook::className() => StockHook::className()
             ]);

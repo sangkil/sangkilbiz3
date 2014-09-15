@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id_invoice
  * @property integer $id_reff
  * @property string $description
- * @property string $trans_value
+ * @property double $trans_value
  *
  * @property Invoice $idInvoice
  */
