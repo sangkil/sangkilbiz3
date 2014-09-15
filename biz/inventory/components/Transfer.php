@@ -133,7 +133,9 @@ class Transfer extends \biz\app\base\ApiHelper
                     $transferDtls[$index] = $detail;
                 }
                 $model->populateRelation('transferDtls', array_values($transferDtls));
-                Yii::$app->trigger($e_name . '_release_end', new Event([$model]));
+                if ($success) {
+                    Yii::$app->trigger($e_name . '_release_end', new Event([$model]));
+                }
             }
             if ($success && $model->save()) {
                 Yii::$app->trigger($e_name . '_released', new Event([$model]));
@@ -181,7 +183,7 @@ class Transfer extends \biz\app\base\ApiHelper
                         $detail = new TransferDtl([
                             'id_transfer' => $model->id_transfer,
                             'id_product' => $index,
-                            'id_uom' => $dataDetail['id_uom_trans']
+                            'id_uom' => $dataDetail['id_uom_receive']
                         ]);
                     }
                     $detail->scenario = MTransfer::SCENARIO_RECEIVE;
@@ -191,7 +193,9 @@ class Transfer extends \biz\app\base\ApiHelper
                     $transferDtls[$index] = $detail;
                 }
                 $model->populateRelation('transferDtls', array_values($transferDtls));
-                Yii::$app->trigger($e_name . '_receive_end', new Event([$model]));
+                if ($success) {
+                    Yii::$app->trigger($e_name . '_receive_end', new Event([$model]));
+                }
             }
             if ($success && $model->save()) {
                 Yii::$app->trigger($e_name . '_received', new Event([$model]));
@@ -220,18 +224,38 @@ class Transfer extends \biz\app\base\ApiHelper
         $model = $model ? : static::findModel($id);
 
         $e_name = static::prefixEventName();
-        $success = false;
+        $success = true;
         $model->scenario = MTransfer::SCENARIO_DEFAULT;
         $model->load($data, '');
         $model->status = MTransfer::STATUS_RECEIVE;
         try {
             $transaction = Yii::$app->db->beginTransaction();
             Yii::$app->trigger($e_name . '_complete', new Event([$model]));
-            
-            if ($model->save()) {
+            $transferDtls = ArrayHelper::index($model->transferDtls, 'id_product');
+            if (!empty($data['details'])) {
+                Yii::$app->trigger($e_name . '_complete_head', new Event([$model]));
+                foreach ($data['details'] as $dataDetail) {
+                    $index = $dataDetail['id_product'];
+                    $detail = $transferDtls[$index];
+                    $detail->scenario = MTransfer::SCENARIO_COMPLETE;
+                    $detail->load($dataDetail, '');
+                    $success = $success && $detail->save();
+                    Yii::$app->trigger($e_name . '_complete_body', new Event([$model, $detail]));
+                    $transferDtls[$index] = $detail;
+                }
+                $model->populateRelation('transferDtls', array_values($transferDtls));
+                Yii::$app->trigger($e_name . '_complete_end', new Event([$model]));
+            }
+            $complete = true;
+            foreach ($transferDtls as $detail) {
+                $complete = $complete && $detail->transfer_qty_send == $detail->transfer_qty_receive;
+            }
+            if (!$complete) {
+                $model->addError('details', 'Not balance');
+            }
+            if ($success && $complete && $model->save()) {
                 Yii::$app->trigger($e_name . '_completed', new Event([$model]));
                 $transaction->commit();
-                $success = true;
             } else {
                 $transaction->rollBack();
                 $success = false;

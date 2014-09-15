@@ -42,6 +42,7 @@ class Transfer extends \yii\db\ActiveRecord
     
     const SCENARIO_RELEASE = 'release';
     const SCENARIO_RECEIVE = 'receive';
+    const SCENARIO_COMPLETE = 'complete';
 
     /**
      * @inheritdoc

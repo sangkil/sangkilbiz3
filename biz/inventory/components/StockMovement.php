@@ -5,6 +5,7 @@ namespace biz\inventory\components;
 use Yii;
 use biz\inventory\models\StockMovement as MStockMovement;
 use biz\app\base\Event;
+use yii\base\NotSupportedException;
 
 /**
  * Description of StockMovement
@@ -59,11 +60,11 @@ class StockMovement extends \biz\app\base\ApiHelper
     
     public static function update($id, $data, $model = null)
     {
-        throw new \yii\base\NotSupportedException();
+        throw new NotSupportedException();
     }
     
     public static function delete($id, $model = null)
     {
-        throw new \yii\base\NotSupportedException();
+        throw new NotSupportedException();
     }
 }

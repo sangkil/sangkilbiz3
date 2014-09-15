@@ -23,9 +23,12 @@ use biz\master\models\ProductUom;
  */
 class TransferDtl extends \yii\db\ActiveRecord
 {
-    public $id_warehouse;
-    public $id_uom_trans;
-    public $qty_trans;
+    public $id_warehouse_src;
+    public $id_uom_send;
+    public $qty_send;
+    public $id_warehouse_dest;
+    public $id_uom_receive;
+    public $qty_receive;
 
     /**
      * @inheritdoc
@@ -45,10 +48,14 @@ class TransferDtl extends \yii\db\ActiveRecord
             [['transfer_qty'], 'required', 'on' => Transfer::SCENARIO_DEFAULT],
             [['id_transfer', 'id_product', 'id_uom'], 'integer'],
             [['transfer_qty', 'transfer_qty_send', 'transfer_qty_receive'], 'number'],
-            [['qty_trans'], 'convertQty', 'on' => [Transfer::SCENARIO_RELEASE, Transfer::SCENARIO_RECEIVE]],
-            [['id_warehouse'], 'require', 'when' => function($model) {
-                return $model->qty_trans !== null && $model->qty_trans !== '';
-            }, 'on' => [Transfer::SCENARIO_RELEASE, Transfer::SCENARIO_RECEIVE]]
+            [['qty_send'], 'convertQtySend', 'on' => [Transfer::SCENARIO_RELEASE, Transfer::SCENARIO_COMPLETE]],
+            [['qty_receive'], 'convertQtyReceive', 'on' => [Transfer::SCENARIO_RECEIVE, Transfer::SCENARIO_COMPLETE]],
+            [['id_warehouse_src'], 'require', 'when' => function($model) {
+                return $model->qty_send !== null && $model->qty_send !== '';
+            }, 'on' => [Transfer::SCENARIO_RELEASE, Transfer::SCENARIO_COMPLETE]],
+            [['id_warehouse_dest'], 'require', 'when' => function($model) {
+                return $model->qty_receive !== null && $model->qty_receive !== '';
+            }, 'on' => [Transfer::SCENARIO_RECEIVE, Transfer::SCENARIO_COMPLETE]],
         ];
     }
 
@@ -57,31 +64,48 @@ class TransferDtl extends \yii\db\ActiveRecord
         $scenarios = parent::scenarios();
 
         foreach ($scenarios[Transfer::SCENARIO_RELEASE] as $i => $attr) {
-            if (!in_array($attr, ['id_warehouse', 'qty_trans', 'id_uom_trans']) && $attr[0] != '!') {
+            if (!in_array($attr, ['id_warehouse_src', 'qty_send', 'id_uom_send']) && $attr[0] != '!') {
                 $scenarios[Transfer::SCENARIO_RELEASE][$i] = '!' . $attr;
             }
         }
         foreach ($scenarios[Transfer::SCENARIO_RECEIVE] as $i => $attr) {
-            if (!in_array($attr, ['id_warehouse', 'qty_trans', 'id_uom_trans']) && $attr[0] != '!') {
+            if (!in_array($attr, ['id_warehouse_dest', 'qty_receive', 'id_uom_receive']) && $attr[0] != '!') {
                 $scenarios[Transfer::SCENARIO_RECEIVE][$i] = '!' . $attr;
+            }
+        }
+        foreach ($scenarios[Transfer::SCENARIO_COMPLETE] as $i => $attr) {
+            if (!in_array($attr, ['id_warehouse_dest', 'qty_receive', 'id_uom_receive']) &&
+                !in_array($attr, ['id_warehouse_src', 'qty_send', 'id_uom_send']) &&
+                $attr[0] != '!') {
+                $scenarios[Transfer::SCENARIO_COMPLETE][$i] = '!' . $attr;
             }
         }
         return $scenarios;
     }
 
-    public function convertQty($attribute)
+    public function convertQtySend($attribute)
     {
-        $scenario = $this->scenario;
-        $field = $scenario == Transfer::SCENARIO_RELEASE ? 'transfer_qty_send' : 'transfer_qty_receive';
-        if ($this->id_uom_trans === null || $this->id_uom == $this->id_uom_trans) {
-            $this->$field += $this->qty_trans;
+        if ($this->id_uom_send === null || $this->id_uom == $this->id_uom_send) {
+            $qty = $this->qty_send;
         } else {
             $uoms = ProductUom::find()->where(['id_product' => $this->id_product])->indexBy('id_uom')->all();
-            $this->$field += $this->qty_trans * $uoms[$this->id_uom_trans]->isi / $uoms[$this->id_uom]->isi;
+            $qty = $this->qty_send * $uoms[$this->id_uom_send]->isi / $uoms[$this->id_uom]->isi;
         }
-        if ($scenario == Transfer::SCENARIO_RELEASE && $this->transfer_qty_send > $this->transfer_qty) {
-            $this->addError($attribute, 'Total qty release large than transfer qty');
+        $this->transfer_qty_send += $qty;
+//        if ($scenario == Transfer::SCENARIO_RELEASE && $this->transfer_qty_send > $this->transfer_qty) {
+//            $this->addError($attribute, 'Total qty release large than transfer qty');
+//        }
+    }
+
+    public function convertQtyReceive($attribute)
+    {
+        if ($this->id_uom_receive === null || $this->id_uom == $this->id_uom_receive) {
+            $qty = $this->qty_receive;
+        } else {
+            $uoms = ProductUom::find()->where(['id_product' => $this->id_product])->indexBy('id_uom')->all();
+            $qty = $this->qty_receive * $uoms[$this->id_uom_send]->isi / $uoms[$this->id_uom]->isi;
         }
+        $this->transfer_qty_receive += $qty;
     }
 
     /**

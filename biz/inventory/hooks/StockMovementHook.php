@@ -11,6 +11,7 @@ use biz\sales\models\Sales;
 use biz\inventory\models\Transfer;
 use biz\master\models\ProductUom;
 use yii\base\UserException;
+use biz\inventory\models\StockAdjustment;
 
 /**
  * Description of CreateTransferNotice
@@ -27,6 +28,9 @@ class StockMovementHook extends \yii\base\Behavior
             'e_purchase_receive_end' => 'purchaseReceive',
             'e_sales_release_end' => 'salesRelease',
             'e_transfer_release_end' => 'transferRelease',
+            'e_transfer_receive_end' => 'transferReceive',
+            'e_transfer_completed' => 'transferComplete',
+            'e_stock-adjustment_applied' => 'adjustmentApplied'
         ];
     }
 
@@ -119,19 +123,123 @@ class StockMovementHook extends \yii\base\Behavior
         $data['details'] = [];
         $query_isi = ProductUom::find()->select('isi');
         foreach ($model->transferDtls as $detail) {
-            if (!empty($detail->qty_release)) {
+            if (!empty($detail->qty_send)) {
                 $isi = $query_isi->where([
                         'id_product' => $detail->id_product,
-                        'id_uom' => $detail->id_uom_trans? : $detail->id_uom])
+                        'id_uom' => $detail->id_uom_send ? : $detail->id_uom])
                     ->scalar();
                 $data['details'][] = [
-                    'id_warehouse' => $detail->id_warehouse,
+                    'id_warehouse' => $detail->id_warehouse_src,
                     'id_product' => $detail->id_product,
-                    'movement_qty' => -$detail->qty_trans * $isi,
+                    'movement_qty' => -$detail->qty_send * $isi,
                 ];
             }
         }
 
         $this->createMovementDoc($data);
+    }
+
+    /**
+     *
+     * @param Event $event
+     */
+    public function transferReceive($event)
+    {
+        /* @var $model Transfer */
+        $model = $event->params[0];
+        $data = [
+            'movement_type' => MStockMovement::TYPE_TRANSFER_RECEIVE,
+            'id_reff' => $model->id_transfer
+        ];
+        $data['details'] = [];
+        $query_isi = ProductUom::find()->select('isi');
+        foreach ($model->transferDtls as $detail) {
+            if (!empty($detail->qty_receive)) {
+                $isi = $query_isi->where([
+                        'id_product' => $detail->id_product,
+                        'id_uom' => $detail->id_uom_receive? : $detail->id_uom])
+                    ->scalar();
+                $data['details'][] = [
+                    'id_warehouse' => $detail->id_warehouse_dest,
+                    'id_product' => $detail->id_product,
+                    'movement_qty' => $detail->qty_receive * $isi,
+                ];
+            }
+        }
+
+        $this->createMovementDoc($data);
+    }
+
+    /**
+     *
+     * @param Event $event
+     */
+    public function transferComplete($event)
+    {
+        /* @var $model Transfer */
+        $model = $event->params[0];
+        $data = [
+            'movement_type' => MStockMovement::TYPE_TRANSFER_COMPLETE,
+            'id_reff' => $model->id_transfer
+        ];
+        $data['details'] = [];
+        $query_isi = ProductUom::find()->select('isi');
+        foreach ($model->transferDtls as $detail) {
+            if (!empty($detail->qty_send)) {
+                $isi = $query_isi->where([
+                        'id_product' => $detail->id_product,
+                        'id_uom' => $detail->id_uom_send? : $detail->id_uom])
+                    ->scalar();
+                $data['details'][] = [
+                    'id_warehouse' => $detail->id_warehouse_src,
+                    'id_product' => $detail->id_product,
+                    'movement_qty' => -$detail->qty_send * $isi,
+                ];
+            }
+            if (!empty($detail->qty_receive)) {
+                $isi = $query_isi->where([
+                        'id_product' => $detail->id_product,
+                        'id_uom' => $detail->id_uom_receive? : $detail->id_uom])
+                    ->scalar();
+                $data['details'][] = [
+                    'id_warehouse' => $detail->id_warehouse_dest,
+                    'id_product' => $detail->id_product,
+                    'movement_qty' => $detail->qty_receive * $isi,
+                ];
+            }
+        }
+
+        $this->createMovementDoc($data);
+    }
+    
+    /**
+     *
+     * @param Event $event
+     */
+    public function adjustmentApplied($event)
+    {
+        /* @var $model StockAdjustment */
+        $model = $event->params[0];
+        $data = [
+            'movement_type' => MStockMovement::TYPE_ADJUSTMENT,
+            'id_reff' => $model->id_adjustment
+        ];
+        $data['details'] = [];
+        $query_isi = ProductUom::find()->select('isi');
+        foreach ($model->stockAdjustmentDtls as $detail) {
+                $isi = $query_isi->where([
+                        'id_product' => $detail->id_product,
+                        'id_uom' => $detail->id_uom])
+                    ->scalar();
+                $data['details'][] = [
+                    'id_warehouse' => $model->id_warehouse,
+                    'id_product' => $detail->id_product,
+                    'movement_qty' => $detail->qty * $isi,
+                    'item_value' => $detail->item_value
+                ];
+            
+        }
+
+        $this->createMovementDoc($data);        
     }
 }

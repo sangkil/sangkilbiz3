@@ -1,42 +1,37 @@
 <?php
-
 namespace biz\inventory\components;
 
-use biz\inventory\models\TransferNotice as MTransferNotice;
-
+use biz\inventory\models\StockOpname as MStockOpname;
 /**
- * Description of TransferNotice
+ * Description of StockOpname
  *
  * @author Misbahul D Munir (mdmunir) <misbahuldmunir@gmail.com>
  */
-class TransferNotice extends \biz\app\base\ApiHelper
+class StockOpname extends \biz\app\base\ApiHelper
 {
-
     public static function modelClass()
     {
-        return MTransferNotice::className();
+        return MStockOpname::className();
     }
-
+    
     public static function prefixEventName()
     {
-        return 'e_transfer-notice';
+        return 'e_stock-opname';
     }
-
+    
     public static function create($data, $model = null)
     {
-        $model = $model ? : new MTransferNotice([
-            'notice_date' => date('Y-m-d')
-        ]);
+        $model = $model ? : new MStockOpname();
         $e_name = static::prefixEventName();
         $success = false;
-        $model->scenario = MTransferNotice::SCENARIO_DEFAULT;
+        $model->scenario = MStockOpname::SCENARIO_DEFAULT;
         $model->load($data, '');
         if (!empty($data['details'])) {
             try {
                 $transaction = Yii::$app->db->beginTransaction();
                 Yii::$app->trigger($e_name . '_create', new Event([$model]));
                 $success = $model->save();
-                $success = $model->saveRelated('stockMovementDtls', $data, $success, 'details', MTransferNotice::SCENARIO_DEFAULT);
+                $success = $model->saveRelated('stockMovementDtls', $data, $success, 'details', MStockOpname::SCENARIO_DEFAULT);
                 if ($success) {
                     Yii::$app->trigger($e_name . '_created', new Event([$model]));
                     $transaction->commit();
@@ -54,16 +49,6 @@ class TransferNotice extends \biz\app\base\ApiHelper
             $model->validate();
             $model->addError('details', 'Details cannot be blank');
         }
-        return [$success, $model];
-    }
-
-    public static function update($id, $data, $model = null)
-    {
-        throw new \yii\base\NotSupportedException();
-    }
-
-    public static function delete($id, $model = null)
-    {
-        throw new \yii\base\NotSupportedException();
+        return [$success, $model];        
     }
 }

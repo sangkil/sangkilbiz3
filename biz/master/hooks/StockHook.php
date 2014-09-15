@@ -21,10 +21,10 @@ class StockHook extends \yii\base\Behavior
             'e_stock-movement_created' => 'stockMovement',
             'e_purchase_receive_body' => 'purchaseReceiveBody',
             'e_sales_release_body' => 'salesReleaseBody',
-//            Hooks::E_ITISS_22 => 'transferIssueBody',
-//            Hooks::E_SSREL_22 => 'salesStdrReleaseBody',
-//            Hooks::E_IRREC_22 => 'receiveReceiveBody',
-//            Hooks::E_INAPP_22 => 'transferNoticeApproveBody'
+            'e_transfer_release_body' => 'transferReleaseBody',
+            'e_transfer_receive_body' => 'transferReceiveBody',
+            'e_transfer_complete_body' => 'transferCompleteBody',
+            'e_stock-adjustment_applied' => 'adjustmentApplied'
         ];
     }
 
@@ -164,7 +164,7 @@ class StockHook extends \yii\base\Behavior
             'id_warehouse' => $detail->id_warehouse,
             'id_product' => $detail->id_product,
             'id_uom' => $detail->id_uom_release? : $detail->id_uom,
-            'qty' => $detail->qty_release,
+            'qty' => -$detail->qty_release,
             'app' => 'sales',
             'id_ref' => $detail->id_sales_dtl,
         ]);
@@ -174,23 +174,20 @@ class StockHook extends \yii\base\Behavior
      *
      * @param \biz\app\base\Event $event
      */
-    public function transferIssueBody($event)
+    public function transferReleaseBody($event)
     {
         if (isset($event->sender->stockMovementImplemented)) {
             return;
         }
-        /* @var $model \biz\inventory\models\Transfer */
         /* @var $detail \biz\inventory\models\TransferDtl */
-        $model = $event->params[0];
         $detail = $event->params[1];
-
         $this->updateStock([
-            'id_warehouse' => $model->id_warehouse_source,
+            'id_warehouse' => $detail->id_warehouse_src,
             'id_product' => $detail->id_product,
-            'id_uom' => $detail->id_uom,
-            'qty' => -$detail->transfer_qty_send,
-            'app' => 'transfer',
-            'id_ref' => $model->id_transfer,
+            'id_uom' => $detail->id_uom_send? : $detail->id_uom,
+            'qty' => -$detail->qty_send,
+            'app' => 'transfer_release',
+            'id_ref' => $detail->id_transfer,
         ]);
     }
 
@@ -198,20 +195,20 @@ class StockHook extends \yii\base\Behavior
      *
      * @param \biz\app\base\Event $event
      */
-    public function salesStdrReleaseBody($event)
+    public function transferReceiveBody($event)
     {
         if (isset($event->sender->stockMovementImplemented)) {
             return;
         }
-        /* @var $detail \biz\master\models\SalesDtl */
+        /* @var $detail \biz\inventory\models\TransferDtl */
         $detail = $event->params[1];
         $this->updateStock([
-            'id_warehouse' => $detail->id_warehouse,
+            'id_warehouse' => $detail->id_warehouse_dest,
             'id_product' => $detail->id_product,
-            'id_uom' => $detail->id_uom,
-            'qty' => -$detail->sales_qty,
-            'app' => 'sales-standart',
-            'id_ref' => $detail->id_sales_dtl,
+            'id_uom' => $detail->id_uom_receive? : $detail->id_uom,
+            'qty' => $detail->qty_receive,
+            'app' => 'transfer_receive',
+            'id_ref' => $detail->id_transfer,
         ]);
     }
 
@@ -219,59 +216,57 @@ class StockHook extends \yii\base\Behavior
      *
      * @param \biz\app\base\Event $event
      */
-    public function receiveReceiveBody($event)
+    public function transferCompleteBody($event)
     {
         if (isset($event->sender->stockMovementImplemented)) {
             return;
         }
-        /* @var $model \biz\master\models\Transfer */
-        /* @var $detail \biz\master\models\TransferDtl */
-        $model = $event->params[0];
+        /* @var $detail \biz\inventory\models\TransferDtl */
         $detail = $event->params[1];
-        $this->updateStock([
-            'id_warehouse' => $model->id_warehouse_dest,
-            'id_product' => $detail->id_product,
-            'id_uom' => $detail->id_uom,
-            'qty' => $detail->transfer_qty_receive,
-            'app' => 'receive',
-            'id_ref' => $model->id_transfer,
-        ]);
+        if (!empty($detail->qty_send)) {
+            $this->updateStock([
+                'id_warehouse' => $detail->id_warehouse_src,
+                'id_product' => $detail->id_product,
+                'id_uom' => $detail->id_uom_send? : $detail->id_uom,
+                'qty' => -$detail->qty_send,
+                'app' => 'transfer_complete',
+                'id_ref' => $detail->id_transfer,
+            ]);
+        }
+        if (!empty($detail->qty_receive)) {
+            $this->updateStock([
+                'id_warehouse' => $detail->id_warehouse_dest,
+                'id_product' => $detail->id_product,
+                'id_uom' => $detail->id_uom_receive? : $detail->id_uom,
+                'qty' => $detail->qty_receive,
+                'app' => 'transfer_complete',
+                'id_ref' => $detail->id_transfer,
+            ]);
+        }
     }
+    
 
     /**
-     *
+     * 
      * @param \biz\app\base\Event $event
      */
-    public function transferNoticeApproveBody($event)
+    public function adjustmentApplied($event)
     {
         if (isset($event->sender->stockMovementImplemented)) {
             return;
         }
-        /* @var $model \biz\master\models\TransferNotice */
-        /* @var $detail \biz\master\models\TransferNoticeDtl */
+        /* @var $model \biz\inventory\models\StockAdjustment */
         $model = $event->params[0];
-        $detail = $event->params[1];
-
-        $params = [
-            'id_product' => $detail->id_product,
-            'id_uom' => $detail->id_uom,
-            'app' => 'notice approve',
-            'id_ref' => $model->id_transfer,
-        ];
-        // source
-        if (($qty = $detail->qty_approve) != 0) {
-            $this->updateStock(array_merge($params, [
-                'id_warehouse' => $model->idTransfer->id_warehouse_source,
-                'qty' => -$qty
-            ]));
-        }
-
-        // dest
-        if (($qty = $detail->qty_approve - $detail->qty_notice) != 0) {
-            $this->updateStock(array_merge($params, [
-                'id_warehouse' => $model->idTransfer->id_warehouse_dest,
-                'qty' => $qty
-            ]));
+        foreach ($model->stockAdjustmentDtls as $detail) {
+            $this->updateStock([
+                'id_warehouse' => $detail->id_warehouse,
+                'id_product' => $detail->id_product,
+                'qty' => $detail->qty,
+                'app' => 'stock_adjustment',
+                'price' => $detail->item_value,
+                'id_ref' => $detail->id_adjustment,
+            ]);
         }
     }
+    
 }

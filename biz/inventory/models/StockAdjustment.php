@@ -23,6 +23,9 @@ use Yii;
  */
 class StockAdjustment extends \yii\db\ActiveRecord
 {
+    const STATUS_DRAFT = 1;
+    const STATUS_APPLIED = 2;
+
     /**
      * @inheritdoc
      */
@@ -37,9 +40,10 @@ class StockAdjustment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['adjustment_num', 'id_warehouse', 'adjustment_date', 'status', 'create_at', 'create_by', 'update_at', 'update_by'], 'required'],
-            [['id_warehouse', 'id_reff', 'status', 'create_by', 'update_by'], 'integer'],
-            [['adjustment_date', 'create_at', 'update_at'], 'safe'],
+            [['status'], 'default', 'value' => self::STATUS_DRAFT],
+            [['adjustment_num', 'id_warehouse', 'adjustment_date', 'status'], 'required'],
+            [['id_warehouse', 'id_reff', 'status'], 'integer'],
+            [['adjustment_date'], 'safe'],
             [['adjustment_num'], 'string', 'max' => 16],
             [['description'], 'string', 'max' => 255]
         ];
@@ -71,5 +75,27 @@ class StockAdjustment extends \yii\db\ActiveRecord
     public function getStockAdjustmentDtls()
     {
         return $this->hasMany(StockAdjustmentDtl::className(), ['id_adjustment' => 'id_adjustment']);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'BizTimestampBehavior',
+            'BizBlameableBehavior',
+            [
+                'class' => 'mdm\autonumber\Behavior',
+                'digit' => 6,
+                'attribute' => 'adjustment_num',
+                'value' => 'AJ' . date('y.?')
+            ],
+            [
+                'class' => 'mdm\converter\DateConverter',
+                'attributes' => [
+                    'adjstmentDate' => 'adjustment_date',
+                ]
+            ],
+            'BizStatusConverter',
+            'mdm\behaviors\ar\RelatedBehavior',
+        ];
     }
 }

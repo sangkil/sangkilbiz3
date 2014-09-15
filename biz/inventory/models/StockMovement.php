@@ -24,6 +24,8 @@ class StockMovement extends \yii\db\ActiveRecord
     const TYPE_SALES = 200;
     const TYPE_TRANSFER_RELEASE = 300;
     const TYPE_TRANSFER_RECEIVE = 400;
+    const TYPE_TRANSFER_COMPLETE = 500;
+    const TYPE_ADJUSTMENT = 600;
 
     /**
      * @inheritdoc
