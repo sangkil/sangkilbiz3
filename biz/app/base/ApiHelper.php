@@ -16,23 +16,36 @@ use Yii;
  */
 class ApiHelper
 {
+    private static $_modelClasses = [];
+    private static $_prefixEventNames = [];
+
+    public static function className()
+    {
+        return get_called_class();
+    }
 
     /**
      * @return ActiveRecordInterface
      */
     public static function modelClass()
     {
-        $class = get_called_class();
-        return str_replace('components', 'models', $class);
+        $class = static::className();
+        if (!isset(static::$_modelClasses[$class])) {
+            static::$_modelClasses[$class] = str_replace('components', 'models', $class);
+        }
+        return static::$_modelClasses[$class];
     }
 
     public static function prefixEventName()
     {
-        $class = get_called_class();
-        if (($pos = strrpos($class, '\\')) !== false) {
-            $class = substr($class, $pos);
+        $class = static::className();
+        if (!isset(static::$_prefixEventNames[$class])) {
+            if (($pos = strrpos($class, '\\')) !== false) {
+                $class = substr($class, $pos);
+            }
+            static::$_prefixEventNames[$class] = 'e_' . Inflector::camel2id($class);
         }
-        return 'e_' . Inflector::camel2id($class);
+        return static::$_prefixEventNames[$class];
     }
 
     public static function create($data, $model = null)
