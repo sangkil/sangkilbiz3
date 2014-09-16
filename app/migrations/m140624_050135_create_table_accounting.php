@@ -42,9 +42,8 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
         ], $tableOptions);
 
         $this->createTable('{{%entri_sheet}}', [
-            'id_esheet' => Schema::TYPE_PK,
-            'cd_esheet' => Schema::TYPE_STRING . '(4) NOT NULL',
-            'nm_esheet' => Schema::TYPE_STRING . '(32) NOT NULL',
+            'cd_esheet' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'nm_esheet' => Schema::TYPE_STRING . '(64) NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
@@ -53,12 +52,13 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
         ], $tableOptions);
 
         $this->createTable('{{%entri_sheet_dtl}}', [
-            'id_esheet' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'nm_esheet_dtl' => Schema::TYPE_STRING . '(32) NOT NULL',
+            'cd_esheet' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'cd_esheet_dtl' => Schema::TYPE_STRING . '(16) NOT NULL',
+            'nm_esheet_dtl' => Schema::TYPE_STRING . '(64) NOT NULL',
             'id_coa' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
-            'PRIMARY KEY (id_esheet, nm_esheet_dtl)',
-            'FOREIGN KEY (id_esheet) REFERENCES {{%entri_sheet}} (id_esheet) ON DELETE CASCADE ON UPDATE CASCADE',
+            'PRIMARY KEY (cd_esheet, cd_esheet_dtl)',
+            'FOREIGN KEY (cd_esheet) REFERENCES {{%entri_sheet}} (cd_esheet) ON DELETE CASCADE ON UPDATE CASCADE',
         ], $tableOptions);
 
         $this->createTable('{{%gl_header}}', [
@@ -108,6 +108,7 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
 
         $this->createTable('{{%invoice_dtl}}', [
             'id_invoice' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'type_reff' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_reff' => Schema::TYPE_INTEGER . ' NOT NULL',
             'description' => Schema::TYPE_STRING . '(64) NULL',
             'trans_value' => Schema::TYPE_FLOAT . ' NOT NULL',

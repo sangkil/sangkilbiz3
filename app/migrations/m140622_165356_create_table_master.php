@@ -132,7 +132,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
         $this->createTable('{{%product_stock}}', [
             'id_warehouse' => Schema::TYPE_INTEGER . ' NOT NULL',
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
             'qty_stock' => Schema::TYPE_INTEGER . ' NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
@@ -143,7 +142,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
             'PRIMARY KEY (id_warehouse , id_product )',
             'FOREIGN KEY (id_warehouse) REFERENCES {{%warehouse}} (id_warehouse) ON DELETE CASCADE ON UPDATE CASCADE',
             'FOREIGN KEY (id_product) REFERENCES {{%product}} (id_product) ON DELETE CASCADE ON UPDATE CASCADE',
-            'FOREIGN KEY (id_uom) REFERENCES {{%uom}} (id_uom) ON DELETE CASCADE ON UPDATE CASCADE',
         ], $tableOptions);
 
         $this->createTable('{{%supplier}}', [
@@ -219,7 +217,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
         $this->createTable('{{%price}}', [
             'id_product' => Schema::TYPE_INTEGER,
             'id_price_category' => Schema::TYPE_INTEGER,
-            'id_uom' => Schema::TYPE_INTEGER,
             'price' => Schema::TYPE_FLOAT,
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
@@ -234,7 +231,6 @@ class m140622_165356_create_table_master extends \yii\db\Migration
 
         $this->createTable('{{%cogs}}', [
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
             'cogs' => Schema::TYPE_FLOAT . ' NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
