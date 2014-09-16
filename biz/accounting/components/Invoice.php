@@ -3,9 +3,11 @@
 namespace biz\accounting\components;
 
 use biz\accounting\models\Invoice as MInvoice;
-use yii\db\Query;
 use biz\accounting\models\InvoiceDtl;
+use biz\purchase\models\Purchase;
+use biz\sales\models\Sales;
 use yii\helpers\ArrayHelper;
+use yii\base\UserException;
 
 /**
  * Description of Invoice
@@ -92,27 +94,102 @@ class Invoice extends \biz\app\base\ApiHelper
         }
         return [$success, $model];
     }
-    
-    public function createFromPurchase($data, $model=null)
+
+    public function createFromPurchase($data, $model = null)
     {
         $inv_vals = ArrayHelper::map($data['details'], 'id_purchase', 'value');
         $ids = array_keys($inv_vals);
-        
-        $c_inv_vals = (new Query())
-            ->select(['p.id_purchase','jml'=>'sum(ivd.trans_value)',
-                'p.purchase_value','p.item_discount','p.id_supplier'])
-            ->from(['p'=>'{{%purchase}}'])
-            ->innerJoin(['ivd'=>'{{%invoice_dtl}}'], '{{p}}.[[id_purchase]]={{ivd}}.[[id_reff]]')
-            ->innerJoin(['iv'=>'{{%invoice}}'], '{{iv}}.[[id_invoice]]={{iv}}.[[id_invoice]]')
-            ->where(['iv.invoice_type'=> MInvoice::TYPE_PURCHASE,'ivd.id_reff'=>$ids])
-            ->groupBy('p.id_purchase')
+
+        $vendors = [];
+        $purchase_values = Purchase::find()
+            ->where(['id_purchase' => $ids])
             ->indexBy('id_purchase')
+            ->asArray()
             ->all();
-        
-        
-        // query data purchase
-        
-        
+        $vendor = null;
+        foreach ($purchase_values as $row) {
+            $vendor = $row['id_supplier'];
+            $vendors[$row['id_supplier']] = true;
+        }
+        if (count($vendors) !== 1) {
+            throw new UserException('Vendor harus sama');
+        }
+
+        $purchase_invoiced = InvoiceDtl::find()
+            ->select(['id_reff', 'total' => 'sum(trans_value)'])
+            ->joinWith('idInvoice')
+            ->where(['invoice_type' => MInvoice::TYPE_PURCHASE, 'id_reff' => $ids])
+            ->groupBy('id_reff')
+            ->indexBy('id_reff')
+            ->asArray()
+            ->all();
+
+        $data['id_vendor'] = $vendor;
+        $data['invoice_type'] = MInvoice::TYPE_PURCHASE;
+        $details = [];
+        foreach ($inv_vals as $id => $value) {
+            $sisa = $purchase_values[$id]['purchase_value'] - $purchase_values[$id]['item_discount'];
+            if (isset($purchase_invoiced[$id])) {
+                $sisa -= $purchase_invoiced[$id]['total'];
+            }
+            if ($value > $sisa) {
+                throw new UserException('Tagihan lebih besar dari sisa');
+            }
+            $details[] = [
+                'id_reff' => $id,
+                'trans_value' => $value,
+            ];
+        }
+        $data['details'] = $details;
+        return static::create($data, $model);
+    }
+
+    public function createFromSales($data, $model = null)
+    {
+        $inv_vals = ArrayHelper::map($data['details'], 'id_sales', 'value');
+        $ids = array_keys($inv_vals);
+
+        $vendors = [];
+        $sales_values = Sales::find()
+            ->where(['id_sales' => $ids])
+            ->indexBy('id_sales')
+            ->asArray()
+            ->all();
+        $vendor = null;
+        foreach ($purchase_values as $row) {
+            $vendor = $row['id_customer'];
+            $vendors[$row['id_customer']] = true;
+        }
+        if (count($vendors) !== 1) {
+            throw new UserException('Vendor harus sama');
+        }
+
+        $sales_invoiced = InvoiceDtl::find()
+            ->select(['id_reff', 'total' => 'sum(trans_value)'])
+            ->joinWith('idInvoice')
+            ->where(['invoice_type' => MInvoice::TYPE_SALES, 'id_reff' => $ids])
+            ->groupBy('id_reff')
+            ->indexBy('id_reff')
+            ->asArray()
+            ->all();
+
+        $data['id_vendor'] = $vendor;
+        $data['invoice_type'] = MInvoice::TYPE_SALES;
+        $details = [];
+        foreach ($inv_vals as $id => $value) {
+            $sisa = $sales_values[$id]['sales_value'] - $purchase_values[$id]['discount'];
+            if (isset($sales_invoiced[$id])) {
+                $sisa -= $sales_invoiced[$id]['total'];
+            }
+            if ($value > $sisa) {
+                throw new UserException('Tagihan lebih besar dari sisa');
+            }
+            $details[] = [
+                'id_reff' => $id,
+                'trans_value' => $value,
+            ];
+        }
+        $data['details'] = $details;
         return static::create($data, $model);
     }
 }
