@@ -16,6 +16,8 @@ use Yii;
  */
 class InvoiceDtl extends \yii\db\ActiveRecord
 {
+    const TYPE_PURCHASE = 100;
+    const TYPE_SALES = 200;
 
     /**
      * @inheritdoc

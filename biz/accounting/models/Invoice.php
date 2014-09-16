@@ -28,8 +28,8 @@ use Yii;
  */
 class Invoice extends \yii\db\ActiveRecord
 {
-    const TYPE_PURCHASE = 100;
-    const TYPE_SALES = 200;
+    const TYPE_IN = 1;
+    const TYPE_OUT = 2;
     const STATUS_DRAFT = 1;
 
     /**

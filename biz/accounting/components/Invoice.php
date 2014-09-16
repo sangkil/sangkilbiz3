@@ -27,8 +27,16 @@ class Invoice extends \biz\app\base\ApiHelper
         return 'e_invoice';
     }
 
+    /**
+     * 
+     * @param array $data
+     * @param MInvoice $model
+     * @return mixed
+     * @throws \Exception
+     */
     public static function create($data, $model = null)
     {
+        /* @var $model MInvoice */
         $model = $model ? : new MInvoice();
         $e_name = static::prefixEventName();
         $success = false;
@@ -37,6 +45,11 @@ class Invoice extends \biz\app\base\ApiHelper
         if (!empty($data['details'])) {
             try {
                 $transaction = Yii::$app->db->beginTransaction();
+                $total = 0;
+                foreach ($data['details'] as $detail) {
+                    $total += $detail['trans_value'];
+                }
+                $model->invoice_value = $total;
                 Yii::$app->trigger($e_name . '_create', new Event([$model]));
                 $success = $model->save();
                 $success = $model->saveRelated('invoiveDtls', $data, $success, 'details');
@@ -62,6 +75,7 @@ class Invoice extends \biz\app\base\ApiHelper
 
     public static function update($id, $data, $model = null)
     {
+        /* @var $model MInvoice */
         $model = $model ? : static::findModel($id);
         $e_name = static::prefixEventName();
         $success = false;
@@ -70,6 +84,11 @@ class Invoice extends \biz\app\base\ApiHelper
         if (!isset($data['details']) || $data['details'] !== []) {
             try {
                 $transaction = Yii::$app->db->beginTransaction();
+                $total = 0;
+                foreach ($data['details'] as $detail) {
+                    $total += $detail['trans_value'];
+                }
+                $model->invoice_value = $total;
                 Yii::$app->trigger($e_name . '_update', new Event([$model]));
                 $success = $model->save();
                 if (!empty($data['details'])) {
@@ -117,15 +136,14 @@ class Invoice extends \biz\app\base\ApiHelper
 
         $purchase_invoiced = InvoiceDtl::find()
             ->select(['id_reff', 'total' => 'sum(trans_value)'])
-            ->joinWith('idInvoice')
-            ->where(['invoice_type' => MInvoice::TYPE_PURCHASE, 'id_reff' => $ids])
+            ->where(['reff_type' => InvoiceDtl::TYPE_PURCHASE, 'id_reff' => $ids])
             ->groupBy('id_reff')
             ->indexBy('id_reff')
             ->asArray()
             ->all();
 
         $data['id_vendor'] = $vendor;
-        $data['invoice_type'] = MInvoice::TYPE_PURCHASE;
+        $data['invoice_type'] = MInvoice::TYPE_IN;
         $details = [];
         foreach ($inv_vals as $id => $value) {
             $sisa = $purchase_values[$id]['purchase_value'] - $purchase_values[$id]['item_discount'];
@@ -166,15 +184,14 @@ class Invoice extends \biz\app\base\ApiHelper
 
         $sales_invoiced = InvoiceDtl::find()
             ->select(['id_reff', 'total' => 'sum(trans_value)'])
-            ->joinWith('idInvoice')
-            ->where(['invoice_type' => MInvoice::TYPE_SALES, 'id_reff' => $ids])
+            ->where(['reff_type' => InvoiceDtl::TYPE_SALES, 'id_reff' => $ids])
             ->groupBy('id_reff')
             ->indexBy('id_reff')
             ->asArray()
             ->all();
 
         $data['id_vendor'] = $vendor;
-        $data['invoice_type'] = MInvoice::TYPE_SALES;
+        $data['invoice_type'] = MInvoice::TYPE_OUT;
         $details = [];
         foreach ($inv_vals as $id => $value) {
             $sisa = $sales_values[$id]['sales_value'] - $purchase_values[$id]['discount'];
