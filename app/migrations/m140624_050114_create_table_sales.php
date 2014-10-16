@@ -44,7 +44,7 @@ class m140624_050114_create_table_sales extends \yii\db\Migration
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             // constrain
-            'FOREIGN KEY (id_cashdrawer) REFERENCES {{%cashdrawer}} (id_cashdrawer) ON DELETE SET NULL ON UPDATE CASCADE',
+            //'FOREIGN KEY (id_cashdrawer) REFERENCES {{%cashdrawer}} (id_cashdrawer) ON DELETE SET NULL ON UPDATE CASCADE',
         ], $tableOptions);
 
         $this->createTable('{{%sales_dtl}}', [
