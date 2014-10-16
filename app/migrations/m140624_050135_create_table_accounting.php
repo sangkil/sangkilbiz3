@@ -49,6 +49,8 @@ class m140624_050135_create_table_accounting extends \yii\db\Migration
             'create_by' => Schema::TYPE_INTEGER . ' NOT NULL',
             'update_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
             'update_by' => Schema::TYPE_INTEGER . ' NOT NULL',
+			// constrain
+            'PRIMARY KEY (cd_esheet)',
         ], $tableOptions);
 
         $this->createTable('{{%entri_sheet_dtl}}', [
