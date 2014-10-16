@@ -231,6 +231,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
 
         $this->createTable('{{%cogs}}', [
             'id_product' => Schema::TYPE_INTEGER . ' NOT NULL',
+			'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
             'cogs' => Schema::TYPE_FLOAT . ' NOT NULL',
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
