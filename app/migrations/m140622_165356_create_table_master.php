@@ -217,6 +217,7 @@ class m140622_165356_create_table_master extends \yii\db\Migration
         $this->createTable('{{%price}}', [
             'id_product' => Schema::TYPE_INTEGER,
             'id_price_category' => Schema::TYPE_INTEGER,
+            'id_uom' => Schema::TYPE_INTEGER . ' NOT NULL',
             'price' => Schema::TYPE_FLOAT,
             // history column
             'create_at' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
