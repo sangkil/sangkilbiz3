@@ -111,7 +111,7 @@ class m140624_050056_create_table_inventory extends \yii\db\Migration
             'qty' => Schema::TYPE_FLOAT . ' NOT NULL',
             'item_value' => Schema::TYPE_FLOAT . ' NOT NULL',
             // constrain
-            'PRIMARY KEY (id_adjustment , id_product',
+            'PRIMARY KEY (id_adjustment , id_product)',
             'FOREIGN KEY (id_adjustment) REFERENCES {{%stock_adjustment}} (id_adjustment) ON DELETE CASCADE ON UPDATE CASCADE',
             ], $tableOptions);
 
